@@ -1,0 +1,66 @@
+package model;
+
+import java.util.ArrayList;
+
+public class Assignment {
+    private String id;
+
+    private String applicantId;
+
+    private String assignmentName;
+
+    private ArrayList<String> questions;
+
+    private ArrayList<String> answers;
+
+    public Assignment(String id, String applicantId, String assignmentName, ArrayList<String> questions, ArrayList<String> answers) {
+        this.id = id;
+        this.applicantId = applicantId;
+        this.assignmentName = assignmentName;
+        this.questions = questions;
+        this.answers = answers;
+    }
+
+    public Assignment() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getApplicantId() {
+        return applicantId;
+    }
+
+    public void setApplicantId(String applicantId) {
+        this.applicantId = applicantId;
+    }
+
+    public String getAssignmentName() {
+        return assignmentName;
+    }
+
+    public void setAssignmentName(String assignmentName) {
+        this.assignmentName = assignmentName;
+    }
+
+    public ArrayList<String> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(ArrayList<String> questions) {
+        this.questions = questions;
+    }
+
+    public ArrayList<String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<String> answers) {
+        this.answers = answers;
+    }
+}
