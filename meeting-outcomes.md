@@ -18,7 +18,7 @@ In this group meeting, we delved into project requirements, including user entit
 
 ### Summary
 
-During this meeting, we collectively reviewed the developed user stories, assessing their alignment with project goals and requirements. We finalized a total of 50 user stories. To estimate development effort, we utilized the planning poker game to assign story points to half of the total user stories.
+During this meeting, we collectively reviewed the developed user stories, assessing their alignment with project goals and requirements. We finalized a total of 50 user stories. To estimate development effort, we utilized the planning poker game to assign story points using fibonacci nummbers with minimum value of 1 and maximum value of 13 to half of the total user stories.
 
 ---
 
