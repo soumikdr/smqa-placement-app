@@ -3,57 +3,57 @@ package service;
 public class ApplicantService {
 
 
-    public static void submitAssessmentForm(){
+    public void submitAssessmentForm(){
     }
-    public static void viewAssessment(){
+    public void viewAssessment(){
 
     }
-    public static void submitInterviewForm(){
+    public void submitInterviewForm(){
 
     }
-    public static void viewInterview(){
+    public void viewInterview(){
 
     }
-    public static void viewFeedback(){
+    public void viewFeedback(){
 
     }
-    public static void viewJobPost(){
+    public void viewJobPost(){
 
     }
-    public static void viewApplicationForm(){
+    public void viewApplicationForm(){
 
     }
-    public static void viewAllAvailableJobs(){
+    public void viewAllAvailableJobs(){
 
     }
-    public static void submitApplicationForm(){
+    public void submitApplicationForm(){
 
     }
-    public static void viewApplicantDashboard(){
+    public void viewApplicantDashboard(){
 
     }
-    public static void viewApplicantProfilePage(){
+    public void viewApplicantProfilePage(){
 
     }
-    public static void deleteApplicantProfile(){
+    public void deleteApplicantProfile(){
 
     }
-    public static void updateApplicantProfile(){
+    public void updateApplicantProfile(){
 
     }
-    public static void viewApplicantApplications(){
+    public void viewApplicantApplications(){
 
     }
-    public static void viewSpecificApplication(){
+    public void viewSpecificApplication(){
 
     }
-    public static void withdrawApplication(){
+    public void withdrawApplication(){
 
     }
-    public static void viewJobDescFromApplication(){
+    public void viewJobDescFromApplication(){
 
     }
-    public static void viewApplicationProcessDashboard(){}
+    public void viewApplicationProcessDashboard(){}
 
 
 

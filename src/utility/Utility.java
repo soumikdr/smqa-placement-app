@@ -1,11 +1,13 @@
+package utility;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Utility {
+ public class Utility {
 
 
-    public static String inputOutput(String message) {
+    public String inputOutput(String message) {
         System.out.println(message);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {

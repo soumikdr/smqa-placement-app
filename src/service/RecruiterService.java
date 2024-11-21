@@ -1,67 +1,67 @@
 package service;
 
 public class RecruiterService {
-    public static void sendAssessment(){
+    public void sendAssessment(){
     }
-    public static void viewAssessmentResult(){
+    public void viewAssessmentResult(){
 
     }
-    public static void sendInterview(){
+    public void sendInterview(){
 
     }
-    public static void viewInterviewResult(){
-
-    }
-
-    public static void viewRecruiterDashboard(){
+    public void viewInterviewResult(){
 
     }
 
-    public static void viewRecruiterProfilePage(){
-
-    }
-    public static void deleteRecruiterProfile(){
-
-    }
-    public static void updateRecruiterProfile(){
+    public void viewRecruiterDashboard(){
 
     }
 
-    public static void viewAvailableJobs(){
+    public void viewRecruiterProfilePage(){
+
+    }
+    public void deleteRecruiterProfile(){
+
+    }
+    public void updateRecruiterProfile(){
 
     }
 
-    public static void viewSpecificJobPost(){
-
-    }
-    public static void updateDescriptionOfJobPost(){
+    public void viewAvailableJobs(){
 
     }
 
-    public static void updateStatusOfJobPost(){
+    public void viewSpecificJobPost(){
 
     }
-    public static void viewTotalNumberOfApplications(){
-
-    }
-
-    public static void viewJobPostingForm(){
-
-    }
-    public static void submitNewJobPost(){
+    public void updateDescriptionOfJobPost(){
 
     }
 
-    public static void viewAllApplications(){
+    public void updateStatusOfJobPost(){
 
     }
-    public static void viewSpecificApplication(){
+    public void viewTotalNumberOfApplications(){
 
     }
-    public static void sendFeedback(){
+
+    public void viewJobPostingForm(){
 
     }
-    public static void viewFeedbackForm(){
+    public void submitNewJobPost(){
+
+    }
+
+    public void viewAllApplications(){
+
+    }
+    public void viewSpecificApplication(){
+
+    }
+    public void sendFeedback(){
+
+    }
+    public void viewFeedbackForm(){
 
     }
 
