@@ -1,31 +1,58 @@
 package service;
 
+import utility.Utility;
+
 public class CommonService {
 
-    public static void accessLandingPage(){
+    private final Utility utility;
 
+    public CommonService() {
+        utility = new Utility();}
+
+    public void accessLandingPage(){
+
+        System.out.println("Welcome to the Landing Page\n");
+
+        System.out.println("1. Sign In");
+        System.out.println("2. Sign Up\n");
+
+        switch (utility.inputOutput("Please Select One Of The Options")){
+            case "1":{
+                viewSignInPage();
+                break;
+            }
+            case "2":{
+                viewSignUpPage();
+                break;
+            }
+            default:{
+                System.out.println("You entered invalid option");
+                accessLandingPage();
+                break;
+            }
+        }
 
     }
 
-    public static void viewSignInPage(){
+    public void viewSignInPage(){
 
     }
-    public static void signIn(){
+    public void signIn(){
 
     }
-    public static void viewSignUpPage(){
+    public void viewSignUpPage(){
 
     }
-    public static void signUp(){
+    public void signUp(){
 
     }
-    public static void logOut(){
+    public void logOut(){
 
     }
-    public static void viewResetPasswordPage(){
+    public void viewResetPasswordPage(){
 
     }
-    public static void resetPassword(){
+    public void resetPassword(){
 
     }
 
