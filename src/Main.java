@@ -1,6 +1,8 @@
+import model.Applicant;
 import model.Application;
 import model.Assignment;
 import model.Job;
+import model.Recruiter;
 import model.User;
 import service.CommonService;
 import utility.Utility;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private ArrayList<User> users;
+    private static ArrayList<User> users;
     // We dont have to keep assignment. According to score we can send "pass" status.
     private ArrayList<Assignment> assignments;
 
@@ -21,7 +23,7 @@ public class Main {
 
     public static void main(String[] args) {
         CommonService commonService = new CommonService();
-        commonService.accessLandingPage();
+        commonService.accessLandingPage(users);
 
 
     }
