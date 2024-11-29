@@ -1,5 +1,7 @@
 package service;
 
+import model.AppState;
+import model.Role;
 import model.User;
 import utility.Utility;
 
@@ -60,9 +62,31 @@ public class CommonService {
         }
     }
 
+    private User getUser(ArrayList<User> users, String userName, String password) {
+        for (User user : users) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 
     public void signIn(ArrayList<User> users, String userName, String password) {
         System.out.println("Welcome to Sign-in page\n");
+        User user = getUser(users, userName, password);
+        if (user == null) {
+            System.out.println("Invalid User name or password\n");
+            viewSignInPage(users);
+            return;
+        }
+        AppState.getInstance().setCurrentUser(user);
+        user.greetUser();
+        if (user.getRole() == Role.RECRUITER) {
+            RecruiterService.getInstance().viewDashboard();
+        } else {
+//            TODO: Go to Applicant Dashboard
+        }
     }
 
     public void viewSignUpPage(ArrayList<User> users) {
