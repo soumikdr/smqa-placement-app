@@ -1,70 +1,106 @@
 package service;
 
-public class RecruiterService {
+public class RecruiterService extends UserService {
 
-    public void sendAssessment(){
-    }
-    public void viewAssessmentResult(){
+    private static RecruiterService instance = null;
 
-    }
-    public void sendInterview(){
-
-    }
-    public void viewInterviewResult(){
-
+    public static RecruiterService getInstance() {
+        if (instance == null) {
+            instance = new RecruiterService();
+        }
+        return instance;
     }
 
-    public void viewRecruiterDashboard(){
+    public void sendAssessment() {
+    }
+
+    public void viewAssessmentResult() {
+
+    }
+
+    public void sendInterview() {
+
+    }
+
+    public void viewInterviewResult() {
+
+    }
+
+
+    public void viewRecruiterProfilePage() {
+
+    }
+
+    public void deleteRecruiterProfile() {
+
+    }
+
+    public void updateRecruiterProfile() {
+
+    }
+
+    public void viewAvailableJobs() {
+
+    }
+
+    public void viewSpecificJobPost() {
+
+    }
+
+    public void updateDescriptionOfJobPost() {
+
+    }
+
+    public void updateStatusOfJobPost() {
+
+    }
+
+    public void viewTotalNumberOfApplications() {
+
+    }
+
+    public void viewJobPostingForm() {
+
+    }
+
+    public void submitNewJobPost() {
+
+    }
+
+    public void viewAllApplications() {
+
+    }
+
+    public void viewSpecificApplication() {
+
+    }
+
+    public void sendFeedback() {
+
+    }
+
+    public void viewFeedbackForm() {
+
+    }
+
+
+    @Override
+    public void viewDashboard() {
         System.out.println("Welcome to Recruiter Dashboard\n");
     }
 
-    public void viewRecruiterProfilePage(){
-
-    }
-    public void deleteRecruiterProfile(){
-
-    }
-    public void updateRecruiterProfile(){
+    @Override
+    public void viewProfilePage() {
 
     }
 
-    public void viewAvailableJobs(){
+    @Override
+    public void deleteProfile() {
 
     }
 
-    public void viewSpecificJobPost(){
+    @Override
+    public void updateProfile() {
 
     }
-    public void updateDescriptionOfJobPost(){
-
-    }
-
-    public void updateStatusOfJobPost(){
-
-    }
-    public void viewTotalNumberOfApplications(){
-
-    }
-
-    public void viewJobPostingForm(){
-
-    }
-    public void submitNewJobPost(){
-
-    }
-
-    public void viewAllApplications(){
-
-    }
-    public void viewSpecificApplication(){
-
-    }
-    public void sendFeedback(){
-
-    }
-    public void viewFeedbackForm(){
-
-    }
-
-
 }

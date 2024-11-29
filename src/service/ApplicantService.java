@@ -1,60 +1,81 @@
 package service;
 
-public class ApplicantService {
+public class ApplicantService extends UserService {
 
 
-    public void submitAssessmentForm(){
+    public void submitAssessmentForm() {
     }
-    public void viewAssessment(){
 
-    }
-    public void submitInterviewForm(){
+    public void viewAssessment() {
 
     }
-    public void viewInterview(){
+
+    public void submitInterviewForm() {
 
     }
-    public void viewFeedback(){
+
+    public void viewInterview() {
 
     }
-    public void viewJobPost(){
+
+    public void viewFeedback() {
 
     }
-    public void viewApplicationForm(){
+
+    public void viewJobPost() {
 
     }
-    public void viewAllAvailableJobs(){
+
+    public void viewApplicationForm() {
 
     }
-    public void submitApplicationForm(){
+
+    public void viewAllAvailableJobs() {
 
     }
-    public void viewApplicantDashboard(){
+
+    public void submitApplicationForm() {
 
     }
-    public void viewApplicantProfilePage(){
+
+
+    public void viewApplicantApplications() {
 
     }
-    public void deleteApplicantProfile(){
+
+    public void viewSpecificApplication() {
 
     }
-    public void updateApplicantProfile(){
+
+    public void withdrawApplication() {
 
     }
-    public void viewApplicantApplications(){
+
+    public void viewJobDescFromApplication() {
 
     }
-    public void viewSpecificApplication(){
+
+    public void viewApplicationProcessDashboard() {
+    }
+
+
+    @Override
+    public void viewDashboard() {
 
     }
-    public void withdrawApplication(){
+
+    @Override
+    public void viewProfilePage() {
 
     }
-    public void viewJobDescFromApplication(){
+
+    @Override
+    public void deleteProfile() {
 
     }
-    public void viewApplicationProcessDashboard(){}
 
+    @Override
+    public void updateProfile() {
 
-
+    }
 }
