@@ -2,15 +2,6 @@ package service;
 
 public class RecruiterService {
 
-    public static RecruiterService instance;
-
-    public static RecruiterService getInstance(){
-        if(instance == null){
-            instance = new RecruiterService();
-        }
-        return instance;
-    }
-
     public void sendAssessment(){
     }
     public void viewAssessmentResult(){

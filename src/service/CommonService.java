@@ -1,7 +1,5 @@
 package service;
 
-import model.AppState;
-import model.Role;
 import model.User;
 import utility.Utility;
 
@@ -63,32 +61,8 @@ public class CommonService {
     }
 
 
-    protected User getUserByCredentials(ArrayList<User> users, String userName, String password) {
-        for (User user : users) {
-            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
     public void signIn(ArrayList<User> users, String userName, String password) {
         System.out.println("Welcome to Sign-in page\n");
-        User user = getUserByCredentials(users, userName, password);
-        if (user != null) {
-            AppState.getInstance().setLoggedInUser(user);
-            System.out.println("Welcome " + user.getName() + " " + user.getLastName() + "\n");
-            switch (user.getRole()) {
-                case APPLICANT:
-                    System.out.println("Welcome to Applicant Dashboard\n");
-                    break;
-                case RECRUITER:
-                    RecruiterService.getInstance().viewRecruiterDashboard();
-                    break;
-            }
-        }
-        System.out.println("Invalid User name or Password\n");
-        viewSignInPage(users);
     }
 
     public void viewSignUpPage(ArrayList<User> users) {
