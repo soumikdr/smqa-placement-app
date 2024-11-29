@@ -97,7 +97,7 @@ public class CommonService {
         String lastName;
         String userName;
         String password;
-        String recruiterCode = "ABCD";
+        String recruiterCode;
         System.out.println("Welcome to Sign Up page\n");
         System.out.println("1. Signup as Applicant\n");
         System.out.println("2. Signup as Recruiter\n");
@@ -115,7 +115,7 @@ public class CommonService {
                 break;
             case "2":
                 System.out.println("Welcome to Recruiter Signup page \n");
-                if (utility.inputOutput("Enter the Recruiter Code").equals(recruiterCode)) {
+                if (utility.inputOutput("Enter the Recruiter Code").equals("ABCD")) {
                     id = "111";
                     firstName = utility.inputOutput("Enter your first name");
                     lastName = utility.inputOutput("Enter your last name");
