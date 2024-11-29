@@ -2,8 +2,6 @@ package service;
 
 import java.util.ArrayList;
 
-import model.Applicant;
-import model.Recruiter;
 import model.User;
 import utility.Utility;
 
@@ -46,7 +44,10 @@ public class CommonService {
 
         switch(utility.inputOutput("Please Select One Of The Options")){
             case "1": 
-                signIn(users);
+                System.out.println("Welcome to Signin page\n");
+                String userName = utility.inputOutput("Enter your User name");
+                String password = utility.inputOutput("Enter your password");
+                signIn(users, userName, password);
                 break;
             case "2": 
                 accessLandingPage(users);
@@ -56,18 +57,20 @@ public class CommonService {
                 viewSignInPage(users);
                 break;
         }
-
     }
-    public void signIn(ArrayList<User> users){
-        System.out.println("Welcome to Signin page \n");
 
-        String userName = utility.inputOutput("Enter your User name");
-        String password = utility.inputOutput("Enter your password");
-
+    public void signIn(ArrayList<User> users, String userName, String password){
+       
         System.out.println("\nUser name" + userName + "\nPassword" + password);
 
     }
     public void viewSignUpPage(ArrayList<User> users){
+        String id;
+        String firstName;
+        String lastName;
+        String userName;
+        String password;
+        String recruiterCode;
         System.out.println("Welcome to Sign Up page\n");
         System.out.println("1. Signup as Applicant\n");
         System.out.println("2. Signup as Recruiter\n");
@@ -75,10 +78,27 @@ public class CommonService {
 
         switch(utility.inputOutput("Please Select One Of The Options")){
             case "1": 
-                signUp("Applicant", users);
+                System.out.println("Welcome to Applicant Signup page \n");
+                id = "111";
+                firstName = utility.inputOutput("Enter your first name");
+                lastName =  utility.inputOutput("Enter your last name");
+                userName =  utility.inputOutput("Create a user name");
+                password =  utility.inputOutput("Create a strong password");
+                signUp("Applicant", users, id, firstName, lastName, userName, password);
                 break;
             case "2": 
-                signUp("Recruiter", users);
+                System.out.println("Welcome to Recruiter Signup page \n");
+                if (utility.inputOutput("Enter the Recruiter Code").equals("ABCD")) {
+                    id = "111";
+                    firstName = utility.inputOutput("Enter your first name");
+                    lastName =  utility.inputOutput("Enter your last name");
+                    userName =  utility.inputOutput("Create a user name");
+                    password =  utility.inputOutput("Create a strong password");
+                    signUp("Recruiter", users, id, firstName, lastName, userName, password);                
+                }else {
+                    System.out.println("\nIncorrect Recruiter Code\n");
+                    viewSignUpPage(users);
+                }
                 break;
             case "3": 
                 accessLandingPage(users);
@@ -90,14 +110,8 @@ public class CommonService {
         }
 
     }
-    public void signUp(String role, ArrayList<User> users){
+    public void signUp(String role, ArrayList<User> users, String id, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
-
-        String id = "Applicant Unique Id";
-        String firstName =  utility.inputOutput("Enter your first name");
-        String lastName =  utility.inputOutput("Enter your last name");
-        String userName =  utility.inputOutput("Create a user name");
-        String password =  utility.inputOutput("Create a strong password");
 
         if (role.equals("Applicant")) {
             System.out.println("\nAPPLICANT DETAILS\n");
@@ -106,7 +120,7 @@ public class CommonService {
             System.out.println("\nRECRUITER DETAILS\n");
             System.out.println("\nId " + id + "\nFirst name " + firstName + "\nLast name " + lastName + "\nUser name " + userName + "\nPassword " + password + "\nRole " + role);
         }
-           }
+    }
     public void logOut(){
 
     }
