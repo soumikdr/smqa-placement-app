@@ -1,6 +1,7 @@
 package service;
 
 public class RecruiterService {
+
     public void sendAssessment(){
     }
     public void viewAssessmentResult(){
@@ -14,7 +15,7 @@ public class RecruiterService {
     }
 
     public void viewRecruiterDashboard(){
-
+        System.out.println("Welcome to Recruiter Dashboard\n");
     }
 
     public void viewRecruiterProfilePage(){
