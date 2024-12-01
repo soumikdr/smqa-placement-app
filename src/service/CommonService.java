@@ -50,6 +50,7 @@ public class CommonService {
                 signIn(users, userName, password);
                 break;
             case "2": 
+                System.out.println("\nRediredting to Landing Page\n");
                 accessLandingPage(users);
                 break;
             default: 
@@ -101,6 +102,7 @@ public class CommonService {
                 }
                 break;
             case "3": 
+                System.out.println("\nRediredting to Landing Page\n");
                 accessLandingPage(users);
                 break;
             default: 
