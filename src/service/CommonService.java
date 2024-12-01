@@ -18,10 +18,12 @@ public class CommonService {
 
         switch (utility.inputOutput("Please Select One Of The Options")){
             case "1":{
+                System.out.println("directing to Sign In Page");
                 viewSignInPage();
                 break;
             }
             case "2":{
+                System.out.println("directing to Sign Up Page");
                 viewSignUpPage();
                 break;
             }
