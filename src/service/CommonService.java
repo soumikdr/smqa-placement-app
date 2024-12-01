@@ -62,7 +62,7 @@ public class CommonService {
         }
     }
 
-    private User getUser(ArrayList<User> users, String userName, String password) {
+    public User authenticateUser(ArrayList<User> users, String userName, String password) {
         for (User user : users) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 return user;
@@ -74,7 +74,7 @@ public class CommonService {
 
     public void signIn(ArrayList<User> users, String userName, String password) {
         System.out.println("Welcome to Sign-in page\n");
-        User user = getUser(users, userName, password);
+        User user = authenticateUser(users, userName, password);
         if (user == null) {
             System.out.println("Invalid User name or password\n");
             viewSignInPage(users);
