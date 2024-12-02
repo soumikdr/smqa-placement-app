@@ -1,9 +1,9 @@
 package service;
 
-import java.util.ArrayList;
-
 import model.User;
 import utility.Utility;
+
+import java.util.ArrayList;
 
 public class CommonService {
 
@@ -26,7 +26,7 @@ public class CommonService {
                 viewSignUpPage();
                 break;
             }
-            default:{
+            default: {
                 System.out.println("You entered invalid option");
                 accessLandingPage();
                 break;
@@ -51,7 +51,7 @@ public class CommonService {
                 System.out.println("\nRediredting to Landing Page\n");
                 accessLandingPage();
                 break;
-            default: 
+            default:
                 System.out.println("You entered invalid option");
                 viewSignInPage();
                 break;
@@ -61,7 +61,10 @@ public class CommonService {
     public void signIn(String userName, String password){
        
         System.out.println("\nUser name" + userName + "\nPassword" + password);
+    }
 
+    public void signIn(ArrayList<User> users, String userName, String password) {
+        System.out.println("Welcome to Sign-in page\n");
     }
     public void viewSignUpPage(){
         String id;
@@ -69,7 +72,7 @@ public class CommonService {
         String lastName;
         String userName;
         String password;
-        String recruiterCode = "ABCD";
+        String recruiterCode;
         System.out.println("Welcome to Sign Up page\n");
         System.out.println("1. Signup as Applicant\n");
         System.out.println("2. Signup as Recruiter\n");
@@ -85,7 +88,7 @@ public class CommonService {
                 password =  Utility.inputOutput("Create a strong password");
                 signUp("Applicant", id, firstName, lastName, userName, password);
                 break;
-            case "2": 
+            case "2":
                 System.out.println("Welcome to Recruiter Signup page \n");
                 if (Utility.inputOutput("Enter the Recruiter Code").equals(recruiterCode)) {
                     id = "111";
@@ -103,13 +106,14 @@ public class CommonService {
                 System.out.println("\nRediredting to Landing Page\n");
                 accessLandingPage();
                 break;
-            default: 
+            default:
                 System.out.println("You entered invalid option");
                 viewSignUpPage();
                 break;
         }
 
     }
+    
     public void signUp(String role, String id, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
 
@@ -121,17 +125,18 @@ public class CommonService {
             System.out.println("\nId " + id + "\nFirst name " + firstName + "\nLast name " + lastName + "\nUser name " + userName + "\nPassword " + password + "\nRole " + role);
         }
     }
-    public void logOut(){
 
-    }
-    public void viewResetPasswordPage(){
-
-    }
-    public void resetPassword(){
+    public void logOut() {
 
     }
 
+    public void viewResetPasswordPage() {
 
+    }
+
+    public void resetPassword() {
+
+    }
 
 
 }
