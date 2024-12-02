@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 public class CommonService {
 
+    ApplicantService applicantService = new ApplicantService();
+    RecruiterService recruiterService = new RecruiterService();
+
 
     public void accessLandingPage(){
 
@@ -143,10 +146,10 @@ public class CommonService {
                 System.out.println("\nRediredting to Dashboard\n");
                 if(Utility.getCurrentUser().getRole().equals("Applicant")) {
                     System.out.println("\nRedirecting to Applicant dashboard\n");
-                    // Redirect to Applicant dashboard
+                    applicantService.viewApplicantDashboard();
                 } else if(Utility.getCurrentUser().getRole().equals("Recruiter")) {
                     System.out.println("\nRedirecting to Recruiter dashboard\n");
-                    // Redirect to recruiter dashboard
+                    recruiterService.viewRecruiterDashboard();
                 }
                 break;
             default:
@@ -162,6 +165,8 @@ public class CommonService {
         if(Utility.getCurrentUser().getUserName().equals(userName) && Utility.getCurrentUser().getRole().equals("Applicant")) {
             Utility.inputOutput("Enter your New Password");
             Utility.getCurrentUser().setPassword(userName);
+            applicantService.viewApplicantDashboard();
+            
         } else {
             System.out.println("\nYou have entered wrong Crediantials\n");
             viewResetPasswordPage();
