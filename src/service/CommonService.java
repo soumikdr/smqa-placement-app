@@ -66,13 +66,14 @@ public class CommonService {
     public void signIn(ArrayList<User> users, String userName, String password) {
         System.out.println("Welcome to Sign-in page\n");
     }
+    
     public void viewSignUpPage(){
         String id;
         String firstName;
         String lastName;
         String userName;
         String password;
-        String recruiterCode;
+        String recruiterCode = "ABCD";
         System.out.println("Welcome to Sign Up page\n");
         System.out.println("1. Signup as Applicant\n");
         System.out.println("2. Signup as Recruiter\n");
