@@ -4,10 +4,6 @@ import utility.Utility;
 
 public class CommonService {
 
-    private final Utility utility;
-
-    public CommonService() {
-        utility = new Utility();}
 
     public void accessLandingPage(){
 
@@ -16,7 +12,7 @@ public class CommonService {
         System.out.println("1. Sign In");
         System.out.println("2. Sign Up\n");
 
-        switch (utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")){
             case "1":{
                 System.out.println("directing to Sign In Page");
                 viewSignInPage();
