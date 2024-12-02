@@ -62,10 +62,6 @@ public class CommonService {
        
         System.out.println("\nUser name" + userName + "\nPassword" + password);
     }
-
-    public void signIn(ArrayList<User> users, String userName, String password) {
-        System.out.println("Welcome to Sign-in page\n");
-    }
     
     public void viewSignUpPage(){
         String id;
@@ -133,11 +129,37 @@ public class CommonService {
 
     public void viewResetPasswordPage() {
 
+        System.out.println("Welcome to reset password page\n");
+        System.out.println("1. Continue to reset paswsword\n");
+        System.out.println("2. Go back to dashword\n");
+
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1": 
+                System.out.println("Welcome to reset password page\n");
+                String userName = Utility.inputOutput("Enter your User name");
+                resetPassword(userName);
+                break;
+            case "2": 
+                System.out.println("\nRediredting to Dashboard\n");
+                if(Utility.getCurrentUser().getRole().equals("Applicant")) {
+                    System.out.println("\nRedirecting to Applicant dashboard\n");
+                    // Redirect to Applicant dashboard
+                } else if(Utility.getCurrentUser().getRole().equals("Recruiter")) {
+                    System.out.println("\nRedirecting to Recruiter dashboard\n");
+                    // Redirect to recruiter dashboard
+                }
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewResetPasswordPage();
+                break;
+        }
+
     }
 
-    public void resetPassword() {
+    
+    public void resetPassword(String userName) {
 
     }
-
 
 }
