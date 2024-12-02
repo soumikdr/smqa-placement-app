@@ -4,12 +4,10 @@ import utility.Utility;
 
 public class ApplicantService {
 
-    private final Utility utility;
     private final CommonService commonService;
 
 
     public ApplicantService() {
-        utility = new Utility();
         commonService = new CommonService();
     }
 
@@ -49,7 +47,7 @@ public class ApplicantService {
         System.out.println("3. View Available Jobs");
 
         System.out.println("\n4. Log Out");
-        switch (utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")){
             case "1":{
                 System.out.println("Directing to Profile Page...");
                 viewApplicantProfilePage();
