@@ -98,4 +98,20 @@ public class CommonServiceTests {
 
 
     }
+
+    @Test
+    public void logoutTest() throws IOException {
+
+//        User user = new User();
+//        user.setId("id");
+//        user.setName("name");
+//        Utility.setCurrentUser(user);
+//
+//        service.logOut();
+//
+//        Assert.assertNull(Utility.getCurrentUser());
+
+    }
+
+
 }
