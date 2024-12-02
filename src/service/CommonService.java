@@ -157,9 +157,15 @@ public class CommonService {
 
     }
 
-    
     public void resetPassword(String userName) {
-
+        System.out.println("\nYour entered username: " + userName + "\n");
+        if(Utility.getCurrentUser().getUserName().equals(userName) && Utility.getCurrentUser().getRole().equals("Applicant")) {
+            Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(userName);
+        } else {
+            System.out.println("\nYou have entered wrong Crediantials\n");
+            viewResetPasswordPage();
+        }
     }
 
 }
