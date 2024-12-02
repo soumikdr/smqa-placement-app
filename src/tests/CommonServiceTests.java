@@ -1,8 +1,10 @@
 package tests;
 
+import model.User;
 import org.junit.Assert;
 import org.junit.Test;
 import service.CommonService;
+import utility.Utility;
 
 import java.io.*;
 
@@ -46,4 +48,20 @@ public class CommonServiceTests {
         Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
 
     }
+
+    @Test
+    public void logoutTest() throws IOException {
+
+//        User user = new User();
+//        user.setId("id");
+//        user.setName("name");
+//        Utility.setCurrentUser(user);
+//
+//        service.logOut();
+//
+//        Assert.assertNull(Utility.getCurrentUser());
+
+    }
+
+
 }

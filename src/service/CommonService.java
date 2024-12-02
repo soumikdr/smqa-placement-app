@@ -46,6 +46,10 @@ public class CommonService {
     }
     public void logOut(){
 
+        Utility.setCurrentUser(null);
+        System.out.println("Logged Out Successfully");
+        accessLandingPage();
+
     }
     public void viewResetPasswordPage(){
 
