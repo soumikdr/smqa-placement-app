@@ -17,13 +17,6 @@ public class CommonService {
 
         switch (Utility.inputOutput("Please Select One Of The Options")){
             case "1":{
-<<<<<<< HEAD
-                viewSignInPage(users);
-                break;
-            }
-            case "2":{
-                viewSignUpPage(users);
-=======
                 System.out.println("directing to Sign In Page");
                 viewSignInPage();
                 break;
@@ -31,7 +24,6 @@ public class CommonService {
             case "2":{
                 System.out.println("directing to Sign Up Page");
                 viewSignUpPage();
->>>>>>> develop
                 break;
             }
             default:{
