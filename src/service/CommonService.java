@@ -1,6 +1,10 @@
 package service;
 
+import model.Recruiter;
+import model.User;
 import utility.Utility;
+
+import java.util.UUID;
 
 public class CommonService {
 
@@ -41,7 +45,20 @@ public class CommonService {
     public void viewSignUpPage(){
 
     }
-    public void signUp(){
+    public void signUp(User user,String code){
+
+        RecruiterService recruiterService = new RecruiterService();
+        String id = UUID.randomUUID().toString();
+        if(code!=null && code.equals("XVQTY")){
+            Recruiter newRecruiter = new Recruiter(id,user.getName(), user.getLastName(), user.getUserName(),user.getPassword());
+            Utility.getUsers().add(newRecruiter);
+            System.out.println("Sign Up Successful for Recruiter");
+            Utility.setCurrentUser(newRecruiter);
+            System.out.println("directing to Recruiter Dashboard");
+            recruiterService.viewRecruiterDashboard();
+        }
+
+        // Applicant part
 
     }
     public void logOut(){
