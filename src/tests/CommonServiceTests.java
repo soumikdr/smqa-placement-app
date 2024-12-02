@@ -2,6 +2,8 @@ package tests;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import model.User;
 import service.CommonService;
 
 import java.io.*;
@@ -45,5 +47,20 @@ public class CommonServiceTests {
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
 
+    }
+
+    @Test
+    public void resetPasswordTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+
+        String simulatedInput = "ansarpatil";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.resetPassword("ansarpatil");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Your entered username:"));
+
+        outputStream.reset();
     }
 }
