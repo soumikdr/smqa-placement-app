@@ -46,4 +46,70 @@ public class CommonServiceTests {
         Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
 
     }
+
+    @Test
+    public void viewSignUpPageTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+
+        String simulatedInput = "1";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.viewSignUpPage();
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Welcome to Applicant Signup page"));
+
+        outputStream.reset();
+
+        simulatedInput = "2";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.viewSignUpPage();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Welcome to Recruiter Signup page"));
+
+        outputStream.reset();
+
+        // simulatedInput = "invalid input";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        // simulatedInput = "1";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        // service.accessLandingPage();
+        // consoleOutput = outputStream.toString();
+        // Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+
+    }
+
+    @Test
+    public void viewSignInPageTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+
+        String simulatedInput = "1";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.viewSignInPage();
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Welcome to Signin page"));
+
+        outputStream.reset();
+
+        simulatedInput = "2";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.viewSignInPage();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Rediredting to Landing Page"));
+
+        outputStream.reset();
+
+        // simulatedInput = "invalid input";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        // simulatedInput = "1";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        // service.accessLandingPage();
+        // consoleOutput = outputStream.toString();
+        // Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+
+    }
 }
