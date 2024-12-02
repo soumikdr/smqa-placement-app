@@ -13,8 +13,6 @@ public class Main {
     // We dont have to keep assignment. According to score we can send "pass" status.
     private static ArrayList<Assignment> assignments;
 
-    private static User currentUser;
-
     private static ArrayList<Job> jobs;
     // we dont have to create this since we can create a variable on users for appliedJobs with ids. Not sure.
     private static ArrayList<Application> applications;
