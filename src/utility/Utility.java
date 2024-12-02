@@ -1,14 +1,13 @@
 package utility;
 
-import model.Application;
-import model.Assignment;
-import model.Job;
-import model.User;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import model.Application;
+import model.Assignment;
+import model.Job;
+import model.User;
 
 public class Utility {
 
@@ -28,9 +27,6 @@ public class Utility {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
             message = br.readLine();
-        } catch (NumberFormatException e) {
-            System.out.println("Error reading in integer value");
-            //return the page
         } catch (IOException e) {
             System.out.println("Error reading in value");
             //return the page

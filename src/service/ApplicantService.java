@@ -1,5 +1,7 @@
 package service;
 
+import model.User;
+
 public class ApplicantService {
 
 
@@ -29,9 +31,12 @@ public class ApplicantService {
     public void submitApplicationForm(){
 
     }
-    public void viewApplicantDashboard(){
 
+    public void viewApplicantDashboard(User user){
+        StringBuilder sb = new StringBuilder();
+        System.out.println(sb.append("\nWelcome to the Applicant Dashboard, ").append(user.getName()).append("!\n").toString());
     }
+
     public void viewApplicantProfilePage(){
 
     }
