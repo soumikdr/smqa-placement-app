@@ -33,7 +33,7 @@ public class Main {
 
 
         CommonService commonService = new CommonService();
-        commonService.accessLandingPage(users);
+        commonService.accessLandingPage();
 
 
     }

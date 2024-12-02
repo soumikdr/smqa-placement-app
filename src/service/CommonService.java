@@ -8,7 +8,7 @@ import utility.Utility;
 public class CommonService {
 
 
-    public void accessLandingPage(ArrayList<User> users){
+    public void accessLandingPage(){
 
         System.out.println("Welcome to the Landing Page\n");
 
@@ -28,42 +28,42 @@ public class CommonService {
             }
             default:{
                 System.out.println("You entered invalid option");
-                accessLandingPage(users);
+                accessLandingPage();
                 break;
             }
         }
 
     }
 
-    public void viewSignInPage(ArrayList<User> users){
+    public void viewSignInPage(){
         System.out.println("Welcome to Signin page\n");
         System.out.println("1. Continue to Signin\n");
         System.out.println("2. Go back to Landing page\n");
 
-        switch(utility.inputOutput("Please Select One Of The Options")){
+        switch(Utility.inputOutput("Please Select One Of The Options")){
             case "1": 
                 System.out.println("Welcome to Signin page\n");
-                String userName = utility.inputOutput("Enter your User name");
-                String password = utility.inputOutput("Enter your password");
-                signIn(users, userName, password);
+                String userName = Utility.inputOutput("Enter your User name");
+                String password = Utility.inputOutput("Enter your password");
+                signIn(userName, password);
                 break;
             case "2": 
                 System.out.println("\nRediredting to Landing Page\n");
-                accessLandingPage(users);
+                accessLandingPage();
                 break;
             default: 
                 System.out.println("You entered invalid option");
-                viewSignInPage(users);
+                viewSignInPage();
                 break;
         }
     }
 
-    public void signIn(ArrayList<User> users, String userName, String password){
+    public void signIn(String userName, String password){
        
         System.out.println("\nUser name" + userName + "\nPassword" + password);
 
     }
-    public void viewSignUpPage(ArrayList<User> users){
+    public void viewSignUpPage(){
         String id;
         String firstName;
         String lastName;
@@ -75,42 +75,42 @@ public class CommonService {
         System.out.println("2. Signup as Recruiter\n");
         System.out.println("3. Go back to Landing page\n");
 
-        switch(utility.inputOutput("Please Select One Of The Options")){
+        switch(Utility.inputOutput("Please Select One Of The Options")){
             case "1": 
                 System.out.println("Welcome to Applicant Signup page \n");
                 id = "111";
-                firstName = utility.inputOutput("Enter your first name");
-                lastName =  utility.inputOutput("Enter your last name");
-                userName =  utility.inputOutput("Create a user name");
-                password =  utility.inputOutput("Create a strong password");
-                signUp("Applicant", users, id, firstName, lastName, userName, password);
+                firstName = Utility.inputOutput("Enter your first name");
+                lastName =  Utility.inputOutput("Enter your last name");
+                userName =  Utility.inputOutput("Create a user name");
+                password =  Utility.inputOutput("Create a strong password");
+                signUp("Applicant", id, firstName, lastName, userName, password);
                 break;
             case "2": 
                 System.out.println("Welcome to Recruiter Signup page \n");
-                if (utility.inputOutput("Enter the Recruiter Code").equals(recruiterCode)) {
+                if (Utility.inputOutput("Enter the Recruiter Code").equals(recruiterCode)) {
                     id = "111";
-                    firstName = utility.inputOutput("Enter your first name");
-                    lastName =  utility.inputOutput("Enter your last name");
-                    userName =  utility.inputOutput("Create a user name");
-                    password =  utility.inputOutput("Create a strong password");
-                    signUp("Recruiter", users, id, firstName, lastName, userName, password);                
+                    firstName = Utility.inputOutput("Enter your first name");
+                    lastName =  Utility.inputOutput("Enter your last name");
+                    userName =  Utility.inputOutput("Create a user name");
+                    password =  Utility.inputOutput("Create a strong password");
+                    signUp("Recruiter", id, firstName, lastName, userName, password);                
                 }else {
                     System.out.println("\nIncorrect Recruiter Code\n");
-                    viewSignUpPage(users);
+                    viewSignUpPage();
                 }
                 break;
             case "3": 
                 System.out.println("\nRediredting to Landing Page\n");
-                accessLandingPage(users);
+                accessLandingPage();
                 break;
             default: 
                 System.out.println("You entered invalid option");
-                viewSignUpPage(users);
+                viewSignUpPage();
                 break;
         }
 
     }
-    public void signUp(String role, ArrayList<User> users, String id, String firstName, String lastName, String userName, String password){
+    public void signUp(String role, String id, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
 
         if (role.equals("Applicant")) {
