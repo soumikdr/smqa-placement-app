@@ -1,6 +1,7 @@
 package service;
 
 import model.User;
+import utility.Utility;
 
 public class ApplicantService {
 
@@ -35,7 +36,8 @@ public class ApplicantService {
 
     }
 
-    public void viewApplicantProfilePage(User user){
+    public void viewApplicantProfilePage(){
+        User user = Utility.getCurrentUser();
         System.out.println("\nApplicant Profile\n");
 
         if (user.getId() == null || user.getId().isEmpty()) {
