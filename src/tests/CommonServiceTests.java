@@ -70,6 +70,39 @@ public class CommonServiceTests {
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
 
 
+        String simulatedInput = "1";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.viewResetPasswordPage();
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Welcome to reset password page"));
+
+        outputStream.reset();
+
+        simulatedInput = "2";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.viewResetPasswordPage();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Rediredting to Dashboard"));
+
+        outputStream.reset();
+
+        // simulatedInput = "invalid input";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        // simulatedInput = "1";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        // service.accessLandingPage();
+        // consoleOutput = outputStream.toString();
+        // Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+
+    }
+
+    @Test
+    public void viewResetPasswordPageTest() throws IOException {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        
         String simulatedInput = "ansarpatil";
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         service.resetPassword("ansarpatil");
@@ -78,6 +111,7 @@ public class CommonServiceTests {
 
         outputStream.reset();
     }
+
     // public void recruiterSignUpTest() throws Exception {
 
     //     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
