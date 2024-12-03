@@ -1,8 +1,16 @@
 package service;
 
 import model.User;
+import utility.Utility;
 
 public class ApplicantService {
+
+    private final CommonService commonService;
+
+
+    public ApplicantService() {
+        commonService = new CommonService();
+    }
 
 
     public void submitAssessmentForm(){
@@ -31,15 +39,86 @@ public class ApplicantService {
     public void submitApplicationForm(){
 
     }
+    public void viewApplicantDashboard(){
 
-    public void viewApplicantDashboard(User user){
-        StringBuilder sb = new StringBuilder();
-        System.out.println(sb.append("\nWelcome to the Applicant Dashboard, ").append(user.getName()).append("!\n").toString());
+        System.out.println("Welcome to the Applicant Dashboard\n");
+
+        System.out.println("1. View Profile");
+        System.out.println("2. View Applications");
+        System.out.println("3. View Available Jobs");
+
+        System.out.println("\n4. Log Out");
+        switch (Utility.inputOutput("Please Select One Of The Options")){
+            case "1":{
+                System.out.println("Directing to Profile Page...");
+                viewApplicantProfilePage();
+                break;
+            }
+            case "2":{
+                System.out.println("Directing to Applications Page...");
+                viewApplicantApplications();
+                break;
+            }
+            case "3":{
+                System.out.println("Directing to Available Jobs Page...");
+                viewAllAvailableJobs();
+                break;
+            }
+            case "4":{
+                System.out.println("Logging Out...");
+                commonService.logOut();
+                break;
+            }
+            default:{
+                System.out.println("You entered invalid option");
+                viewApplicantDashboard();
+                break;
+            }
+        }
+
     }
 
     public void viewApplicantProfilePage(){
+        User user = Utility.getCurrentUser();
+        System.out.println("\nApplicant Profile\n");
 
+        if (user.getId() == null || user.getId().isEmpty()) {
+            System.out.println("ID is missing.");
+        } else {
+            System.out.println("ID: " + user.getId());
+        }
+
+        if (user.getName() == null || user.getName().isEmpty()) {
+            System.out.println("Name is missing.");
+        } else {
+            System.out.println("Name: " + user.getName());
+        }
+
+        if (user.getLastName() == null || user.getLastName().isEmpty()) {
+            System.out.println("Last Name is missing.");
+        } else {
+            System.out.println("Last Name: " + user.getLastName());
+        }
+
+        if (user.getUserName() == null || user.getUserName().isEmpty()) {
+            System.out.println("Username is missing.");
+        } else {
+            System.out.println("Username: " + user.getUserName());
+        }
+
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            System.out.println("Role is missing.");
+        } else {
+            System.out.println("Role: " + user.getRole());
+        }
+
+        String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
+        
+        if (!answer.isEmpty()) {
+            viewApplicantDashboard();
+        }
     }
+
     public void deleteApplicantProfile(){
 
     }
@@ -59,7 +138,5 @@ public class ApplicantService {
 
     }
     public void viewApplicationProcessDashboard(){}
-
-
 
 }
