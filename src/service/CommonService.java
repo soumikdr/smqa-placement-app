@@ -1,12 +1,11 @@
 package service;
 
+import java.util.ArrayList;
+import java.util.UUID;
+import model.Recruiter;
 import model.User;
 import utility.Utility;
 
-import java.util.ArrayList;
-import model.Recruiter;
-
-import java.util.UUID;
 
 public class CommonService {
 
@@ -64,13 +63,42 @@ public class CommonService {
         }
     }
 
-    public void signIn(String userName, String password){
-       
-        System.out.println("\nUser name" + userName + "\nPassword" + password);
+    public void signIn(String userName, String password) {
+        ArrayList<User> users = Utility.getUsers();
+        Boolean isUserFound = false;
+
+        for (User user : users) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                isUserFound = true;
+
+                if (user.getRole() == null) {
+                    System.out.println("\nUser role is not defined. Please contact the administrator.");
+                    Utility.inputOutput("Press enter to go back...");
+                    accessLandingPage();
+                }
+
+                Utility.setCurrentUser(user);
+
+                if (user.getRole().toLowerCase().equals("applicant")) {
+                    ApplicantService applicantService = new ApplicantService();
+                    applicantService.viewApplicantDashboard();
+                }
+            }
+        }
+
+        if (!isUserFound) {
+            System.out.println("\n");
+            String tryAgain = Utility.inputOutput("Invalid username or password. Do you want to try again? (y/n)");
+            
+            if (tryAgain.equals("y")) {
+                viewSignInPage();
+            } else {
+                accessLandingPage();
+            }
+        }
     }
-    
+
     public void viewSignUpPage(){
-        String id;
         String firstName;
         String lastName;
         String userName;
@@ -108,8 +136,8 @@ public class CommonService {
                 viewSignUpPage();
                 break;
         }
-
     }
+
     public void signUp(String role, String recruiterCode, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
         
