@@ -99,7 +99,6 @@ public class CommonService {
     }
 
     public void viewSignUpPage(){
-        String id;
         String firstName;
         String lastName;
         String userName;
@@ -137,8 +136,8 @@ public class CommonService {
                 viewSignUpPage();
                 break;
         }
-
     }
+
     public void signUp(String role, String recruiterCode, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
         
