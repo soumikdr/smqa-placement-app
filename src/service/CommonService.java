@@ -4,6 +4,9 @@ import model.User;
 import utility.Utility;
 
 import java.util.ArrayList;
+import model.Recruiter;
+
+import java.util.UUID;
 
 public class CommonService {
 
@@ -72,7 +75,7 @@ public class CommonService {
         String lastName;
         String userName;
         String password;
-        String recruiterCode = "ABCD";
+        String recruiterCode;
         System.out.println("Welcome to Sign Up page\n");
         System.out.println("1. Signup as Applicant\n");
         System.out.println("2. Signup as Recruiter\n");
@@ -81,26 +84,20 @@ public class CommonService {
         switch(Utility.inputOutput("Please Select One Of The Options")){
             case "1": 
                 System.out.println("Welcome to Applicant Signup page \n");
-                id = "111";
                 firstName = Utility.inputOutput("Enter your first name");
                 lastName =  Utility.inputOutput("Enter your last name");
                 userName =  Utility.inputOutput("Create a user name");
                 password =  Utility.inputOutput("Create a strong password");
-                signUp("Applicant", id, firstName, lastName, userName, password);
+                signUp("Applicant",null, firstName, lastName, userName, password);
                 break;
             case "2":
                 System.out.println("Welcome to Recruiter Signup page \n");
-                if (Utility.inputOutput("Enter the Recruiter Code").equals(recruiterCode)) {
-                    id = "111";
                     firstName = Utility.inputOutput("Enter your first name");
                     lastName =  Utility.inputOutput("Enter your last name");
                     userName =  Utility.inputOutput("Create a user name");
                     password =  Utility.inputOutput("Create a strong password");
-                    signUp("Recruiter", id, firstName, lastName, userName, password);                
-                }else {
-                    System.out.println("\nIncorrect Recruiter Code\n");
-                    viewSignUpPage();
-                }
+                    recruiterCode = Utility.inputOutput("Enter the Recruiter Code");
+                    signUp("Recruiter", recruiterCode, firstName, lastName, userName, password);                
                 break;
             case "3": 
                 System.out.println("\nRediredting to Landing Page\n");
@@ -113,20 +110,27 @@ public class CommonService {
         }
 
     }
-    
-    public void signUp(String role, String id, String firstName, String lastName, String userName, String password){
+    public void signUp(String role, String recruiterCode, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
-
-        if (role.equals("Applicant")) {
-            System.out.println("\nAPPLICANT DETAILS\n");
-            System.out.println("\nId " + id + "\nFirst name " + firstName + "\nLast name " + lastName + "\nUser name " + userName + "\nPassword " + password + "\nRole " + role);
-        } else {
-            System.out.println("\nRECRUITER DETAILS\n");
-            System.out.println("\nId " + id + "\nFirst name " + firstName + "\nLast name " + lastName + "\nUser name " + userName + "\nPassword " + password + "\nRole " + role);
+        
+        RecruiterService recruiterService = new RecruiterService();
+        String id = UUID.randomUUID().toString();
+        if(recruiterCode!=null && recruiterCode.equals("XVQTY")){
+            Recruiter newRecruiter = new Recruiter(id,firstName, lastName, userName, password);
+            Utility.getUsers().add(newRecruiter);
+            System.out.println("Sign Up Successful for Recruiter");
+            Utility.setCurrentUser(newRecruiter);
+            System.out.println("directing to Recruiter Dashboard");
+            recruiterService.viewRecruiterDashboard();
         }
+
+        // Applicant part
     }
 
     public void logOut() {
+        Utility.setCurrentUser(null);
+        System.out.println("Logged Out Successfully");
+        accessLandingPage();
 
     }
 
