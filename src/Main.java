@@ -1,6 +1,8 @@
+import model.Applicant;
 import model.Application;
 import model.Assignment;
 import model.Job;
+import model.Recruiter;
 import model.User;
 import service.CommonService;
 import utility.Utility;
