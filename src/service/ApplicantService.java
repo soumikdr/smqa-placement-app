@@ -69,6 +69,12 @@ public class ApplicantService {
         } else {
             System.out.println("Role: " + user.getRole());
         }
+
+        String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
+        
+        if (!answer.isEmpty()) {
+            viewApplicantDashboard();
+        }
     }
 
     public void deleteApplicantProfile(){
