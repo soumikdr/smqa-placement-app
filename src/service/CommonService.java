@@ -1,12 +1,17 @@
 package service;
 
-import model.Recruiter;
 import model.User;
 import utility.Utility;
+
+import java.util.ArrayList;
+import model.Recruiter;
 
 import java.util.UUID;
 
 public class CommonService {
+
+    ApplicantService applicantService = new ApplicantService();
+    RecruiterService recruiterService = new RecruiterService();
 
 
     public void accessLandingPage(){
@@ -27,7 +32,7 @@ public class CommonService {
                 viewSignUpPage();
                 break;
             }
-            default:{
+            default: {
                 System.out.println("You entered invalid option");
                 accessLandingPage();
                 break;
@@ -37,20 +42,81 @@ public class CommonService {
     }
 
     public void viewSignInPage(){
+        System.out.println("Welcome to Signin page\n");
+        System.out.println("1. Continue to Signin\n");
+        System.out.println("2. Go back to Landing page\n");
 
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1": 
+                System.out.println("Welcome to Signin page\n");
+                String userName = Utility.inputOutput("Enter your User name");
+                String password = Utility.inputOutput("Enter your password");
+                signIn(userName, password);
+                break;
+            case "2": 
+                System.out.println("\nRediredting to Landing Page\n");
+                accessLandingPage();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewSignInPage();
+                break;
+        }
     }
-    public void signIn(){
 
+    public void signIn(String userName, String password){
+       
+        System.out.println("\nUser name" + userName + "\nPassword" + password);
     }
+    
     public void viewSignUpPage(){
+        String id;
+        String firstName;
+        String lastName;
+        String userName;
+        String password;
+        String recruiterCode;
+        System.out.println("Welcome to Sign Up page\n");
+        System.out.println("1. Signup as Applicant\n");
+        System.out.println("2. Signup as Recruiter\n");
+        System.out.println("3. Go back to Landing page\n");
+
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1": 
+                System.out.println("Welcome to Applicant Signup page \n");
+                firstName = Utility.inputOutput("Enter your first name");
+                lastName =  Utility.inputOutput("Enter your last name");
+                userName =  Utility.inputOutput("Create a user name");
+                password =  Utility.inputOutput("Create a strong password");
+                signUp("Applicant",null, firstName, lastName, userName, password);
+                break;
+            case "2":
+                System.out.println("Welcome to Recruiter Signup page \n");
+                    firstName = Utility.inputOutput("Enter your first name");
+                    lastName =  Utility.inputOutput("Enter your last name");
+                    userName =  Utility.inputOutput("Create a user name");
+                    password =  Utility.inputOutput("Create a strong password");
+                    recruiterCode = Utility.inputOutput("Enter the Recruiter Code");
+                    signUp("Recruiter", recruiterCode, firstName, lastName, userName, password);                
+                break;
+            case "3": 
+                System.out.println("\nRediredting to Landing Page\n");
+                accessLandingPage();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewSignUpPage();
+                break;
+        }
 
     }
-    public void signUp(User user,String code){
-
+    public void signUp(String role, String recruiterCode, String firstName, String lastName, String userName, String password){
+        System.out.println("Welcome to " + role + " Signup page \n");
+        
         RecruiterService recruiterService = new RecruiterService();
         String id = UUID.randomUUID().toString();
-        if(code!=null && code.equals("XVQTY")){
-            Recruiter newRecruiter = new Recruiter(id,user.getName(), user.getLastName(), user.getUserName(),user.getPassword());
+        if(recruiterCode!=null && recruiterCode.equals("XVQTY")){
+            Recruiter newRecruiter = new Recruiter(id,firstName, lastName, userName, password);
             Utility.getUsers().add(newRecruiter);
             System.out.println("Sign Up Successful for Recruiter");
             Utility.setCurrentUser(newRecruiter);
@@ -59,23 +125,56 @@ public class CommonService {
         }
 
         // Applicant part
-
     }
-    public void logOut(){
 
+    public void logOut() {
         Utility.setCurrentUser(null);
         System.out.println("Logged Out Successfully");
         accessLandingPage();
 
     }
-    public void viewResetPasswordPage(){
+
+    public void viewResetPasswordPage() {
+
+        System.out.println("Welcome to reset password page\n");
+        System.out.println("1. Continue to reset paswsword\n");
+        System.out.println("2. Go back to dashword\n");
+
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1": 
+                System.out.println("Welcome to reset password page\n");
+                String userName = Utility.inputOutput("Enter your User name");
+                resetPassword(userName);
+                break;
+            case "2": 
+                System.out.println("\nRediredting to Dashboard\n");
+                if(Utility.getCurrentUser().getRole().equals("Applicant")) {
+                    System.out.println("\nRedirecting to Applicant dashboard\n");
+                    applicantService.viewApplicantDashboard();
+                } else if(Utility.getCurrentUser().getRole().equals("Recruiter")) {
+                    System.out.println("\nRedirecting to Recruiter dashboard\n");
+                    recruiterService.viewRecruiterDashboard();
+                }
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewResetPasswordPage();
+                break;
+        }
 
     }
-    public void resetPassword(){
 
+    public void resetPassword(String userName) {
+        System.out.println("\nYour entered username: " + userName + "\n");
+        if(Utility.getCurrentUser().getUserName().equals(userName) && Utility.getCurrentUser().getRole().equals("Applicant")) {
+            Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(userName);
+            applicantService.viewApplicantDashboard();
+            
+        } else {
+            System.out.println("\nYou have entered wrong Crediantials\n");
+            viewResetPasswordPage();
+        }
     }
-
-
-
 
 }

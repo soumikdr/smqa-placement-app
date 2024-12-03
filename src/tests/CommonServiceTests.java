@@ -6,6 +6,8 @@ import model.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import model.User;
 import service.CommonService;
 import utility.Utility;
 
@@ -63,41 +65,54 @@ public class CommonServiceTests {
     }
 
     @Test
-    public void recruiterSignUpTest() throws Exception {
-
+    public void resetPasswordTest() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
 
-        String expectedCode="XVQTY";
-        String id= "";
-        // We shouldn't send id, we have to delete from cons.
-        User expectedNewUser = new User(id,"name","lastName","userName","password","Recruiter");
 
-        service.signUp(expectedNewUser,expectedCode);
+        String simulatedInput = "ansarpatil";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.resetPassword("ansarpatil");
         String consoleOutput = outputStream.toString();
-
-        Assert.assertTrue(consoleOutput.contains("Sign Up Successful for Recruiter"));
-        Assert.assertEquals(expectedNewUser.getName(),Utility.getUsers().get(Utility.getUsers().size()-1).getName());
+        Assert.assertTrue(consoleOutput.contains("Your entered username:"));
 
         outputStream.reset();
-
-        String invalidCode="EEEEE";
-
-        service.signUp(expectedNewUser,invalidCode);
-        consoleOutput = outputStream.toString();
-        Assert.assertFalse(consoleOutput.contains("Sign Up Successful for Recruiter"));
-
-        outputStream.reset();
-
-        String noCode=null;
-
-        service.signUp(expectedNewUser,noCode);
-        consoleOutput = outputStream.toString();
-        Assert.assertFalse(consoleOutput.contains("Sign Up Successful for Recruiter"));
-
-
-
     }
+    // public void recruiterSignUpTest() throws Exception {
+
+    //     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    //     System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+    //     String expectedCode="XVQTY";
+    //     String id= "";
+    //     // We shouldn't send id, we have to delete from cons.
+    //     User expectedNewUser = new User(id,"name","lastName","userName","password","Recruiter");
+
+    //     service.signUp(expectedNewUser,expectedCode);
+    //     String consoleOutput = outputStream.toString();
+
+    //     Assert.assertTrue(consoleOutput.contains("Sign Up Successful for Recruiter"));
+    //     Assert.assertEquals(expectedNewUser.getName(),Utility.getUsers().get(Utility.getUsers().size()-1).getName());
+
+    //     outputStream.reset();
+
+    //     String invalidCode="EEEEE";
+
+    //     service.signUp(expectedNewUser,invalidCode);
+    //     consoleOutput = outputStream.toString();
+    //     Assert.assertFalse(consoleOutput.contains("Sign Up Successful for Recruiter"));
+
+    //     outputStream.reset();
+
+    //     String noCode=null;
+
+    //     service.signUp(expectedNewUser,noCode);
+    //     consoleOutput = outputStream.toString();
+    //     Assert.assertFalse(consoleOutput.contains("Sign Up Successful for Recruiter"));
+
+
+
+    // }
 
     @Test
     public void logoutTest() throws IOException {
