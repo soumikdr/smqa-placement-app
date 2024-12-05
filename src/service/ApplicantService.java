@@ -1,81 +1,142 @@
 package service;
 
-public class ApplicantService extends UserService {
+import model.User;
+import utility.Utility;
+
+public class ApplicantService {
+
+    private final CommonService commonService;
 
 
-    public void submitAssessmentForm() {
-    }
-
-    public void viewAssessment() {
-
-    }
-
-    public void submitInterviewForm() {
-
-    }
-
-    public void viewInterview() {
-
-    }
-
-    public void viewFeedback() {
-
-    }
-
-    public void viewJobPost() {
-
-    }
-
-    public void viewApplicationForm() {
-
-    }
-
-    public void viewAllAvailableJobs() {
-
-    }
-
-    public void submitApplicationForm() {
-
+    public ApplicantService() {
+        commonService = new CommonService();
     }
 
 
-    public void viewApplicantApplications() {
+    public void submitAssessmentForm(){
+    }
+    public void viewAssessment(){
+
+    }
+    public void submitInterviewForm(){
+
+    }
+    public void viewInterview(){
+
+    }
+    public void viewFeedback(){
+
+    }
+    public void viewJobPost(){
+
+    }
+    public void viewApplicationForm(){
+
+    }
+    public void viewAllAvailableJobs(){
+
+    }
+    public void submitApplicationForm(){
+
+    }
+    public void viewApplicantDashboard(){
+
+        System.out.println("Welcome to the Applicant Dashboard\n");
+
+        System.out.println("1. View Profile");
+        System.out.println("2. View Applications");
+        System.out.println("3. View Available Jobs");
+
+        System.out.println("\n4. Log Out");
+        switch (Utility.inputOutput("Please Select One Of The Options")){
+            case "1":{
+                System.out.println("Directing to Profile Page...");
+                viewApplicantProfilePage();
+                break;
+            }
+            case "2":{
+                System.out.println("Directing to Applications Page...");
+                viewApplicantApplications();
+                break;
+            }
+            case "3":{
+                System.out.println("Directing to Available Jobs Page...");
+                viewAllAvailableJobs();
+                break;
+            }
+            case "4":{
+                System.out.println("Logging Out...");
+                commonService.logOut();
+                break;
+            }
+            default:{
+                System.out.println("You entered invalid option");
+                viewApplicantDashboard();
+                break;
+            }
+        }
 
     }
 
-    public void viewSpecificApplication() {
+    public void viewApplicantProfilePage(){
+        User user = Utility.getCurrentUser();
+        System.out.println("\nApplicant Profile\n");
 
+        if (user.getId() == null || user.getId().isEmpty()) {
+            System.out.println("ID is missing.");
+        } else {
+            System.out.println("ID: " + user.getId());
+        }
+
+        if (user.getName() == null || user.getName().isEmpty()) {
+            System.out.println("Name is missing.");
+        } else {
+            System.out.println("Name: " + user.getName());
+        }
+
+        if (user.getLastName() == null || user.getLastName().isEmpty()) {
+            System.out.println("Last Name is missing.");
+        } else {
+            System.out.println("Last Name: " + user.getLastName());
+        }
+
+        if (user.getUserName() == null || user.getUserName().isEmpty()) {
+            System.out.println("Username is missing.");
+        } else {
+            System.out.println("Username: " + user.getUserName());
+        }
+
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            System.out.println("Role is missing.");
+        } else {
+            System.out.println("Role: " + user.getRole());
+        }
+
+        String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
+        
+        if (!answer.isEmpty()) {
+            viewApplicantDashboard();
+        }
     }
 
-    public void withdrawApplication() {
+    public void deleteApplicantProfile(){
 
     }
-
-    public void viewJobDescFromApplication() {
-
-    }
-
-    public void viewApplicationProcessDashboard() {
-    }
-
-
-    @Override
-    public void viewDashboard() {
+    public void updateApplicantProfile(){
 
     }
-
-    @Override
-    public void viewProfilePage() {
+    public void viewApplicantApplications(){
 
     }
-
-    @Override
-    public void deleteProfile() {
+    public void viewSpecificApplication(){
 
     }
-
-    @Override
-    public void updateProfile() {
+    public void withdrawApplication(){
 
     }
+    public void viewJobDescFromApplication(){
+
+    }
+    public void viewApplicationProcessDashboard(){}
+
 }

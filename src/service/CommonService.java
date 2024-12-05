@@ -1,96 +1,104 @@
 package service;
 
-import model.AppState;
-import model.Role;
+import java.util.ArrayList;
+import java.util.UUID;
+import model.Recruiter;
 import model.User;
 import utility.Utility;
 
-import java.util.ArrayList;
 
 public class CommonService {
 
-    private final Utility utility;
+    ApplicantService applicantService = new ApplicantService();
+    RecruiterService recruiterService = new RecruiterService();
 
-    public CommonService() {
-        utility = new Utility();
-    }
 
-    public void accessLandingPage(ArrayList<User> users) {
+    public void accessLandingPage(){
 
         System.out.println("Welcome to the Landing Page\n");
 
         System.out.println("1. Sign In");
         System.out.println("2. Sign Up\n");
 
-        switch (utility.inputOutput("Please Select One Of The Options")) {
-            case "1": {
-                viewSignInPage(users);
+        switch (Utility.inputOutput("Please Select One Of The Options")){
+            case "1":{
+                System.out.println("directing to Sign In Page");
+                viewSignInPage();
                 break;
             }
-            case "2": {
-                viewSignUpPage(users);
+            case "2":{
+                System.out.println("directing to Sign Up Page");
+                viewSignUpPage();
                 break;
             }
             default: {
                 System.out.println("You entered invalid option");
-                accessLandingPage(users);
+                accessLandingPage();
                 break;
             }
         }
 
     }
 
-    public void viewSignInPage(ArrayList<User> users) {
-        System.out.println("Welcome to Sign-in page\n");
-        System.out.println("1. Continue to Sign-in\n");
+    public void viewSignInPage(){
+        System.out.println("Welcome to Signin page\n");
+        System.out.println("1. Continue to Signin\n");
         System.out.println("2. Go back to Landing page\n");
 
-        switch (utility.inputOutput("Please Select One Of The Options")) {
-            case "1":
-                System.out.println("Welcome to Sign-in page\n");
-                String userName = utility.inputOutput("Enter your User name");
-                String password = utility.inputOutput("Enter your password");
-                signIn(users, userName, password);
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1": 
+                System.out.println("Welcome to Signin page\n");
+                String userName = Utility.inputOutput("Enter your User name");
+                String password = Utility.inputOutput("Enter your password");
+                signIn(userName, password);
                 break;
-            case "2":
-                accessLandingPage(users);
+            case "2": 
+                System.out.println("\nRediredting to Landing Page\n");
+                accessLandingPage();
                 break;
             default:
                 System.out.println("You entered invalid option");
-                viewSignInPage(users);
+                viewSignInPage();
                 break;
         }
     }
 
-    public User authenticateUser(ArrayList<User> users, String userName, String password) {
+    public void signIn(String userName, String password) {
+        ArrayList<User> users = Utility.getUsers();
+        Boolean isUserFound = false;
+
         for (User user : users) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
-                return user;
+                isUserFound = true;
+
+                if (user.getRole() == null) {
+                    System.out.println("\nUser role is not defined. Please contact the administrator.");
+                    Utility.inputOutput("Press enter to go back...");
+                    accessLandingPage();
+                }
+
+                Utility.setCurrentUser(user);
+
+                if (user.getRole().toLowerCase().equals("applicant")) {
+                    ApplicantService applicantService = new ApplicantService();
+                    applicantService.viewApplicantDashboard();
+                }
             }
         }
-        return null;
-    }
 
-
-    public void signIn(ArrayList<User> users, String userName, String password) {
-        System.out.println("Welcome to Sign-in page\n");
-        User user = authenticateUser(users, userName, password);
-        if (user == null) {
-            System.out.println("Invalid User name or password\n");
-            viewSignInPage(users);
-            return;
-        }
-        AppState.getInstance().setCurrentUser(user);
-        user.greetUser();
-        if (user.getRole() == Role.RECRUITER) {
-            RecruiterService.getInstance().viewDashboard();
-        } else {
-//            TODO: Go to Applicant Dashboard
+        if (!isUserFound) {
+            System.out.println("\n");
+            String tryAgain = Utility.inputOutput("Invalid username or password. Do you want to try again? (y/n)");
+            
+            if (tryAgain.equals("y")) {
+                viewSignInPage();
+            } else {
+                accessLandingPage();
+            }
         }
     }
 
-    public void viewSignUpPage(ArrayList<User> users) {
-        String id;
+    public void viewSignUpPage(){
         String firstName;
         String lastName;
         String userName;
@@ -101,64 +109,100 @@ public class CommonService {
         System.out.println("2. Signup as Recruiter\n");
         System.out.println("3. Go back to Landing page\n");
 
-        switch (utility.inputOutput("Please Select One Of The Options")) {
-            case "1":
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1": 
                 System.out.println("Welcome to Applicant Signup page \n");
-                id = "111";
-                firstName = utility.inputOutput("Enter your first name");
-                lastName = utility.inputOutput("Enter your last name");
-                userName = utility.inputOutput("Create a user name");
-                password = utility.inputOutput("Create a strong password");
-                signUp("Applicant", users, id, firstName, lastName, userName, password);
+                firstName = Utility.inputOutput("Enter your first name");
+                lastName =  Utility.inputOutput("Enter your last name");
+                userName =  Utility.inputOutput("Create a user name");
+                password =  Utility.inputOutput("Create a strong password");
+                signUp("Applicant",null, firstName, lastName, userName, password);
                 break;
             case "2":
                 System.out.println("Welcome to Recruiter Signup page \n");
-                if (utility.inputOutput("Enter the Recruiter Code").equals("ABCD")) {
-                    id = "111";
-                    firstName = utility.inputOutput("Enter your first name");
-                    lastName = utility.inputOutput("Enter your last name");
-                    userName = utility.inputOutput("Create a user name");
-                    password = utility.inputOutput("Create a strong password");
-                    signUp("Recruiter", users, id, firstName, lastName, userName, password);
-                } else {
-                    System.out.println("\nIncorrect Recruiter Code\n");
-                    viewSignUpPage(users);
-                }
+                    firstName = Utility.inputOutput("Enter your first name");
+                    lastName =  Utility.inputOutput("Enter your last name");
+                    userName =  Utility.inputOutput("Create a user name");
+                    password =  Utility.inputOutput("Create a strong password");
+                    recruiterCode = Utility.inputOutput("Enter the Recruiter Code");
+                    signUp("Recruiter", recruiterCode, firstName, lastName, userName, password);                
                 break;
-            case "3":
-                accessLandingPage(users);
+            case "3": 
+                System.out.println("\nRediredting to Landing Page\n");
+                accessLandingPage();
                 break;
             default:
                 System.out.println("You entered invalid option");
-                viewSignUpPage(users);
+                viewSignUpPage();
                 break;
         }
-
     }
 
-    public void signUp(String role, ArrayList<User> users, String id, String firstName, String lastName, String userName, String password) {
+    public void signUp(String role, String recruiterCode, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
-
-        if (role.equals("Applicant")) {
-            System.out.println("\nAPPLICANT DETAILS\n");
-            System.out.println("\nId " + id + "\nFirst name " + firstName + "\nLast name " + lastName + "\nUser name " + userName + "\nPassword " + password + "\nRole " + role);
-        } else {
-            System.out.println("\nRECRUITER DETAILS\n");
-            System.out.println("\nId " + id + "\nFirst name " + firstName + "\nLast name " + lastName + "\nUser name " + userName + "\nPassword " + password + "\nRole " + role);
+        
+        RecruiterService recruiterService = new RecruiterService();
+        String id = UUID.randomUUID().toString();
+        if(recruiterCode!=null && recruiterCode.equals("XVQTY")){
+            Recruiter newRecruiter = new Recruiter(id,firstName, lastName, userName, password);
+            Utility.getUsers().add(newRecruiter);
+            System.out.println("Sign Up Successful for Recruiter");
+            Utility.setCurrentUser(newRecruiter);
+            System.out.println("directing to Recruiter Dashboard");
+            recruiterService.viewRecruiterDashboard();
         }
+
+        // Applicant part
     }
 
     public void logOut() {
+        Utility.setCurrentUser(null);
+        System.out.println("Logged Out Successfully");
+        accessLandingPage();
 
     }
 
     public void viewResetPasswordPage() {
 
+        System.out.println("Welcome to reset password page\n");
+        System.out.println("1. Continue to reset paswsword\n");
+        System.out.println("2. Go back to dashword\n");
+
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1": 
+                System.out.println("Welcome to reset password page\n");
+                String userName = Utility.inputOutput("Enter your User name");
+                resetPassword(userName);
+                break;
+            case "2": 
+                System.out.println("\nRediredting to Dashboard\n");
+                if(Utility.getCurrentUser().getRole().equals("Applicant")) {
+                    System.out.println("\nRedirecting to Applicant dashboard\n");
+                    applicantService.viewApplicantDashboard();
+                } else if(Utility.getCurrentUser().getRole().equals("Recruiter")) {
+                    System.out.println("\nRedirecting to Recruiter dashboard\n");
+                    recruiterService.viewRecruiterDashboard();
+                }
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewResetPasswordPage();
+                break;
+        }
+
     }
 
-    public void resetPassword() {
-
+    public void resetPassword(String userName) {
+        System.out.println("\nYour entered username: " + userName + "\n");
+        if(Utility.getCurrentUser().getUserName().equals(userName) && Utility.getCurrentUser().getRole().equals("Applicant")) {
+            Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(userName);
+            applicantService.viewApplicantDashboard();
+            
+        } else {
+            System.out.println("\nYou have entered wrong Crediantials\n");
+            viewResetPasswordPage();
+        }
     }
-
 
 }
