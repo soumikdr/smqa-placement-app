@@ -3,6 +3,11 @@ package service;
 import utility.Utility;
 
 public class RecruiterService {
+    private final CommonService commonService;
+
+    public RecruiterService() {
+        commonService = new CommonService();
+    }
 
     public void sendAssessment(){
     }
@@ -18,6 +23,19 @@ public class RecruiterService {
 
     public void viewRecruiterDashboard(){
         System.out.println("Welcome to Recruiter Dashboard\n");
+        System.out.println("1. Log Out");
+        switch (Utility.inputOutput("Please Select One Of The Options")){
+            case "1":{
+                System.out.println("Logging out...");
+                commonService.logOut();
+                break;
+            }
+            default: {
+                System.out.println("You entered invalid option");
+                viewRecruiterDashboard();
+                break;
+            }
+        }
     }
 
     public void viewRecruiterProfilePage(){
