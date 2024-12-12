@@ -11,7 +11,7 @@ import java.io.PrintStream;
 
 public class ApplicantServiceTests {
 
-    public ApplicantService service = new ApplicantService();
+    public ApplicantService service = ApplicantService.getInstance();
 
 
     @Test

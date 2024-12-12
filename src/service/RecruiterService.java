@@ -4,7 +4,16 @@ import utility.Utility;
 
 public class RecruiterService {
 
-    public void sendAssessment() {
+    private static RecruiterService instance = null;
+
+    public static RecruiterService getInstance() {
+        if (instance == null) {
+            instance = new RecruiterService();
+        }
+        return instance;
+    }
+
+    public void sendAssessment(){
     }
 
     public void viewAssessmentResult() {

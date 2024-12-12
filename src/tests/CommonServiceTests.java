@@ -1,33 +1,32 @@
 package tests;
 
-import com.sun.tools.javac.Main;
-import model.Recruiter;
 import model.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import model.User;
 import service.CommonService;
 import utility.Utility;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class CommonServiceTests {
 
-    public CommonService service = new CommonService();
+    public CommonService service = CommonService.getInstance();
 
-    public CommonServiceTests(){
+    public CommonServiceTests() {
     }
+
     @Before
-    public void setUp(){
-        ArrayList<User> users=new ArrayList<>();
+    public void setUp() {
+        ArrayList<User> users = new ArrayList<>();
 
-        users.add(new User("1","John","Doe","johnDoe","bestpassword","Applicant"));
-        users.add(new User("2","Ansar","Patil","darkAngel","123qwe","Recruiter"));
-
+        users.add(new User("1", "John", "Doe", "johnDoe", "bestpassword", "Applicant"));
+        users.add(new User("2", "Ansar", "Patil", "darkAngel", "123qwe", "Recruiter"));
+        users.add(new User("3", "Jane", "Doe", "janeDoe", "bestpassword", ""));
         Utility.setUsers(users);
     }
 
@@ -169,7 +168,7 @@ public class CommonServiceTests {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
-        
+
         String simulatedInput = "ansarpatil";
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         service.resetPassword("ansarpatil");
@@ -212,7 +211,6 @@ public class CommonServiceTests {
     //     Assert.assertFalse(consoleOutput.contains("Sign Up Successful for Recruiter"));
 
 
-
     // }
 
     @Test
@@ -229,5 +227,19 @@ public class CommonServiceTests {
 
     }
 
+
+    @Test
+    public void authenticateUser() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "bestpassword");
+        Assert.assertNotNull(user);
+    }
+
+    @Test
+    public void authenticateUserInvalid() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "wrongpassword");
+        Assert.assertNull(user);
+    }
 
 }
