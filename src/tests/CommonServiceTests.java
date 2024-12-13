@@ -229,5 +229,25 @@ public class CommonServiceTests {
 
     }
 
+@Test
+    public void signUpTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
 
+        String simulatedInput = "1";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.signUp("Applicant",null,"John","Doe","johnDoe","bestpassword");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Sign Up Successful for Applicant"));
+
+        outputStream.reset();
+
+        simulatedInput = "3";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.signUp("Unknown",null,"John","Doe","johnDoe","bestpassword");
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Invalid Role"));
+
+        outputStream.reset();
+    }
 }

@@ -140,7 +140,7 @@ public class CommonService {
 
     public void signUp(String role, String recruiterCode, String firstName, String lastName, String userName, String password){
         System.out.println("Welcome to " + role + " Signup page \n");
-        
+        if(role.equals("Recruiter")){
         RecruiterService recruiterService = new RecruiterService();
         String id = UUID.randomUUID().toString();
         if(recruiterCode!=null && recruiterCode.equals("XVQTY")){
@@ -150,9 +150,24 @@ public class CommonService {
             Utility.setCurrentUser(newRecruiter);
             System.out.println("directing to Recruiter Dashboard");
             recruiterService.viewRecruiterDashboard();
-        }
+        }}
 
         // Applicant part
+        else if(role.equals("Applicant")){
+            ApplicantService applicantService = new ApplicantService();
+            String id = UUID.randomUUID().toString();
+            User newUser = new User(id, firstName, lastName, userName, password, role);
+            Utility.getUsers().add(newUser);
+            System.out.println("Sign Up Successful for Applicant");
+            Utility.setCurrentUser(newUser);
+            System.out.println("directing to Applicant Dashboard");
+            applicantService.viewApplicantDashboard();
+        }
+        else
+        {
+            System.out.println("Invalid Role");
+            viewSignUpPage();
+        }
     }
 
     public void logOut() {
