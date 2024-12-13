@@ -3,6 +3,8 @@ package service;
 import model.User;
 import utility.Utility;
 
+import java.util.ArrayList;
+
 public class ApplicantService {
 
     private static ApplicantService instance = null;
@@ -122,11 +124,20 @@ public class ApplicantService {
         } else {
             System.out.println("Role: " + user.getRole());
         }
+        System.out.println("\n1: Update your profile\n2: Go back to dashboard\n");
 
-        String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1":
+                showUpdateProfilePage();
+                break;
+            case "2":
+                System.out.println("You entered invalid option");
+                viewApplicantDashboard();
+                break;
 
-        if (!answer.isEmpty()) {
-            viewApplicantDashboard();
+            default:
+                viewApplicantDashboard();
+                break;
         }
     }
 
@@ -134,8 +145,30 @@ public class ApplicantService {
 
     }
 
-    public void updateApplicantProfile() {
+    public void updateProfile(User user) {
+//        Filter the user from the list and update the user
+        ArrayList<User> users = Utility.getUsers();
+//        Remove the user from the list
+        users.removeIf(u -> u.getId().equals(user.getId()));
+//        Add the updated user to the list
+        users.add(user);
+//        Update the current user
+        Utility.setCurrentUser(user);
+    }
 
+    public void showUpdateProfilePage() {
+        System.out.println("Welcome to Update profile page\n");
+        User currentUser = Utility.getCurrentUser();
+        String name = Utility.inputOutput("Enter your name: ");
+        if (name != null && !name.isEmpty()) {
+            currentUser.setName(name);
+        }
+        String lastName = Utility.inputOutput("Enter your last name: ");
+        if (lastName != null && !lastName.isEmpty()) {
+            currentUser.setLastName(lastName);
+        }
+        System.out.println("Profile updated successfully\n");
+        updateProfile(currentUser);
     }
 
     public void viewApplicantApplications() {
