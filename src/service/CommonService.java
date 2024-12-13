@@ -185,8 +185,8 @@ public class CommonService {
     public void viewResetPasswordPage() {
 
         System.out.println("Welcome to reset password page\n");
-        System.out.println("1. Continue to reset paswsword\n");
-        System.out.println("2. Go back to dashword\n");
+        System.out.println("1. Continue to reset password\n");
+        System.out.println("2. Go back to dashboard\n");
 
         switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
@@ -195,7 +195,7 @@ public class CommonService {
                 resetPassword(userName);
                 break;
             case "2":
-                System.out.println("\nRediredting to Dashboard\n");
+                System.out.println("\nRedirecting to Dashboard\n");
                 if (Utility.getCurrentUser().getRole().equals("Applicant")) {
                     System.out.println("\nRedirecting to Applicant dashboard\n");
                     ApplicantService.getInstance().viewApplicantDashboard();
@@ -209,18 +209,21 @@ public class CommonService {
                 viewResetPasswordPage();
                 break;
         }
-
     }
 
     public void resetPassword(String userName) {
         System.out.println("\nYour entered username: " + userName + "\n");
-        if (Utility.getCurrentUser().getUserName().equals(userName) && Utility.getCurrentUser().getRole().equals("Applicant")) {
+        if (Utility.getCurrentUser().getUserName().equals(userName)) {
             Utility.inputOutput("Enter your New Password");
             Utility.getCurrentUser().setPassword(userName);
-            ApplicantService.getInstance().viewApplicantDashboard();
-
+            System.out.println("\nRedirecting to " + Utility.getCurrentUser().getRole() + " dashboard\n");
+            if (Utility.getCurrentUser().getRole().equals("Applicant")) {
+                ApplicantService.getInstance().viewApplicantDashboard();
+            } else {
+                RecruiterService.getInstance().viewRecruiterDashboard();
+            }
         } else {
-            System.out.println("\nYou have entered wrong Crediantials\n");
+            System.out.println("\nYou have entered wrong Credentials\n");
             viewResetPasswordPage();
         }
     }
