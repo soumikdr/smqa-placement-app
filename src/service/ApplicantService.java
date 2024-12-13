@@ -3,6 +3,8 @@ package service;
 import model.User;
 import utility.Utility;
 
+import java.util.ArrayList;
+
 public class ApplicantService {
 
     private static ApplicantService instance = null;
@@ -130,8 +132,18 @@ public class ApplicantService {
         }
     }
 
-    public void deleteApplicantProfile() {
+    public void deleteProfileHelper() {
+        User user = Utility.getCurrentUser();
+        ArrayList<User> users = Utility.getUsers();
+        users.removeIf(u -> u.getId().equals(user.getId()));
+        Utility.setUsers(users);
+        Utility.setCurrentUser(null);
+    }
 
+    public void deleteApplicantProfile() {
+        System.out.println("Deleting Applicant Profile...");
+        deleteProfileHelper();
+        CommonService.getInstance().accessLandingPage();
     }
 
     public void updateApplicantProfile() {
