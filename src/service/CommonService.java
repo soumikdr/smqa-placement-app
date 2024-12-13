@@ -44,6 +44,7 @@ public class CommonService {
         System.out.println("Welcome to Signin page\n");
         System.out.println("1. Continue to Signin\n");
         System.out.println("2. Go back to Landing page\n");
+        System.out.println("3. Reset Password\n");
 
         switch(Utility.inputOutput("Please Select One Of The Options")){
             case "1": 
@@ -55,6 +56,10 @@ public class CommonService {
             case "2": 
                 System.out.println("\nRediredting to Landing Page\n");
                 accessLandingPage();
+                break;
+            case "3":
+                System.out.println("\nRediredting to Reset Password Page\n");
+                viewResetPasswordPage();
                 break;
             default:
                 System.out.println("You entered invalid option");
@@ -199,7 +204,12 @@ public class CommonService {
             Utility.getCurrentUser().setPassword(userName);
             applicantService.viewApplicantDashboard();
             
-        } else {
+        } else if(Utility.getCurrentUser().getUserName().equals(userName) && Utility.getCurrentUser().getRole().equals("Recruiter")) {
+            String newPassword = Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(newPassword);
+            recruiterService.viewRecruiterDashboard();
+        }
+        else {
             System.out.println("\nYou have entered wrong Crediantials\n");
             viewResetPasswordPage();
         }

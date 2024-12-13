@@ -228,6 +228,16 @@ public class CommonServiceTests {
 //        Assert.assertNull(Utility.getCurrentUser());
 
     }
+    @Test
+    public void resetPasswordRecruiterTest() throws IOException {
+        User recruiter = new User("3", "Jack", "Roler", "jack", "123qwe", "Recruiter");
+        Utility.setCurrentUser(recruiter);
+        String dummyPassword = "newPassword";
+        System.setIn(new ByteArrayInputStream(dummyPassword.getBytes()));
+        service.resetPassword("jack");
+        Assert.assertEquals("newPassword", Utility.getCurrentUser().getPassword());
+    }
+
 
 
 }
