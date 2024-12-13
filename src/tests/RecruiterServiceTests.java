@@ -4,11 +4,16 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
+import model.User;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import service.CommonService;
 import service.RecruiterService;
+import utility.Utility;
 
 public class RecruiterServiceTests {
 
@@ -17,7 +22,15 @@ public class RecruiterServiceTests {
 
     public RecruiterServiceTests(){
     }
+    @Before
+    public void setUp(){
+        ArrayList<User> users=new ArrayList<>();
 
+        users.add(new User("1","John","Doe","johnDoe","bestpassword","Applicant"));
+        users.add(new User("2","Ansar","Patil","darkAngel","123qwe","Recruiter"));
+
+        Utility.setUsers(users);
+    }
     @Test
     public void viewRecruiterProfilePageTest() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -48,5 +61,12 @@ public class RecruiterServiceTests {
         // consoleOutput = outputStream.toString();
         // Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
 
+    }
+
+    @Test
+    public void deleteRecruiterProfileTest() throws IOException {
+        Utility.setCurrentUser(Utility.getUsers().get(1));
+        service.deleteRecruiterProfile();
+        Assert.assertNull(Utility.getCurrentUser());
     }
 }

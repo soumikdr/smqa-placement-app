@@ -3,6 +3,12 @@ package service;
 import utility.Utility;
 
 public class RecruiterService {
+    private final CommonService commonService;
+
+
+    public RecruiterService() {
+        commonService = new CommonService();
+    }
 
     public void sendAssessment(){
     }
@@ -49,7 +55,12 @@ public class RecruiterService {
     }
 
     public void deleteRecruiterProfile(){
-
+        System.out.println("Deleting your profile...");
+        String userName = Utility.getCurrentUser().getUserName();
+        Utility.getUsers().removeIf(user -> user.getUserName().equals(userName));
+        Utility.setCurrentUser(null);
+        System.out.println("Profile deleted successfully");
+        commonService.accessLandingPage();
     }
     public void updateRecruiterProfile(){
 
