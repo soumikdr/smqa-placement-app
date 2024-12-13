@@ -39,6 +39,32 @@ public class CommonService {
         }
 
     }
+    public void visitLandingPage(){
+
+        System.out.println("Welcome to the Landing Page for Recruiter\n");
+
+        System.out.println("1. Sign In");
+        System.out.println("2. Sign Up\n");
+
+        switch (Utility.inputOutput("Please Select One Of The Options")){
+            case "1":{
+                System.out.println("directing to Sign In Page");
+                viewSignInPage();
+                break;
+            }
+            case "2":{
+                System.out.println("directing to Sign Up Page");
+                viewSignUpPage();
+                break;
+            }
+            default: {
+                System.out.println("You entered invalid option");
+                accessLandingPage();
+                break;
+            }
+        }
+
+    }
 
     public void viewSignInPage(){
         System.out.println("Welcome to Signin page\n");

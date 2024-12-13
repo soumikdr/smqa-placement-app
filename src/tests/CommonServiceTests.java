@@ -65,6 +65,23 @@ public class CommonServiceTests {
     }
 
     @Test
+    public void visitLandingPageTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));// Redirect System.out
+        String simulatedInput = "1";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.visitLandingPage();
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("directing to Sign In Page"));
+
+        outputStream.reset();
+        simulatedInput = "2";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.visitLandingPage();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("directing to Sign Up Page"));
+    }
+    @Test
     public void viewSignUpPageTest() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
