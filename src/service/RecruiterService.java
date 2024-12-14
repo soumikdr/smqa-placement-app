@@ -4,15 +4,27 @@ import utility.Utility;
 
 public class RecruiterService {
 
+    private static RecruiterService instance = null;
+
+    public static RecruiterService getInstance() {
+        if (instance == null) {
+            instance = new RecruiterService();
+        }
+        return instance;
+    }
+
     public void sendAssessment(){
     }
-    public void viewAssessmentResult(){
+
+    public void viewAssessmentResult() {
 
     }
-    public void sendInterview(){
+
+    public void sendInterview() {
 
     }
-    public void viewInterviewResult(){
+
+    public void viewInterviewResult() {
 
     }
 
@@ -32,18 +44,18 @@ public class RecruiterService {
         System.out.println("\n3: Go back to dashboard\n");
 
         switch(Utility.inputOutput("Please Select One Of The Options")){
-            case "1": 
+            case "1":
                 System.out.println("Welcome to Update profile page\n");
                 updateRecruiterProfile();
-            break;
+                break;
             case "2":
                 System.out.println("Welcome to Delete profile page\n");
                 deleteRecruiterProfile();
-            break;
+                break;
             default:
                 System.out.println("You entered invalid option");
                 viewRecruiterProfilePage();
-            break;
+                break;
         }
 
     }
@@ -55,41 +67,47 @@ public class RecruiterService {
 
     }
 
-    public void viewAvailableJobs(){
+    public void viewAvailableJobs() {
 
     }
 
-    public void viewSpecificJobPost(){
-
-    }
-    public void updateDescriptionOfJobPost(){
+    public void viewSpecificJobPost() {
 
     }
 
-    public void updateStatusOfJobPost(){
-
-    }
-    public void viewTotalNumberOfApplications(){
+    public void updateDescriptionOfJobPost() {
 
     }
 
-    public void viewJobPostingForm(){
-
-    }
-    public void submitNewJobPost(){
+    public void updateStatusOfJobPost() {
 
     }
 
-    public void viewAllApplications(){
+    public void viewTotalNumberOfApplications() {
 
     }
-    public void viewSpecificApplication(){
+
+    public void viewJobPostingForm() {
 
     }
-    public void sendFeedback(){
+
+    public void submitNewJobPost() {
 
     }
-    public void viewFeedbackForm(){
+
+    public void viewAllApplications() {
+
+    }
+
+    public void viewSpecificApplication() {
+
+    }
+
+    public void sendFeedback() {
+
+    }
+
+    public void viewFeedbackForm() {
 
     }
 
