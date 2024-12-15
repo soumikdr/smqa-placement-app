@@ -1,6 +1,9 @@
 package service;
 
+import model.Job;
 import utility.Utility;
+
+import java.util.ArrayList;
 
 public class RecruiterService {
 
@@ -13,7 +16,7 @@ public class RecruiterService {
         return instance;
     }
 
-    public void sendAssessment(){
+    public void sendAssessment() {
     }
 
     public void viewAssessmentResult() {
@@ -28,11 +31,11 @@ public class RecruiterService {
 
     }
 
-    public void viewRecruiterDashboard(){
+    public void viewRecruiterDashboard() {
         System.out.println("Welcome to Recruiter Dashboard\n");
     }
 
-    public void viewRecruiterProfilePage(){
+    public void viewRecruiterProfilePage() {
         System.out.println("\nWelcome to your profile page\n");
         System.out.println("\nFirst Name: " + Utility.getCurrentUser().getName() + "\n");
         System.out.println("\nLast Name: " + Utility.getCurrentUser().getLastName() + "\n");
@@ -43,7 +46,7 @@ public class RecruiterService {
         System.out.println("\n2: Delete your profile\n");
         System.out.println("\n3: Go back to dashboard\n");
 
-        switch(Utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
                 System.out.println("Welcome to Update profile page\n");
                 updateRecruiterProfile();
@@ -60,15 +63,29 @@ public class RecruiterService {
 
     }
 
-    public void deleteRecruiterProfile(){
+    public void deleteRecruiterProfile() {
 
     }
-    public void updateRecruiterProfile(){
+
+    public void updateRecruiterProfile() {
 
     }
 
     public void viewAvailableJobs() {
-
+        ArrayList<Job> jobs = Utility.getJobs();
+        if (jobs == null || jobs.isEmpty()) {
+            System.out.println("No jobs available");
+            return;
+        }
+        System.out.println("Available Jobs");
+        System.out.println("-----------------------------------");
+        for (Job job : jobs) {
+            System.out.println("Job ID: " + job.getId());
+            System.out.println("Job Title: " + job.getJobName());
+            System.out.println("Job Description: " + job.getJobDescription());
+            System.out.println("Job Status: " + job.getJobStatus());
+            System.out.println("-----------------------------------");
+        }
     }
 
     public void viewSpecificJobPost() {
