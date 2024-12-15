@@ -102,7 +102,7 @@ public class RecruiterService {
                 id,
                 jobName,
                 jobDescription,
-                JobStatus.OPEN
+                JobStatus.PUBLIC
         );
         Utility.addJob(job);
         System.out.println("Job posted successfully");
