@@ -1,5 +1,7 @@
 package tests;
 
+import model.Applicant;
+import model.Recruiter;
 import model.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,9 +23,9 @@ public class ApplicantServiceTests {
     public void setUp() {
         ArrayList<User> users = new ArrayList<>();
 
-        users.add(new User("1", "John", "Doe", "johnDoe", "bestpassword", "Applicant"));
-        users.add(new User("2", "Ansar", "Patil", "darkAngel", "123qwe", "Recruiter"));
-        users.add(new User("3", "Jane", "Doe", "janeDoe", "bestpassword", ""));
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
+        users.add(new Applicant("3", "Jane", "Doe", "janeDoe", "bestpassword", new ArrayList<>()));
         Utility.setUsers(users);
     }
 
@@ -76,7 +78,6 @@ public class ApplicantServiceTests {
 
     @Test
     public void updateProfileTest() {
-        setUp();
         User newUserProfile = Utility.getUsers().get(0);
         newUserProfile.setName("New Name");
         newUserProfile.setLastName("New Last Name");
@@ -90,5 +91,7 @@ public class ApplicantServiceTests {
         Assert.assertNotNull("User not found", filteredUser);
         Assert.assertEquals("New Name", filteredUser.getName());
         Assert.assertEquals("New Last Name", filteredUser.getLastName());
+        Assert.assertEquals(newUserProfile.getId(), filteredUser.getId());
+
     }
 }
