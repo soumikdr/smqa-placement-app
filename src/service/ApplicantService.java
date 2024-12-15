@@ -1,7 +1,9 @@
 package service;
 
-import model.User;
+import model.*;
 import utility.Utility;
+
+import java.util.ArrayList;
 
 public class ApplicantService {
 
@@ -139,7 +141,32 @@ public class ApplicantService {
     }
 
     public void viewApplicantApplications() {
+        User user = Utility.getCurrentUser();
+        if (user instanceof Recruiter) {
+            System.out.println("You are not an applicant.");
+            return;
+        }
+        ArrayList<Application> applications = ((Applicant) user).getApplications();
+        if (applications == null || applications.isEmpty()) {
+            System.out.println("No applications found.");
+            return;
+        }
+        ArrayList<Job> jobs = Utility.getJobs();
+        System.out.println("Applications:");
+        System.out.println();
+        for (Application application : applications) {
+            Job job = jobs.stream().filter(j -> j.getId().equals(application.getJobId())).findFirst().orElse(null);
+            if (job == null) {
+                System.out.println("Job not found for application: " + application.getId());
+                continue;
+            }
 
+            System.out.println("Job Title: " + job.getJobName());
+            System.out.println("Job Description: " + job.getJobDescription());
+            System.out.println("Status: " + application.getStatus());
+            System.out.println("Application ID: " + application.getId());
+            System.out.println();
+        }
     }
 
     public void viewSpecificApplication() {
