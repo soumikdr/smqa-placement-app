@@ -1,21 +1,21 @@
 package tests;
 
+import org.junit.Assert;
+import org.junit.Test;
+import service.RecruiterService;
+import utility.Utility;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import service.RecruiterService;
-
 public class RecruiterServiceTests {
 
-     public RecruiterService service = new RecruiterService();
+    public RecruiterService service = new RecruiterService();
     private ByteArrayOutputStream outputStream;
 
-    public RecruiterServiceTests(){
+    public RecruiterServiceTests() {
     }
 
     @Test
@@ -38,7 +38,7 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Welcome to Delete profile page"));
 
         outputStream.reset();
-        
+
         // simulatedInput = "invalid input";
         // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         // simulatedInput = "1";
@@ -48,5 +48,15 @@ public class RecruiterServiceTests {
         // consoleOutput = outputStream.toString();
         // Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
 
+    }
+
+    @Test
+    public void submitNewJobPost() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        service.submitNewJobPost("Software Engineer", "Develop software");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Job posted successfully"));
+        Assert.assertEquals(1, Utility.getJobs().size());
     }
 }
