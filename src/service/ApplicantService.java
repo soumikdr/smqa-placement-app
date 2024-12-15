@@ -119,25 +119,15 @@ public class ApplicantService {
             System.out.println("Username: " + user.getUserName());
         }
 
-        if (user.getRole() == null || user.getRole().isEmpty()) {
+        if (user.getRole() == null) {
             System.out.println("Role is missing.");
         } else {
-            System.out.println("Role: " + user.getRole());
+            System.out.println("Role: " + user.getRole().name());
         }
-        System.out.println("\n1: Update your profile\n2: Go back to dashboard\n");
+        String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
 
-        switch (Utility.inputOutput("Please Select One Of The Options")) {
-            case "1":
-                showUpdateProfilePage();
-                break;
-            case "2":
-                System.out.println("You entered invalid option");
-                viewApplicantDashboard();
-                break;
-
-            default:
-                viewApplicantDashboard();
-                break;
+        if (!answer.isEmpty()) {
+            viewApplicantDashboard();
         }
     }
 
