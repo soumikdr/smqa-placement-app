@@ -1,6 +1,12 @@
 package service;
 
+import model.Applicant;
+import model.Application;
+import model.User;
 import utility.Utility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecruiterService {
 
@@ -96,6 +102,27 @@ public class RecruiterService {
     }
 
     public void viewAllApplications() {
+        User user = Utility.getCurrentUser();
+        if(user instanceof Applicant)
+        {
+            System.out.println("You are not authorized to view this page");
+            return;
+        }
+        ArrayList<Application> applications = Utility.getApplications();
+        if(applications == null || applications.isEmpty())
+        {
+            System.out.println("No applications available.");
+            return;
+        }
+
+        applications.stream().filter(application -> "Open".equals(application.getStatus())).
+                forEach(application -> {
+            System.out.println("Application ID: " + application.getId());
+            System.out.println("Job Id: " + application.getJobId());
+            System.out.println("Status: " + application.getStatus());
+            System.out.println("Applicant ID: " + application.getApplicantId());
+            System.out.println("Assignments: "   + application.getAssignments());
+        });
 
     }
 
