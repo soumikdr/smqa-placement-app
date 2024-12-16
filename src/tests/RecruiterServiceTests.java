@@ -33,7 +33,6 @@ public class RecruiterServiceTests {
     }
     @Test
     public  void logoutTest() {
-        setUp();
 //        Simulate user log in
         Utility.setCurrentUser(Utility.getUsers().get(1));
         CommonService commonService = new CommonService();
