@@ -1,7 +1,11 @@
 package service;
 
+import model.Job;
 import model.User;
 import utility.Utility;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ApplicantService {
 
@@ -43,8 +47,26 @@ public class ApplicantService {
     }
 
     public void viewAllAvailableJobs() {
-
-    }
+        User user = Utility.getCurrentUser();
+        if (user == null || user.getRole() == null || !user.getRole().equals("applicant")) {
+            System.out.println("You are not authorized to view this page");
+            return;
+        }
+        System.out.println("Welcome to the Available Jobs Page\n");
+        List<Job> jobs = Utility.getJobs();
+        List<Job> openJobs = jobs.stream().filter(j -> j.getJobStatus().equals("Public")).toList();
+        if (openJobs.isEmpty()) {
+            System.out.println("No jobs available at the moment");
+            return;
+        }
+        openJobs.forEach(job -> {
+            System.out.println("Job ID: " + job.getId());
+            System.out.println("Job Name: " + job.getJobName());
+            System.out.println("Job Description: " + job.getJobDescription());
+            System.out.println("Job Status: " + job.getJobStatus());
+            System.out.println();
+            });
+        }
 
     public void submitApplicationForm() {
 
