@@ -1,5 +1,6 @@
 package service;
 
+import model.Job;
 import utility.Utility;
 
 public class RecruiterService {
@@ -45,15 +46,19 @@ public class RecruiterService {
 
         switch(Utility.inputOutput("Please Select One Of The Options")){
             case "1":
-                System.out.println("Welcome to Update profile page\n");
+                System.out.println("Redirecting to update profile page...\n");
                 updateRecruiterProfile();
                 break;
             case "2":
-                System.out.println("Welcome to Delete profile page\n");
+                System.out.println("Redirecting to delete profile page...\n");
                 deleteRecruiterProfile();
                 break;
+            case "3":
+            System.out.println("Redirecting to dashboard...\n");
+                viewRecruiterDashboard();
+                 break;
             default:
-                System.out.println("You entered invalid option");
+                System.out.println("You entered invalid option\n");
                 viewRecruiterProfilePage();
                 break;
         }
@@ -72,6 +77,42 @@ public class RecruiterService {
     }
 
     public void viewSpecificJobPost() {
+        System.out.println("Welocme to Specific Job Post Ddtails\n");
+        String jobId = Utility.inputOutput("\nEnter the Job Id\n");
+        Boolean invalidJobId = true;
+
+        for (Job job: Utility.getJobs()) {
+            if (job.getId().equals(jobId)) {
+                System.out.println("\nJob ID: " + job.getId());
+                System.out.println("\nJob Name: " + job.getJobName());
+                System.out.println("\nJob Description: " + job.getJobDescription());
+                System.out.println("\nJob Status: " + job.getJobStatus());
+                invalidJobId = false;
+                break;
+            }
+        }
+
+        if (invalidJobId) {
+            System.out.println("\nYou have entered a invalid Job id\n");
+        }
+
+        System.out.println("\n1: View another job details\n");
+        System.out.println("\n2: Go back to dashboard\n");
+
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1":
+                System.out.println("Redirecting to view specific job details \n");
+                viewSpecificJobPost();
+                break;
+            case "2":
+                System.out.println("Redirecting to dashboard\n");
+                viewRecruiterDashboard();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewRecruiterDashboard();
+                break;
+        }
 
     }
 
