@@ -1,6 +1,9 @@
 package service;
 
+import model.Application;
 import utility.Utility;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
 
@@ -83,8 +86,16 @@ public class RecruiterService {
 
     }
 
-    public void viewTotalNumberOfApplications() {
+    public void viewTotalNumberOfApplications(String jobId) {
 
+        AtomicInteger total= new AtomicInteger();
+        Utility.getApplications().stream().forEach(application -> {
+            if(application.getJobId().equals(jobId)){
+                total.getAndIncrement();
+            }
+        });
+
+        System.out.println("Total Applications of : "+jobId+" is " + total);
     }
 
     public void viewJobPostingForm() {
