@@ -179,7 +179,6 @@ public class CommonService {
         Utility.setCurrentUser(null);
         System.out.println("Logged Out Successfully");
         accessLandingPage();
-
     }
 
     public void viewResetPasswordPage() {
