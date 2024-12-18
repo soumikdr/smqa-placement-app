@@ -3,6 +3,9 @@ package service;
 import model.Job;
 import utility.Utility;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class RecruiterService {
 
     private static RecruiterService instance = null;
@@ -120,8 +123,22 @@ public class RecruiterService {
 
     }
 
-    public void updateStatusOfJobPost() {
-
+    public void updateStatusOfJobPost(String jobId) {
+        ArrayList<Job> jobs = Utility.getJobs();
+        if (jobs == null || jobs.isEmpty()) {
+            System.out.println("No jobs available");
+            return;
+        }
+        for (Job job : jobs) {
+            if (job.getId().equals(jobId)) {
+                System.out.println("Current status of job: " + job.getJobStatus());
+                String newStatus = Objects.equals(job.getJobStatus(), "Private") ? "Public" : "Private";
+                job.setJobStatus(newStatus);
+                System.out.println("Status of job updated successfully");
+                return;
+            }
+        }
+        System.out.println("No job post available with given id");
     }
 
     public void viewTotalNumberOfApplications() {
