@@ -1,9 +1,4 @@
-import model.Applicant;
-import model.Application;
-import model.Assignment;
-import model.Job;
-import model.Recruiter;
-import model.User;
+import model.*;
 import service.CommonService;
 import utility.Utility;
 
@@ -22,9 +17,9 @@ public class Main {
     private static Utility utility;
 
     public static void main(String[] args) {
-        users=new ArrayList<>();
-        users.add(new User("1","John","Doe","johnDoe","bestpassword","Applicant"));
-        users.add(new User("2","Ansar","Patil","darkAngel","123qwe","Recruiter"));
+        users = new ArrayList<>();
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
 
         Utility.setUsers(users);
         Utility.setAssignments(assignments);
