@@ -2,6 +2,7 @@ package tests;
 
 import model.*;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import service.ApplicantService;
 import utility.Utility;
@@ -16,6 +17,15 @@ public class ApplicantServiceTests {
 
     public ApplicantService service = ApplicantService.getInstance();
 
+    @Before
+    public void setUp() {
+        ArrayList<User> users = new ArrayList<>();
+
+        users.add(new User("1", "John", "Doe", "johnDoe", "bestpassword", "Applicant"));
+        users.add(new User("2", "Ansar", "Patil", "darkAngel", "123qwe", "Recruiter"));
+        users.add(new User("3", "Jane", "Doe", "janeDoe", "bestpassword", ""));
+        Utility.setUsers(users);
+    }
 
     @Test
     public void accessApplicantDashboardTest() throws IOException {
@@ -139,6 +149,19 @@ public class ApplicantServiceTests {
         service.viewApplicantApplications();
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains(expectedOutput));
+    }
 
+    @Test
+    public void deleteProfileHelper() {
+        ApplicantService service = ApplicantService.getInstance();
+        User user = Utility.getUsers().get(0);
+        Utility.setCurrentUser(user);
+        int initialSize = Utility.getUsers().size();
+        service.deleteProfileHelper();
+        int finalSize = Utility.getUsers().size();
+        Assert.assertEquals(initialSize - 1, finalSize);
+//        Check if the user is deleted
+        boolean isDeleted = Utility.getUsers().stream().filter(u -> u.getId().equals(user.getId())).findFirst().isEmpty();
+        Assert.assertTrue(isDeleted);
     }
 }
