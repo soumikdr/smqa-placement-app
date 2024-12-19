@@ -2,6 +2,7 @@ package tests;
 
 import model.Job;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import service.RecruiterService;
 import utility.Utility;
@@ -14,10 +15,20 @@ import java.util.ArrayList;
 
 public class RecruiterServiceTests {
 
-     public RecruiterService service = new RecruiterService();
+    public RecruiterService service = new RecruiterService();
     private ByteArrayOutputStream outputStream;
 
-    public RecruiterServiceTests(){
+    public RecruiterServiceTests() {
+    }
+
+    @Before
+    public void setUp() {
+        ArrayList<Job> jobs = new ArrayList<>();
+        jobs.add(new Job("1", "Software Engineer", "Develop software", "Private"));
+        jobs.add(new Job("2", "Data Analyst", "Analyze data", "Private"));
+        jobs.add(new Job("3", "Product Manager", "Manage products", "Private"));
+        Utility.setJobs(jobs);
+
     }
 
     @Test
@@ -94,5 +105,34 @@ public class RecruiterServiceTests {
         service.viewAvailableJobs();
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains(expectedOutput));
+    }
+
+    @Test
+    public void updateStatusOfJobPost_Empty() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        //        Clearing the jobs
+        Utility.setJobs(new ArrayList<>());
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        service.updateStatusOfJobPost("1");
+    }
+
+    public void updateStatusOfJobPost_JobNotAvailable() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        service.updateStatusOfJobPost("5");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("No job post available with given id"));
+    }
+
+    @Test
+    public void updateStatusOfJobPost_Success() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        service.updateStatusOfJobPost("1");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Status of job updated successfully"));
+        Job job = Utility.getJobs().stream().filter(j -> j.getId().equals("1")).findFirst().orElse(null);
+        assert job != null;
+        Assert.assertEquals("Public", job.getJobStatus());
     }
 }
