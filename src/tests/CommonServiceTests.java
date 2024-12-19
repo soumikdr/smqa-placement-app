@@ -1,68 +1,98 @@
 package tests;
 
-import com.sun.tools.javac.Main;
-import model.Recruiter;
 import model.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
-import model.User;
 import service.CommonService;
 import utility.Utility;
 
-import java.io.*;
+import static org.mockito.Mockito.times;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class CommonServiceTests {
 
-    public CommonService service = new CommonService();
+    public CommonService service = CommonService.getInstance();
 
-    public CommonServiceTests(){
+    public CommonServiceTests() {
     }
+
     @Before
-    public void setUp(){
-        ArrayList<User> users=new ArrayList<>();
+    public void setUp() {
+        ArrayList<User> users = new ArrayList<>();
 
-        users.add(new User("1","John","Doe","johnDoe","bestpassword","Applicant"));
-        users.add(new User("2","Ansar","Patil","darkAngel","123qwe","Recruiter"));
-
+        users.add(new User("1", "John", "Doe", "johnDoe", "bestpassword", "Applicant"));
+        users.add(new User("2", "Ansar", "Patil", "darkAngel", "123qwe", "Recruiter"));
+        users.add(new User("3", "Jane", "Doe", "janeDoe", "bestpassword", ""));
         Utility.setUsers(users);
     }
+    
+    
+
+
+
 
     @Test
     public void accessLandingPageTest() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        CommonService spyObject = Mockito.spy(service);
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
+        	
+        	Mockito.doNothing().when(spyObject).viewSignInPage();
+        	Mockito.doNothing().when(spyObject).viewSignUpPage();
+
+        	
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+
+            spyObject.accessLandingPage();
+
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("directing to Sign In Page"));
+
+            outputStream.reset();
+
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("2");
+
+            spyObject.accessLandingPage();
+            
+            consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("directing to Sign Up Page"));
+
+            outputStream.reset();
+
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("invalid");
+
+            Mockito.doCallRealMethod().doNothing().when(spyObject).accessLandingPage();
+            
+            spyObject.accessLandingPage();
+            
+            consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            
+            Mockito.verify(spyObject).viewSignInPage();
+            Mockito.verify(spyObject).viewSignUpPage();
+            Mockito.verify(spyObject,times(4)).accessLandingPage();
+            mockedUtility.verify(times(3),()->Utility.inputOutput(Mockito.anyString()));
 
 
-        String simulatedInput = "1";
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-        service.accessLandingPage();
-        String consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("directing to Sign In Page"));
-
-        outputStream.reset();
-
-        simulatedInput = "2";
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-        service.accessLandingPage();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("directing to Sign Up Page"));
-
-        outputStream.reset();
-
-//        simulatedInput = "invalid input";
-//        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-//        simulatedInput = "1";
-//        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-//
-//        service.accessLandingPage();
-//        consoleOutput = outputStream.toString();
-//        Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
-
-    }
+            
+            
+          }
+        }
 
     @Test
     public void viewSignUpPageTest() throws IOException {
@@ -169,7 +199,7 @@ public class CommonServiceTests {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
-        
+
         String simulatedInput = "ansarpatil";
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         service.resetPassword("ansarpatil");
@@ -212,7 +242,6 @@ public class CommonServiceTests {
     //     Assert.assertFalse(consoleOutput.contains("Sign Up Successful for Recruiter"));
 
 
-
     // }
 
     @Test
@@ -229,5 +258,19 @@ public class CommonServiceTests {
 
     }
 
+
+    @Test
+    public void authenticateUser() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "bestpassword");
+        Assert.assertNotNull(user);
+    }
+
+    @Test
+    public void authenticateUserInvalid() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "wrongpassword");
+        Assert.assertNull(user);
+    }
 
 }

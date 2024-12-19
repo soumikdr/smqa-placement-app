@@ -1,6 +1,10 @@
 package service;
 
+import model.Job;
 import utility.Utility;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class RecruiterService {
     private final CommonService commonService;
@@ -9,15 +13,27 @@ public class RecruiterService {
         commonService = new CommonService();
     }
 
+    private static RecruiterService instance = null;
+
+    public static RecruiterService getInstance() {
+        if (instance == null) {
+            instance = new RecruiterService();
+        }
+        return instance;
+    }
+
     public void sendAssessment(){
     }
-    public void viewAssessmentResult(){
+
+    public void viewAssessmentResult() {
 
     }
-    public void sendInterview(){
+
+    public void sendInterview() {
 
     }
-    public void viewInterviewResult(){
+
+    public void viewInterviewResult() {
 
     }
 
@@ -37,18 +53,18 @@ public class RecruiterService {
         System.out.println("\n3: Go back to dashboard\n");
 
         switch(Utility.inputOutput("Please Select One Of The Options")){
-            case "1": 
+            case "1":
                 System.out.println("Welcome to Update profile page\n");
                 updateRecruiterProfile();
-            break;
+                break;
             case "2":
                 System.out.println("Welcome to Delete profile page\n");
                 deleteRecruiterProfile();
-            break;
+                break;
             default:
                 System.out.println("You entered invalid option");
                 viewRecruiterProfilePage();
-            break;
+                break;
         }
 
     }
@@ -60,41 +76,61 @@ public class RecruiterService {
 
     }
 
-    public void viewAvailableJobs(){
+    public void viewAvailableJobs() {
 
     }
 
-    public void viewSpecificJobPost(){
-
-    }
-    public void updateDescriptionOfJobPost(){
+    public void viewSpecificJobPost() {
 
     }
 
-    public void updateStatusOfJobPost(){
-
-    }
-    public void viewTotalNumberOfApplications(){
+    public void updateDescriptionOfJobPost() {
 
     }
 
-    public void viewJobPostingForm(){
+    public void updateStatusOfJobPost(String jobId) {
+        ArrayList<Job> jobs = Utility.getJobs();
+        if (jobs == null || jobs.isEmpty()) {
+            System.out.println("No jobs available");
+            return;
+        }
+        for (Job job : jobs) {
+            if (job.getId().equals(jobId)) {
+                System.out.println("Current status of job: " + job.getJobStatus());
+                String newStatus = Objects.equals(job.getJobStatus(), "Private") ? "Public" : "Private";
+                job.setJobStatus(newStatus);
+                System.out.println("Status of job updated successfully");
+                return;
+            }
+        }
+        System.out.println("No job post available with given id");
+    }
+
+    public void viewTotalNumberOfApplications() {
 
     }
-    public void submitNewJobPost(){
+
+    public void viewJobPostingForm() {
 
     }
 
-    public void viewAllApplications(){
+    public void submitNewJobPost() {
 
     }
-    public void viewSpecificApplication(){
+
+    public void viewAllApplications() {
 
     }
-    public void sendFeedback(){
+
+    public void viewSpecificApplication() {
 
     }
-    public void viewFeedbackForm(){
+
+    public void sendFeedback() {
+
+    }
+
+    public void viewFeedbackForm() {
 
     }
 

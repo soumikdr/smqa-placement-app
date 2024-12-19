@@ -3,43 +3,56 @@ package service;
 import model.User;
 import utility.Utility;
 
+import java.util.ArrayList;
+
 public class ApplicantService {
 
-    private final CommonService commonService;
+    private static ApplicantService instance = null;
 
-
-    public ApplicantService() {
-        commonService = new CommonService();
+    public static ApplicantService getInstance() {
+        if (instance == null) {
+            instance = new ApplicantService();
+        }
+        return instance;
     }
 
 
-    public void submitAssessmentForm(){
+    public void submitAssessmentForm() {
     }
-    public void viewAssessment(){
+
+    public void viewAssessment() {
 
     }
-    public void submitInterviewForm(){
+
+    public void submitInterviewForm() {
 
     }
-    public void viewInterview(){
+
+    public void viewInterview() {
 
     }
-    public void viewFeedback(){
+
+    public void viewFeedback() {
 
     }
-    public void viewJobPost(){
+
+    public void viewJobPost() {
 
     }
-    public void viewApplicationForm(){
+
+    public void viewApplicationForm() {
 
     }
-    public void viewAllAvailableJobs(){
+
+    public void viewAllAvailableJobs() {
 
     }
-    public void submitApplicationForm(){
+
+    public void submitApplicationForm() {
 
     }
-    public void viewApplicantDashboard(){
+
+    public void viewApplicantDashboard() {
 
         System.out.println("Welcome to the Applicant Dashboard\n");
 
@@ -48,28 +61,28 @@ public class ApplicantService {
         System.out.println("3. View Available Jobs");
 
         System.out.println("\n4. Log Out");
-        switch (Utility.inputOutput("Please Select One Of The Options")){
-            case "1":{
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1": {
                 System.out.println("Directing to Profile Page...");
                 viewApplicantProfilePage();
                 break;
             }
-            case "2":{
+            case "2": {
                 System.out.println("Directing to Applications Page...");
                 viewApplicantApplications();
                 break;
             }
-            case "3":{
+            case "3": {
                 System.out.println("Directing to Available Jobs Page...");
                 viewAllAvailableJobs();
                 break;
             }
-            case "4":{
+            case "4": {
                 System.out.println("Logging Out...");
-                commonService.logOut();
+                CommonService.getInstance().logOut();
                 break;
             }
-            default:{
+            default: {
                 System.out.println("You entered invalid option");
                 viewApplicantDashboard();
                 break;
@@ -78,7 +91,7 @@ public class ApplicantService {
 
     }
 
-    public void viewApplicantProfilePage(){
+    public void viewApplicantProfilePage() {
         User user = Utility.getCurrentUser();
         System.out.println("\nApplicant Profile\n");
 
@@ -113,30 +126,55 @@ public class ApplicantService {
         }
 
         String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
-        
+
         if (!answer.isEmpty()) {
             viewApplicantDashboard();
         }
     }
 
-    public void deleteApplicantProfile(){
+    public void deleteProfileHelper() {
+        User user = Utility.getCurrentUser();
+        ArrayList<User> users = Utility.getUsers();
+        users.removeIf(u -> u.getId().equals(user.getId()));
+        Utility.setUsers(users);
+        Utility.setCurrentUser(null);
+    }
+
+    public void deleteApplicantProfile() {
+        String input = Utility.inputOutput("Are you sure you want to delete your profile? (Y/N)");
+        if (input.equalsIgnoreCase("Y")) {
+            System.out.println("Deleting Applicant Profile...");
+            deleteProfileHelper();
+            CommonService.getInstance().accessLandingPage();
+        } else if (input.equalsIgnoreCase("N")) {
+            System.out.println("Profile deletion cancelled.");
+            viewApplicantProfilePage();
+        } else {
+            System.out.println("Invalid input. Profile deletion cancelled.");
+        }
+    }
+
+    public void updateApplicantProfile() {
 
     }
-    public void updateApplicantProfile(){
+
+    public void viewApplicantApplications() {
 
     }
-    public void viewApplicantApplications(){
+
+    public void viewSpecificApplication() {
 
     }
-    public void viewSpecificApplication(){
+
+    public void withdrawApplication() {
 
     }
-    public void withdrawApplication(){
+
+    public void viewJobDescFromApplication() {
 
     }
-    public void viewJobDescFromApplication(){
 
+    public void viewApplicationProcessDashboard() {
     }
-    public void viewApplicationProcessDashboard(){}
 
 }
