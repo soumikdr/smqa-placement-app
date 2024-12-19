@@ -1,13 +1,7 @@
-import model.Application;
-import model.Assignment;
-import model.Job;
-import model.User;
+import model.*;
 import service.CommonService;
-import service.RecruiterService;
+import utility.Utility;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Main {
@@ -20,13 +14,24 @@ public class Main {
     // we dont have to create this since we can create a variable on users for appliedJobs with ids. Not sure.
     private static ArrayList<Application> applications;
 
+    private static Utility utility;
 
     public static void main(String[] args) {
-        System.out.println(Utility.inputOutput("Example"));
-        System.out.println("Hello world!");
-        CommonService.accessLandingPage();
-    }
+        users = new ArrayList<>();
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
 
+        Utility.setUsers(users);
+        Utility.setAssignments(assignments);
+        Utility.setJobs(jobs);
+        Utility.setApplications(applications);
+
+
+        CommonService commonService = new CommonService();
+        commonService.accessLandingPage();
+
+
+    }
 
 
 }

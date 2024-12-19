@@ -1,67 +1,142 @@
 package service;
 
+import model.Job;
+import model.JobStatus;
+import utility.Utility;
+
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.UUID;
+
 public class RecruiterService {
-    public static void sendAssessment(){
-    }
-    public static void viewAssessmentResult(){
 
-    }
-    public static void sendInterview(){
+    private static RecruiterService instance = null;
 
-    }
-    public static void viewInterviewResult(){
-
+    public static RecruiterService getInstance() {
+        if (instance == null) {
+            instance = new RecruiterService();
+        }
+        return instance;
     }
 
-    public static void viewRecruiterDashboard(){
-
+    public void sendAssessment() {
     }
 
-    public static void viewRecruiterProfilePage(){
-
-    }
-    public static void deleteRecruiterProfile(){
-
-    }
-    public static void updateRecruiterProfile(){
+    public void viewAssessmentResult() {
 
     }
 
-    public static void viewAvailableJobs(){
+    public void sendInterview() {
 
     }
 
-    public static void viewSpecificJobPost(){
-
-    }
-    public static void updateDescriptionOfJobPost(){
+    public void viewInterviewResult() {
 
     }
 
-    public static void updateStatusOfJobPost(){
-
-    }
-    public static void viewTotalNumberOfApplications(){
-
+    public void viewRecruiterDashboard() {
+        System.out.println("Welcome to Recruiter Dashboard\n");
     }
 
-    public static void viewJobPostingForm(){
+    public void viewRecruiterProfilePage() {
+        System.out.println("\nWelcome to your profile page\n");
+        System.out.println("\nFirst Name: " + Utility.getCurrentUser().getName() + "\n");
+        System.out.println("\nLast Name: " + Utility.getCurrentUser().getLastName() + "\n");
+        System.out.println("\nUser Name: " + Utility.getCurrentUser().getUserName() + "\n");
+        System.out.println("\nRole: " + Utility.getCurrentUser().getRole());
+
+        System.out.println("\n1: Update your profile\n");
+        System.out.println("\n2: Delete your profile\n");
+        System.out.println("\n3: Go back to dashboard\n");
+
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1":
+                System.out.println("Welcome to Update profile page\n");
+                updateRecruiterProfile();
+                break;
+            case "2":
+                System.out.println("Welcome to Delete profile page\n");
+                deleteRecruiterProfile();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewRecruiterProfilePage();
+                break;
+        }
 
     }
-    public static void submitNewJobPost(){
+
+    public void deleteRecruiterProfile() {
 
     }
 
-    public static void viewAllApplications(){
+    public void updateRecruiterProfile() {
 
     }
-    public static void viewSpecificApplication(){
+
+    public void viewAvailableJobs() {
 
     }
-    public static void sendFeedback(){
+
+    public void viewSpecificJobPost() {
 
     }
-    public static void viewFeedbackForm(){
+
+    public void updateDescriptionOfJobPost() {
+
+    }
+
+    public void updateStatusOfJobPost(String jobId) {
+        ArrayList<Job> jobs = Utility.getJobs();
+        if (jobs == null || jobs.isEmpty()) {
+            System.out.println("No jobs available");
+            return;
+        }
+        for (Job job : jobs) {
+            if (job.getId().equals(jobId)) {
+                System.out.println("Current status of job: " + job.getJobStatus());
+                JobStatus newStatus = Objects.equals(job.getJobStatus(), JobStatus.PRIVATE) ? JobStatus.PUBLIC : JobStatus.PRIVATE;
+                job.setJobStatus(newStatus);
+                System.out.println("Status of job updated successfully");
+                return;
+            }
+        }
+        System.out.println("No job post available with given id");
+    }
+
+    public void viewTotalNumberOfApplications() {
+
+    }
+
+    public void viewJobPostingForm() {
+
+    }
+
+    public void submitNewJobPost(String jobName, String jobDescription) {
+        String id = UUID.randomUUID().toString();
+        Job job = new Job(
+                id,
+                jobName,
+                jobDescription,
+                JobStatus.PUBLIC
+        );
+        Utility.addJob(job);
+        System.out.println("Job posted successfully");
+    }
+
+    public void viewAllApplications() {
+
+    }
+
+    public void viewSpecificApplication() {
+
+    }
+
+    public void sendFeedback() {
+
+    }
+
+    public void viewFeedbackForm() {
 
     }
 
