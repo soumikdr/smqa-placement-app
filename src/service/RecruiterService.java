@@ -95,7 +95,7 @@ public class RecruiterService {
         for (Job job : jobs) {
             if (job.getId().equals(jobId)) {
                 System.out.println("Current status of job: " + job.getJobStatus());
-                String newStatus = Objects.equals(job.getJobStatus(), "Private") ? "Public" : "Private";
+                JobStatus newStatus = Objects.equals(job.getJobStatus(), JobStatus.PRIVATE) ? JobStatus.PUBLIC : JobStatus.PRIVATE;
                 job.setJobStatus(newStatus);
                 System.out.println("Status of job updated successfully");
                 return;

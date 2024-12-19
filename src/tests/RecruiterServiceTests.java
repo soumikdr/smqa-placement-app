@@ -1,6 +1,7 @@
 package tests;
 
 import model.Job;
+import model.JobStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +25,9 @@ public class RecruiterServiceTests {
     @Before
     public void setUp() {
         ArrayList<Job> jobs = new ArrayList<>();
-        jobs.add(new Job("1", "Software Engineer", "Develop software", "Private"));
-        jobs.add(new Job("2", "Data Analyst", "Analyze data", "Private"));
-        jobs.add(new Job("3", "Product Manager", "Manage products", "Private"));
+        jobs.add(new Job("1", "Software Engineer", "Develop software", JobStatus.PUBLIC));
+        jobs.add(new Job("2", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
+        jobs.add(new Job("3", "Product Manager", "Manage products", JobStatus.PRIVATE));
         Utility.setJobs(jobs);
 
     }
@@ -101,6 +102,6 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Status of job updated successfully"));
         Job job = Utility.getJobs().stream().filter(j -> j.getId().equals("1")).findFirst().orElse(null);
         assert job != null;
-        Assert.assertEquals("Public", job.getJobStatus());
+        Assert.assertEquals(JobStatus.PUBLIC, job.getJobStatus());
     }
 }
