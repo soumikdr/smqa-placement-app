@@ -195,13 +195,23 @@ public class ApplicantService {
         }
         System.out.println("Applications:");
         System.out.println();
-        for (Application application : applications) {
-            System.out.println("Application ID: " + application.getId() + " | " + "Status: " + application.getStatus());
+        int index = 1;
+        applications.forEach(application -> {
+            System.out.println(index + ". Application ID: " + application.getId() + " | " + "Status: " + application.getStatus());
             System.out.println();
+        });
+        String applicationIndex = Utility.inputOutput("Enter the application number to view the application details: ");
+        int applicationIndexInt = Integer.parseInt(applicationIndex);
+        if (applicationIndexInt > applications.size()) {
+            System.out.println("Invalid application number.");
+            return;
         }
+
+        Application application = applications.get(Integer.parseInt(applicationIndex) - 1);
+        viewSpecificApplication(application);
     }
 
-    public void viewSpecificApplication() {
+    public void viewSpecificApplication(Application application) {
 
     }
 
