@@ -1,5 +1,7 @@
 package tests;
 
+import model.Applicant;
+import model.Recruiter;
 import model.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,9 +32,9 @@ public class CommonServiceTests {
     public void setUp() {
         ArrayList<User> users = new ArrayList<>();
 
-        users.add(new User("1", "John", "Doe", "johnDoe", "bestpassword", "Applicant"));
-        users.add(new User("2", "Ansar", "Patil", "darkAngel", "123qwe", "Recruiter"));
-        users.add(new User("3", "Jane", "Doe", "janeDoe", "bestpassword", ""));
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
+        users.add(new Applicant("3", "Jane", "Doe", "janeDoe", "bestpassword", new ArrayList<>()));
         Utility.setUsers(users);
     }
     
