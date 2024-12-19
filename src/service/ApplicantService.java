@@ -1,12 +1,10 @@
 package service;
 
-import model.Applicant;
-import model.Application;
-import model.Recruiter;
-import model.User;
+import model.*;
 import utility.Utility;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicantService {
 
@@ -40,7 +38,28 @@ public class ApplicantService {
     }
 
     public void viewJobPost() {
+        User user = Utility.getCurrentUser();
+        if (user == null || user.getRole() != UserRole.APPLICANT) {
+            System.out.println("You are not authorized to view this page");
+            return;
+        }
 
+        String jobId = Utility.inputOutput("Enter the Job ID to view the details:");
+        List<Job> jobs = Utility.getJobs();
+        Job job = jobs.stream()
+                .filter(j -> j.getId().equals(jobId))
+                .findFirst()
+                .orElse(null);
+
+        if (job == null) {
+            System.out.println("Job with ID " + jobId + " not found.");
+            return;
+        }
+        System.out.println("Welcome to the Job Post\n");
+        System.out.println("Job ID: " + job.getId());
+        System.out.println("Job Title: " + job.getJobName());
+        System.out.println("Job Description: " + job.getJobDescription());
+        System.out.println("Job Status: " + job.getJobStatus());
     }
 
     public void viewApplicationForm() {

@@ -4,6 +4,7 @@ import model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedStatic;
 import service.ApplicantService;
 import utility.Utility;
 
@@ -12,6 +13,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class ApplicantServiceTests {
 
@@ -174,4 +180,48 @@ public class ApplicantServiceTests {
         boolean isDeleted = Utility.getUsers().stream().filter(u -> u.getId().equals(user.getId())).findFirst().isEmpty();
         Assert.assertTrue(isDeleted);
     }
+
+    @Test
+    public void viewJobPostValidTest() {
+        ArrayList<Application> applications = new ArrayList<>();
+        Applicant applicant = new Applicant("1", "John", "Doe", "johnDoe", "password", applications);
+
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(applicant);
+            mockedUtility.when(() -> Utility.inputOutput("Enter the Job ID to view the details:")).thenReturn("1");
+            List<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("1", "Software Engineer", "Develop and maintain software", "Open"));
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outputStream));
+            service.viewJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Job ID: 1"));
+            Assert.assertTrue(consoleOutput.contains("Job Title: Software Engineer"));
+            Assert.assertTrue(consoleOutput.contains("Job Description: Develop and maintain software"));
+            Assert.assertTrue(consoleOutput.contains("Job Status: Open"));
+        }
+    }
+
+    @Test
+    public void viewJobPostInvalidTest() {
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+            Applicant mockApplicant = new Applicant("1", "John", "Doe", "johnDoe", "password", new ArrayList<>());
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockApplicant);
+            mockedUtility.when(() -> Utility.inputOutput("Enter the Job ID to view the details:")).thenReturn("999");
+            List<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("1", "Software Engineer", "Develop and maintain software", "Open"));
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outputStream));
+            service.viewJobPost();
+            mockedUtility.verify(Utility::getCurrentUser, times(1));
+            mockedUtility.verify(() -> Utility.inputOutput("Enter the Job ID to view the details:"), times(1));
+            mockedUtility.verify(Utility::getJobs, times(1));
+            String consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Job with ID 999 not found."));
+        }
+    }
 }
+
+
