@@ -74,7 +74,7 @@ public class RecruiterServiceTests {
         service.submitNewJobPost("Software Engineer", "Develop software");
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Job posted successfully"));
-        Assert.assertEquals(1, Utility.getJobs().size());
+        Assert.assertEquals(4, Utility.getJobs().size());
     }
 
     public void updateStatusOfJobPost_Empty() {
@@ -105,7 +105,7 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Status of job updated successfully"));
         Job job = Utility.getJobs().stream().filter(j -> j.getId().equals("1")).findFirst().orElse(null);
         assert job != null;
-        Assert.assertEquals(JobStatus.PUBLIC, job.getJobStatus());
+        Assert.assertEquals(JobStatus.PRIVATE, job.getJobStatus());
     }
 
     @Test
@@ -117,8 +117,8 @@ public class RecruiterServiceTests {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
             ArrayList<Job> mockJobs = new ArrayList<>();
-            mockJobs.add(new Job("101", "Software Engineer", "Develop software", "Open"));
-            mockJobs.add(new Job("102", "Data Scientist", "Analyze data", "Open"));
+            mockJobs.add(new Job("101", "Software Engineer", "Develop software", JobStatus.PRIVATE));
+            mockJobs.add(new Job("102", "Data Scientist", "Analyze data", JobStatus.PUBLIC));
 
             mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
 

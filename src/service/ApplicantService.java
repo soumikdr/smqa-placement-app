@@ -2,6 +2,7 @@ package service;
 
 import model.Job;
 import model.User;
+import model.UserRole;
 import utility.Utility;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class ApplicantService {
 
     public void viewJobPost() {
         User user = Utility.getCurrentUser();
-        if (user == null || !"Applicant".equalsIgnoreCase(user.getRole())) {
+        if (user == null || user.getRole() != UserRole.APPLICANT) {
             System.out.println("You are not authorized to view this page");
             return;
         }
