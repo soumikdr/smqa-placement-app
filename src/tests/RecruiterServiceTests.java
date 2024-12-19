@@ -106,33 +106,29 @@ public class RecruiterServiceTests {
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
-            // Mock job list
             ArrayList<Job> mockJobs = new ArrayList<>();
             mockJobs.add(new Job("101", "Software Engineer", "Develop software", "Open"));
             mockJobs.add(new Job("102", "Data Scientist", "Analyze data", "Open"));
 
             mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
 
-            // Case 1: Valid Job ID
+            Mockito.doNothing().when(spyObject).viewRecruiterDashboard();
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "2");
             spyObject.viewSpecificJobPost();
             String consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Job ID: 101"));
             Assert.assertTrue(consoleOutput.contains("Job Name: Software Engineer"));
             Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
-
             outputStream.reset();
 
-            // Case 2: Invalid Job ID
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("999", "2");
             spyObject.viewSpecificJobPost();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You have entered a invalid Job id"));
             Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
-
             outputStream.reset();
 
-            // Case 3: Redirect to view another job
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "1", "102", "2");
             spyObject.viewSpecificJobPost();
             consoleOutput = outputStream.toString();
@@ -140,22 +136,18 @@ public class RecruiterServiceTests {
             Assert.assertTrue(consoleOutput.contains("Redirecting to view specific job details"));
             Assert.assertTrue(consoleOutput.contains("Job ID: 102"));
             Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
-
             outputStream.reset();
 
-            // Case 4: Redirect to dashboard
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "2");
             spyObject.viewSpecificJobPost();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
 
-            // Case 5: Invalid option in the menu
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "invalid");
             spyObject.viewSpecificJobPost();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
 
-            // Verify interactions
             Mockito.verify(spyObject, Mockito.times(6)).viewSpecificJobPost();
             Mockito.verify(spyObject, Mockito.times(5)).viewRecruiterDashboard();
             mockedUtility.verify(Mockito.times(12), () -> Utility.inputOutput(Mockito.anyString()));
