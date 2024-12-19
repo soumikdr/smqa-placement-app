@@ -80,7 +80,7 @@ public class RecruiterService {
     }
 
     public void viewSpecificJobPost() {
-        System.out.println("Welocme to Specific Job Post Ddtails\n");
+        System.out.println("Welocme to Specific Job Post Details\n");
         String jobId = Utility.inputOutput("\nEnter the Job Id\n");
         Boolean invalidJobId = true;
 
