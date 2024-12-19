@@ -127,24 +127,18 @@ public class ApplicantServiceTests {
                 "3",
                 "4",
                 "testusername",
-                "Pending",
+                "Withdrawn",
                 new ArrayList<Assignment>()
         ));
         Utility.setCurrentUser(new Applicant("test", "test", "test", "testusername", "password", applications));
         String expectedOutput = """
                 Applications:\r
                 \r
-                Job Title: Software Engineer\r
-                Job Description: Develop software\r
-                Status: Pending\r
-                Application ID: 1\r
+                Application ID: 1 | Status: Pending\r
                 \r
-                Job Title: Data Analyst\r
-                Job Description: Analyze data\r
-                Status: Pending\r
-                Application ID: 2\r
+                Application ID: 2 | Status: Pending\r
                 \r
-                Job not found for application: 3\r
+                Application ID: 3 | Status: Withdrawn\r
                 """;
         service.viewApplicantApplications();
         String consoleOutput = outputStream.toString();
