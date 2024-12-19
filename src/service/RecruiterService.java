@@ -34,6 +34,26 @@ public class RecruiterService {
 
     public void viewRecruiterDashboard(){
         System.out.println("Welcome to Recruiter Dashboard\n");
+
+        System.out.println("1. View profile");
+        System.out.println("2. View available jobs");
+        System.out.println("3. View available applications");
+
+        switch(Utility.inputOutput("\nPlease select one option to proceed..")){
+            case "1":
+                viewRecruiterProfilePage();
+                break;
+            case "2":
+                viewAvailableJobs();
+                break;
+            case "3":
+                viewAllApplications();
+                break;
+            default:
+                System.out.println("\nYou have entered an invalid option. Please try again.\n");
+                viewRecruiterDashboard();
+                break;
+        }
     }
 
     public void viewRecruiterProfilePage(){
