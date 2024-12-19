@@ -1,8 +1,6 @@
 package tests;
 
-import model.Applicant;
-import model.Recruiter;
-import model.User;
+import model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,6 +90,18 @@ public class ApplicantServiceTests {
         Assert.assertEquals("New Name", filteredUser.getName());
         Assert.assertEquals("New Last Name", filteredUser.getLastName());
         Assert.assertEquals(newUserProfile.getId(), filteredUser.getId());
-
+    }
+    @Test
+    public void deleteProfileHelper() {
+        ApplicantService service = ApplicantService.getInstance();
+        User user = Utility.getUsers().get(0);
+        Utility.setCurrentUser(user);
+        int initialSize = Utility.getUsers().size();
+        service.deleteProfileHelper();
+        int finalSize = Utility.getUsers().size();
+        Assert.assertEquals(initialSize - 1, finalSize);
+//        Check if the user is deleted
+        boolean isDeleted = Utility.getUsers().stream().filter(u -> u.getId().equals(user.getId())).findFirst().isEmpty();
+        Assert.assertTrue(isDeleted);
     }
 }
