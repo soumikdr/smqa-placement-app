@@ -1,10 +1,12 @@
 package service;
 
 import model.Job;
+import model.JobStatus;
 import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class RecruiterService {
 
@@ -17,7 +19,7 @@ public class RecruiterService {
         return instance;
     }
 
-    public void sendAssessment(){
+    public void sendAssessment() {
     }
 
     public void viewAssessmentResult() {
@@ -32,11 +34,11 @@ public class RecruiterService {
 
     }
 
-    public void viewRecruiterDashboard(){
+    public void viewRecruiterDashboard() {
         System.out.println("Welcome to Recruiter Dashboard\n");
     }
 
-    public void viewRecruiterProfilePage(){
+    public void viewRecruiterProfilePage() {
         System.out.println("\nWelcome to your profile page\n");
         System.out.println("\nFirst Name: " + Utility.getCurrentUser().getName() + "\n");
         System.out.println("\nLast Name: " + Utility.getCurrentUser().getLastName() + "\n");
@@ -47,7 +49,7 @@ public class RecruiterService {
         System.out.println("\n2: Delete your profile\n");
         System.out.println("\n3: Go back to dashboard\n");
 
-        switch(Utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
                 System.out.println("Welcome to Update profile page\n");
                 updateRecruiterProfile();
@@ -64,10 +66,11 @@ public class RecruiterService {
 
     }
 
-    public void deleteRecruiterProfile(){
+    public void deleteRecruiterProfile() {
 
     }
-    public void updateRecruiterProfile(){
+
+    public void updateRecruiterProfile() {
 
     }
 
@@ -92,7 +95,7 @@ public class RecruiterService {
         for (Job job : jobs) {
             if (job.getId().equals(jobId)) {
                 System.out.println("Current status of job: " + job.getJobStatus());
-                String newStatus = Objects.equals(job.getJobStatus(), "Private") ? "Public" : "Private";
+                JobStatus newStatus = Objects.equals(job.getJobStatus(), JobStatus.PRIVATE) ? JobStatus.PUBLIC : JobStatus.PRIVATE;
                 job.setJobStatus(newStatus);
                 System.out.println("Status of job updated successfully");
                 return;
@@ -109,8 +112,16 @@ public class RecruiterService {
 
     }
 
-    public void submitNewJobPost() {
-
+    public void submitNewJobPost(String jobName, String jobDescription) {
+        String id = UUID.randomUUID().toString();
+        Job job = new Job(
+                id,
+                jobName,
+                jobDescription,
+                JobStatus.PUBLIC
+        );
+        Utility.addJob(job);
+        System.out.println("Job posted successfully");
     }
 
     public void viewAllApplications() {

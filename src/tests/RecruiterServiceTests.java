@@ -1,6 +1,7 @@
 package tests;
 
 import model.Job;
+import model.JobStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,18 +16,18 @@ import java.util.ArrayList;
 
 public class RecruiterServiceTests {
 
-     public RecruiterService service = new RecruiterService();
+    public RecruiterService service = new RecruiterService();
     private ByteArrayOutputStream outputStream;
 
-    public RecruiterServiceTests(){
+    public RecruiterServiceTests() {
     }
 
     @Before
     public void setUp() {
         ArrayList<Job> jobs = new ArrayList<>();
-        jobs.add(new Job("1", "Software Engineer", "Develop software", "Private"));
-        jobs.add(new Job("2", "Data Analyst", "Analyze data", "Private"));
-        jobs.add(new Job("3", "Product Manager", "Manage products", "Private"));
+        jobs.add(new Job("1", "Software Engineer", "Develop software", JobStatus.PUBLIC));
+        jobs.add(new Job("2", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
+        jobs.add(new Job("3", "Product Manager", "Manage products", JobStatus.PRIVATE));
         Utility.setJobs(jobs);
 
     }
@@ -51,7 +52,7 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Welcome to Delete profile page"));
 
         outputStream.reset();
-        
+
         // simulatedInput = "invalid input";
         // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         // simulatedInput = "1";
@@ -64,6 +65,15 @@ public class RecruiterServiceTests {
     }
 
     @Test
+    public void submitNewJobPost() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        service.submitNewJobPost("Software Engineer", "Develop software");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Job posted successfully"));
+        Assert.assertEquals(1, Utility.getJobs().size());
+    }
+
     public void updateStatusOfJobPost_Empty() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 //        Clearing the jobs
@@ -92,6 +102,6 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Status of job updated successfully"));
         Job job = Utility.getJobs().stream().filter(j -> j.getId().equals("1")).findFirst().orElse(null);
         assert job != null;
-        Assert.assertEquals("Public", job.getJobStatus());
+        Assert.assertEquals(JobStatus.PUBLIC, job.getJobStatus());
     }
 }
