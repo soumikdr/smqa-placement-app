@@ -1,6 +1,7 @@
 package service;
 
 import model.Job;
+import model.User;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -67,8 +68,36 @@ public class RecruiterService {
     public void deleteRecruiterProfile(){
 
     }
-    public void updateRecruiterProfile(){
 
+    public void updateRecruiterProfile(){
+        System.out.println("\nUpdate profile information (leave empty for no change)\n");
+
+        String firstName = Utility.inputOutput("Enter new first name: ");
+        String lastName = Utility.inputOutput("Enter new last name: ");
+
+        if (!firstName.isEmpty()) {
+            Utility.getCurrentUser().setName(firstName);
+        }
+        
+        if (!lastName.isEmpty()) {
+            Utility.getCurrentUser().setLastName(lastName);
+        }
+
+        boolean uniqueUsername = false;
+
+        while (!uniqueUsername) {
+            String userName = Utility.inputOutput("Enter new username: ");
+
+            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null) == null) {
+                uniqueUsername = true;
+                Utility.getCurrentUser().setUserName(userName);
+            } else {
+                System.out.println("Username already exists. Please try again.");
+            }
+        }
+
+        System.out.println("\nProfile updated successfully!\n");
+        viewRecruiterProfilePage();
     }
 
     public void viewAvailableJobs() {
@@ -128,6 +157,5 @@ public class RecruiterService {
     public void viewFeedbackForm() {
 
     }
-
 
 }
