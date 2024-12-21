@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class ApplicantServiceTests {
 
@@ -109,9 +108,9 @@ public class ApplicantServiceTests {
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
         ArrayList<Application> applications = new ArrayList<>();
         ArrayList<Job> jobs = new ArrayList<>();
-        jobs.add(new Job("1", "Software Engineer", "Develop software", "Open"));
-        jobs.add(new Job("2", "Data Analyst", "Analyze data", "Open"));
-        jobs.add(new Job("3", "Product Manager", "Manage products", "Open"));
+        jobs.add(new Job("1", "Software Engineer", "Develop software", JobStatus.PUBLIC));
+        jobs.add(new Job("2", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
+        jobs.add(new Job("3", "Product Manager", "Manage products", JobStatus.PUBLIC));
         Utility.setJobs(jobs);
 
         applications.add(new Application(
@@ -139,15 +138,16 @@ public class ApplicantServiceTests {
         String expectedOutput = """
                 Applications:\r
                 \r
-                Application ID: 1 | Status: Pending\r
+                1. Application ID: 1 | Status: Pending\r
                 \r
-                Application ID: 2 | Status: Pending\r
+                2. Application ID: 2 | Status: Pending\r
                 \r
-                Application ID: 3 | Status: Withdrawn\r
+                3. Application ID: 3 | Status: Withdrawn\r
                 """;
         service.viewApplicantApplications();
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains(expectedOutput));
+//        TODO: Add view specific application test
     }
     @Test
     public void updateProfileTest() {

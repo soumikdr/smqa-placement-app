@@ -215,10 +215,11 @@ public class ApplicantService {
         System.out.println("Applications:");
         System.out.println();
         int index = 1;
-        applications.forEach(application -> {
+        for (Application application : applications) {
             System.out.println(index + ". Application ID: " + application.getId() + " | " + "Status: " + application.getStatus());
             System.out.println();
-        });
+            index++;
+        }
         String applicationIndex = Utility.inputOutput("Enter the application number to view the application details: ");
         int applicationIndexInt = Integer.parseInt(applicationIndex);
         if (applicationIndexInt > applications.size()) {
