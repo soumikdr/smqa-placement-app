@@ -17,10 +17,23 @@ public class Main {
     private static Utility utility;
 
     public static void main(String[] args) {
-        users = new ArrayList<>();
+        users=new ArrayList<>();
+        jobs=new ArrayList<>();
+        jobs.add(new Job(
+            "Job1",
+            "Data Analyst", 
+            "A data analyst's job is to collect, organize, and analyze data to help businesses solve problems and gain insights. ",
+            JobStatus.PRIVATE
+            ));
+        jobs.add(new Job(
+            "Job2",
+            "Frontend Developer",
+            "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ",
+            JobStatus.PUBLIC));
         users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
         users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
 
+        
         Utility.setUsers(users);
         Utility.setAssignments(assignments);
         Utility.setJobs(jobs);
