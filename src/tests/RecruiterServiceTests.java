@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
 import service.RecruiterService;
 import utility.Utility;
 
@@ -78,7 +77,7 @@ public class RecruiterServiceTests {
     }
     
     @Test
-    public void updateStatusOfJobPost_Empty() {
+    public void viewAvailableJobs_Empty() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
 
@@ -98,22 +97,9 @@ public class RecruiterServiceTests {
         Utility.setJobs(jobs);
         String expectedOutput = """
                 Available Jobs\r
-                -----------------------------------\r
-                Job ID: 1\r
-                Job Title: Software Engineer\r
-                Job Description: Develop software\r
-                Job Status: PUBLIC\r
-                -----------------------------------\r
-                Job ID: 2\r
-                Job Title: Data Analyst\r
-                Job Description: Analyze data\r
-                Job Status: PUBLIC\r
-                -----------------------------------\r
-                Job ID: 3\r
-                Job Title: Product Manager\r
-                Job Description: Manage products\r
-                Job Status: PUBLIC\r
-                -----------------------------------\r
+                1. Job ID: 1 | Job Title: Software Engineer\r
+                2. Job ID: 2 | Job Title: Data Analyst\r
+                3. Job ID: 3 | Job Title: Product Manager\r
                 """;
 
         service.viewAvailableJobs();
@@ -130,6 +116,7 @@ public class RecruiterServiceTests {
         service.updateStatusOfJobPost("1");
     }
 
+    @Test
     public void updateStatusOfJobPost_JobNotAvailable() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out

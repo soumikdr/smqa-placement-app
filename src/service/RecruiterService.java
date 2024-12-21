@@ -59,9 +59,9 @@ public class RecruiterService {
                 deleteRecruiterProfile();
                 break;
             case "3":
-            System.out.println("Redirecting to dashboard...\n");
+                System.out.println("Redirecting to dashboard...\n");
                 viewRecruiterDashboard();
-                 break;
+                break;
             default:
                 System.out.println("You entered invalid option\n");
                 viewRecruiterProfilePage();
@@ -85,14 +85,12 @@ public class RecruiterService {
             return;
         }
         System.out.println("Available Jobs");
-        System.out.println("-----------------------------------");
+        int index = 1;
         for (Job job : jobs) {
-            System.out.println("Job ID: " + job.getId());
-            System.out.println("Job Title: " + job.getJobName());
-            System.out.println("Job Description: " + job.getJobDescription());
-            System.out.println("Job Status: " + job.getJobStatus());
-            System.out.println("-----------------------------------");
+            System.out.println(index + ". Job ID: " + job.getId() + " | Job Title: " + job.getJobName());
+            index++;
         }
+        viewSpecificJobPost();
     }
 
     public void viewSpecificJobPost() {
@@ -100,7 +98,7 @@ public class RecruiterService {
         String jobId = Utility.inputOutput("\nEnter the Job Id\n");
         Boolean invalidJobId = true;
 
-        for (Job job: Utility.getJobs()) {
+        for (Job job : Utility.getJobs()) {
             if (job.getId().equals(jobId)) {
                 System.out.println("\nJob ID: " + job.getId());
                 System.out.println("\nJob Name: " + job.getJobName());
@@ -118,7 +116,7 @@ public class RecruiterService {
         System.out.println("\n1: View another job details\n");
         System.out.println("\n2: Go back to dashboard\n");
 
-        switch(Utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
                 System.out.println("Redirecting to view specific job details \n");
                 viewSpecificJobPost();
