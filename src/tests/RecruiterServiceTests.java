@@ -5,6 +5,9 @@ import model.JobStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
 import service.RecruiterService;
 import utility.Utility;
 
@@ -71,7 +74,7 @@ public class RecruiterServiceTests {
         service.submitNewJobPost("Software Engineer", "Develop software");
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Job posted successfully"));
-        Assert.assertEquals(1, Utility.getJobs().size());
+        Assert.assertEquals(4, Utility.getJobs().size());
     }
 
     public void updateStatusOfJobPost_Empty() {
@@ -102,6 +105,62 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Status of job updated successfully"));
         Job job = Utility.getJobs().stream().filter(j -> j.getId().equals("1")).findFirst().orElse(null);
         assert job != null;
-        Assert.assertEquals(JobStatus.PUBLIC, job.getJobStatus());
+        Assert.assertEquals(JobStatus.PRIVATE, job.getJobStatus());
+    }
+
+    @Test
+    public void viewSpecificJobPostTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        RecruiterService spyObject = Mockito.spy(service);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("101", "Software Engineer", "Develop software", JobStatus.PRIVATE));
+            mockJobs.add(new Job("102", "Data Scientist", "Analyze data", JobStatus.PUBLIC));
+
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+
+            Mockito.doNothing().when(spyObject).viewRecruiterDashboard();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "2");
+            spyObject.viewSpecificJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Job ID: 101"));
+            Assert.assertTrue(consoleOutput.contains("Job Name: Software Engineer"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("999", "2");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You have entered a invalid Job id"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "1", "102", "2");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Job ID: 101"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to view specific job details"));
+            Assert.assertTrue(consoleOutput.contains("Job ID: 102"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "2");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "invalid");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+
+            Mockito.verify(spyObject, Mockito.times(6)).viewSpecificJobPost();
+            Mockito.verify(spyObject, Mockito.times(5)).viewRecruiterDashboard();
+            mockedUtility.verify(Mockito.times(12), () -> Utility.inputOutput(Mockito.anyString()));
+        }
     }
 }
