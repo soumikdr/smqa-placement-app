@@ -1,9 +1,12 @@
 package service;
 
+import model.Application;
+import model.Assignment;
 import model.User;
 import utility.Utility;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ApplicantService {
 
@@ -48,8 +51,17 @@ public class ApplicantService {
 
     }
 
-    public void submitApplicationForm() {
+    public void submitApplicationForm(String jobId, String applicantId) {
+       
+    	String applicationId=UUID.randomUUID().toString();
+    	Application newApplication=new Application(applicationId,jobId, applicantId,"Submitted", new ArrayList<Assignment>());
+    	Utility.getApplications().add(newApplication);
+    	
+    	System.out.println("Application submitted : "+newApplication.getId());
+    	System.out.println("Directing to Applicant Dashboard");
 
+    	viewApplicantDashboard();
+    	
     }
 
     public void viewApplicantDashboard() {
