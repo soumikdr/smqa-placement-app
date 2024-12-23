@@ -1,6 +1,7 @@
 package tests;
 
 import model.Application;
+import model.ApplicationStatus;
 import model.Assignment;
 import model.Job;
 import model.JobStatus;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import service.ApplicantService;
 import service.RecruiterService;
 import utility.Utility;
 
@@ -20,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecruiterServiceTests {
 
@@ -216,6 +219,68 @@ public class RecruiterServiceTests {
 
         }
         
-
     }
+
+    @Test
+    public void viewSubmittedAnswersTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        RecruiterService spyObject = Mockito.spy(service);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Application> mockApplications = new ArrayList<>();
+            ArrayList<String> mockQuestions1 = new ArrayList<>(List.of("What is Java?", "Explain OOP concepts."));
+            ArrayList<String> mockAnswers1 = new ArrayList<>(List.of("Java is a programming language.", "OOP includes Encapsulation, Polymorphism."));
+            ArrayList<String> mockQuestions2 = new ArrayList<>(List.of("What is your experience?"));
+            ArrayList<String> mockAnswers2 = new ArrayList<>(List.of("I have 5 years of experience in software development."));
+            
+            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
+                new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", mockQuestions1, mockAnswers1))), null));
+            mockApplications.add(new Application("A102", "J102", "U102", ApplicationStatus.SUCCESSFUL,
+                new ArrayList<>(List.of(new Assignment("Assign2", "U102", "Assignment 2", mockQuestions2, mockAnswers2))), null));
+            mockApplications.add(new Application("A103", "J103", "U101", ApplicationStatus.UNSUCCESSFUL,
+                new ArrayList<>(), null));
+
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+
+            spyObject.viewSubmittedAnswers("A101");
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcome to view submitted answers for the application A101"));
+            Assert.assertTrue(consoleOutput.contains("Question:"));
+            Assert.assertTrue(consoleOutput.contains("What is Java?"));
+            Assert.assertTrue(consoleOutput.contains("Explain OOP concepts."));
+            Assert.assertTrue(consoleOutput.contains("Answer:"));
+            Assert.assertTrue(consoleOutput.contains("Java is a programming language."));
+            Assert.assertTrue(consoleOutput.contains("OOP includes Encapsulation, Polymorphism."));
+            outputStream.reset();
+
+            spyObject.viewSubmittedAnswers("A103");
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcome to view submitted answers for the application A103"));
+            Assert.assertFalse(consoleOutput.contains("Question:"));
+            Assert.assertFalse(consoleOutput.contains("Answer:"));
+            outputStream.reset();
+
+            spyObject.viewSubmittedAnswers("A102");
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcome to view submitted answers for the application A102"));
+            Assert.assertTrue(consoleOutput.contains("Question:"));
+            Assert.assertTrue(consoleOutput.contains("What is your experience?"));
+            Assert.assertTrue(consoleOutput.contains("Answer:"));
+            Assert.assertTrue(consoleOutput.contains("I have 5 years of experience in software development."));
+            outputStream.reset();
+
+            spyObject.viewSubmittedAnswers("A999");
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcome to view submitted answers for the application A999"));
+            Assert.assertFalse(consoleOutput.contains("Question:"));
+            Assert.assertFalse(consoleOutput.contains("Answer:"));
+            outputStream.reset();
+
+            Mockito.verify(spyObject, Mockito.times(4)).viewSubmittedAnswers(Mockito.anyString());
+            mockedUtility.verify(Mockito.times(4), Utility::getApplications);
+        }
+    }
+
 }

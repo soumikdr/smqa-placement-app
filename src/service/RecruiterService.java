@@ -212,5 +212,26 @@ public class RecruiterService {
 
     }
 
+    public void viewSubmittedAnswers(String applicationId) {
+        System.out.println("\nWelcome to view submitted answers for the application " + applicationId);
+        ArrayList<String> questions = new ArrayList<String>();
+        ArrayList<String> answers = new ArrayList<String>();
+
+        for (Application application: Utility.getApplications()) {
+            if (application.getId().equals(applicationId)) {
+                for (Assignment assignment : application.getAssignments()) {
+                    questions=assignment.getQuestions();
+                    answers=assignment.getAnswers();
+                    for(int i=0; i<questions.size(); i++) {
+                        System.out.println("\nQuestion: \n");
+                        System.out.println(questions.get(i));
+                        System.out.println("Answer: \n");
+                        System.out.println(answers.get(i));
+                    }
+                }
+            }
+        }
+    }
+
 
 }
