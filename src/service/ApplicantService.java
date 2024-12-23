@@ -1,6 +1,9 @@
 package service;
 
 import model.Job;
+import model.Application;
+import model.ApplicationStatus;
+import model.Assignment;
 import model.User;
 import model.UserRole;
 import utility.Utility;
@@ -209,7 +212,88 @@ public class ApplicantService {
     }
 
     public void viewSpecificApplication() {
+        User user = Utility.getCurrentUser();
 
+        System.out.println("\nWelcome to specific application details\n");
+
+        String applicationId = Utility.inputOutput("\nEnter the Application Id\n");
+        Boolean invalidApplicationId = true;
+
+        for (Application application: Utility.getApplications()) {
+            if (application.getId().equals(applicationId) && user.getId().equals(application.getApplicantId())) {
+                System.out.println("\nApplication ID: " + application.getId());
+                System.out.println("\nJob Id: " + application.getJobId());
+                System.out.println("\nApplicant Id: " + application.getApplicantId());
+                System.out.println("\nApplication Status: " + application.getStatus());
+                System.out.println("\nAssignments: ");
+                if (application.getAssignments().isEmpty()) {
+                    System.out.println("\nNo assignemts for this applicaton");
+                } else {
+                    for(Assignment assignemt: application.getAssignments() ) {
+                        System.out.println("\nAssignment Id: " + assignemt.getId());
+                        System.out.println("\nApplicant Id: " + assignemt.getApplicantId());
+                        System.out.println("\nAssignment Name: " + assignemt.getAssignmentName());
+                        System.out.println("\nQuestions: ");
+                        if (assignemt.getQuestions().isEmpty()) {
+                            System.out.println("\nNo questions for this assignemt");
+                        } else {
+                            for(String question: assignemt.getQuestions()) {
+                                System.out.println("\n" + question);
+                            }
+                        }
+                        System.out.println("\nAnswers: ");
+                        if (assignemt.getAnswers().isEmpty()) {
+                            System.out.println("\nNo answers submitted for this assignemt");
+                        } else {
+                            for(String answer: assignemt.getAnswers()) {
+                                System.out.println("\n" + answer);
+                            }
+                        }
+                    }
+                }
+                if (application.getStatus().equals(ApplicationStatus.INPROGRESS)) {
+                    System.out.println("\n1: Complete your application\n");
+                    System.out.println("\n2: Complete your application later\n");
+
+                    switch(Utility.inputOutput("Please Select One Of The Options")) {
+                        case "1":
+                            System.out.println("\nRedirecting to application process dashboard");
+                            viewApplicationProcessDashboard(applicationId);
+                            break;
+                        case "2":
+                            System.out.println("\nComplete your application soon");
+                            break;
+                        default:
+                            System.out.println("You entered invalid option");
+                            break;
+                    }
+                }
+                invalidApplicationId = false;
+                break;
+            }
+        }
+
+        if (invalidApplicationId) {
+            System.out.println("\nYou have entered a invalid application id\n");
+        }
+
+        System.out.println("\n1: View another Application details\n");
+        System.out.println("\n2: Go back to applications page\n");
+
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1":
+                System.out.println("Redirecting to view specific application details \n");
+                viewSpecificApplication();
+                break;
+            case "2":
+                System.out.println("Redirecting to applications page\n");
+                viewApplicantApplications();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewApplicantApplications();
+                break;
+        }
     }
 
     public void withdrawApplication() {
