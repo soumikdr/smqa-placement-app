@@ -1,14 +1,12 @@
 package tests;
 
-import model.Applicant;
-import model.Application;
-import model.Job;
-import model.User;
 import model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
 import service.ApplicantService;
 import utility.Utility;
 
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class ApplicantServiceTests {
 
@@ -154,6 +151,70 @@ public class ApplicantServiceTests {
     //         assertTrue(consoleOutput.contains("Job with ID 999 not found."));
     //     }
     // }
+
+    @Test
+public void viewApplicationProcessDashboardTest() throws IOException {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outputStream)); // Redirect System.out
+    ApplicantService spyObject = Mockito.spy(service);
+
+    try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString()))
+            .thenReturn("1", "2", "3", "4", "5", "6", "invalid", "6", "2");
+
+        Mockito.doNothing().when(spyObject).viewAssessment();
+        Mockito.doNothing().when(spyObject).submitAssessmentForm();
+        Mockito.doNothing().when(spyObject).viewInterview();
+        Mockito.doNothing().when(spyObject).submitInterviewForm();
+        Mockito.doNothing().when(spyObject).viewFeedback();
+
+        spyObject.viewApplicationProcessDashboard();
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Redirecting to View assignments page")); // Typo in original code
+        Mockito.verify(spyObject, Mockito.times(1)).viewAssessment();
+        outputStream.reset();
+
+        spyObject.viewApplicationProcessDashboard();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Redirecting to submit assignments page"));
+        Mockito.verify(spyObject, Mockito.times(1)).submitAssessmentForm();
+        outputStream.reset();
+
+        spyObject.viewApplicationProcessDashboard();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Redirecting to view interview questions page"));
+        Mockito.verify(spyObject, Mockito.times(1)).viewInterview();
+        outputStream.reset();
+
+        spyObject.viewApplicationProcessDashboard();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Redirecting to submit interview answers page"));
+        Mockito.verify(spyObject, Mockito.times(1)).submitInterviewForm();
+        outputStream.reset();
+
+        spyObject.viewApplicationProcessDashboard();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Redirecting to view feedback page"));
+        Mockito.verify(spyObject, Mockito.times(1)).viewFeedback();
+        outputStream.reset();
+
+        spyObject.viewApplicationProcessDashboard();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Go back to Applications page"));
+        Mockito.verify(spyObject, Mockito.times(1)).viewApplicantApplications();
+        outputStream.reset();
+
+        spyObject.viewApplicationProcessDashboard();
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+        Mockito.verify(spyObject, Mockito.times(2)).viewApplicantDashboard();
+        outputStream.reset();
+
+        Mockito.verify(spyObject, Mockito.times(7)).viewApplicationProcessDashboard();
+        mockedUtility.verify(Mockito.times(9), () -> Utility.inputOutput(Mockito.anyString()));
+    }
+}
+
 }
 
 

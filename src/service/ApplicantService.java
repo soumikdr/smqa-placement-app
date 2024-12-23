@@ -221,6 +221,53 @@ public class ApplicantService {
     }
 
     public void viewApplicationProcessDashboard() {
+
+        System.out.println("\nWelcome to application process dashboard\n");
+
+        System.out.println("1. View assignments");
+        System.out.println("2. Submit assignment\n");
+        System.out.println("3. View interview questions\n");
+        System.out.println("4. Submit interview answers\n");
+        System.out.println("5. View feedback\n");
+
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1": {
+                System.out.println("Redirecting to View assignments page");
+                viewAssessment();
+                break;
+            }
+            case "2": {
+                System.out.println("Redirecting to submit assignments page");
+                submitAssessmentForm();
+                break;
+            }
+            case "3": {
+                System.out.println("Redirecting to view interview questions page");
+                viewInterview();
+                break;
+            }
+            case "4": {
+                System.out.println("Redirecting to submit interview answers page");
+                submitInterviewForm();
+                break;
+            }
+            case "5": {
+                System.out.println("Redirecting to view feedback page");
+                viewFeedback();
+                break;
+            }
+            case "6": {
+                System.out.println("Go back to Applications page");
+                viewApplicantApplications();
+                break;
+            }
+            default: {
+                System.out.println("You entered invalid option");
+                viewApplicantDashboard();
+                break;
+            }
+        }
+
     }
 
 }
