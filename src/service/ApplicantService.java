@@ -258,7 +258,7 @@ public class ApplicantService {
                     switch(Utility.inputOutput("Please Select One Of The Options")) {
                         case "1":
                             System.out.println("\nRedirecting to application process dashboard");
-                            viewApplicationProcessDashboard();
+                            viewApplicationProcessDashboard(applicationId);
                             break;
                         case "2":
                             System.out.println("\nComplete your application soon");
@@ -304,7 +304,7 @@ public class ApplicantService {
 
     }
 
-    public void viewApplicationProcessDashboard() {
+    public void viewApplicationProcessDashboard(String applicationId) {
     }
 
 }
