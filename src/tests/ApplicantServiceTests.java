@@ -171,7 +171,7 @@ public void viewApplicationProcessDashboardTest() throws IOException {
 
         spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         String consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Redirecting to View assignments page")); // Typo in original code
+        Assert.assertTrue(consoleOutput.contains("Redirecting to View assignments page"));
         Mockito.verify(spyObject, Mockito.times(1)).viewAssessment(Mockito.anyString());
         outputStream.reset();
 
