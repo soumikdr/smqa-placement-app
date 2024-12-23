@@ -1,5 +1,7 @@
 package tests;
 
+import model.Application;
+import model.Assignment;
 import model.Job;
 import model.JobStatus;
 import org.junit.Assert;
@@ -10,6 +12,8 @@ import org.mockito.Mockito;
 
 import service.RecruiterService;
 import utility.Utility;
+
+import static org.mockito.Mockito.times;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -162,5 +166,56 @@ public class RecruiterServiceTests {
             Mockito.verify(spyObject, Mockito.times(5)).viewRecruiterDashboard();
             mockedUtility.verify(Mockito.times(12), () -> Utility.inputOutput(Mockito.anyString()));
         }
+    }
+    @Test
+    public void viewAssessmentResultTest() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        RecruiterService spyObject = Mockito.spy(service);
+        
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            ArrayList<Application> mockApplications = new ArrayList<>();
+            mockApplications.add(new Application("App1", "Job1", "User1", "UnderConsideration", null));
+            mockApplications.add(new Application("App2", "Job2", "User2", "UnderConsideration", null));
+
+            ArrayList<Assignment> mockAssignments = new ArrayList<>();
+            
+            ArrayList<String> questions=new ArrayList<String>();
+            questions.add("Q1");
+            questions.add("Q2");
+            ArrayList<String> answers=new ArrayList<String>();
+            answers.add("ANS1");
+            answers.add("ANS2");
+            
+            mockAssignments.add(new Assignment("A1","App1","Coding Assessment",questions,answers));
+            mockAssignments.add(new Assignment("A2","App1","Interview",questions,answers));
+            
+            mockApplications.get(0).setAssignments(mockAssignments);
+
+
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+
+            Mockito.doNothing().when(spyObject).viewSpecificApplication();
+            
+            spyObject.viewAssessmentResult("App1", "A1");
+            
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Assessment Found"));
+            Assert.assertTrue(consoleOutput.contains("Q1"));
+
+            outputStream.reset();
+
+            spyObject.viewAssessmentResult("App1", "A3");
+            
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("There is no Coding Assessment Result for this application"));
+            Assert.assertTrue(consoleOutput.contains("Directing to Application Page"));
+
+            Mockito.verify(spyObject,times(2)).viewSpecificApplication();
+            mockedUtility.verify(times(2),() -> Utility.getApplications());
+
+        }
+        
+
     }
 }
