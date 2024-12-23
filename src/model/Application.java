@@ -9,15 +9,15 @@ public class Application {
 
     private String applicantId;
 
-    private String status;
+    private ApplicationStatus applicationStatus;
 
     private ArrayList<Assignment> assignments;
 
-    public Application(String id, String jobId, String applicantId, String status, ArrayList<Assignment> assignments) {
+    public Application(String id, String jobId, String applicantId, ApplicationStatus applicationStatus, ArrayList<Assignment> assignments) {
         this.id = id;
         this.jobId = jobId;
         this.applicantId = applicantId;
-        this.status = status;
+        this.applicationStatus = applicationStatus;
         this.assignments = assignments;
     }
 
@@ -48,12 +48,12 @@ public class Application {
         this.applicantId = applicantId;
     }
 
-    public String getStatus() {
-        return status;
+    public ApplicationStatus getStatus() {
+        return applicationStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(ApplicationStatus applicationStatus) {
+        this.applicationStatus = applicationStatus;
     }
 
     public ArrayList<Assignment> getAssignments() {

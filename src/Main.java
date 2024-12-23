@@ -19,6 +19,11 @@ public class Main {
     public static void main(String[] args) {
         users=new ArrayList<>();
         jobs=new ArrayList<>();
+        applications=new ArrayList<>();
+        assignments=new ArrayList<>();
+        ArrayList<String> questions = new ArrayList<String>();
+        ArrayList<String> answers = new ArrayList<String>();
+
         jobs.add(new Job(
             "Job1",
             "Data Analyst", 
@@ -30,9 +35,19 @@ public class Main {
             "Frontend Developer",
             "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ",
             JobStatus.PUBLIC));
-        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
-        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
 
+        questions.add("What is class in Java");
+        questions.add("What is object in Java");
+        answers.add("A class in Java is a set of objects which shares common characteristics/ behavior and common properties/ attributes.");
+        answers.add("Objects are the instances of a class that are created to use the attributes and methods of a class.");
+
+        assignments.add(new Assignment("Assignment1", "1", "Technical", questions, answers));
+
+        applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments));
+        applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments));
+
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", applications));
+        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
         
         Utility.setUsers(users);
         Utility.setAssignments(assignments);
