@@ -100,6 +100,33 @@ public class RecruiterService {
 
         if (invalidJobId) {
             System.out.println("\nYou have entered a invalid Job id\n");
+        } else {
+            System.out.println("\n1: Update job description\n");
+            System.out.println("\n2: Update job status\n");
+            System.out.println("\n3: View total applications for this job\n");
+            System.out.println("\n4: Continue to main menu\n");
+
+            switch(Utility.inputOutput("Please Select One Of The Options")){
+                case "1":
+                    System.out.println("Redirecting to update job description page \n");
+                    updateDescriptionOfJobPost(jobId);
+                    break;
+                case "2":
+                    System.out.println("Redirecting to total applications for the job\n");
+                    updateStatusOfJobPost(jobId);
+                    break;
+                case "3":
+                    System.out.println("Redirecting to dashboard\n");
+                    viewTotalNumberOfApplications(jobId);
+                    break;
+                case "4":
+                    System.out.println("Redirecting to main menu\n");
+                    break;
+                default:
+                    System.out.println("You entered invalid option");
+                    viewRecruiterDashboard();
+                    break;
+            }
         }
 
         System.out.println("\n1: View another job details\n");
@@ -122,7 +149,7 @@ public class RecruiterService {
 
     }
 
-    public void updateDescriptionOfJobPost() {
+    public void updateDescriptionOfJobPost(String jobId) {
 
     }
 
@@ -144,7 +171,7 @@ public class RecruiterService {
         System.out.println("No job post available with given id");
     }
 
-    public void viewTotalNumberOfApplications() {
+    public void viewTotalNumberOfApplications(String jobId) {
 
     }
 
