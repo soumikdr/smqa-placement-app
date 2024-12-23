@@ -161,7 +161,11 @@ public class ApplicantServiceTests {
         ArrayList<String> answers = new ArrayList<>();
     
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            // Mock the current user
+
+            Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).viewApplicantApplications();
+            Mockito.doNothing().when(spyObject).viewApplicantApplications();
+
             User mockUser = new User("U101", "John", "Doe", "johndoe", "bestpassword", UserRole.APPLICANT);
             mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
     
