@@ -1,26 +1,25 @@
 package tests;
 
-import model.Applicant;
-import model.Application;
-import model.Job;
-import model.User;
 import model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import service.ApplicantService;
 import utility.Utility;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class ApplicantServiceTests {
 
@@ -100,6 +99,7 @@ public class ApplicantServiceTests {
         Assert.assertEquals("New Last Name", filteredUser.getLastName());
         Assert.assertEquals(newUserProfile.getId(), filteredUser.getId());
     }
+
     @Test
     public void deleteProfileHelper() {
         ApplicantService service = ApplicantService.getInstance();
@@ -154,6 +154,32 @@ public class ApplicantServiceTests {
     //         assertTrue(consoleOutput.contains("Job with ID 999 not found."));
     //     }
     // }
-}
 
+
+    @Test
+    public void viewApplicationFormTest() {
+        ApplicantService spyObject = Mockito.spy(ApplicantService.getInstance());
+
+        Job mockJob = new Job("1", "Software Engineer", "Develop software", JobStatus.PUBLIC);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+            
+           mockedUtility.when(() -> Utility.inputOutput("Enter your education: ")).thenReturn("Bachelor's Degree");
+            mockedUtility.when(() -> Utility.inputOutput("Enter your experience: ")).thenReturn("5");
+            mockedUtility.when(() -> Utility.inputOutput("Enter your skills: ")).thenReturn("Java, Spring");
+
+            spyObject.viewApplicationForm(mockJob);
+
+            String consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Welcome to the Job Application Form"));
+            assertTrue(consoleOutput.contains("Enter your education: "));
+            assertTrue(consoleOutput.contains("Enter your experience: "));
+            assertTrue(consoleOutput.contains("Enter your skills: "));
+        }
+    }
+
+}
 
