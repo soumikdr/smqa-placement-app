@@ -13,12 +13,15 @@ public class Application {
 
     private ArrayList<Assignment> assignments;
 
-    public Application(String id, String jobId, String applicantId, ApplicationStatus applicationStatus, ArrayList<Assignment> assignments) {
+    private String feedback;
+
+    public Application(String id, String jobId, String applicantId, ApplicationStatus applicationStatus, ArrayList<Assignment> assignments, String feedback) {
         this.id = id;
         this.jobId = jobId;
         this.applicantId = applicantId;
         this.applicationStatus = applicationStatus;
         this.assignments = assignments;
+        this.feedback = feedback;
     }
 
     public Application() {
@@ -54,6 +57,14 @@ public class Application {
 
     public void setStatus(ApplicationStatus applicationStatus) {
         this.applicationStatus = applicationStatus;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 
     public ArrayList<Assignment> getAssignments() {

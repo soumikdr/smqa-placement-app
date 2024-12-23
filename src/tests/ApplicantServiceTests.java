@@ -170,11 +170,11 @@ public class ApplicantServiceTests {
     
             ArrayList<Application> mockApplications = new ArrayList<>();
             mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
-                new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", questions, answers)))));
-            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>()));
-            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.SUCCESSFUL, new ArrayList<>()));
+                new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", questions, answers))), null));
+            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
+            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.SUCCESSFUL, new ArrayList<>(),  null));
             mockApplications.add(new Application("A104", "J104", "U101", ApplicationStatus.INPROGRESS,
-                new ArrayList<>(List.of(new Assignment("Assign2", "U101", "Assignment 1", new ArrayList<>(), new ArrayList<>())))));
+                new ArrayList<>(List.of(new Assignment("Assign2", "U101", "Assignment 1", new ArrayList<>(), new ArrayList<>()))), null));
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 

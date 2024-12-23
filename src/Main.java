@@ -43,8 +43,8 @@ public class Main {
 
         assignments.add(new Assignment("Assignment1", "1", "Technical", questions, answers));
 
-        applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments));
-        applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments));
+        applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments, "Feedback"));
+        applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments, ""));
 
         users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", applications));
         users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
