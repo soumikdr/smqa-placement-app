@@ -13,6 +13,8 @@ public class Application {
 
     private ArrayList<Assignment> assignments;
 
+    private String feedback;
+
     public Application(String id, String jobId, String applicantId, String status, ArrayList<Assignment> assignments) {
         this.id = id;
         this.jobId = jobId;
@@ -62,5 +64,13 @@ public class Application {
 
     public void setAssignments(ArrayList<Assignment> assignments) {
         this.assignments = assignments;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 }

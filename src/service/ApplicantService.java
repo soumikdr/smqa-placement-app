@@ -1,5 +1,6 @@
 package service;
 
+import model.Application;
 import model.Job;
 import model.User;
 import model.UserRole;
@@ -36,8 +37,20 @@ public class ApplicantService {
 
     }
 
-    public void viewFeedback() {
+    public void viewFeedback(String applicationId) {
+        System.out.println("\nWelcoem to view feedback page");
 
+        for(Application application: Utility.getApplications()) {
+            if (application.getApplicantId().equals(applicationId)) {
+                if(application.getFeedback().isEmpty()) {
+                    System.out.println("\n Feedback not received");
+                } else {
+                    System.out.println("\nFeedback for " + applicationId);
+                    System.out.println("\n" + application.getFeedback());
+                }
+            }
+        }
+        viewApplicationProcessDashboard(applicationId);
     }
 
     public void viewJobPost() {
@@ -220,7 +233,7 @@ public class ApplicantService {
 
     }
 
-    public void viewApplicationProcessDashboard() {
+    public void viewApplicationProcessDashboard(String applicationId) {
     }
 
 }
