@@ -143,7 +143,7 @@ public class CommonService {
                 signUp("Recruiter", recruiterCode, firstName, lastName, userName, password);
                 break;
             case "3":
-                System.out.println("\nRediredting to Landing Page\n");
+                System.out.println("\nRedirecting to Landing Page\n");
                 accessLandingPage();
                 break;
             default:
@@ -190,10 +190,10 @@ public class CommonService {
                 break;
             case "2":
                 System.out.println("\nRediredting to Dashboard\n");
-                if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT) {
+                if (Utility.getCurrentUser().getRole().equals(UserRole.APPLICANT)) {
                     System.out.println("\nRedirecting to Applicant dashboard\n");
                     ApplicantService.getInstance().viewApplicantDashboard();
-                } else if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER) {
+                } else {
                     System.out.println("\nRedirecting to Recruiter dashboard\n");
                     RecruiterService.getInstance().viewRecruiterDashboard();
                 }
@@ -208,12 +208,19 @@ public class CommonService {
     public void resetPassword(String userName) {
         System.out.println("\nYour entered username: " + userName + "\n");
         if (Utility.getCurrentUser().getUserName().equals(userName)) {
-            Utility.inputOutput("Enter your New Password");
-            Utility.getCurrentUser().setPassword(userName);
+            String password = Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(password);
+            for(User user: Utility.getUsers()) {
+                if(user.getUserName().equals(userName)) {
+                    user.setPassword(password);
+                }
+            }
             System.out.println("\nRedirecting to " + Utility.getCurrentUser().getRole() + " dashboard\n");
             if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT) {
+                System.out.println("\nRedirecting to Applicant dashboard");
                 ApplicantService.getInstance().viewApplicantDashboard();
             } else {
+                System.out.println("\nRedirecting to Recruiter dashboard");
                 RecruiterService.getInstance().viewRecruiterDashboard();
             }
         } else {

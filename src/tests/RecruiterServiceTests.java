@@ -4,6 +4,9 @@ import model.Application;
 import model.Assignment;
 import model.Job;
 import model.JobStatus;
+import model.User;
+import model.UserRole;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,35 +42,65 @@ public class RecruiterServiceTests {
 
     }
 
-    @Test
+     @Test
     public void viewRecruiterProfilePageTest() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        RecruiterService spyObject = Mockito.spy(service);
 
-        String simulatedInput = "1";
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-        service.viewRecruiterProfilePage();
-        String consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Welcome to Update profile page"));
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
-        outputStream.reset();
+            Mockito.doNothing().when(spyObject).updateRecruiterProfile();;
+            Mockito.doNothing().when(spyObject).deleteRecruiterProfile();
+            Mockito.doNothing().when(spyObject).viewRecruiterDashboard();
 
-        simulatedInput = "2";
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-        service.viewRecruiterProfilePage();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Welcome to Delete profile page"));
+            User mockUser = new User("U101", "John", "Doe", "johndoe", "bestpassword", UserRole.RECRUITER);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
 
-        outputStream.reset();
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+            spyObject.viewRecruiterProfilePage();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to update profile page..."));
+            outputStream.reset();
 
-        // simulatedInput = "invalid input";
-        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-        // simulatedInput = "1";
-        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
+            spyObject.viewRecruiterProfilePage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to delete profile page..."));
+            outputStream.reset();
 
-        // service.viewRecruiterProfilePage();
-        // consoleOutput = outputStream.toString();
-        // Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("3");
+            spyObject.viewRecruiterProfilePage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard..."));
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("invalid", "1");
+            spyObject.viewRecruiterProfilePage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("invalid", "3");
+            spyObject.viewRecruiterProfilePage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("3");
+            spyObject.viewRecruiterProfilePage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("First Name: John"));
+            Assert.assertTrue(consoleOutput.contains("Last Name: Doe"));
+            Assert.assertTrue(consoleOutput.contains("User Name: johndoe"));
+            Assert.assertTrue(consoleOutput.contains("Role: RECRUITER"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+            outputStream.reset();
+
+            Mockito.verify(spyObject, Mockito.atLeastOnce()).viewRecruiterProfilePage();
+            mockedUtility.verify(Mockito.atLeastOnce(), () -> Utility.inputOutput(Mockito.anyString()));
+        }
 
     }
 

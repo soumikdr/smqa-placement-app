@@ -266,7 +266,9 @@ public class ApplicantService {
                 }
                 if (application.getStatus().equals(ApplicationStatus.INPROGRESS)) {
                     System.out.println("\n1: Complete your application\n");
-                    System.out.println("\n2: Complete your application later\n");
+                    System.out.println("\n2: View Job Description");
+                    System.out.println("\n3: Withdraw application");
+                    System.out.println("\n4: Complete your application later\n");
 
                     switch(Utility.inputOutput("Please Select One Of The Options")) {
                         case "1":
@@ -274,7 +276,15 @@ public class ApplicantService {
                             viewApplicationProcessDashboard(applicationId);
                             break;
                         case "2":
-                            System.out.println("\nComplete your application soon");
+                        System.out.println("\nComplete your application soon");
+                        break;
+                        case "3":
+                            System.out.println("\nRedirecting to view job description page");
+                            viewJobDescFromApplication(applicationId);
+                            break;
+                        case "4":
+                            System.out.println("\nRedirecting to withdraw application page");
+                            withdrawApplication(applicationId);
                             break;
                         default:
                             System.out.println("You entered invalid option");
@@ -283,7 +293,7 @@ public class ApplicantService {
                 }
                 invalidApplicationId = false;
                 break;
-            }
+        }
         }
 
         if (invalidApplicationId) {
@@ -309,11 +319,30 @@ public class ApplicantService {
         }
     }
 
-    public void withdrawApplication() {
+    public void withdrawApplication(String applicationId) {
+        System.out.println("\nWelcome to withdraw application page");
 
+        System.out.println("1: Confirm to withdraw application");
+        System.out.println("2: Go back to applications page");
+
+        switch(Utility.inputOutput("Please Select One Of The Options")){
+            case "1":
+                System.out.println("Withdrawing application \n");
+                ArrayList<Application> applications = Utility.getApplications();
+                applications.removeIf(application -> applicationId.equals(application.getId()));
+                break;
+            case "2":
+                System.out.println("Redirecting to applications page\n");
+                viewApplicantApplications();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewApplicantApplications();
+                break;
+        }
     }
 
-    public void viewJobDescFromApplication() {
+    public void viewJobDescFromApplication(String applicationId) {
 
     }
 
