@@ -1,5 +1,7 @@
 package service;
 
+import model.Assignment;
+import model.AssignmentStatus;
 import model.Job;
 import model.User;
 import model.UserRole;
@@ -28,8 +30,31 @@ public class ApplicantService {
 
     }
 
-    public void submitInterviewForm() {
+    public void submitInterviewForm(Assignment interview) {
+    	    	
+    	System.out.println("Please answer questions to complete interview :");
+    	
+    	for(String question:interview.getQuestions()) {
+    		
+    		 
+    		interview.getAnswers().add(Utility.inputOutput(question));
+    		
+    	}
+    	System.out.println("Interview completed.");
 
+    	for(Assignment a: Utility.getAssignments())
+    	{
+    		if(a.getId().equals(interview.getId())) {
+    			a.setAnswers(interview.getAnswers());
+    	    	a.setStatus(AssignmentStatus.SUBMITTED);
+    		}
+    	}
+    	
+    	System.out.println("Answers Submitted.");
+    	System.out.println("Directing to application dashboard..");
+        viewApplicationProcessDashboard();
+    	
+    	
     }
 
     public void viewInterview() {

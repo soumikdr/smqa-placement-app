@@ -1,5 +1,7 @@
 import model.*;
+import service.ApplicantService;
 import service.CommonService;
+import service.RecruiterService;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -17,6 +19,19 @@ public class Main {
     private static Utility utility;
 
     public static void main(String[] args) {
+    	
+    	ArrayList<String> questions=new ArrayList<String>();
+    	questions.add("Q1");
+    	questions.add("Q2");
+    
+    	
+    	assignments=new ArrayList<Assignment>();
+    	assignments.add(new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>()));
+        Utility.setAssignments(assignments);
+
+    	ApplicantService.getInstance().submitInterviewForm(assignments.get(0));
+    	
+    	
         users=new ArrayList<>();
         jobs=new ArrayList<>();
         jobs.add(new Job(
@@ -35,10 +50,10 @@ public class Main {
 
         
         Utility.setUsers(users);
-        Utility.setAssignments(assignments);
         Utility.setJobs(jobs);
         Utility.setApplications(applications);
 
+    	System.out.println(Utility.getAssignments().get(0).getAnswers().get(0));
 
         CommonService commonService = new CommonService();
         commonService.accessLandingPage();
