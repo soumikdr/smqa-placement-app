@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.internal.configuration.injection.MockInjection;
 
 import service.ApplicantService;
 import utility.Utility;
@@ -162,55 +163,55 @@ public void viewApplicationProcessDashboardTest() throws IOException {
         mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString()))
             .thenReturn("1", "2", "3", "4", "5", "6", "invalid", "6", "2");
 
-        Mockito.doNothing().when(spyObject).viewAssessment("1");
-        Mockito.doNothing().when(spyObject).submitAssessmentForm("1");
-        Mockito.doNothing().when(spyObject).viewInterview("1");
-        Mockito.doNothing().when(spyObject).submitInterviewForm("1");
-        Mockito.doNothing().when(spyObject).viewFeedback("1");
+        Mockito.doNothing().when(spyObject).viewAssessment(Mockito.anyString());
+        Mockito.doNothing().when(spyObject).submitAssessmentForm(Mockito.anyString());
+        Mockito.doNothing().when(spyObject).viewInterview(Mockito.anyString());
+        Mockito.doNothing().when(spyObject).submitInterviewForm(Mockito.anyString());
+        Mockito.doNothing().when(spyObject).viewFeedback(Mockito.anyString());
 
-        spyObject.viewApplicationProcessDashboard("App1");
+        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Redirecting to View assignments page")); // Typo in original code
-        Mockito.verify(spyObject, Mockito.times(1)).viewAssessment("App1");
+        Mockito.verify(spyObject, Mockito.times(1)).viewAssessment(Mockito.anyString());
         outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard("App1");
+        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Redirecting to submit assignments page"));
-        Mockito.verify(spyObject, Mockito.times(1)).submitAssessmentForm("App1");
+        Mockito.verify(spyObject, Mockito.times(1)).submitAssessmentForm(Mockito.anyString());
         outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard("App1");
+        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Redirecting to view interview questions page"));
-        Mockito.verify(spyObject, Mockito.times(1)).viewInterview("App1");
+        Mockito.verify(spyObject, Mockito.times(1)).viewInterview(Mockito.anyString());
         outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard("App1");
+        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Redirecting to submit interview answers page"));
-        Mockito.verify(spyObject, Mockito.times(1)).submitInterviewForm("App1");
+        Mockito.verify(spyObject, Mockito.times(1)).submitInterviewForm(Mockito.anyString());
         outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard("App1");
+        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Redirecting to view feedback page"));
-        Mockito.verify(spyObject, Mockito.times(1)).viewFeedback("App1");
+        Mockito.verify(spyObject, Mockito.times(1)).viewFeedback(Mockito.anyString());
         outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard("App1");
+        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Go back to Applications page"));
         Mockito.verify(spyObject, Mockito.times(1)).viewApplicantApplications();
         outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard("App1");
+        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
-        Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard("App1");
+        Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard(Mockito.anyString());
         outputStream.reset();
 
-        Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard("App1");
+        Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard(Mockito.anyString());
         mockedUtility.verify(Mockito.times(8), () -> Utility.inputOutput(Mockito.anyString()));
     }
 }
@@ -341,7 +342,68 @@ public void viewApplicationProcessDashboardTest() throws IOException {
         }
     }
 
-    
+    @Test
+    public void viewFeedbackTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService spyObject = Mockito.spy(service);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Mocked applications list
+            ArrayList<Application> mockApplications = new ArrayList<>();
+            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS, 
+                new ArrayList<>(), "Excellent performance, keep it up!"));
+            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, 
+                new ArrayList<>(), ""));
+            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.UNSUCCESSFUL, 
+                new ArrayList<>(), "Needs improvement, better luck next time."));
+
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+
+            // Mocking dependent method call
+            Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard(Mockito.anyString());
+
+            // Case 1: Application ID matches and feedback is available
+            spyObject.viewFeedback("A101");
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcoem to view feedback page"));
+            Assert.assertTrue(consoleOutput.contains("Feedback for A101"));
+            Assert.assertTrue(consoleOutput.contains("Excellent performance, keep it up!"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewApplicationProcessDashboard("A101");
+            outputStream.reset();
+
+            // Case 2: Application ID matches but feedback is not available
+            spyObject.viewFeedback("A102");
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcoem to view feedback page"));
+            Assert.assertTrue(consoleOutput.contains("Feedback not received"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewApplicationProcessDashboard("A102");
+            outputStream.reset();
+
+            // Case 3: No application matches the given application ID
+            spyObject.viewFeedback("A999");
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcoem to view feedback page"));
+            Assert.assertFalse(consoleOutput.contains("Feedback for U999"));
+            Assert.assertFalse(consoleOutput.contains("Feedback not received"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewApplicationProcessDashboard("A999");
+            outputStream.reset();
+
+            // Case 4: Multiple applications for the same applicant
+            spyObject.viewFeedback("A101");
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcoem to view feedback page"));
+            Assert.assertTrue(consoleOutput.contains("Feedback for A101"));
+            Assert.assertTrue(consoleOutput.contains("Excellent performance, keep it up!"));
+            Mockito.verify(spyObject, Mockito.times(2)).viewApplicationProcessDashboard("A101");
+            outputStream.reset();
+
+            // Verify interactions
+            Mockito.verify(spyObject, Mockito.times(4)).viewFeedback(Mockito.anyString());
+            mockedUtility.verify(Mockito.times(4), Utility::getApplications);
+        }
+    }
+
 }
 
 

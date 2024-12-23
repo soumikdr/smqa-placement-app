@@ -44,7 +44,7 @@ public class ApplicantService {
         System.out.println("\nWelcoem to view feedback page");
 
         for(Application application: Utility.getApplications()) {
-            if (application.getApplicantId().equals(applicationId)) {
+            if (application.getId().equals(applicationId)) {
                 if(application.getFeedback().isEmpty()) {
                     System.out.println("\n Feedback not received");
                 } else {
