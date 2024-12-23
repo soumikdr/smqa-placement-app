@@ -21,22 +21,22 @@ public class ApplicantService {
     }
 
 
-    public void submitAssessmentForm() {
+    public void submitAssessmentForm(String applicationId) {
     }
 
-    public void viewAssessment() {
-
-    }
-
-    public void submitInterviewForm() {
+    public void viewAssessment(String applicationId) {
 
     }
 
-    public void viewInterview() {
+    public void submitInterviewForm(String applicationId) {
 
     }
 
-    public void viewFeedback() {
+    public void viewInterview(String applicationId) {
+
+    }
+
+    public void viewFeedback(String applicationId) {
 
     }
 
@@ -220,7 +220,7 @@ public class ApplicantService {
 
     }
 
-    public void viewApplicationProcessDashboard() {
+    public void viewApplicationProcessDashboard(String applicationId) {
 
         System.out.println("\nWelcome to application process dashboard\n");
 
@@ -233,27 +233,27 @@ public class ApplicantService {
         switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1": {
                 System.out.println("Redirecting to View assignments page");
-                viewAssessment();
+                viewAssessment(applicationId);
                 break;
             }
             case "2": {
                 System.out.println("Redirecting to submit assignments page");
-                submitAssessmentForm();
+                submitAssessmentForm(applicationId);
                 break;
             }
             case "3": {
                 System.out.println("Redirecting to view interview questions page");
-                viewInterview();
+                viewInterview(applicationId);
                 break;
             }
             case "4": {
                 System.out.println("Redirecting to submit interview answers page");
-                submitInterviewForm();
+                submitInterviewForm(applicationId);
                 break;
             }
             case "5": {
                 System.out.println("Redirecting to view feedback page");
-                viewFeedback();
+                viewFeedback(applicationId);
                 break;
             }
             case "6": {
@@ -263,7 +263,7 @@ public class ApplicantService {
             }
             default: {
                 System.out.println("You entered invalid option");
-                viewApplicantDashboard();
+                viewApplicationProcessDashboard(applicationId);
                 break;
             }
         }
