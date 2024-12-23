@@ -179,7 +179,7 @@ public class ApplicantServiceTests {
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 
             Mockito.doNothing().when(spyObject).viewApplicantApplications();
-            Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard();
+            Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard("A101");
 
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "1", "invalid");
             spyObject.viewSpecificApplication();
@@ -268,7 +268,7 @@ public class ApplicantServiceTests {
             outputStream.reset();
     
             Mockito.verify(spyObject, Mockito.times(9)).viewSpecificApplication();
-            Mockito.verify(spyObject, Mockito.times(4)).viewApplicationProcessDashboard();
+            Mockito.verify(spyObject, Mockito.times(3)).viewApplicationProcessDashboard("A101");
             Mockito.verify(spyObject, Mockito.times(8)).viewApplicantApplications();
             mockedUtility.verify(Mockito.times(24), () -> Utility.inputOutput(Mockito.anyString()));
         }
