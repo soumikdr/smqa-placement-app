@@ -1,13 +1,9 @@
 package service;
-
-import model.Assignment;
-import model.AssignmentStatus;
 import model.Application;
 import model.Job;
 import model.ApplicationStatus;
 import model.Assignment;
 import model.User;
-import model.UserRole;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -119,8 +115,16 @@ public class ApplicantService {
 
     }
 
-    public void submitApplicationForm(Job job, String education, Integer experience, String skills) {
+    public void submitApplicationForm(String jobId, String applicantId) {
 
+    	String applicationId=UUID.randomUUID().toString();
+    	Application newApplication=new Application(applicationId,jobId, applicantId,"Submitted", new ArrayList<Assignment>());
+    	Utility.getApplications().add(newApplication);
+
+    	System.out.println("Application submitted : "+newApplication.getId());
+    	System.out.println("Directing to Applicant Dashboard");
+
+    	viewApplicantDashboard();
 
     }
 
