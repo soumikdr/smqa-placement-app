@@ -8,10 +8,10 @@ public class Job {
 
     private String jobDescription;
 
-    private String jobStatus;
+    private JobStatus jobStatus;
 
 
-    public Job(String id, String jobName, String jobDescription, String jobStatus) {
+    public Job(String id, String jobName, String jobDescription, JobStatus jobStatus) {
         this.id = id;
         this.jobName = jobName;
         this.jobDescription = jobDescription;
@@ -45,11 +45,11 @@ public class Job {
         this.jobDescription = jobDescription;
     }
 
-    public String getJobStatus() {
+    public JobStatus getJobStatus() {
         return jobStatus;
     }
 
-    public void setJobStatus(String jobStatus) {
+    public void setJobStatus(JobStatus jobStatus) {
         this.jobStatus = jobStatus;
     }
 }
