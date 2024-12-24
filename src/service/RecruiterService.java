@@ -71,6 +71,34 @@ public class RecruiterService {
 
     public void viewRecruiterDashboard() {
         System.out.println("Welcome to Recruiter Dashboard\n");
+
+        System.out.println("1. View profile");
+        System.out.println("2. View available jobs");
+        System.out.println("3. View available applications");
+        System.out.println("4. Post a new job");
+        System.out.println("5. Logout");
+
+        switch(Utility.inputOutput("\nPlease select one option to proceed..")){
+            case "1":
+                viewRecruiterProfilePage();
+                break;
+            case "2":
+                viewAvailableJobs();
+                break;
+            case "3":
+                viewAllApplications();
+                break;
+            case "4":
+                viewJobPostingForm();
+                break;
+            case "5":
+                logout();
+                break;
+            default:
+                System.out.println("\nYou have entered an invalid option. Please try again.\n");
+                viewRecruiterDashboard();
+                break;
+        }
     }
 
     public void viewRecruiterProfilePage() {
@@ -105,7 +133,62 @@ public class RecruiterService {
 
     }
 
-    public void deleteRecruiterProfile() {
+
+    public void approveRejectApplication(Application application) {
+
+    	System.out.println("Do you want to Approve/Reject Application?");
+
+    	System.out.println("1. Approve The Application");
+    	System.out.print("2. Reject The Application\n");
+
+    	System.out.println("0. Go Back to Application Page");
+
+    	String selection=Utility.inputOutput("Please Select One Of The Options");
+
+    	switch (selection) {
+		case "1": {
+              application.setStatus("Approved");
+              Utility.getApplications().stream().map(a -> {
+            	  if(a.getId().equals(application.getId())) {
+            		  a.setStatus(application.getStatus());
+            	  }
+            	  return a;
+              });
+              System.out.println("Application Approved");
+              System.out.println("Directing to Application's Page");
+
+              //has to redirect to application page
+              viewSpecificApplication();
+               break;
+		}
+		case "2":{
+            application.setStatus("Rejected");
+            Utility.getApplications().stream().map(a -> {
+          	  if(a.getId().equals(application.getId())) {
+          		  a.setStatus(application.getStatus());
+          	  }
+          	  return a;
+            });
+            System.out.println("Application Rejected");
+            System.out.println("Directing to Application's Page");
+            //has to redirect to application page
+            viewSpecificApplication();
+            break;
+		}
+		case "3":{
+			viewSpecificApplication();
+            //has to redirect to application page
+            System.out.println("Directing to Application's Page");
+            break;
+		}
+		default:
+            System.out.println("You entered invalid option");
+            approveRejectApplication(application);
+            break;
+		}
+
+    }
+    public void deleteRecruiterProfile(){
 
     }
 
@@ -282,5 +365,8 @@ public class RecruiterService {
         }
     }
 
+    public void logout() {
 
+    }
+    
 }

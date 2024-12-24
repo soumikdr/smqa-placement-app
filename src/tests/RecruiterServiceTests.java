@@ -13,12 +13,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import service.CommonService;
+
+
 import service.RecruiterService;
 import utility.Utility;
 
 import static org.mockito.Mockito.times;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -117,6 +123,74 @@ public class RecruiterServiceTests {
         }
 
     }
+    @Test
+    public void testApproveRejectApplication() {
+
+        Application application=new Application("1", "Job1", "User1", "UnderConsideration", null);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        RecruiterService spyObject = Mockito.spy(service);
+        ArrayList<Application> apps=new ArrayList<Application>();
+        apps.add(application);
+
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
+
+        	Mockito.doNothing().when(spyObject).viewSpecificApplication();
+
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+            mockedUtility.when(()->Utility.getApplications()).thenReturn(apps);
+
+
+            spyObject.approveRejectApplication(application);
+
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Application Approved"));
+
+            outputStream.reset();
+
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("2");
+
+            spyObject.approveRejectApplication(application);
+
+            consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Application Rejected"));
+
+            outputStream.reset();
+
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("3");
+
+            spyObject.approveRejectApplication(application);
+
+            consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Directing to Application's Page"));
+
+            outputStream.reset();
+
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("invalid");
+
+        	Mockito.doCallRealMethod().doNothing().when(spyObject).approveRejectApplication(any());
+
+            spyObject.approveRejectApplication(application);
+
+            consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+
+            Mockito.verify(spyObject,times(3)).viewSpecificApplication();
+            Mockito.verify(spyObject,times(5)).approveRejectApplication(Mockito.any());
+            mockedUtility.verify(times(4),()->Utility.inputOutput(Mockito.anyString()));
+            mockedUtility.verify(times(2),()->Utility.getApplications());
+
+
+          }
+
+
+    }
+
 
     @Test
     public void submitNewJobPost() {
@@ -176,6 +250,8 @@ public class RecruiterServiceTests {
         Utility.setJobs(new ArrayList<>());
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
         service.updateStatusOfJobPost("1");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("No jobs available"));
     }
 
     @Test
