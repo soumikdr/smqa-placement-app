@@ -62,8 +62,14 @@ COCOMO calculations,
 ![Imgur](https://i.imgur.com/mSRDSve.png) <br />
 ![Imgur](https://i.imgur.com/TLIBPjB.png)
 
-## Sprint Meeting - 19th November, 2024
+## Sprint Meeting - 18th November, 2024
 
 ### Summery
 
-In our first sprint meeting, We allocated user stories to the sprints based on PERT chart activities, considering the predecessor dependencies and the estimated times. Each user story is assigned to a priority level. Also, user story issues assigned among us keeping equal work distribution in mind.
+In our first sprint meeting, we allocated user stories to the sprints based on PERT chart activities, considering the predecessor dependencies and the estimated times. Each user story is assigned to a priority level. Also, user story issues assigned among us keeping equal work distribution in mind. We decided to push every user story when unit test of user story also completed. By this way, we can reduce the costs in future sprints. We assigned a scrum master for managing the meetings. We discussed how our code architecture should be and how we must continue. We decided on how our code implementation and GitHub flow such as branch naming's and flow between feature, develop and main branches should be. 
+
+## Sprint Meeting - 3rd December, 2024
+
+### Summery
+
+We discussed every issue that we faced in sprint 1. In the first sprint meeting, we decided to not use Mocking for unit tests to speed up the process and keep it simple but for some unit test cases, there was a recursion issue we were facing, and we decided to use Mockito library. We reviewed each other's push request and added comments if changes of code are needed. There were a few user stories that were not finished because of errors from different development environments and merge conflicts between other team member's branches. We have written Whitebox unit tests for every user story. Also, to be sure that how we should adjust BlackBox testing to our code architecture, we asked our module convenor to get better clarification about the test approaches based on our project scenario. We took his suggestions for the upcoming sprint, so that it becomes more efficient, and the sprint goals become achievable.
