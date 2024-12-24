@@ -4,16 +4,14 @@ import model.Assignment;
 import model.AssignmentStatus;
 import model.Application;
 import model.Job;
-import model.Application;
 import model.ApplicationStatus;
 import model.Assignment;
 import model.User;
 import model.UserRole;
 import utility.Utility;
 
-import java.util.List;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicantService {
 
@@ -106,15 +104,23 @@ public class ApplicantService {
         System.out.println("Job Status: " + job.getJobStatus());
     }
 
-    public void viewApplicationForm() {
-
+    public void viewApplicationForm(Job job) {
+        System.out.println("Welcome to the Job Application Form\n");
+        System.out.print("Enter your education: ");
+        String education = Utility.inputOutput("Enter your education: ");
+        System.out.print("Enter your experience: ");
+        Integer experience = Integer.valueOf(Utility.inputOutput("Enter your experience: "));
+        System.out.print("Enter your skills: ");
+        String skills = Utility.inputOutput("Enter your skills: ");
+        submitApplicationForm(job, education, experience, skills);
     }
 
     public void viewAllAvailableJobs() {
 
     }
 
-    public void submitApplicationForm() {
+    public void submitApplicationForm(Job job, String education, Integer experience, String skills) {
+
 
     }
 
@@ -246,7 +252,25 @@ public class ApplicantService {
     }
 
     public void viewApplicantApplications() {
-
+        User user = Utility.getCurrentUser();
+        if (user instanceof Recruiter) {
+            System.out.println("You are not an applicant.");
+            return;
+        }
+        ArrayList<Application> applications = ((Applicant) user).getApplications();
+        if (applications == null || applications.isEmpty()) {
+            System.out.println("No applications found.");
+            return;
+        }
+        System.out.println("Applications:");
+        System.out.println();
+        int index = 1;
+        for (Application application : applications) {
+            System.out.println(index + ". Application ID: " + application.getId() + " | " + "Status: " + application.getStatus());
+            System.out.println();
+            index++;
+        }
+        viewSpecificApplication();
     }
 
     public void viewSpecificApplication() {
