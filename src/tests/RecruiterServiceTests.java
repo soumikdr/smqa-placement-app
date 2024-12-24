@@ -77,7 +77,6 @@ public class RecruiterServiceTests {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
             Mockito.doNothing().when(spyObject).updateRecruiterProfile();
-            ;
             Mockito.doNothing().when(spyObject).deleteRecruiterProfile();
             Mockito.doNothing().when(spyObject).viewRecruiterDashboard();
 

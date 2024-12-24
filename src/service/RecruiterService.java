@@ -14,13 +14,6 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
-    private final CommonService commonService;
-
-
-    public RecruiterService() {
-        commonService = new CommonService();
-    }
-
 
     private static RecruiterService instance = null;
 
