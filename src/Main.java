@@ -20,6 +20,11 @@ public class Main {
     public static void main(String[] args) {
         users=new ArrayList<>();
         jobs=new ArrayList<>();
+        applications=new ArrayList<>();
+        assignments=new ArrayList<>();
+        ArrayList<String> questions = new ArrayList<String>();
+        ArrayList<String> answers = new ArrayList<String>();
+
         jobs.add(new Job(
             "Job1",
             "Data Analyst",
@@ -37,15 +42,18 @@ public class Main {
 
 
 
-        assignments=new ArrayList<Assignment>();
-        assignments.add(new Assignment("1", "1", "John", null, null));
 
+        questions.add("What is class in Java");
+        questions.add("What is object in Java");
+        answers.add("A class in Java is a set of objects which shares common characteristics/ behavior and common properties/ attributes.");
+        answers.add("Objects are the instances of a class that are created to use the attributes and methods of a class.");
 
-        applications=new ArrayList<>();
-        applications.add(new Application("1", jobs.get(0).getId(), users.get(2).getId(), "UnderConsideration", assignments));
+        assignments.add(new Assignment("Assignment1", "1", "Technical", questions, answers));
 
+        applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments, "Feedback"));
+        applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments, ""));
 
-        Utility.setUsers(users);
+       Utility.setUsers(users);
         Utility.setAssignments(assignments);
         Utility.setJobs(jobs);
         Utility.setApplications(applications);
