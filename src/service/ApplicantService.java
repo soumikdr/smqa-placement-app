@@ -2,16 +2,14 @@ package service;
 
 import model.Application;
 import model.Job;
-import model.Application;
 import model.ApplicationStatus;
 import model.Assignment;
 import model.User;
 import model.UserRole;
 import utility.Utility;
 
-import java.util.List;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicantService {
 
@@ -221,7 +219,25 @@ public class ApplicantService {
     }
 
     public void viewApplicantApplications() {
-
+        User user = Utility.getCurrentUser();
+        if (user instanceof Recruiter) {
+            System.out.println("You are not an applicant.");
+            return;
+        }
+        ArrayList<Application> applications = ((Applicant) user).getApplications();
+        if (applications == null || applications.isEmpty()) {
+            System.out.println("No applications found.");
+            return;
+        }
+        System.out.println("Applications:");
+        System.out.println();
+        int index = 1;
+        for (Application application : applications) {
+            System.out.println(index + ". Application ID: " + application.getId() + " | " + "Status: " + application.getStatus());
+            System.out.println();
+            index++;
+        }
+        viewSpecificApplication();
     }
 
     public void viewSpecificApplication() {
