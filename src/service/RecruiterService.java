@@ -4,11 +4,14 @@ import model.Application;
 import model.Assignment;
 import model.Job;
 import model.JobStatus;
+import model.Application;
 import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
 
@@ -91,9 +94,9 @@ public class RecruiterService {
                 deleteRecruiterProfile();
                 break;
             case "3":
-            System.out.println("Redirecting to dashboard...\n");
+                System.out.println("Redirecting to dashboard...\n");
                 viewRecruiterDashboard();
-                 break;
+                break;
             default:
                 System.out.println("You entered invalid option\n");
                 viewRecruiterProfilePage();
@@ -166,7 +169,18 @@ public class RecruiterService {
     }
 
     public void viewAvailableJobs() {
-
+        ArrayList<Job> jobs = Utility.getJobs();
+        if (jobs == null || jobs.isEmpty()) {
+            System.out.println("No jobs available");
+            return;
+        }
+        System.out.println("Available Jobs");
+        int index = 1;
+        for (Job job : jobs) {
+            System.out.println(index + ". Job ID: " + job.getId() + " | Job Title: " + job.getJobName());
+            index++;
+        }
+        viewSpecificJobPost();
     }
 
     public void viewSpecificJobPost() {
@@ -174,7 +188,7 @@ public class RecruiterService {
         String jobId = Utility.inputOutput("\nEnter the Job Id\n");
         Boolean invalidJobId = true;
 
-        for (Job job: Utility.getJobs()) {
+        for (Job job : Utility.getJobs()) {
             if (job.getId().equals(jobId)) {
                 System.out.println("\nJob ID: " + job.getId());
                 System.out.println("\nJob Name: " + job.getJobName());
@@ -187,12 +201,39 @@ public class RecruiterService {
 
         if (invalidJobId) {
             System.out.println("\nYou have entered a invalid Job id\n");
+        } else {
+            System.out.println("\n1: Update job description\n");
+            System.out.println("\n2: Update job status\n");
+            System.out.println("\n3: View total applications for this job\n");
+            System.out.println("\n4: Continue to main menu\n");
+
+            switch(Utility.inputOutput("Please Select One Of The Options")){
+                case "1":
+                    System.out.println("Redirecting to update job description page \n");
+                    updateDescriptionOfJobPost(jobId);
+                    break;
+                case "2":
+                    System.out.println("Redirecting to total applications for the job\n");
+                    updateStatusOfJobPost(jobId);
+                    break;
+                case "3":
+                    System.out.println("Redirecting to dashboard\n");
+                    viewTotalNumberOfApplications(jobId);
+                    break;
+                case "4":
+                    System.out.println("Redirecting to main menu\n");
+                    break;
+                default:
+                    System.out.println("You entered invalid option");
+                    viewRecruiterDashboard();
+                    break;
+            }
         }
 
         System.out.println("\n1: View another job details\n");
         System.out.println("\n2: Go back to dashboard\n");
 
-        switch(Utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
                 System.out.println("Redirecting to view specific job details \n");
                 viewSpecificJobPost();
@@ -209,7 +250,7 @@ public class RecruiterService {
 
     }
 
-    public void updateDescriptionOfJobPost() {
+    public void updateDescriptionOfJobPost(String jobId) {
 
     }
 
@@ -231,8 +272,16 @@ public class RecruiterService {
         System.out.println("No job post available with given id");
     }
 
-    public void viewTotalNumberOfApplications() {
+    public void viewTotalNumberOfApplications(String jobId) {
 
+        AtomicInteger total= new AtomicInteger();
+        Utility.getApplications().stream().forEach(application -> {
+            if(application.getJobId().equals(jobId)){
+                total.getAndIncrement();
+            }
+        });
+
+        System.out.println("Total Applications of : "+jobId+" is " + total);
     }
 
     public void viewJobPostingForm() {
@@ -265,6 +314,27 @@ public class RecruiterService {
 
     public void viewFeedbackForm() {
 
+    }
+
+    public void viewSubmittedAnswers(String applicationId) {
+        System.out.println("\nWelcome to view submitted answers for the application " + applicationId);
+        ArrayList<String> questions = new ArrayList<String>();
+        ArrayList<String> answers = new ArrayList<String>();
+
+        for (Application application: Utility.getApplications()) {
+            if (application.getId().equals(applicationId)) {
+                for (Assignment assignment : application.getAssignments()) {
+                    questions=assignment.getQuestions();
+                    answers=assignment.getAnswers();
+                    for(int i=0; i<questions.size(); i++) {
+                        System.out.println("\nQuestion: \n");
+                        System.out.println(questions.get(i));
+                        System.out.println("Answer: \n");
+                        System.out.println(answers.get(i));
+                    }
+                }
+            }
+        }
     }
 
 
