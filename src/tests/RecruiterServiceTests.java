@@ -272,8 +272,8 @@ public class RecruiterServiceTests {
         
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             ArrayList<Application> mockApplications = new ArrayList<>();
-            mockApplications.add(new Application("App1", "Job1", "User1", "UnderConsideration", null));
-            mockApplications.add(new Application("App2", "Job2", "User2", "UnderConsideration", null));
+            mockApplications.add(new Application("App1", "Job1", "User1", "UnderConsideration", null,1,"University of Leicester","Java"));
+            mockApplications.add(new Application("App2", "Job2", "User2", "UnderConsideration", null,1,"University of Leicester","Java"));
 
             ArrayList<Assignment> mockAssignments = new ArrayList<>();
             

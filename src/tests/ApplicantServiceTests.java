@@ -6,18 +6,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.Mockito;
 
 import service.ApplicantService;
 import utility.Utility;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mockStatic;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class ApplicantServiceTests {
 
@@ -168,6 +173,7 @@ public class ApplicantServiceTests {
         Assert.assertEquals("New Last Name", filteredUser.getLastName());
         Assert.assertEquals(newUserProfile.getId(), filteredUser.getId());
     }
+
     @Test
     public void deleteProfileHelper() {
         ApplicantService service = ApplicantService.getInstance();
@@ -222,6 +228,32 @@ public class ApplicantServiceTests {
     //         assertTrue(consoleOutput.contains("Job with ID 999 not found."));
     //     }
     // }
+
+
+    @Test
+    public void viewApplicationFormTest() {
+        ApplicantService spyObject = Mockito.spy(ApplicantService.getInstance());
+
+        Job mockJob = new Job("1", "Software Engineer", "Develop software", JobStatus.PUBLIC);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+
+           mockedUtility.when(() -> Utility.inputOutput("Enter your education: ")).thenReturn("Bachelor's Degree");
+            mockedUtility.when(() -> Utility.inputOutput("Enter your experience: ")).thenReturn("5");
+            mockedUtility.when(() -> Utility.inputOutput("Enter your skills: ")).thenReturn("Java, Spring");
+
+            spyObject.viewApplicationForm(mockJob);
+
+            String consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Welcome to the Job Application Form"));
+            assertTrue(consoleOutput.contains("Enter your education: "));
+            assertTrue(consoleOutput.contains("Enter your experience: "));
+            assertTrue(consoleOutput.contains("Enter your skills: "));
+        }
+    }
 
     @Test
 public void viewApplicationProcessDashboardTest() throws IOException {
@@ -293,7 +325,7 @@ public void viewApplicationProcessDashboardTest() throws IOException {
         ApplicantService spyObject = Mockito.spy(service);
         ArrayList<String> questions = new ArrayList<>();
         ArrayList<String> answers = new ArrayList<>();
-    
+
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
             Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard(Mockito.anyString());
@@ -303,10 +335,10 @@ public void viewApplicationProcessDashboardTest() throws IOException {
 
             User mockUser = new User("U101", "John", "Doe", "johndoe", "bestpassword", UserRole.APPLICANT);
             mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
-    
+
             questions.add("Q1");
             answers.add("A1");
-    
+
             ArrayList<Application> mockApplications = new ArrayList<>();
             mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
                 new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", questions, answers))), null));
@@ -408,14 +440,14 @@ public void viewApplicationProcessDashboardTest() throws IOException {
             Assert.assertTrue(consoleOutput.contains("You have entered a invalid application id"));
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
             outputStream.reset();
-    
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A000", "2");
             spyObject.viewSpecificApplication();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You have entered a invalid application id"));
             Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
             outputStream.reset();
-    
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A102", "2");
             spyObject.viewSpecificApplication();
             consoleOutput = outputStream.toString();
@@ -424,13 +456,13 @@ public void viewApplicationProcessDashboardTest() throws IOException {
             Assert.assertTrue(consoleOutput.contains("Application Status: SUCCESSFUL"));
             Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
             outputStream.reset();
-    
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "nvalid");
             spyObject.viewSpecificApplication();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
             outputStream.reset();
-    
+
             Mockito.verify(spyObject, Mockito.times(11)).viewSpecificApplication();
             Mockito.verify(spyObject, Mockito.times(3)).viewApplicationProcessDashboard("A101");
             Mockito.verify(spyObject, Mockito.times(10)).viewApplicantApplications();
@@ -562,11 +594,11 @@ public void viewSpecificApplicationTest1() throws IOException {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             // Mocked applications list
             ArrayList<Application> mockApplications = new ArrayList<>();
-            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS, 
+            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
                 new ArrayList<>(), "Excellent performance, keep it up!"));
-            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, 
+            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL,
                 new ArrayList<>(), ""));
-            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.UNSUCCESSFUL, 
+            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.UNSUCCESSFUL,
                 new ArrayList<>(), "Needs improvement, better luck next time."));
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
@@ -619,18 +651,18 @@ public void viewSpecificApplicationTest1() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
         ApplicantService spyObject = Mockito.spy(service);
-    
+
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
             ArrayList<Application> mockApplications = new ArrayList<>();
             mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS, new ArrayList<>(), null));
             mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
             mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.UNSUCCESSFUL, new ArrayList<>(), null));
-    
+
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
-    
+
             Mockito.doNothing().when(spyObject).viewApplicantApplications();
-    
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("1");
             spyObject.withdrawApplication("A101");
             String consoleOutput = outputStream.toString();
@@ -638,7 +670,7 @@ public void viewSpecificApplicationTest1() throws IOException {
             Assert.assertTrue(consoleOutput.contains("Withdrawing application"));
             Assert.assertFalse(mockApplications.stream().anyMatch(app -> "A101".equals(app.getId())));
             outputStream.reset();
-    
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
             spyObject.withdrawApplication("A102");
             consoleOutput = outputStream.toString();
@@ -646,7 +678,7 @@ public void viewSpecificApplicationTest1() throws IOException {
             Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
             Assert.assertTrue(mockApplications.stream().anyMatch(app -> "A102".equals(app.getId())));
             outputStream.reset();
-    
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("invalid");
             spyObject.withdrawApplication("A103");
             consoleOutput = outputStream.toString();
@@ -654,14 +686,14 @@ public void viewSpecificApplicationTest1() throws IOException {
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
             Assert.assertTrue(mockApplications.stream().anyMatch(app -> "A103".equals(app.getId())));
             outputStream.reset();
-    
+
             Mockito.verify(spyObject, Mockito.times(3)).withdrawApplication(Mockito.anyString());
             Mockito.verify(spyObject, Mockito.times(2)).viewApplicantApplications();
             mockedUtility.verify(Mockito.times(3), () -> Utility.inputOutput(Mockito.anyString()));
             mockedUtility.verify(Mockito.times(1), Utility::getApplications);
         }
     }
-    
+
 }
 
 
