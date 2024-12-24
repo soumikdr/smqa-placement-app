@@ -26,7 +26,21 @@ public class ApplicantService {
     }
 
     public void viewAssessment(String applicationId) {
+System.out.println("Welcome to the Assessment Page\n");
 
+        for(Application application: Utility.getApplications()) {
+            if (application.getId().equals(applicationId)) {
+                if(application.getAssignments().isEmpty()) {
+                    System.out.println("No assignments found");
+                } else {
+                    System.out.println("Assignments for " + applicationId);
+                    for(Assignment assignment: application.getAssignments()) {
+                        System.out.println("Assignment ID: " + assignment.getId()+"|" +"Assignment Name: " + assignment.getAssignmentName() +"|"+"Assignment Status: " + assignment.getStatus());
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     public void submitInterviewForm(Assignment interview) {
