@@ -229,6 +229,75 @@ public class CommonServiceTests {
             Mockito.verify(spyObject, Mockito.times(2)).resetPassword("johndoe");
         }
     }
+
+    @Test
+public void resetPasswordTest() throws IOException {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outputStream)); // Redirect System.out
+    CommonService spyObject = Mockito.spy(service);
+    ApplicantService applicantSpyObject = Mockito.spy(applicantService);
+    RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+    ApplicantService mockApplicantService = Mockito.mock(ApplicantService.class);
+    Mockito.mockStatic(ApplicantService.class).when(ApplicantService::getInstance).thenReturn(mockApplicantService);
+    RecruiterService mockRecruiterService = Mockito.mock(RecruiterService.class);
+    Mockito.mockStatic(RecruiterService.class).when(RecruiterService::getInstance).thenReturn(mockRecruiterService);
+    
+
+    try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+       // Mockito.doNothing().when(applicantSpyObject).viewApplicantDashboard();
+        Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+        Mockito.doCallRealMethod().doNothing().when(applicantSpyObject).viewApplicantDashboard();
+        Mockito.doNothing().when(spyObject).viewResetPasswordPage();
+
+        User mockApplicantUser = new User("U101", "Mark", "Peter", "markpeter", "oldpassword", UserRole.APPLICANT);
+        mockedUtility.when(Utility::getCurrentUser).thenReturn(mockApplicantUser);
+        mockedUtility.when(Utility::getUsers).thenReturn(new ArrayList<>(Arrays.asList(mockApplicantUser)));
+        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("newpassword");
+
+        Utility.setUsers(new ArrayList<>(Arrays.asList(mockApplicantUser)));
+        spyObject.resetPassword("markpeter");
+
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Your entered username: markpeter"));
+        Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant dashboard"));
+        Assert.assertEquals("newpassword", mockApplicantUser.getPassword());
+        outputStream.reset();
+
+        User mockRecruiterUser = new User("U102", "Alice", "Smith", "recruiterAlice", "oldpassword", UserRole.RECRUITER);
+        mockedUtility.when(Utility::getCurrentUser).thenReturn(mockRecruiterUser);
+        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("newpassword");
+
+        Utility.setUsers(new ArrayList<>(Arrays.asList(mockRecruiterUser)));
+        spyObject.resetPassword("recruiterAlice");
+
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Your entered username: recruiterAlice"));
+        Assert.assertTrue(consoleOutput.contains("Redirecting to Recruiter dashboard"));
+        Assert.assertEquals("newpassword", mockRecruiterUser.getPassword());
+        outputStream.reset();
+
+        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("wrongusername");
+        spyObject.resetPassword("wrongusername");
+
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Your entered username: wrongusername"));
+        Assert.assertTrue(consoleOutput.contains("You have entered wrong Credentials"));
+        Mockito.verify(spyObject, Mockito.times(1)).viewResetPasswordPage();
+        outputStream.reset();
+
+        User mockApplicantUser2 = new User("U101", "Mark", "Peter", "markpeter", "oldpassword", UserRole.APPLICANT);
+        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("wrongusername");
+        spyObject.resetPassword("wrongusername");
+
+        consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("You have entered wrong Credentials"));
+        Assert.assertEquals("oldpassword", mockApplicantUser2.getPassword());
+        Mockito.verify(spyObject, Mockito.times(2)).viewResetPasswordPage();
+        outputStream.reset();
+    }
+}
+
     
 
     // public void recruiterSignUpTest() throws Exception {

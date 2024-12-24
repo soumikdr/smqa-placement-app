@@ -215,7 +215,6 @@ public class CommonService {
                     user.setPassword(password);
                 }
             }
-            System.out.println("\nRedirecting to " + Utility.getCurrentUser().getRole() + " dashboard\n");
             if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT) {
                 System.out.println("\nRedirecting to Applicant dashboard");
                 ApplicantService.getInstance().viewApplicantDashboard();
