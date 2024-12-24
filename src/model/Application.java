@@ -13,6 +13,10 @@ public class Application {
 
     private ArrayList<Assignment> assignments;
 
+
+    private String interviewDate;
+    private String interviewTime;
+
     public Application(String id, String jobId, String applicantId, String status, ArrayList<Assignment> assignments) {
         this.id = id;
         this.jobId = jobId;
@@ -40,6 +44,7 @@ public class Application {
         this.jobId = jobId;
     }
 
+
     public String getApplicantId() {
         return applicantId;
     }
@@ -63,4 +68,22 @@ public class Application {
     public void setAssignments(ArrayList<Assignment> assignments) {
         this.assignments = assignments;
     }
+
+
+    public String getInterviewDate() {
+        return interviewDate;
+    }
+
+    public void setInterviewDate(String interviewDate) {
+        this.interviewDate = interviewDate;
+    }
+
+    public String getInterviewTime() {
+        return interviewTime;
+    }
+
+    public void setInterviewTime(String interviewTime) {
+        this.interviewTime = interviewTime;
+    }
+
 }
