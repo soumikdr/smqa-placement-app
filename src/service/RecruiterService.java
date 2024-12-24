@@ -1,5 +1,6 @@
 package service;
 
+import model.Application;
 import model.Job;
 import model.JobStatus;
 import utility.Utility;
@@ -26,8 +27,13 @@ public class RecruiterService {
 
     }
 
-    public void sendInterview() {
-
+    public void sendInterview(Application application) {
+        String interviewDate = Utility.inputOutput("Enter the interview date: ");
+        String interviewTime = Utility.inputOutput("Enter the interview time: ");
+        application.setInterviewDate(interviewDate);
+        application.setInterviewTime(interviewTime);
+        application.setStatus("INTERVIEW_SCHEDULED");
+        System.out.println("Interview scheduled successfully");
     }
 
     public void viewInterviewResult() {
@@ -59,9 +65,9 @@ public class RecruiterService {
                 deleteRecruiterProfile();
                 break;
             case "3":
-            System.out.println("Redirecting to dashboard...\n");
+                System.out.println("Redirecting to dashboard...\n");
                 viewRecruiterDashboard();
-                 break;
+                break;
             default:
                 System.out.println("You entered invalid option\n");
                 viewRecruiterProfilePage();
@@ -87,7 +93,7 @@ public class RecruiterService {
         String jobId = Utility.inputOutput("\nEnter the Job Id\n");
         Boolean invalidJobId = true;
 
-        for (Job job: Utility.getJobs()) {
+        for (Job job : Utility.getJobs()) {
             if (job.getId().equals(jobId)) {
                 System.out.println("\nJob ID: " + job.getId());
                 System.out.println("\nJob Name: " + job.getJobName());
@@ -105,7 +111,7 @@ public class RecruiterService {
         System.out.println("\n1: View another job details\n");
         System.out.println("\n2: Go back to dashboard\n");
 
-        switch(Utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
                 System.out.println("Redirecting to view specific job details \n");
                 viewSpecificJobPost();

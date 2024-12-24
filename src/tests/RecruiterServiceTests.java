@@ -1,5 +1,6 @@
 package tests;
 
+import model.Application;
 import model.Job;
 import model.JobStatus;
 import org.junit.Assert;
@@ -7,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
 import service.RecruiterService;
 import utility.Utility;
 
@@ -161,6 +161,25 @@ public class RecruiterServiceTests {
             Mockito.verify(spyObject, Mockito.times(6)).viewSpecificJobPost();
             Mockito.verify(spyObject, Mockito.times(5)).viewRecruiterDashboard();
             mockedUtility.verify(Mockito.times(12), () -> Utility.inputOutput(Mockito.anyString()));
+        }
+    }
+
+    @Test
+    public void sendInterviewTest() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        RecruiterService spyObject = Mockito.spy(service);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            Application mockApplication = new Application("1", "101", "201", "Applied", new ArrayList<>());
+            mockedUtility.when(()->Utility.inputOutput("Enter the interview date: ")).thenReturn("2025-01-03");
+            mockedUtility.when(()->Utility.inputOutput("Enter the interview time: ")).thenReturn("12:00");
+            spyObject.sendInterview(mockApplication);
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Interview scheduled successfully"));
+            Assert.assertTrue(mockApplication.getInterviewDate().equals("2025-01-03"));
+            Assert.assertTrue(mockApplication.getInterviewTime().equals("12:00"));
+            Assert.assertTrue(mockApplication.getStatus().equals("INTERVIEW_SCHEDULED"));
         }
     }
 }
