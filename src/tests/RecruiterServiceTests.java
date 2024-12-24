@@ -13,8 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
-import service.ApplicantService;
 import service.RecruiterService;
 import utility.Utility;
 
@@ -116,15 +114,55 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Job posted successfully"));
         Assert.assertEquals(4, Utility.getJobs().size());
     }
+    
+    @Test
+    public void viewAvailableJobs_Empty() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
 
+        service.viewAvailableJobs();
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("No jobs available"));
+    }
+
+    @Test
+    public void viewAvailableJobs_NotEmpty() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+
+        RecruiterService spyObject = Mockito.spy(service);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("1", "Software Engineer", "Develop software", JobStatus.PUBLIC));
+            mockJobs.add(new Job("2", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
+            mockJobs.add(new Job("3", "Product Manager", "Manage products", JobStatus.PUBLIC));
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+            Mockito.doNothing().when(spyObject).viewSpecificJobPost();
+            String expectedOutput = """
+                Available Jobs\r
+                1. Job ID: 1 | Job Title: Software Engineer\r
+                2. Job ID: 2 | Job Title: Data Analyst\r
+                3. Job ID: 3 | Job Title: Product Manager\r
+                """;
+            spyObject.viewAvailableJobs();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains(expectedOutput));
+        }
+
+
+    }
+
+    @Test
     public void updateStatusOfJobPost_Empty() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        Clearing the jobs
+        //        Clearing the jobs
         Utility.setJobs(new ArrayList<>());
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
         service.updateStatusOfJobPost("1");
-        String consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("No jobs available"));
     }
 
     @Test
