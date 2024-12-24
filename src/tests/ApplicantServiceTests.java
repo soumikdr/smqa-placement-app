@@ -734,6 +734,37 @@ public void viewSpecificApplicationTest1() throws IOException {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+    @Test
+    public void viewAssessmentTest() {
+        ApplicantService service = ApplicantService.getInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Mocked applications list
+            ArrayList<Application> mockApplications = new ArrayList<>();
+            ArrayList<Assignment> assignments = new ArrayList<>();
+            assignments.add(new Assignment("1", "1","Assignment 1", new ArrayList<>(), new ArrayList<>()));
+            mockApplications.add(new Application("A101", "J101", "U101","Inprogress",new ArrayList<>(), 3, "MS", "Java", ""));
+
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            service.viewAssessment("A101");
+
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Welcome to the Assessment Page"));
+        }
+    }
+
 }
 
 
