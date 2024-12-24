@@ -162,45 +162,68 @@ public class RecruiterServiceTests {
 
             mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
 
+            Mockito.doNothing().when(spyObject).updateDescriptionOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).updateStatusOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).viewTotalNumberOfApplications(Mockito.anyString());
             Mockito.doNothing().when(spyObject).viewRecruiterDashboard();
 
-            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "2");
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "1", "2");
             spyObject.viewSpecificJobPost();
             String consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Job ID: 101"));
             Assert.assertTrue(consoleOutput.contains("Job Name: Software Engineer"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to update job description page"));
+            Mockito.verify(spyObject, Mockito.times(1)).updateDescriptionOfJobPost("101");
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "2", "2");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to total applications for the job"));
+            Mockito.verify(spyObject, Mockito.times(1)).updateStatusOfJobPost("101");
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "3", "2");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewTotalNumberOfApplications("101");
+            outputStream.reset();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "4");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to main menu"));
             outputStream.reset();
 
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("999", "2");
             spyObject.viewSpecificJobPost();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You have entered a invalid Job id"));
-            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
+            Mockito.verify(spyObject, Mockito.times(5)).viewRecruiterDashboard();
             outputStream.reset();
-
-            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "1", "102", "2");
-            spyObject.viewSpecificJobPost();
-            consoleOutput = outputStream.toString();
-            Assert.assertTrue(consoleOutput.contains("Job ID: 101"));
-            Assert.assertTrue(consoleOutput.contains("Redirecting to view specific job details"));
-            Assert.assertTrue(consoleOutput.contains("Job ID: 102"));
-            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
-            outputStream.reset();
-
-            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "2");
-            spyObject.viewSpecificJobPost();
-            consoleOutput = outputStream.toString();
-            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard"));
 
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "invalid");
             spyObject.viewSpecificJobPost();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            Mockito.verify(spyObject, Mockito.times(7)).viewRecruiterDashboard();
+            outputStream.reset();
 
-            Mockito.verify(spyObject, Mockito.times(6)).viewSpecificJobPost();
-            Mockito.verify(spyObject, Mockito.times(5)).viewRecruiterDashboard();
-            mockedUtility.verify(Mockito.times(12), () -> Utility.inputOutput(Mockito.anyString()));
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("101", "1", "1", "102", "4");
+            spyObject.viewSpecificJobPost();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to view specific job details"));
+            Assert.assertTrue(consoleOutput.contains("Job ID: 102"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to main menu"));
+            outputStream.reset();
+
+            Mockito.verify(spyObject, Mockito.times(8)).viewSpecificJobPost();
+            Mockito.verify(spyObject, Mockito.times(2)).updateDescriptionOfJobPost("101");
+            Mockito.verify(spyObject, Mockito.times(1)).updateStatusOfJobPost("101");
+            Mockito.verify(spyObject, Mockito.times(1)).viewTotalNumberOfApplications("101");
+            Mockito.verify(spyObject, Mockito.times(8)).viewRecruiterDashboard();
+            mockedUtility.verify(Mockito.times(23), () -> Utility.inputOutput(Mockito.anyString()));
         }
     }
     @Test
