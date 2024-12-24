@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.internal.configuration.injection.MockInjection;
 
 import service.ApplicantService;
 import utility.Utility;
