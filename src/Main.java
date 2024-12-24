@@ -1,4 +1,5 @@
 import model.*;
+import service.ApplicantService;
 import service.CommonService;
 import service.RecruiterService;
 import utility.Utility;
@@ -18,6 +19,19 @@ public class Main {
     private static Utility utility;
 
     public static void main(String[] args) {
+
+    	ArrayList<String> questions=new ArrayList<String>();
+    	questions.add("Q1");
+    	questions.add("Q2");
+
+
+    	assignments=new ArrayList<Assignment>();
+    	assignments.add(new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>()));
+        Utility.setAssignments(assignments);
+
+    	ApplicantService.getInstance().submitInterviewForm(assignments.get(0));
+
+
         users=new ArrayList<>();
         jobs=new ArrayList<>();
         applications=new ArrayList<>();

@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.Mockito;
 
 import service.ApplicantService;
+import service.CommonService;
 import utility.Utility;
 
 import java.io.ByteArrayInputStream;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -36,6 +39,43 @@ public class ApplicantServiceTests {
         users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
         users.add(new Applicant("3", "Jane", "Doe", "janeDoe", "bestpassword", new ArrayList<>()));
         Utility.setUsers(users);
+    }
+
+    @Test
+    public void submitInterviewFormTest() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService spyObject = Mockito.spy(service);
+
+    	ArrayList<String> questions=new ArrayList<String>();
+    	questions.add("Q1");
+    	questions.add("Q2");
+
+    	Assignment interview=new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>());
+
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
+
+        	Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard();
+
+
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("Answer1").thenReturn("Answer2");
+
+            spyObject.submitInterviewForm(interview);
+
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Answers Submitted"));
+
+            Assert.assertEquals(interview.getAnswers().get(0), "Answer1");
+
+
+            Mockito.verify(spyObject).viewApplicationProcessDashboard();
+
+            mockedUtility.verify(Mockito.times(2),()->Utility.inputOutput(Mockito.anyString()));
+
+
+          }
     }
 
     @Test
