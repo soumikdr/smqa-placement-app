@@ -833,7 +833,7 @@ public void viewSpecificApplicationTest1() throws IOException {
             ArrayList<Application> mockApplications = new ArrayList<>();
             ArrayList<Assignment> assignments = new ArrayList<>();
             assignments.add(new Assignment("1", "1","Assignment 1", new ArrayList<>(), new ArrayList<>()));
-            mockApplications.add(new Application("A101", "J101", "U101","Inprogress",new ArrayList<>(), 3, "MS", "Java", ""));
+            mockApplications.add(new Application("A101", "J101", "U101",ApplicationStatus.INPROGRESS,new ArrayList<>(), 3, "MS", "Java", ""));
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
             service.viewAssessment("A101");

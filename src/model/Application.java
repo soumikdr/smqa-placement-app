@@ -19,11 +19,11 @@ public class Application {
 
     private String skills;
     private String feedback;
-    public Application(String id, String jobId, String applicantId, String status, ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills,String feedback) {
+    public Application(String id, String jobId, String applicantId, ApplicationStatus status, ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills,String feedback) {
             this.id = id;
             this.jobId = jobId;
             this.applicantId = applicantId;
-            this.applicationStatus = applicationStatus;
+            this.applicationStatus = status;
             this.assignments = assignments;
             this.feedback = feedback;
             this.yearOfExperience = yearOfExperience;
