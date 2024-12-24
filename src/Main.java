@@ -1,5 +1,6 @@
 import model.*;
 import service.CommonService;
+import service.RecruiterService;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Main {
 
         jobs.add(new Job(
             "Job1",
-            "Data Analyst", 
+            "Data Analyst",
             "A data analyst's job is to collect, organize, and analyze data to help businesses solve problems and gain insights. ",
             JobStatus.PRIVATE
             ));
@@ -35,6 +36,12 @@ public class Main {
             "Frontend Developer",
             "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ",
             JobStatus.PUBLIC));
+        users.add(new User("1","John","Doe","johnDoe","bestpassword","Applicant"));
+        users.add(new User("2","Ansar","Patil","darkAngel","123qwe","Recruiter"));
+        users.add(new User("3","Shomik","Datta","xFireTomato","12345","Recruiter"));
+
+
+
 
         questions.add("What is class in Java");
         questions.add("What is object in Java");
@@ -46,10 +53,7 @@ public class Main {
         applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments, "Feedback"));
         applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments, ""));
 
-        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", applications));
-        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
-        
-        Utility.setUsers(users);
+       Utility.setUsers(users);
         Utility.setAssignments(assignments);
         Utility.setJobs(jobs);
         Utility.setApplications(applications);

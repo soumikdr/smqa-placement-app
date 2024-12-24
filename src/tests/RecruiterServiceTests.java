@@ -18,12 +18,25 @@ import utility.Utility;
 
 import static org.mockito.Mockito.times;
 
+import static org.mockito.Mockito.times;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import model.Application;
+import service.CommonService;
+import service.RecruiterService;
+import utility.Utility;
+import java.util.ArrayList;
 
 public class RecruiterServiceTests {
 
@@ -114,7 +127,7 @@ public class RecruiterServiceTests {
         Assert.assertTrue(consoleOutput.contains("Job posted successfully"));
         Assert.assertEquals(4, Utility.getJobs().size());
     }
-    
+
     @Test
     public void viewAvailableJobs_Empty() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -269,33 +282,33 @@ public class RecruiterServiceTests {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
         RecruiterService spyObject = Mockito.spy(service);
-        
+
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             ArrayList<Application> mockApplications = new ArrayList<>();
             mockApplications.add(new Application("App1", "Job1", "User1", "UnderConsideration", null,1,"University of Leicester","Java"));
             mockApplications.add(new Application("App2", "Job2", "User2", "UnderConsideration", null,1,"University of Leicester","Java"));
 
             ArrayList<Assignment> mockAssignments = new ArrayList<>();
-            
+
             ArrayList<String> questions=new ArrayList<String>();
             questions.add("Q1");
             questions.add("Q2");
             ArrayList<String> answers=new ArrayList<String>();
             answers.add("ANS1");
             answers.add("ANS2");
-            
+
             mockAssignments.add(new Assignment("A1","App1","Coding Assessment",questions,answers));
             mockAssignments.add(new Assignment("A2","App1","Interview",questions,answers));
-            
+
             mockApplications.get(0).setAssignments(mockAssignments);
 
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 
             Mockito.doNothing().when(spyObject).viewSpecificApplication();
-            
+
             spyObject.viewAssessmentResult("App1", "A1");
-            
+
             String consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Assessment Found"));
             Assert.assertTrue(consoleOutput.contains("Q1"));
@@ -303,7 +316,7 @@ public class RecruiterServiceTests {
             outputStream.reset();
 
             spyObject.viewAssessmentResult("App1", "A3");
-            
+
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("There is no Coding Assessment Result for this application"));
             Assert.assertTrue(consoleOutput.contains("Directing to Application Page"));
@@ -312,7 +325,8 @@ public class RecruiterServiceTests {
             mockedUtility.verify(times(2),() -> Utility.getApplications());
 
         }
-        
+
+
     }
 
     @Test
@@ -328,7 +342,7 @@ public class RecruiterServiceTests {
             ArrayList<String> mockAnswers1 = new ArrayList<>(List.of("Java is a programming language.", "OOP includes Encapsulation, Polymorphism."));
             ArrayList<String> mockQuestions2 = new ArrayList<>(List.of("What is your experience?"));
             ArrayList<String> mockAnswers2 = new ArrayList<>(List.of("I have 5 years of experience in software development."));
-            
+
             mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
                 new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", mockQuestions1, mockAnswers1))), null));
             mockApplications.add(new Application("A102", "J102", "U102", ApplicationStatus.SUCCESSFUL,
@@ -376,5 +390,40 @@ public class RecruiterServiceTests {
             mockedUtility.verify(Mockito.times(4), Utility::getApplications);
         }
     }
+
+    @Test
+    public void viewTotalNumberOfApplicationsTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
+
+
+            ArrayList<Application> apps=new ArrayList<>();
+
+            Application app=new Application();
+
+            app.setJobId("JOB1");
+
+            apps.add(app);
+
+            mockedUtility.when(()->Utility.getApplications()).thenReturn(apps);
+
+            String consoleOutput = outputStream.toString();
+
+
+            Assert.assertFalse(consoleOutput.contains("Total Applications of : JOB1 is 1"));
+
+            service.viewTotalNumberOfApplications("JOB1");
+
+            consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Total Applications of : JOB1 is 1"));
+
+            mockedUtility.verify(()->Utility.getApplications());
+
+
+          }
+        }
 
 }
