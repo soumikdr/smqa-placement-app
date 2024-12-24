@@ -1,4 +1,5 @@
 package service;
+
 import model.Application;
 import model.Job;
 import model.ApplicationStatus;
@@ -396,12 +397,33 @@ public class ApplicantService {
     }
 
     public void viewJobDescFromApplication(String applicationId) {
+        Application application = Utility.getApplications().stream()
+                .filter(a -> a.getId().equals(applicationId))
+                .findFirst()
+                .orElse(null);
 
+        if (application == null) {
+            System.out.println("Application with ID " + applicationId + " not found.");
+            return;
+        }
+        Job job = Utility.getJobs().stream()
+                .filter(j -> j.getId().equals(application.getJobId()))
+                .findFirst()
+                .orElse(null);
+
+        if (job == null) {
+            System.out.println("Job with ID " + application.getJobId() + " not found.");
+            return;
+        }
+        System.out.println("Job ID: " + job.getId());
+        System.out.println("Job Title: " + job.getJobName());
+        System.out.println("Job Description: " + job.getJobDescription());
     }
 
     public void viewApplicationProcessDashboard(String applicationId) {
 
         System.out.println("\nWelcome to application process dashboard\n");
+
 
         System.out.println("1. View assignments");
         System.out.println("2. Submit assignment\n");

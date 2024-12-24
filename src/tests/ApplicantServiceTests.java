@@ -1,19 +1,12 @@
 package tests;
 
-import model.Application;
-import model.Applicant;
-import model.Application;
-import model.Job;
-import model.User;
 import model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.Mockito;
 
-import org.mockito.Mockito;
 
 import service.ApplicantService;
 import service.CommonService;
@@ -31,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -321,6 +313,40 @@ public class ApplicantServiceTests {
     //     }
     // }
 
+    @Test
+    public void viewJobDescFromApplication_InvalidJob() {
+        ArrayList<Job> jobs = new ArrayList<>();
+        jobs.add(new Job("1", "Software Engineer", "Develop and maintain software", JobStatus.PUBLIC));
+        Utility.setJobs(jobs);
+        String jobId = "2";
+        Application application = new Application("1", jobId, "3", "PENDING", new ArrayList<>());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        service.viewJobDescFromApplication(application);
+
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Job with ID " + jobId + " not found."));
+    }
+
+    @Test
+    public void viewJobDescFromApplication_ValidJob() {
+        ArrayList<Job> jobs = new ArrayList<>();
+        jobs.add(new Job("1", "Software Engineer", "Develop and maintain software", JobStatus.PUBLIC));
+        Utility.setJobs(jobs);
+        String jobId = "1";
+        Application application = new Application("1", jobId, "3", "PENDING", new ArrayList<>());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        service.viewJobDescFromApplication(application);
+
+        String consoleOutput = outputStream.toString();
+
+        Assert.assertTrue(consoleOutput.contains("Job ID: " + jobId));
+        Assert.assertTrue(consoleOutput.contains("Job Title: Software Engineer"));
+        Assert.assertTrue(consoleOutput.contains("Job Description: Develop and maintain software"));
+    }
 
     @Test
     public void viewApplicationFormTest() {
