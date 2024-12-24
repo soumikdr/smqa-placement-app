@@ -160,8 +160,6 @@ public class RecruiterServiceTests {
 
             Assert.assertTrue(consoleOutput.contains("Application Rejected"));
 
-        outputStream.reset();
-
         // simulatedInput = "invalid input";
         // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         // simulatedInput = "1";
