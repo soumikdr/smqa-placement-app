@@ -4,11 +4,14 @@ import model.Application;
 import model.Assignment;
 import model.Job;
 import model.JobStatus;
+import model.Application;
 import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
 
@@ -25,9 +28,9 @@ public class RecruiterService {
     }
 
     public void viewAssessmentResult(String applicationId, String assignmentId) {
-    	
+
     	Assignment result=new Assignment();
-    	
+
     	for(Application a: Utility.getApplications()) {
     		if(a.getId().equals(applicationId)) {
     			for(Assignment assign: a.getAssignments()) {
@@ -45,16 +48,16 @@ public class RecruiterService {
         	System.out.println("Assessment Questions and Answers : ");
         	for(String question: result.getQuestions()) {
         		System.out.println(question+"\n");
-        		
+
         		System.out.println(result.getAnswers().get(answerCount)+"\n");
         		answerCount++;
-     
+
         	}
     	}
-    	
+
     	System.out.println("Directing to Application Page..");
     	viewSpecificApplication();
-    	
+
 
     }
 
@@ -216,6 +219,14 @@ public class RecruiterService {
 
     public void viewTotalNumberOfApplications(String jobId) {
 
+        AtomicInteger total= new AtomicInteger();
+        Utility.getApplications().stream().forEach(application -> {
+            if(application.getJobId().equals(jobId)){
+                total.getAndIncrement();
+            }
+        });
+
+        System.out.println("Total Applications of : "+jobId+" is " + total);
     }
 
     public void viewJobPostingForm() {

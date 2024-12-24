@@ -19,19 +19,19 @@ public class Main {
     private static Utility utility;
 
     public static void main(String[] args) {
-    	
+
     	ArrayList<String> questions=new ArrayList<String>();
     	questions.add("Q1");
     	questions.add("Q2");
-    
-    	
+
+
     	assignments=new ArrayList<Assignment>();
     	assignments.add(new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>()));
         Utility.setAssignments(assignments);
 
     	ApplicantService.getInstance().submitInterviewForm(assignments.get(0));
-    	
-    	
+
+
         users=new ArrayList<>();
         jobs=new ArrayList<>();
         applications=new ArrayList<>();
@@ -41,7 +41,7 @@ public class Main {
 
         jobs.add(new Job(
             "Job1",
-            "Data Analyst", 
+            "Data Analyst",
             "A data analyst's job is to collect, organize, and analyze data to help businesses solve problems and gain insights. ",
             JobStatus.PRIVATE
             ));
@@ -50,6 +50,12 @@ public class Main {
             "Frontend Developer",
             "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ",
             JobStatus.PUBLIC));
+        users.add(new User("1","John","Doe","johnDoe","bestpassword","Applicant"));
+        users.add(new User("2","Ansar","Patil","darkAngel","123qwe","Recruiter"));
+        users.add(new User("3","Shomik","Datta","xFireTomato","12345","Recruiter"));
+
+
+
 
         questions.add("What is class in Java");
         questions.add("What is object in Java");
@@ -61,14 +67,11 @@ public class Main {
         applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments, "Feedback"));
         applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments, ""));
 
-        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", applications));
-        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
-        
-        Utility.setUsers(users);
+       Utility.setUsers(users);
+        Utility.setAssignments(assignments);
         Utility.setJobs(jobs);
         Utility.setApplications(applications);
 
-    	System.out.println(Utility.getAssignments().get(0).getAnswers().get(0));
 
         CommonService commonService = new CommonService();
         commonService.accessLandingPage();
