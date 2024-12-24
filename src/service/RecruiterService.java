@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
 
+
     private static RecruiterService instance = null;
 
     public static RecruiterService getInstance() {
@@ -366,7 +367,10 @@ public class RecruiterService {
     }
 
     public void logout() {
-
+        System.out.println("Logging out...");
+        Utility.setCurrentUser(null);
+        System.out.println("Logged out successfully");
+        CommonService.getInstance().accessLandingPage();
     }
     
 }

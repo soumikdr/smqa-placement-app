@@ -1,16 +1,12 @@
 package tests;
 
-import model.Application;
-import model.ApplicationStatus;
-import model.Assignment;
-import model.Job;
-import model.JobStatus;
+import model.*;
 import model.User;
-import model.UserRole;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import service.CommonService;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -20,6 +16,7 @@ import service.CommonService;
 import service.RecruiterService;
 import utility.Utility;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -54,6 +51,11 @@ public class RecruiterServiceTests {
 
     @Before
     public void setUp() {
+        ArrayList<User> users = new ArrayList<>();
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
+
+        Utility.setUsers(users);
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job("1", "Software Engineer", "Develop software", JobStatus.PUBLIC));
         jobs.add(new Job("2", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
@@ -158,6 +160,10 @@ public class RecruiterServiceTests {
 
             Assert.assertTrue(consoleOutput.contains("Application Rejected"));
 
+        // simulatedInput = "invalid input";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        // simulatedInput = "1";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
             outputStream.reset();
 
             mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("3");
@@ -502,4 +508,23 @@ public class RecruiterServiceTests {
           }
         }
 
+    @Test
+    public void logoutTest() {
+        RecruiterService service = RecruiterService.getInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class);
+             MockedStatic<CommonService> mockedCommonService = Mockito.mockStatic(CommonService.class)) {
+
+            CommonService mockCommonService = Mockito.mock(CommonService.class);
+            mockedCommonService.when(CommonService::getInstance).thenReturn(mockCommonService);
+            service.logout();
+
+            String consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Logging out..."));
+            assertTrue(consoleOutput.contains("Logged out successfully"));
+            mockedUtility.verify(() -> Utility.setCurrentUser(null));
+        }
+    }
 }
