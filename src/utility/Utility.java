@@ -1,13 +1,14 @@
 package utility;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import model.Application;
 import model.Assignment;
 import model.Job;
 import model.User;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Utility {
 
@@ -35,7 +36,6 @@ public class Utility {
     }
 
 
-
     public static ArrayList<Assignment> getAssignments() {
         return assignments;
     }
@@ -50,6 +50,13 @@ public class Utility {
 
     public static void setJobs(ArrayList<Job> jobs) {
         Utility.jobs = jobs;
+    }
+
+    public static void addJob(Job job) {
+        if (jobs == null) {
+            jobs = new ArrayList<>();
+        }
+        jobs.add(job);
     }
 
     public static ArrayList<Application> getApplications() {
