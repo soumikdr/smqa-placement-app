@@ -9,7 +9,7 @@ public class Application {
 
     private String applicantId;
 
-    private String status;
+    private ApplicationStatus applicationStatus;
 
     private ArrayList<Assignment> assignments;
 
@@ -20,81 +20,96 @@ public class Application {
     private String skills;
 
     public Application(String id, String jobId, String applicantId, String status, ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills) {
-        this.id = id;
-        this.jobId = jobId;
-        this.applicantId = applicantId;
-        this.status = status;
-        this.assignments = assignments;
-        this.yearOfExperience = yearOfExperience;
-        this.education = education;
-        this.skills = skills;
-    }
+        private String feedback;
+
+    public
+        Application(String id, String jobId, String applicantId, ApplicationStatus applicationStatus, ArrayList < Assignment > assignments, String feedback)
+        {
+            this.id = id;
+            this.jobId = jobId;
+            this.applicantId = applicantId;
+            this.applicationStatus = applicationStatus;
+            this.assignments = assignments;
+            this.feedback = feedback;
+            this.yearOfExperience = yearOfExperience;
+            this.education = education;
+            this.skills = skills;
+        }
 
     public Application() {
-    }
+        }
 
-    public String getId() {
-        return id;
-    }
+        public String getId () {
+            return id;
+        }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+        public void setId (String id){
+            this.id = id;
+        }
 
-    public String getJobId() {
-        return jobId;
-    }
+        public String getJobId () {
+            return jobId;
+        }
 
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
-    }
+        public void setJobId (String jobId){
+            this.jobId = jobId;
+        }
 
-    public String getApplicantId() {
-        return applicantId;
-    }
+        public String getApplicantId () {
+            return applicantId;
+        }
 
-    public void setApplicantId(String applicantId) {
-        this.applicantId = applicantId;
-    }
+        public void setApplicantId (String applicantId){
+            this.applicantId = applicantId;
+        }
 
-    public String getStatus() {
-        return status;
-    }
+        public ApplicationStatus getStatus () {
+            return applicationStatus;
+        }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+        public void setStatus (ApplicationStatus applicationStatus){
+            this.applicationStatus = applicationStatus;
+        }
 
-    public ArrayList<Assignment> getAssignments() {
-        return assignments;
-    }
+        public String getFeedback () {
+            return feedback;
+        }
 
-    public void setAssignments(ArrayList<Assignment> assignments) {
-        this.assignments = assignments;
-    }
+        public void setFeedback (String feedback){
+            this.feedback = feedback;
+        }
 
-    public Integer getYearOfExperience() {
-        return yearOfExperience;
-    }
+        public ArrayList<Assignment> getAssignments () {
+            return assignments;
+        }
 
-    public void setYearOfExperience(Integer yearOfExperience) {
-        this.yearOfExperience = yearOfExperience;
-    }
+        public void setAssignments (ArrayList < Assignment > assignments) {
+            this.assignments = assignments;
+        }
 
-    public String getEducation() {
-        return education;
-    }
+        public Integer getYearOfExperience () {
+            return yearOfExperience;
+        }
 
-    public void setEducation(String education) {
-        this.education = education;
-    }
+        public void setYearOfExperience (Integer yearOfExperience){
+            this.yearOfExperience = yearOfExperience;
+        }
+
+        public String getEducation () {
+            return education;
+        }
+
+        public void setEducation (String education){
+            this.education = education;
+        }
 
 
-    public String getSkills() {
-        return skills;
-    }
+        public String getSkills () {
+            return skills;
+        }
 
-    public void setSkills(String skills) {
-        this.skills = skills;
+        public void setSkills (String skills){
+            this.skills = skills;
+        }
     }
 }
