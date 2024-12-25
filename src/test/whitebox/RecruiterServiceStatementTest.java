@@ -3,6 +3,11 @@ package test.whitebox;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.After;
@@ -15,8 +20,14 @@ import java.io.InputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import model.Application;
+import model.ApplicationStatus;
+import model.Assignment;
 import model.User;
 import model.UserRole;
 import service.RecruiterService;
@@ -47,9 +58,22 @@ public class RecruiterServiceStatementTest {
 
     @Before
     public void setup() {
+        // Mock Assignments
+        ArrayList<String> questions = new ArrayList<String>();
+        questions.add("Question 1");
+        questions.add("Question 2");
+
+        ArrayList<String> answers = new ArrayList<String>();
+        answers.add("1. Answer");
+        answers.add("2. Answer");
+
+        Assignment assignment = new Assignment("1", "1", "Java Assignment", questions, answers);
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        assignments.add(assignment);
+        
         // Mock applications
         mockApplications = new ArrayList<>();
-        Application app1 = new Application("1", "1", "1", "Pending", new ArrayList<>());
+        Application app1 = new Application("1", "1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc", "JS, CSS", "Feedback");
         mockApplications.add(app1);
 
         // Mock users
@@ -154,6 +178,37 @@ public class RecruiterServiceStatementTest {
 
             String expectedOutput = "No applicant found with for this application";
             assertEquals(expectedOutput, outContent.toString().trim());
+        }
+    }
+
+    @Test
+    public void testSendAssignment_ValidRole() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Setup and Mocking
+            Application application = new Application();
+            application.setApplicantId("applicant123");
+            application.setAssignments(new ArrayList<>());
+    
+            Map<String, List<String>> mockQuestionMap = new HashMap<>();
+            mockQuestionMap.put("frontend", Arrays.asList("Question 1", "Question 2"));
+    
+            utilities.when(Utility::getQuestionMap).thenReturn(mockQuestionMap);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("frontend");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+    
+            // Test
+            recruiterService.sendAssignment(application);
+    
+            // Assertions
+            assertEquals(1, application.getAssignments().size());
+            Assignment assignment = application.getAssignments().get(0);
+            assertEquals("applicant123", assignment.getApplicantId());
+            assertTrue(assignment.getAssignmentName().contains("Assignment frontend"));
+            assertEquals(Arrays.asList("Question 1", "Question 2"), assignment.getQuestions());
+    
+            // Verify interactions
+            utilities.verify(Utility::getQuestionMap);
+            utilities.verify(() -> Utility.inputOutput(anyString()));
         }
     }
 

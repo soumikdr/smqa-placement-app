@@ -1,6 +1,8 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -411,7 +413,27 @@ public class RecruiterService {
     }
 
     public void sendAssignment(Application application) {
-        
+        System.out.println("\n-------- Send assignment to applicant --------\n");
+        System.out.println("Please type one from the roles below to send the assignment questions (e.g. frontend)"); 
+
+        Map<String, List<String>> questionMap = Utility.getQuestionMap();
+        System.out.println(questionMap.keySet().toString());
+        String roleInput = Utility.inputOutput("\nType here..");
+        List<String> questions = questionMap.get(roleInput);
+
+        if (questions == null) {
+            System.out.println("\nNo questions found for the given role\n");
+            viewSpecificApplication(application.getId());
+            return;
+        }
+
+        Assignment newAssignment = new Assignment(UUID.randomUUID().toString(), application.getApplicantId(), "Assignment " + roleInput, new ArrayList<String>(questions), new ArrayList<>());
+        ArrayList <Assignment> assignments = application.getAssignments();
+        assignments.add(newAssignment);
+        application.setAssignments(assignments);
+
+        System.out.println("\nAssignment sent successfully.\n");
+        viewSpecificApplication(application.getId());
     }
 
     public void sendFeedback() {

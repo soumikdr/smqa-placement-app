@@ -1,10 +1,17 @@
-import model.*;
-import service.ApplicantService;
-import service.CommonService;
-import service.RecruiterService;
-import utility.Utility;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import model.Application;
+import model.ApplicationStatus;
+import model.Assignment;
+import model.Job;
+import model.JobStatus;
+import model.User;
+import model.UserRole;
+import service.CommonService;
+import utility.Utility;
 
 public class Main {
 
@@ -20,16 +27,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-    	ArrayList<String> questions=new ArrayList<String>();
-    	questions.add("Q1");
-    	questions.add("Q2");
+    	// ArrayList<String> questions=new ArrayList<String>();
+    	// questions.add("Q1");
+    	// questions.add("Q2");
 
 
-    	assignments=new ArrayList<Assignment>();
-    	assignments.add(new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>()));
-        Utility.setAssignments(assignments);
+    	// assignments=new ArrayList<Assignment>();
+    	// assignments.add(new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>()));
+        // Utility.setAssignments(assignments);
 
-    	ApplicantService.getInstance().submitInterviewForm(assignments.get(0));
+    	// ApplicantService.getInstance().submitInterviewForm(assignments.get(0));
 
 
         users=new ArrayList<>();
@@ -50,11 +57,10 @@ public class Main {
             "Frontend Developer",
             "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ",
             JobStatus.PUBLIC));
-        users.add(new User("1","John","Doe","johnDoe","bestpassword","Applicant"));
-        users.add(new User("2","Ansar","Patil","darkAngel","123qwe","Recruiter"));
-        users.add(new User("3","Shomik","Datta","xFireTomato","12345","Recruiter"));
 
-
+        users.add(new User("1","John","Doe","johnDoe","bestpassword", UserRole.APPLICANT));
+        users.add(new User("2","Ansar","Patil","darkAngel","123qwe", UserRole.RECRUITER));
+        users.add(new User("3","Shomik","Datta","xFireTomato","12345", UserRole.RECRUITER));
 
 
         questions.add("What is class in Java");
@@ -64,18 +70,39 @@ public class Main {
 
         assignments.add(new Assignment("Assignment1", "1", "Technical", questions, answers));
 
-        applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments, "Feedback"));
-        applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments, ""));
+        applications.add(new Application("Application1", "Job1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc", "JS, CSS", "Feedback"));
+        applications.add(new Application("Application2", "Job2", "1", ApplicationStatus.UNSUCCESSFUL, assignments,  2, "MSc", "Docker, Spring MVC", "Feedback 2"));
 
-       Utility.setUsers(users);
+
+        // Create a HashMap to store questions
+        Map<String, List<String>> questionMap = new HashMap<>();
+
+        // Create a list of questions for the first key
+        List<String> questionsFrontendDev = new ArrayList<>();
+        questionsFrontendDev.add("How would you conditionally render an element in JSX?");
+        questionsFrontendDev.add("What is the difference between let and const in JavaScript?");
+
+        // Add the list of questions to the map with a key
+        questionMap.put("frontend", questionsFrontendDev);
+
+        // Create a list of questions for the second key
+        List<String> questionsBackendDev = new ArrayList<>();
+        questionsBackendDev.add("What is REST?");
+        questionsBackendDev.add("What is the purpose of a database index?");
+
+        // Add the list of questions to the map with a different key
+        questionMap.put("backend", questionsBackendDev);
+
+
+        Utility.setUsers(users);
         Utility.setAssignments(assignments);
         Utility.setJobs(jobs);
         Utility.setApplications(applications);
+        Utility.setQuestionMap(questionMap);
 
 
         CommonService commonService = new CommonService();
         commonService.accessLandingPage();
-
 
     }
 
