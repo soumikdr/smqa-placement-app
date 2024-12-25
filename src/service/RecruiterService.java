@@ -1,10 +1,15 @@
 package service;
 
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.UUID;
+
 import model.Application;
 import model.Assignment;
 import model.Job;
 import model.JobStatus;
 import model.Application;
+import model.User;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -57,12 +62,11 @@ public class RecruiterService {
     	}
 
     	System.out.println("Directing to Application Page..");
-    	viewSpecificApplication();
-
-
+    	viewSpecificApplication(applicationId);
+    	
     }
 
-    public void sendInterview() {
+    public void sendInterview(Application application) {
 
     }
 
@@ -333,8 +337,81 @@ public class RecruiterService {
 
     }
 
-    public void viewSpecificApplication() {
+    public void viewSpecificApplication(String applicationId) {
+        User userApplicant = null;
+        Application application = null;
+        ArrayList<Application> allApplications = Utility.getApplications();
+        ArrayList<User> allUsers = Utility.getUsers();
 
+        for (Application app : allApplications) {
+            if (app.getId().equals(applicationId)) {
+                application = app;
+            }
+        }
+
+        if (application == null) {
+            System.out.println("No application found with given id");
+            viewAllApplications();
+            return;
+        }
+
+        for (User user : allUsers) {
+            if (user.getId().equals(application.getApplicantId())) {
+                userApplicant = user;
+            }
+        }
+
+        if (userApplicant == null) {
+            System.out.println("No applicant found with for this application");
+            viewAllApplications();
+            return;
+        }
+
+        System.out.println("Application ID: " + application.getId());
+        System.out.println("Job ID: " + application.getJobId());
+        System.out.println("Applicant ID: " + application.getApplicantId());
+        System.out.println("Applicant Name: " + userApplicant.getName() + " " + userApplicant.getLastName());
+        System.out.println("Status: " + application.getStatus());
+        System.out.println("Assignments found: " + application.getAssignments().size());
+
+        for (int i = 0; i < application.getAssignments().size(); i++) {
+            System.out.println("\nAssignment " + i + ": " + application.getAssignments().get(i).getAssignmentName());
+            System.out.println("Questions: ");
+
+            for (int j = 0; j < application.getAssignments().get(i).getQuestions().size(); j++) {
+                System.out.println(application.getAssignments().get(i).getQuestions().get(j));
+            }
+
+            System.out.println("Answers: ");
+            
+            for (int j = 0; j < application.getAssignments().get(i).getAnswers().size(); j++) {
+                System.out.println(application.getAssignments().get(i).getAnswers().get(j));
+            }
+        }
+
+        System.out.println("\n1: Update status of application");
+        System.out.println("2: Send an assignment");
+        System.out.println("3: Send interview questions");
+        System.out.println("4: Send feedback");
+        System.out.println("5: Go back to All Applications");
+        String answer = Utility.inputOutput("Please select one of the options..");
+
+        switch (answer) {
+            case "1" -> approveRejectApplication(application);
+            case "2" -> sendAssignment(application);
+            case "3" -> sendInterview(application);
+            case "4" -> sendFeedback();
+            case "5" -> viewAllApplications();
+            default -> {
+                System.out.println("You entered invalid option");
+                viewSpecificApplication(applicationId);
+                return;
+            }
+        }        
+    }
+
+    public void sendAssignment(Application application) {
+        
     }
 
     public void sendFeedback() {
