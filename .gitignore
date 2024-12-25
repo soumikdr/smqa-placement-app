@@ -10,10 +10,12 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+/target/
+.settings/
 
 ### VS Code ###
 .vscode/
 
 ### Mac OS ###
 .DS_Store
-/bin/
+
