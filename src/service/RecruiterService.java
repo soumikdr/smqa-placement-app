@@ -262,27 +262,19 @@ public class RecruiterService {
         System.out.println("3: Send interview questions");
         System.out.println("4: Send feedback");
         System.out.println("5: Go back to All Applications");
+        String answer = Utility.inputOutput("Please select one of the options..");
 
-        switch (Utility.inputOutput("\nPlease select one of the options..")) {
-            case "1":
-                approveRejectApplication(application);
-                break;
-            case "2":
-                sendAssignment(application);
-                break;
-            case "3":
-                sendInterview(application);
-                break;
-            case "4":
-                sendFeedback();
-                break;
-            case "5":
-                viewAllApplications();
-                break;
-            default:
+        switch (answer) {
+            case "1" -> approveRejectApplication(application);
+            case "2" -> sendAssignment(application);
+            case "3" -> sendInterview(application);
+            case "4" -> sendFeedback();
+            case "5" -> viewAllApplications();
+            default -> {
                 System.out.println("You entered invalid option");
                 viewSpecificApplication(applicationId);
-                break;
+                return;
+            }
         }        
     }
 

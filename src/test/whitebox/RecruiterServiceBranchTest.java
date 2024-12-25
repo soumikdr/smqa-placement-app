@@ -1,12 +1,15 @@
 package test.whitebox;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -14,55 +17,84 @@ import org.mockito.Mockito;
 import model.Application;
 import model.User;
 import model.UserRole;
+import model.Assignment;
 import service.RecruiterService;
 import utility.Utility;
 
 public class RecruiterServiceBranchTest {
     private ArrayList<Application> mockApplications;
     private ArrayList<User> mockUsers;
-    RecruiterService recruiterService;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     @Before
     public void setUp() {
+        // Mock Assignments
+        ArrayList<String> questions = new ArrayList<String>();
+        questions.add("Question 1");
+        questions.add("Question 2");
+
+        ArrayList<String> answers = new ArrayList<String>();
+        answers.add("1. Answer");
+        answers.add("2. Answer");
+
+        Assignment assignment = new Assignment("1", "1", "Java Assignment", questions, answers);
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        assignments.add(assignment);
+         
         // Mock applications
         mockApplications = new ArrayList<>();
         Application app1 = new Application("1", "1", "1", "Pending", new ArrayList<>());
+        app1.setAssignments(assignments);
         mockApplications.add(app1);
 
         // Mock users
         mockUsers = new ArrayList<>();
         User user1 = new User("1", "John", "Doe", "johnDoe", "bestpassword", UserRole.APPLICANT);
         mockUsers.add(user1);
-        
-        // Mock service class
-        recruiterService = Mockito.spy(new RecruiterService());
+    }
+    
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @After
+    public void restoreStreams() {
+        System.setOut(originalOut);
     }
 
     @Test
     public void testViewSpecificApplication_ApplicationNotFound() {
-        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            mockedUtility.when(Utility::getApplications).thenReturn(new ArrayList<>());
+    	try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAllApplications();
+
+            // Invalid application ID given
+            recruiterService.viewSpecificApplication("999g");
+
+            String expectedOutput = "No application found with given id";
+            assertEquals(expectedOutput, outContent.toString().trim());
         }
-
-        recruiterService.viewSpecificApplication("999");	// Non existent application ID
-
-        verify(utilityMock).getApplications();
-        verify(recruiterService).viewAllApplications();
     }
 
     @Test
     public void testViewSpecificApplication_ApplicantNotFound() {
-        Application application = new Application("appId", "jobId", "nonExistentApplicantId", "Pending", new ArrayList<>());
-        List<Application> applications = new ArrayList<>();
-        applications.add(application);
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 
-        when(utilityMock::getApplications).thenReturn(applications);
-        when(utilityMock.getUsers()).thenReturn(new ArrayList<>());
+            // No users given, so applicant will not be found
+            mockedUtility.when(Utility::getUsers).thenReturn(new ArrayList<>());
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAllApplications();
 
-        recruiterService.viewSpecificApplication("appId");
+            recruiterService.viewSpecificApplication("1");
 
-        verify(utilityMock).getUsers();
-        verify(utilityMock).viewAllApplications();
+            String expectedOutput = "No applicant found with for this application";
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }
     }
 
     @Test
@@ -70,33 +102,48 @@ public class RecruiterServiceBranchTest {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
             mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
-  
+
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAllApplications();
+            
+            // Checking all the switch branches one by one
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("1");
+            recruiterService.viewSpecificApplication("1");
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("2");
+            recruiterService.viewSpecificApplication("1");
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("3");
+            recruiterService.viewSpecificApplication("1");
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("4");
+            recruiterService.viewSpecificApplication("1");
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("5");
             recruiterService.viewSpecificApplication("1");
             
-            verify(mockedUtility).getApplications();
-            verify(mockedUtility).getUsers();
-            // Verify output methods for correct details if applicable
+            verify(recruiterService, times(1)).sendFeedback();
+            verify(recruiterService, times(1)).approveRejectApplication(mockApplications.get(0));
+            verify(recruiterService, times(1)).sendAssignment(mockApplications.get(0));
+            verify(recruiterService, times(1)).sendInterview(mockApplications.get(0));
+            verify(recruiterService, times(1)).viewAllApplications();
         }
     }
 
     @Test
     public void testViewSpecificApplication_InvalidOption() {
-        Application application = new Application("appId", "jobId", "userId", "Pending", new ArrayList<>());
-        User user = new User("1", "John", "Doe", "john", "password", UserRole.APPLICANT);
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
 
-        List<Application> applications = new ArrayList<>();
-        applications.add(application);
-
-        List<User> users = new ArrayList<>();
-        users.add(user);
-
-        when(utilityMock.getApplications()).thenReturn(applications);
-        when(utilityMock.getUsers()).thenReturn(users);
-        when(utilityMock.inputOutput(anyString())).thenReturn("invalid");
-
-        recruiterService.viewSpecificApplication("appId");
-
-        verify(utilityMock, times(1)).inputOutput(anyString());
-        verify(utilityMock).viewSpecificApplication("appId");
+            // First input Invalid then one valid input
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("Invalid", "1");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            
+            recruiterService.viewSpecificApplication("1");
+            
+            verify(recruiterService, times(2)).viewSpecificApplication("1");
+        }
     }
+
 }
