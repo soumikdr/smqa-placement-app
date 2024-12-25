@@ -1,5 +1,6 @@
 package service;
 
+import model.Applicant;
 import model.Recruiter;
 import model.User;
 import model.UserRole;
@@ -95,7 +96,7 @@ public class CommonService {
         if (user == null) {
             System.out.println("\n");
             String tryAgain = Utility.inputOutput("Invalid username or password. Do you want to try again? (y/n)");
-
+            
             if (tryAgain.equals("y")) {
                 viewSignInPage();
             } else {
@@ -113,7 +114,7 @@ public class CommonService {
         }
     }
 
-    public void viewSignUpPage() {
+    public void viewSignUpPage(){
         String firstName;
         String lastName;
         String userName;
@@ -155,7 +156,7 @@ public class CommonService {
 
     public void signUp(String role, String recruiterCode, String firstName, String lastName, String userName, String password) {
         System.out.println("Welcome to " + role + " Signup page \n");
-
+        
         RecruiterService recruiterService = new RecruiterService();
         String id = UUID.randomUUID().toString();
         if (recruiterCode != null && recruiterCode.equals("XVQTY")) {
@@ -166,8 +167,17 @@ public class CommonService {
             System.out.println("directing to Recruiter Dashboard");
             recruiterService.viewRecruiterDashboard();
         }
-
         // Applicant part
+        else {
+            ApplicantService applicantService = new ApplicantService();
+            User newUser = new Applicant(id, firstName, lastName, userName, password, new ArrayList<>());
+            Utility.getUsers().add(newUser);
+            System.out.println("Sign Up Successful for Applicant");
+            Utility.setCurrentUser(newUser);
+            System.out.println("directing to Applicant Dashboard");
+            applicantService.viewApplicantDashboard();
+        }
+
     }
 
     public void logOut() {
@@ -188,7 +198,7 @@ public class CommonService {
                 String userName = Utility.inputOutput("Enter your User name");
                 resetPassword(userName);
                 break;
-            case "2":
+            case "2": 
                 System.out.println("\nRediredting to Dashboard\n");
                 if (Utility.getCurrentUser().getRole().equals(UserRole.APPLICANT)) {
                     System.out.println("\nRedirecting to Applicant dashboard\n");

@@ -46,11 +46,6 @@ public class CommonServiceTests {
         users.add(new Applicant("3", "Jane", "Doe", "janeDoe", "bestpassword", new ArrayList<>()));
         Utility.setUsers(users);
     }
-    
-    
-
-
-
 
     @Test
     public void accessLandingPageTest() throws IOException {
@@ -59,11 +54,11 @@ public class CommonServiceTests {
         CommonService spyObject = Mockito.spy(service);
 
         try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
-        	
+
         	Mockito.doNothing().when(spyObject).viewSignInPage();
         	Mockito.doNothing().when(spyObject).viewSignUpPage();
 
-        	
+
             mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("1");
 
             spyObject.accessLandingPage();
@@ -77,7 +72,7 @@ public class CommonServiceTests {
             mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("2");
 
             spyObject.accessLandingPage();
-            
+
             consoleOutput = outputStream.toString();
 
             Assert.assertTrue(consoleOutput.contains("directing to Sign Up Page"));
@@ -87,18 +82,18 @@ public class CommonServiceTests {
             mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("invalid");
 
             Mockito.doCallRealMethod().doNothing().when(spyObject).accessLandingPage();
-            
+
             spyObject.accessLandingPage();
-            
+
             consoleOutput = outputStream.toString();
 
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
-            
+
             Mockito.verify(spyObject).viewSignInPage();
             Mockito.verify(spyObject).viewSignUpPage();
             Mockito.verify(spyObject,times(4)).accessLandingPage();
             mockedUtility.verify(times(3),()->Utility.inputOutput(Mockito.anyString()));
-            
+
           }
         }
 
@@ -107,7 +102,7 @@ public class CommonServiceTests {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outputStream)); // Redirect System.out
             CommonService spyObject = Mockito.spy(service);
-        
+
             try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
                 mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString()))
@@ -116,36 +111,36 @@ public class CommonServiceTests {
                                 "2",
                                 "Jane", "Smith", "janesmith", "recruiterpassword", "recruitercode",
                                 "3",
-                                "invalid", "1"); 
+                                "invalid", "1");
             Mockito.doNothing().when(spyObject).signUp(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
             Mockito.doNothing().when(spyObject).accessLandingPage();
                 spyObject.viewSignUpPage();
                 String consoleOutput = outputStream.toString();
                 Assert.assertTrue(consoleOutput.contains("Welcome to Applicant Signup page"));
                 outputStream.reset();
-        
+
                 spyObject.viewSignUpPage();
                 consoleOutput = outputStream.toString();
                 Assert.assertTrue(consoleOutput.contains("Welcome to Recruiter Signup page"));
                 outputStream.reset();
-        
+
                 spyObject.viewSignUpPage();
                 consoleOutput = outputStream.toString();
                 Assert.assertTrue(consoleOutput.contains("Redirecting to Landing Page"));
                 outputStream.reset();
-        
+
                 spyObject.viewSignUpPage();
                 consoleOutput = outputStream.toString();
                 Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
                 Assert.assertTrue(consoleOutput.contains("Welcome to Applicant Signup page"));
                 outputStream.reset();
-        
+
                 Mockito.verify(spyObject, Mockito.times(1)).signUp(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
                 Mockito.verify(spyObject, Mockito.times(1)).accessLandingPage();
                 mockedUtility.verify(Mockito.times(18), () -> Utility.inputOutput(Mockito.anyString()));
             }
         }
-        
+
 
     @Test
     public void viewSignInPageTest() throws IOException {
@@ -189,13 +184,13 @@ public class CommonServiceTests {
         CommonService spyObject = Mockito.spy(service);
         RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
         ApplicantService applicantSpyObject = Mockito.spy(applicantService);
-    
+
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-    
+
             Mockito.doNothing().when(spyObject).resetPassword(Mockito.anyString());
             Mockito.doNothing().when(applicantSpyObject).viewApplicantDashboard();
             Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
-    
+
             User mockUser = new User("U101", "John", "Doe", "johndoe", "bestpassword", UserRole.RECRUITER);
             mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("1", "johndoe");
@@ -204,7 +199,7 @@ public class CommonServiceTests {
             Assert.assertTrue(consoleOutput.contains("Welcome to reset password page"));
             outputStream.reset();
             Mockito.verify(spyObject, Mockito.times(1)).resetPassword("johndoe");
-    
+
             User mockUser2 = new User("U102", "Alice", "Smith", "alice_smith", "password456", UserRole.APPLICANT);
             mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser2);
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
@@ -212,7 +207,7 @@ public class CommonServiceTests {
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant dashboard"));
             outputStream.reset();
-    
+
             User mockUser3 = new User("U201", "Alice", "Smith", "alice_smith", "password456", UserRole.RECRUITER);
             mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser3);
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
@@ -220,7 +215,7 @@ public class CommonServiceTests {
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Redirecting to Recruiter dashboard"));
             outputStream.reset();
-    
+
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("invalid", "1", "johndoe");
             spyObject.viewResetPasswordPage();
             consoleOutput = outputStream.toString();
@@ -241,7 +236,7 @@ public void resetPasswordTest() throws IOException {
     Mockito.mockStatic(ApplicantService.class).when(ApplicantService::getInstance).thenReturn(mockApplicantService);
     RecruiterService mockRecruiterService = Mockito.mock(RecruiterService.class);
     Mockito.mockStatic(RecruiterService.class).when(RecruiterService::getInstance).thenReturn(mockRecruiterService);
-    
+
 
     try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
@@ -298,7 +293,7 @@ public void resetPasswordTest() throws IOException {
     }
 }
 
-    
+
 
     // public void recruiterSignUpTest() throws Exception {
 
@@ -349,7 +344,17 @@ public void resetPasswordTest() throws IOException {
 
     }
 
+@Test
+    public void signUpTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
 
+        String simulatedInput = "1";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        service.signUp("Applicant",null,"John","Doe","johnDoe","bestpassword");
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Sign Up Successful for Applicant"));
+    }
     @Test
     public void authenticateUser() {
         setUp();
@@ -363,5 +368,6 @@ public void resetPasswordTest() throws IOException {
         User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "wrongpassword");
         Assert.assertNull(user);
     }
+
 
 }
