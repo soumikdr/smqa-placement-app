@@ -3,15 +3,16 @@ package test.whitebox;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.After;
@@ -20,6 +21,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import model.Application;
+import model.ApplicationStatus;
 import model.User;
 import model.UserRole;
 import model.Assignment;
@@ -30,6 +32,7 @@ import utility.Utility;
 public class RecruiterServiceBranchTest {
     private ArrayList<Application> mockApplications;
     private ArrayList<User> mockUsers;
+    private Application mockApplication;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
@@ -50,7 +53,9 @@ public class RecruiterServiceBranchTest {
          
         // Mock applications
         mockApplications = new ArrayList<>();
-        Application app1 = new Application("1", "1", "1", "Pending", new ArrayList<>());
+        Application app1 = new Application("1", "1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc", "JS, CSS", "Feedback");
+        mockApplication = app1;
+
         app1.setAssignments(assignments);
         mockApplications.add(app1);
 
@@ -209,6 +214,105 @@ public class RecruiterServiceBranchTest {
             recruiterService.viewSpecificApplication("1");
             
             verify(recruiterService, times(2)).viewSpecificApplication("1");
+        }
+    }
+
+    @Test
+    public void testSendAssignment_ValidRole() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Mock dependencies
+            Map<String, List<String>> questionMap = new HashMap<>();
+            questionMap.put("frontend", Arrays.asList("Q1", "Q2"));
+            utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("frontend");
+            // Clear assignments if any
+            mockApplication.setAssignments(new ArrayList<Assignment>());
+
+            // Invoke the method
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            recruiterService.sendAssignment(mockApplication);
+
+            // Assertions
+            assertEquals(1, mockApplication.getAssignments().size());
+            Assignment assignment = mockApplication.getAssignments().get(0);
+            assertEquals("Assignment frontend", assignment.getAssignmentName());
+            assertEquals(Arrays.asList("Q1", "Q2"), assignment.getQuestions());
+            assertEquals("1", assignment.getApplicantId());
+
+            // Verify interaction with mocked methods
+            utilities.verify(Utility::getQuestionMap);
+            utilities.verify(() -> Utility.inputOutput(anyString()));
+        }
+    }
+
+    @Test
+    public void testSendAssignment_InvalidRole() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange and mock dependencies
+            Map<String, List<String>> questionMap = new HashMap<>();
+            questionMap.put("frontend", Arrays.asList("Q1", "Q2"));
+            utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("invalid_role");
+            // Clear assignments if any
+            mockApplication.setAssignments(new ArrayList<Assignment>());
+
+            // Invoke the method
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            recruiterService.sendAssignment(mockApplication);
+
+            // Assertions
+            assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
+
+            // Verify interaction with mocked methods
+            utilities.verify(Utility::getQuestionMap);
+            utilities.verify(() -> Utility.inputOutput(anyString()));
+        }
+    }
+
+    @Test
+    public void testSendAssignment_NullRole() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Mock dependencies
+            Map<String, List<String>> questionMap = new HashMap<>();
+            questionMap.put("frontend", Arrays.asList("Q1", "Q2"));
+            utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn(null);
+            // Clear assignments if any
+            mockApplication.setAssignments(new ArrayList<Assignment>());
+
+            // Invoke the method
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            recruiterService.sendAssignment(mockApplication);
+
+            // Assertions
+            assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
+
+            // Verify interaction with mocked methods
+            utilities.verify(Utility::getQuestionMap);
+            utilities.verify(() -> Utility.inputOutput(anyString()));
+        }
+    }
+
+    @Test
+    public void testSendAssignment_NoQuestionsInMap() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Mock dependencies
+            Map<String, List<String>> questionMap = new HashMap<>();
+            utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("frontend");
+            // Clear assignments if any
+            mockApplication.setAssignments(new ArrayList<Assignment>());
+
+            // Invoke the method
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            recruiterService.sendAssignment(mockApplication);
+
+            // Assertions
+            assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
+
+            // Verify interaction with mocked methods
+            utilities.verify(Utility::getQuestionMap);
+            utilities.verify(() -> Utility.inputOutput(anyString()));
         }
     }
 
