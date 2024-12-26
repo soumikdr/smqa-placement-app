@@ -286,7 +286,51 @@ public class RecruiterService {
     }
 
     public void updateDescriptionOfJobPost(String jobId) {
+        System.out.println("\n-------- Update job description --------\n");
+        ArrayList<Job> jobs = Utility.getJobs();
+        Job job = null;
 
+        if (jobs == null || jobs.isEmpty()) {
+            System.out.println("No jobs available");
+            return;
+        }
+
+        for (Job j : jobs) {
+            if (j.getId().equals(jobId)) {
+                job = j;
+            }
+        }
+
+        if (job == null) {
+            System.out.println("No job post available with given id");
+            viewAvailableJobs();
+            return;
+        }
+
+        System.out.println("Current title of job: " + job.getJobName());
+        System.out.println("Current description of job: " + job.getJobDescription());
+        
+        System.out.println("\n");
+        String newName = Utility.inputOutput("Enter new job title..");
+        String newDescription = Utility.inputOutput("Enter new job description..");
+        System.out.println("\n");
+        
+        if (newName.isEmpty()) {
+            System.out.println("Job title not updated as it is empty"); 
+        } else {
+            job.setJobName(newName);
+            System.out.println("Job title updated successfully");
+        }
+        
+        if (newDescription.isEmpty()) {
+            System.out.println("Job description not updated as it is empty");
+        } else {
+            job.setJobDescription(newDescription);
+            System.out.println("Job description updated successfully");
+        }
+
+        System.out.println("\n");
+        viewAvailableJobs();
     }
 
     public void updateStatusOfJobPost(String jobId) {
