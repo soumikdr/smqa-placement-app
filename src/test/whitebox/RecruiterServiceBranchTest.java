@@ -25,6 +25,8 @@ import model.ApplicationStatus;
 import model.User;
 import model.UserRole;
 import model.Assignment;
+import model.Job;
+import model.JobStatus;
 import service.RecruiterService;
 import utility.Utility;
 
@@ -32,12 +34,20 @@ import utility.Utility;
 public class RecruiterServiceBranchTest {
     private ArrayList<Application> mockApplications;
     private ArrayList<User> mockUsers;
+    private ArrayList<Job> mockJobs;
     private Application mockApplication;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
     @Before
     public void setUp() {
+        // Mock Jobs
+        Job job1 = new Job( "1", "Data Analyst", "A data analyst's job is to collect, organize, and analyze data to help businesses solve problems and gain insights. ", JobStatus.PRIVATE );
+        Job job2 = new Job( "2", "Frontend Developer", "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ", JobStatus.PUBLIC );
+        mockJobs = new ArrayList<>();
+        mockJobs.add(job1);
+        mockJobs.add(job2);
+        
         // Mock Assignments
         ArrayList<String> questions = new ArrayList<String>();
         questions.add("Question 1");
@@ -316,4 +326,128 @@ public class RecruiterServiceBranchTest {
         }
     }
 
+    @Test
+    public void testUpdateDescriptionOfJobPost_NullJobList() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            utilities.when(Utility::getJobs).thenReturn(null);
+
+            // Act
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            recruiterService.updateDescriptionOfJobPost("1");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("No jobs available", lastMessage);
+        }
+    }
+
+    @Test
+    public void testUpdateDescriptionOfJobPost_EmptyJobList() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            utilities.when(Utility::getJobs).thenReturn(new ArrayList<>());
+
+            // Act
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            recruiterService.updateDescriptionOfJobPost("1");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("No jobs available", lastMessage);
+        }
+    }
+
+    @Test
+    public void testUpdateDescriptionOfJobPost_JobIdNotFound() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            utilities.when(Utility::getJobs).thenReturn(mockJobs);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Updated Job Title").thenReturn("Updated job description");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAvailableJobs();
+
+            // Act
+            recruiterService.updateDescriptionOfJobPost("864651896461651");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("No job post available with given id", lastMessage);
+
+            // Verify
+            verify(recruiterService, times(1)).viewAvailableJobs();
+            verify(recruiterService, times(1)).updateDescriptionOfJobPost("864651896461651");
+        }
+    }
+
+    @Test
+    public void testUpdateDescriptionOfJobPost_NewTitleEmpty() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            utilities.when(Utility::getJobs).thenReturn(mockJobs);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("").thenReturn("Updated job description");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAvailableJobs();
+
+            // Act
+            recruiterService.updateDescriptionOfJobPost("1");
+
+            // Assert - Verify "Job title not updated as it is empty"
+            assertEquals(mockJobs.get(0).getJobName(), Utility.getJobs().get(0).getJobName());
+        }
+    }
+
+    @Test
+    public void testUpdateDescriptionOfJobPost_NewDescriptionEmpty() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            utilities.when(Utility::getJobs).thenReturn(mockJobs);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Updated Job Title").thenReturn("");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAvailableJobs();
+
+            // Act
+            recruiterService.updateDescriptionOfJobPost("1");
+
+            // Assert - Verify "Job description not updated as it is empty"
+            assertEquals(mockJobs.get(0).getJobDescription(), Utility.getJobs().get(0).getJobDescription());
+        }
+    }
+
+    @Test
+    public void testUpdateDescriptionOfJobPost_ValidJobUpdate() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            // Initial Jobs have different job name and description
+            utilities.when(Utility::getJobs).thenReturn(mockJobs);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Updated Job Title").thenReturn("Updated job description");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAvailableJobs();
+
+            // Act
+            recruiterService.updateDescriptionOfJobPost("1");
+
+            // Assert - Verify "Job title and description updated"
+            assertEquals("Updated Job Title", Utility.getJobs().get(0).getJobName());
+            assertEquals("Updated job description", Utility.getJobs().get(0).getJobDescription());
+        }
+    }
 }

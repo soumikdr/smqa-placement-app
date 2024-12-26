@@ -28,6 +28,8 @@ import java.util.Map;
 import model.Application;
 import model.ApplicationStatus;
 import model.Assignment;
+import model.Job;
+import model.JobStatus;
 import model.User;
 import model.UserRole;
 import service.RecruiterService;
@@ -38,6 +40,7 @@ public class RecruiterServiceStatementTest {
 
     private ArrayList<Application> mockApplications;
     private ArrayList<User> mockUsers;
+    private ArrayList<Job> mockJobs;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     
@@ -58,6 +61,13 @@ public class RecruiterServiceStatementTest {
 
     @Before
     public void setup() {
+        // Mock Jobs
+        Job job1 = new Job( "1", "Data Analyst", "A data analyst's job is to collect, organize, and analyze data to help businesses solve problems and gain insights. ", JobStatus.PRIVATE );
+        Job job2 = new Job( "2", "Frontend Developer", "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ", JobStatus.PUBLIC );
+        mockJobs = new ArrayList<>();
+        mockJobs.add(job1);
+        mockJobs.add(job2);
+
         // Mock Assignments
         ArrayList<String> questions = new ArrayList<String>();
         questions.add("Question 1");
@@ -209,6 +219,29 @@ public class RecruiterServiceStatementTest {
             // Verify interactions
             utilities.verify(Utility::getQuestionMap);
             utilities.verify(() -> Utility.inputOutput(anyString()));
+        }
+    }
+
+    @Test
+    public void testUpdateDescriptionOfJobPost_JobFoundAndUpdated() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Setup and Mocking
+            // Initial Jobs have different job name and description
+            utilities.when(Utility::getJobs).thenReturn(mockJobs);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Senior Engineer").thenReturn("Develop and manage software projects");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAvailableJobs();
+
+            // Act
+            recruiterService.updateDescriptionOfJobPost("1");
+
+            // Assert - Verify "Job title and description updated"
+            assertEquals("Senior Engineer", Utility.getJobs().get(0).getJobName());
+            assertEquals("Develop and manage software projects", Utility.getJobs().get(0).getJobDescription());
+
+            // Verify interactions
+            utilities.verify(times(3), Utility::getJobs);
+            utilities.verify(times(2), () -> Utility.inputOutput(anyString()));
         }
     }
 
