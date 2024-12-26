@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
 
-
     private static RecruiterService instance = null;
 
     public static RecruiterService getInstance() {
@@ -196,7 +195,12 @@ public class RecruiterService {
 
     }
     public void deleteRecruiterProfile(){
-
+        System.out.println("Deleting your profile...");
+        String userName = Utility.getCurrentUser().getUserName();
+        Utility.getUsers().removeIf(user -> user.getUserName().equals(userName));
+        Utility.setCurrentUser(null);
+        System.out.println("Profile deleted successfully");
+        commonService.accessLandingPage();
     }
 
     public void updateRecruiterProfile() {
