@@ -1,6 +1,10 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import utility.Utility;
 
 public class Application {
     private String id;
@@ -18,7 +22,9 @@ public class Application {
     private String education;
 
     private String skills;
+
     private String feedback;
+
     public Application(String id, String jobId, String applicantId, ApplicationStatus status, ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills,String feedback) {
             this.id = id;
             this.jobId = jobId;
@@ -29,10 +35,13 @@ public class Application {
             this.yearOfExperience = yearOfExperience;
             this.education = education;
             this.skills = skills;
+
+            ArrayList<String> commonInterviewQuestions = Utility.getCommonInterviewQuestions();
+            Assignment interview = new Assignment(UUID.randomUUID().toString(), applicantId, "interview", commonInterviewQuestions, null);
+            this.assignments.add(interview);
         }
 
-    public Application() {
-        }
+        public Application() {}
 
         public String getId () {
             return id;

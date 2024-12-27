@@ -5,6 +5,7 @@ import model.Job;
 import model.ApplicationStatus;
 import model.Assignment;
 import model.User;
+import model.AssignmentStatus;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -23,10 +24,11 @@ public class ApplicantService {
 
 
     public void submitAssessmentForm(String applicationId) {
+
     }
 
     public void viewAssessment(String applicationId) {
-System.out.println("Welcome to the Assessment Page\n");
+        System.out.println("Welcome to the Assessment Page\n");
 
         for(Application application: Utility.getApplications()) {
             if (application.getId().equals(applicationId)) {
@@ -43,7 +45,29 @@ System.out.println("Welcome to the Assessment Page\n");
         }
     }
 
-    public void submitInterviewForm(Assignment interview) {
+    public void submitInterviewForm(String applicationId) {
+        Application application = null;
+
+        for(Application app: Utility.getApplications()) {
+            if (app.getId().equals(applicationId)) {
+                application = app;
+                break;
+            }
+        }
+
+        Assignment interview = null;
+
+        for(Assignment assignment: application.getAssignments()) {
+            if (assignment.getAssignmentName().equals("interview")) {
+                interview = assignment;
+                break;
+            }
+        }
+
+        if (interview == null) {
+            System.out.println("Interview not found for this application");
+            return;
+        }
 
     	System.out.println("Please answer questions to complete interview :");
 
@@ -65,9 +89,8 @@ System.out.println("Welcome to the Assessment Page\n");
 
     	System.out.println("Answers Submitted.");
     	System.out.println("Directing to application dashboard..");
-        viewApplicationProcessDashboard();
 
-
+        viewApplicationProcessDashboard(application.getId());
     }
 
     public void viewInterview(String applicationId) {
