@@ -1,12 +1,14 @@
 package test.whitebox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -101,6 +103,39 @@ public class ApplicantServiceStatementTest {
             String lastMessage = lines[lines.length - 1];
 
             assertEquals("All assignments submitted successfully", lastMessage.trim());
+        }
+    }
+
+    @Test
+    public void testViewInterview_Valid() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicationProcessDashboard("1");
+
+            // Act
+            applicantService.viewInterview("1");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+
+            // Filter string
+            List<String> filteredLines = new ArrayList<>();
+
+            for (String str : lines) {
+                String trimmed = str.trim();
+                if (!trimmed.isEmpty()) {
+                    filteredLines.add(trimmed);
+                }
+            }
+
+            assertTrue(filteredLines.contains("Questions are:"));
+            assertTrue(filteredLines.contains("Redirecting back to Application Dashboard.."));
         }
     }
 }
