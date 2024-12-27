@@ -1,6 +1,10 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import utility.Utility;
 
 public class Application {
     private String id;
@@ -9,58 +13,106 @@ public class Application {
 
     private String applicantId;
 
-    private String status;
+    private ApplicationStatus applicationStatus;
 
     private ArrayList<Assignment> assignments;
 
-    public Application(String id, String jobId, String applicantId, String status, ArrayList<Assignment> assignments) {
-        this.id = id;
-        this.jobId = jobId;
-        this.applicantId = applicantId;
-        this.status = status;
-        this.assignments = assignments;
-    }
+    private Integer yearOfExperience;
 
-    public Application() {
-    }
+    private String education;
 
-    public String getId() {
-        return id;
-    }
+    private String skills;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    private String feedback;
 
-    public String getJobId() {
-        return jobId;
-    }
+    public Application(String id, String jobId, String applicantId, ApplicationStatus status, ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills,String feedback) {
+            this.id = id;
+            this.jobId = jobId;
+            this.applicantId = applicantId;
+            this.applicationStatus = status;
+            this.assignments = assignments;
+            this.feedback = feedback;
+            this.yearOfExperience = yearOfExperience;
+            this.education = education;
+            this.skills = skills;
 
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
-    }
+            ArrayList<String> commonInterviewQuestions = Utility.getCommonInterviewQuestions();
+            Assignment interview = new Assignment(UUID.randomUUID().toString(), applicantId, "interview", commonInterviewQuestions, null);
+            this.assignments.add(interview);
+        }
 
-    public String getApplicantId() {
-        return applicantId;
-    }
+        public Application() {}
 
-    public void setApplicantId(String applicantId) {
-        this.applicantId = applicantId;
-    }
+        public String getId () {
+            return id;
+        }
 
-    public String getStatus() {
-        return status;
-    }
+        public void setId (String id){
+            this.id = id;
+        }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+        public String getJobId () {
+            return jobId;
+        }
 
-    public ArrayList<Assignment> getAssignments() {
-        return assignments;
-    }
+        public void setJobId (String jobId){
+            this.jobId = jobId;
+        }
 
-    public void setAssignments(ArrayList<Assignment> assignments) {
-        this.assignments = assignments;
+        public String getApplicantId () {
+            return applicantId;
+        }
+
+        public void setApplicantId (String applicantId){
+            this.applicantId = applicantId;
+        }
+
+        public ApplicationStatus getStatus () {
+            return applicationStatus;
+        }
+
+        public void setStatus (ApplicationStatus applicationStatus){
+            this.applicationStatus = applicationStatus;
+        }
+
+        public String getFeedback () {
+            return feedback;
+        }
+
+        public void setFeedback (String feedback){
+            this.feedback = feedback;
+        }
+
+        public ArrayList<Assignment> getAssignments () {
+            return assignments;
+        }
+
+        public void setAssignments (ArrayList < Assignment > assignments) {
+            this.assignments = assignments;
+        }
+
+        public Integer getYearOfExperience () {
+            return yearOfExperience;
+        }
+
+        public void setYearOfExperience (Integer yearOfExperience){
+            this.yearOfExperience = yearOfExperience;
+        }
+
+        public String getEducation () {
+            return education;
+        }
+
+        public void setEducation (String education){
+            this.education = education;
+        }
+
+
+        public String getSkills () {
+            return skills;
+        }
+
+        public void setSkills (String skills){
+            this.skills = skills;
+        }
     }
-}

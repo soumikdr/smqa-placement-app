@@ -12,12 +12,12 @@ public class User {
 
     private String password;
 
-    private String role;
+    private UserRole role;
 
     public User() {
     }
 
-    public User(String id, String name, String lastName, String userName, String password, String role) {
+    public User(String id, String name, String lastName, String userName, String password, UserRole role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -66,11 +66,15 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public void greetUser() {
+        System.out.println("Welcome " + name + " " + lastName);
     }
 }
