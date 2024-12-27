@@ -41,6 +41,7 @@ public class RecruiterServiceStatementTest {
     private ArrayList<Application> mockApplications;
     private ArrayList<User> mockUsers;
     private ArrayList<Job> mockJobs;
+    private Application mockApplication;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     
@@ -84,6 +85,7 @@ public class RecruiterServiceStatementTest {
         // Mock applications
         mockApplications = new ArrayList<>();
         Application app1 = new Application("1", "1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc", "JS, CSS", "Feedback");
+        mockApplication = app1;
         mockApplications.add(app1);
 
         // Mock users
@@ -245,4 +247,26 @@ public class RecruiterServiceStatementTest {
         }
     }
 
+    @Test
+    public void testSendFeedback_Valid() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Valid feedback");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewSpecificApplication(mockApplication.getId());
+
+            // Act
+            recruiterService.sendFeedback(mockApplication);
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Feedback sent successfully", lastMessage);
+        }
+    }
 }

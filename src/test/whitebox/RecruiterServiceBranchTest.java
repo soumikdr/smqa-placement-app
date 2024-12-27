@@ -63,7 +63,7 @@ public class RecruiterServiceBranchTest {
          
         // Mock applications
         mockApplications = new ArrayList<>();
-        Application app1 = new Application("1", "1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc", "JS, CSS", "Feedback");
+        Application app1 = new Application("1", "1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc", "JS, CSS", "");
         mockApplication = app1;
 
         app1.setAssignments(assignments);
@@ -203,7 +203,7 @@ public class RecruiterServiceBranchTest {
             mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("5");
             recruiterService.viewSpecificApplication("1");
             
-            verify(recruiterService, times(1)).sendFeedback();
+            verify(recruiterService, times(1)).sendFeedback(mockApplications.get(0));
             verify(recruiterService, times(1)).approveRejectApplication(mockApplications.get(0));
             verify(recruiterService, times(1)).sendAssignment(mockApplications.get(0));
             verify(recruiterService, times(1)).sendInterview(mockApplications.get(0));
@@ -448,6 +448,58 @@ public class RecruiterServiceBranchTest {
             // Assert - Verify "Job title and description updated"
             assertEquals("Updated Job Title", Utility.getJobs().get(0).getJobName());
             assertEquals("Updated job description", Utility.getJobs().get(0).getJobDescription());
+        }
+    }
+
+    @Test
+    public void testSendFeedback_EmptyFeedback() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            // One application with empty feedback initially
+            utilities.when(Utility::getApplications).thenReturn(mockApplications);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            // doNothing().when(recruiterService).sendFeedback(mockApplication);
+
+            // Act
+            recruiterService.sendFeedback(mockApplication);
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Feedback not updated as it is empty", lastMessage);
+            assertEquals("", Utility.getApplications().get(0).getFeedback());
+        }
+    }
+
+    @Test
+    public void testSendFeedback_ValidFeedback() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange
+            // One application with empty feedback initially
+            utilities.when(Utility::getApplications).thenReturn(mockApplications);
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Valid feedback");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewSpecificApplication(mockApplication.getId());
+
+            // Act
+            recruiterService.sendFeedback(mockApplication);
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Feedback sent successfully", lastMessage);
+            assertEquals("Valid feedback", Utility.getApplications().get(0).getFeedback());
         }
     }
 }
