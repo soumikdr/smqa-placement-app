@@ -24,7 +24,56 @@ public class ApplicantService {
 
 
     public void submitAssessmentForm(String applicationId) {
+        System.out.println("\n------ Submit your assignments ------\n");
+        Application application = null;
 
+        for(Application app: Utility.getApplications()) {
+            if (app.getId().equals(applicationId)) {
+                application = app;
+                break;
+            }
+        }
+
+        if (application == null) {
+            System.out.println("Application with given ID not found");
+            return;
+        }
+
+        ArrayList<Assignment> assignments = application.getAssignments();
+
+        // Check if there are any assignments for this application other than 'interview'
+        if (assignments.size() < 2) {
+            System.out.println("No assignments found for this application");
+            viewApplicationProcessDashboard(applicationId);
+            return;
+        }
+
+        for (Assignment assignment: assignments) {
+            if (assignment.getAssignmentName().equals("interview")) {
+                continue;
+            }
+            
+            System.out.println("\nAssignment Name: " + assignment.getAssignmentName() + "\n");
+            
+            if (assignment.getStatus() == AssignmentStatus.SUBMITTED) {
+                System.out.println("This assignment is already submitted");
+                continue;
+            }
+
+            ArrayList<String> answers = new ArrayList<>();
+
+            for (String question : assignment.getQuestions()) {
+                System.out.println("Question: " + question);
+                String answer = Utility.inputOutput("Type your answer here (include question number): ");
+                answers.add(answer);
+            }
+
+            assignment.setAnswers(answers);
+            assignment.setStatus(AssignmentStatus.SUBMITTED);
+        }
+
+        System.out.println("\nAll assignments submitted successfully\n");
+        viewApplicationProcessDashboard(applicationId);
     }
 
     public void viewAssessment(String applicationId) {
