@@ -164,7 +164,7 @@ public class RecruiterService {
               System.out.println("Directing to Application's Page");
 
               //has to redirect to application page
-              viewSpecificApplication();
+              viewSpecificApplication(application.getId());
                break;
 		}
 		case "2":{
@@ -178,11 +178,11 @@ public class RecruiterService {
             System.out.println("Application Rejected");
             System.out.println("Directing to Application's Page");
             //has to redirect to application page
-            viewSpecificApplication();
+            viewSpecificApplication(application.getId());
             break;
 		}
 		case "3":{
-			viewSpecificApplication();
+			viewSpecificApplication(application.getId());
             //has to redirect to application page
             System.out.println("Directing to Application's Page");
             break;
@@ -422,6 +422,7 @@ public class RecruiterService {
         System.out.println("Applicant ID: " + application.getApplicantId());
         System.out.println("Applicant Name: " + userApplicant.getName() + " " + userApplicant.getLastName());
         System.out.println("Status: " + application.getStatus());
+        System.out.println("Feedback: " + application.getFeedback());
         System.out.println("Assignments found: " + application.getAssignments().size());
 
         for (int i = 0; i < application.getAssignments().size(); i++) {
@@ -450,7 +451,7 @@ public class RecruiterService {
             case "1" -> approveRejectApplication(application);
             case "2" -> sendAssignment(application);
             case "3" -> sendInterview(application);
-            case "4" -> sendFeedback();
+            case "4" -> sendFeedback(application);
             case "5" -> viewAllApplications();
             default -> {
                 System.out.println("You entered invalid option");
@@ -484,12 +485,19 @@ public class RecruiterService {
         viewSpecificApplication(application.getId());
     }
 
-    public void sendFeedback() {
+    public void sendFeedback(Application application) {
+        System.out.println("\n-------- Send feedback to applicant --------\n");
+        String feedback = Utility.inputOutput("Please type your feedback here..");
 
-    }
+        if (feedback.isEmpty()) {
+            System.out.println("Feedback not updated as it is empty");
+            return;
+        }
 
-    public void viewFeedbackForm() {
+        application.setFeedback(feedback);
+        System.out.println("\nFeedback sent successfully\n");
 
+        viewSpecificApplication(application.getId());
     }
 
     public void viewSubmittedAnswers(String applicationId) {
