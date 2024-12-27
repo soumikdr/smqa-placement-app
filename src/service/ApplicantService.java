@@ -5,6 +5,7 @@ import model.Job;
 import model.ApplicationStatus;
 import model.Assignment;
 import model.User;
+import model.AssignmentStatus;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -23,10 +24,60 @@ public class ApplicantService {
 
 
     public void submitAssessmentForm(String applicationId) {
+        System.out.println("\n------ Submit your assignments ------\n");
+        Application application = null;
+
+        for(Application app: Utility.getApplications()) {
+            if (app.getId().equals(applicationId)) {
+                application = app;
+                break;
+            }
+        }
+
+        if (application == null) {
+            System.out.println("Application with given ID not found");
+            return;
+        }
+
+        ArrayList<Assignment> assignments = application.getAssignments();
+
+        // Check if there are any assignments for this application other than 'interview'
+        if (assignments.size() < 2) {
+            System.out.println("No assignments found for this application");
+            viewApplicationProcessDashboard(applicationId);
+            return;
+        }
+
+        for (Assignment assignment: assignments) {
+            if (assignment.getAssignmentName().equals("interview")) {
+                continue;
+            }
+            
+            System.out.println("\nAssignment Name: " + assignment.getAssignmentName() + "\n");
+            
+            if (assignment.getStatus() == AssignmentStatus.SUBMITTED) {
+                System.out.println("This assignment is already submitted");
+                continue;
+            }
+
+            ArrayList<String> answers = new ArrayList<>();
+
+            for (String question : assignment.getQuestions()) {
+                System.out.println("Question: " + question);
+                String answer = Utility.inputOutput("Type your answer here (include question number): ");
+                answers.add(answer);
+            }
+
+            assignment.setAnswers(answers);
+            assignment.setStatus(AssignmentStatus.SUBMITTED);
+        }
+
+        System.out.println("\nAll assignments submitted successfully\n");
+        viewApplicationProcessDashboard(applicationId);
     }
 
     public void viewAssessment(String applicationId) {
-System.out.println("Welcome to the Assessment Page\n");
+        System.out.println("Welcome to the Assessment Page\n");
 
         for(Application application: Utility.getApplications()) {
             if (application.getId().equals(applicationId)) {
@@ -43,7 +94,29 @@ System.out.println("Welcome to the Assessment Page\n");
         }
     }
 
-    public void submitInterviewForm(Assignment interview) {
+    public void submitInterviewForm(String applicationId) {
+        Application application = null;
+
+        for(Application app: Utility.getApplications()) {
+            if (app.getId().equals(applicationId)) {
+                application = app;
+                break;
+            }
+        }
+
+        Assignment interview = null;
+
+        for(Assignment assignment: application.getAssignments()) {
+            if (assignment.getAssignmentName().equals("interview")) {
+                interview = assignment;
+                break;
+            }
+        }
+
+        if (interview == null) {
+            System.out.println("Interview not found for this application");
+            return;
+        }
 
     	System.out.println("Please answer questions to complete interview :");
 
@@ -65,9 +138,8 @@ System.out.println("Welcome to the Assessment Page\n");
 
     	System.out.println("Answers Submitted.");
     	System.out.println("Directing to application dashboard..");
-        viewApplicationProcessDashboard();
 
-
+        viewApplicationProcessDashboard(application.getId());
     }
 
     public void viewInterview(String applicationId) {

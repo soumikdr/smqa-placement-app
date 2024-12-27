@@ -1,5 +1,5 @@
 package model;
 
 public enum ApplicationStatus {
-    INPROGRESS, SUCCESSFUL, UNSUCCESSFUL
+    INPROGRESS, INTERVIEW, SUCCESSFUL, UNSUCCESSFUL
 }

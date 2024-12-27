@@ -79,16 +79,16 @@ public class Main {
 
         // Create a list of questions for the first key
         List<String> questionsFrontendDev = new ArrayList<>();
-        questionsFrontendDev.add("How would you conditionally render an element in JSX?");
-        questionsFrontendDev.add("What is the difference between let and const in JavaScript?");
+        questionsFrontendDev.add("[1] How would you conditionally render an element in JSX?");
+        questionsFrontendDev.add("[2] What is the difference between let and const in JavaScript?");
 
         // Add the list of questions to the map with a key
         questionMap.put("frontend", questionsFrontendDev);
 
         // Create a list of questions for the second key
         List<String> questionsBackendDev = new ArrayList<>();
-        questionsBackendDev.add("What is REST?");
-        questionsBackendDev.add("What is the purpose of a database index?");
+        questionsBackendDev.add("[1] What is REST?");
+        questionsBackendDev.add("[2] What is the purpose of a database index?");
 
         // Add the list of questions to the map with a different key
         questionMap.put("backend", questionsBackendDev);
