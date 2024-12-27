@@ -97,9 +97,9 @@ public class Utility {
 
     public static ArrayList<String> getCommonInterviewQuestions() {
         ArrayList<String> interviewQuestions = new ArrayList<>();
-        interviewQuestions.add("Why are you interested in this position?");
-        interviewQuestions.add("How do you handle conflict in a team environment?");
-        interviewQuestions.add("What are your salary expectations?");
+        interviewQuestions.add("[1] Why are you interested in this position?");
+        interviewQuestions.add("[2] How do you handle conflict in a team environment?");
+        interviewQuestions.add("[3] What are your salary expectations?");
 
         return interviewQuestions;
     }

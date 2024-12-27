@@ -1,15 +1,19 @@
 package service;
 
+import model.Applicant;
 import model.Application;
 import model.Job;
+import model.Recruiter;
 import model.ApplicationStatus;
 import model.Assignment;
 import model.User;
+import model.UserRole;
 import model.AssignmentStatus;
 import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ApplicantService {
 
@@ -143,7 +147,37 @@ public class ApplicantService {
     }
 
     public void viewInterview(String applicationId) {
+        System.out.println("\n------ View Interview Questions ------\n");
+        Application application = null;
 
+        for(Application app: Utility.getApplications()) {
+            if (app.getId().equals(applicationId)) {
+                application = app;
+                break;
+            }
+        }
+
+        if (application == null) {
+            System.out.println("Application with given ID not found");
+            return;
+        }
+
+        ArrayList<Assignment> assignments = application.getAssignments();
+
+        for (Assignment assignment: assignments) {
+            if (assignment.getAssignmentName().equals("interview")) {
+                System.out.println("Questions are: ");
+
+                for (String question: assignment.getQuestions()) {
+                    System.out.println(question);
+                }
+
+                break;
+            }
+        }
+
+        System.out.println("\nRedirecting back to Application Dashboard..\n");
+        viewApplicationProcessDashboard(applicationId);
     }
 
     public void viewFeedback(String applicationId) {
