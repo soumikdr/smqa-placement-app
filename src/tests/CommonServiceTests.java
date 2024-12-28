@@ -17,6 +17,8 @@ import service.CommonService;
 import service.RecruiterService;
 import utility.Utility;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 
 import java.io.ByteArrayInputStream;
@@ -256,7 +258,7 @@ public void resetPasswordTest() throws IOException {
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Your entered username: markpeter"));
         Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant dashboard"));
-        Assert.assertEquals("newpassword", mockApplicantUser.getPassword());
+        assertEquals("newpassword", mockApplicantUser.getPassword());
         outputStream.reset();
 
         User mockRecruiterUser = new User("U102", "Alice", "Smith", "recruiterAlice", "oldpassword", UserRole.RECRUITER);
@@ -269,7 +271,7 @@ public void resetPasswordTest() throws IOException {
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Your entered username: recruiterAlice"));
         Assert.assertTrue(consoleOutput.contains("Redirecting to Recruiter dashboard"));
-        Assert.assertEquals("newpassword", mockRecruiterUser.getPassword());
+        assertEquals("newpassword", mockRecruiterUser.getPassword());
         outputStream.reset();
 
         mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("wrongusername");
@@ -287,7 +289,7 @@ public void resetPasswordTest() throws IOException {
 
         consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("You have entered wrong Credentials"));
-        Assert.assertEquals("oldpassword", mockApplicantUser2.getPassword());
+        assertEquals("oldpassword", mockApplicantUser2.getPassword());
         Mockito.verify(spyObject, Mockito.times(2)).viewResetPasswordPage();
         outputStream.reset();
     }
@@ -343,6 +345,43 @@ public void resetPasswordTest() throws IOException {
 //        Assert.assertNull(Utility.getCurrentUser());
 
     }
+
+    @Test
+    public void resetPasswordRecruiterTest() {
+        CommonService service = CommonService.getInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            User mockApplicantUser = new Applicant("U101", "Mark", "Peter", "markpeter", "oldpassword", new ArrayList<>());
+            User mockRecruiterUser = new Recruiter("U102", "Alice", "Smith", "recruiterAlice", "oldpassword";
+
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockApplicantUser);
+            mockedUtility.when(Utility::getUsers).thenReturn(new ArrayList<>(Arrays.asList(mockApplicantUser, mockRecruiterUser)));
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("newpassword");
+
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockRecruiterUser);
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("XVQTY", "newpassword");
+
+            service.resetPassword("recruiterAlice");
+            consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Your entered username: recruiterAlice"));
+            assertTrue(consoleOutput.contains("Redirecting to Recruiter dashboard"));
+            assertEquals("newpassword", mockRecruiterUser.getPassword());
+            outputStream.reset();
+
+            // Test for Recruiter with incorrect reset code
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("wrongcode", "newpassword");
+
+            service.resetPassword("recruiterAlice");
+            consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Your entered username: recruiterAlice"));
+            assertTrue(consoleOutput.contains("You have entered wrong Reset Code"));
+            assertEquals("newpassword", mockRecruiterUser.getPassword()); // Password should not change
+            outputStream.reset();
+        }
+    }
+
 
 @Test
     public void signUpTest() throws IOException {
