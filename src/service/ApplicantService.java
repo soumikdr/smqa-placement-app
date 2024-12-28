@@ -1,15 +1,11 @@
 package service;
 
-import model.Applicant;
-import model.Application;
+import model.*;
 import model.Job;
-import model.Recruiter;
-import model.ApplicationStatus;
-import model.Assignment;
-import model.User;
-import model.UserRole;
-import model.AssignmentStatus;
 import utility.Utility;
+
+import java.util.Arrays;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +52,9 @@ public class ApplicantService {
             if (assignment.getAssignmentName().equals("interview")) {
                 continue;
             }
-            
+
             System.out.println("\nAssignment Name: " + assignment.getAssignmentName() + "\n");
-            
+
             if (assignment.getStatus() == AssignmentStatus.SUBMITTED) {
                 System.out.println("This assignment is already submitted");
                 continue;
@@ -233,8 +229,25 @@ public class ApplicantService {
     }
 
     public void viewAllAvailableJobs() {
-
-    }
+        User user = Utility.getCurrentUser();
+        if (user == null || user.getRole() == null || user.getRole() != UserRole.APPLICANT) {
+            System.out.println("You are not authorized to view this page");
+            return;
+        }
+        System.out.println("Welcome to the Available Jobs Page\n");
+        List<Job> jobs = Utility.getJobs();
+        List<Job> openJobs = jobs.stream().filter(j -> JobStatus.PUBLIC.equals(j.getJobStatus())).toList();
+        if (openJobs.isEmpty()) {
+            System.out.println("No jobs available at the moment");
+            return;
+        }
+        System.out.println("Available Jobs");
+        openJobs.forEach(job -> {
+            System.out.println("Job ID: " + job.getId()+ "|"+"Job Name: " + job.getJobName());
+            System.out.println();
+            });
+        viewJobPost();
+        }
 
     public void submitApplicationForm(String jobId, String applicantId) {
 

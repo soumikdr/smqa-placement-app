@@ -1,5 +1,9 @@
 package tests;
 
+import model.Applicant;
+import model.Application;
+import model.Job;
+import model.User;
 import model.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,6 +13,7 @@ import org.mockito.Mockito;
 
 
 import service.ApplicantService;
+import utility.Utility;
 import service.CommonService;
 import utility.Utility;
 
@@ -22,6 +27,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.MockedStatic;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -32,7 +42,6 @@ import java.util.UUID;
 public class ApplicantServiceTests {
 
     public ApplicantService service = ApplicantService.getInstance();
-
     @Before
     public void setUp() {
         ArrayList<User> users = new ArrayList<>();
@@ -168,6 +177,30 @@ public class ApplicantServiceTests {
 //        Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
 
     }
+
+    @Test
+    public void viewAllAvailableJobsTest() {
+        ApplicantService service = ApplicantService.getInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+            User mockUser = new Applicant("U101", "Mark", "Peter", "markpeter", "password", new ArrayList<>());
+            List<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("1", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
+            mockJobs.add(new Job("2", "Backend Developer", "Develop backend services", JobStatus.PRIVATE));
+
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+            service.viewAllAvailableJobs();
+            String consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Welcome to the Available Jobs Page"));
+            assertTrue(consoleOutput.contains("Available Jobs"));
+            assertTrue(consoleOutput.contains("Job ID: 1|Job Name: Data Analyst"));
+        }
+    }
+
+
 
     @Test
     public void viewApplicantApplications_NotApplicant() {
