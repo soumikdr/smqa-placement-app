@@ -217,20 +217,11 @@ public class CommonService {
 
     public void resetPassword(String userName) {
         System.out.println("\nYour entered username: " + userName + "\n");
-        String resetCode = "";
-        if(Utility.getCurrentUser().getRole()==UserRole.RECRUITER) {
-            resetCode = Utility.inputOutput("Enter the Reset Code");
-        }
         if (Utility.getCurrentUser().getUserName().equals(userName)) {
             String password = Utility.inputOutput("Enter your New Password");
             Utility.getCurrentUser().setPassword(password);
             for(User user: Utility.getUsers()) {
                 if(user.getUserName().equals(userName)) {
-                    if(Utility.getCurrentUser().getRole()==UserRole.RECRUITER && !resetCode.equals("XVQTY")) {
-                        System.out.println("\nYou have entered wrong Reset Code\n");
-                        viewResetPasswordPage();
-                        break;
-                    }
                     user.setPassword(password);
                 }
             }
@@ -241,9 +232,8 @@ public class CommonService {
                 System.out.println("\nRedirecting to Recruiter dashboard");
                 RecruiterService.getInstance().viewRecruiterDashboard();
             }
-        }
-        else {
-            System.out.println("\nYou have entered wrong Crediantials\n");
+        } else {
+            System.out.println("\nYou have entered wrong Credentials\n");
             viewResetPasswordPage();
         }
     }
