@@ -30,6 +30,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Application;
+import model.Assignment;
+import model.User;
 import model.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,10 +40,15 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import org.mockito.MockedStatic;
 import service.CommonService;
 import model.Application;
 import service.CommonService;
 import service.RecruiterService;
+import utility.Utility;
+
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 import utility.Utility;
 import utility.Utility;
 import java.util.ArrayList;
@@ -52,9 +60,10 @@ public class RecruiterServiceTests {
 
     public RecruiterServiceTests() {
     }
-
     @Before
     public void setUp() {
+        outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
         ArrayList<User> users = new ArrayList<>();
         users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
         users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
@@ -65,7 +74,6 @@ public class RecruiterServiceTests {
         jobs.add(new Job("2", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
         jobs.add(new Job("3", "Product Manager", "Manage products", JobStatus.PRIVATE));
         Utility.setJobs(jobs);
-
     }
 
     @Test
@@ -155,6 +163,12 @@ public class RecruiterServiceTests {
 
             Assert.assertTrue(consoleOutput.contains("Application Approved"));
 
+        outputStream.reset();
+
+        // simulatedInput = "invalid input";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        // simulatedInput = "1";
+        // System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
             outputStream.reset();
 
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
@@ -473,11 +487,38 @@ public class RecruiterServiceTests {
             Assert.assertFalse(consoleOutput.contains("Question:"));
             Assert.assertFalse(consoleOutput.contains("Answer:"));
             outputStream.reset();
-
             Mockito.verify(spyObject, Mockito.times(4)).viewSubmittedAnswers(Mockito.anyString());
             mockedUtility.verify(Mockito.times(4), Utility::getApplications);
+
         }
     }
+
+    @Test
+    public void viewAllApplicationsTest() {
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+            List<Application> mockApplications = new ArrayList<>();
+            ArrayList<Assignment> mockAssignments = new ArrayList<>();
+            mockAssignments.add(new Assignment("1", "1", "DSA", new ArrayList<>(), new ArrayList<>()));
+            mockApplications.add(new Application("1", "1", "101", ApplicationStatus.INPROGRESS, mockAssignments,2,"University of Leicester","Java","Good"));
+            mockApplications.add(new Application("2", "2", "102", ApplicationStatus.UNSUCCESSFUL, mockAssignments,2,"University of Leicester","Java","Good"));
+
+            User mockUser = new Recruiter("1", "John", "Doe", "johnDoe", "bestpassword");
+
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+
+            service.viewAllApplications();
+
+
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Application ID: 1"));
+            Assert.assertTrue(consoleOutput.contains("Status: INPROGRESS"));
+            Assert.assertFalse(consoleOutput.contains("Application ID: 2"));
+            Assert.assertFalse(consoleOutput.contains("Status: CLOSED"));
+        }
+    }
+
+
 
     @Test
     public void viewTotalNumberOfApplicationsTest() throws IOException {

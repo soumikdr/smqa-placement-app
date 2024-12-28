@@ -6,18 +6,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import model.*;
 import model.Application;
-import model.Assignment;
-import model.Job;
-import model.JobStatus;
-import model.Application;
-import model.User;
 import utility.Utility;
-
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.UUID;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
@@ -64,7 +55,7 @@ public class RecruiterService {
 
     	System.out.println("Directing to Application Page..");
     	viewSpecificApplication(applicationId);
-    	
+
     }
 
     public void sendInterview(Application application) {
@@ -313,19 +304,19 @@ public class RecruiterService {
 
         System.out.println("Current title of job: " + job.getJobName());
         System.out.println("Current description of job: " + job.getJobDescription());
-        
+
         System.out.println("\n");
         String newName = Utility.inputOutput("Enter new job title..");
         String newDescription = Utility.inputOutput("Enter new job description..");
         System.out.println("\n");
-        
+
         if (newName.isEmpty()) {
-            System.out.println("Job title not updated as it is empty"); 
+            System.out.println("Job title not updated as it is empty");
         } else {
             job.setJobName(newName);
             System.out.println("Job title updated successfully");
         }
-        
+
         if (newDescription.isEmpty()) {
             System.out.println("Job description not updated as it is empty");
         } else {
@@ -384,6 +375,23 @@ public class RecruiterService {
     }
 
     public void viewAllApplications() {
+        User user = Utility.getCurrentUser();
+        if(user instanceof Applicant)
+        {
+            System.out.println("You are not authorized to view this page");
+            return;
+        }
+        ArrayList<Application> applications = Utility.getApplications();
+        if(applications == null || applications.isEmpty())
+        {
+            System.out.println("No applications available.");
+            return;
+        }
+
+        applications.stream().filter(application -> ApplicationStatus.INPROGRESS.equals(application.getStatus())).
+                forEach(application -> {
+            System.out.println("Application ID: " + application.getId() + "|"+"Status: " + application.getStatus()+"|"+"Applicant ID: " + application.getApplicantId());
+        });
 
     }
 
@@ -434,7 +442,7 @@ public class RecruiterService {
             }
 
             System.out.println("Answers: ");
-            
+
             for (int j = 0; j < application.getAssignments().get(i).getAnswers().size(); j++) {
                 System.out.println(application.getAssignments().get(i).getAnswers().get(j));
             }
@@ -458,12 +466,12 @@ public class RecruiterService {
                 viewSpecificApplication(applicationId);
                 return;
             }
-        }        
+        }
     }
 
     public void sendAssignment(Application application) {
         System.out.println("\n-------- Send assignment to applicant --------\n");
-        System.out.println("Please type one from the roles below to send the assignment questions (e.g. frontend)"); 
+        System.out.println("Please type one from the roles below to send the assignment questions (e.g. frontend)");
 
         Map<String, List<String>> questionMap = Utility.getQuestionMap();
         System.out.println(questionMap.keySet().toString());
@@ -527,5 +535,5 @@ public class RecruiterService {
         System.out.println("Logged out successfully");
         CommonService.getInstance().accessLandingPage();
     }
-    
+
 }
