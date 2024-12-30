@@ -1,17 +1,11 @@
+import model.*;
+import service.CommonService;
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.Application;
-import model.ApplicationStatus;
-import model.Assignment;
-import model.Job;
-import model.JobStatus;
-import model.User;
-import model.UserRole;
-import service.CommonService;
-import utility.Utility;
 
 public class Main {
 
@@ -58,9 +52,9 @@ public class Main {
             "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ",
             JobStatus.PUBLIC));
 
-        users.add(new User("1","John","Doe","johnDoe","bestpassword", UserRole.APPLICANT));
-        users.add(new User("2","Ansar","Patil","darkAngel","123qwe", UserRole.RECRUITER));
-        users.add(new User("3","Shomik","Datta","xFireTomato","12345", UserRole.RECRUITER));
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList()));
+        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
+        users.add(new Recruiter("3", "Shomik", "Datta", "xFireTomato", "12345"));
 
 
         questions.add("What is class in Java");
