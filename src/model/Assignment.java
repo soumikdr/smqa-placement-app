@@ -12,6 +12,8 @@ public class Assignment {
     private ArrayList<String> questions;
 
     private ArrayList<String> answers;
+    
+    private AssignmentStatus status;
 
     public Assignment(String id, String applicantId, String assignmentName, ArrayList<String> questions, ArrayList<String> answers) {
         this.id = id;
@@ -19,6 +21,7 @@ public class Assignment {
         this.assignmentName = assignmentName;
         this.questions = questions;
         this.answers = answers;
+        this.status=AssignmentStatus.PASSIVE;
     }
 
     public Assignment() {
@@ -63,4 +66,14 @@ public class Assignment {
     public void setAnswers(ArrayList<String> answers) {
         this.answers = answers;
     }
+
+	public AssignmentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AssignmentStatus status) {
+		this.status = status;
+	}
+    
+    
 }
