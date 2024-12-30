@@ -60,7 +60,9 @@ public class CommonService {
                 System.out.println("Welcome to Signin page\n");
                 String userName = Utility.inputOutput("Enter your User name");
                 String password = Utility.inputOutput("Enter your password");
-                signIn(userName, password);
+                String roleInput = Utility.inputOutput("Enter your role (APPLICANT/RECRUITER)");
+                UserRole role = UserRole.valueOf(roleInput.toUpperCase());
+                signIn(userName, password,role);
                 break;
             case "2":
                 System.out.println("\nRediredting to Landing Page\n");
@@ -89,7 +91,7 @@ public class CommonService {
         return null;
     }
 
-    public void signIn(String userName, String password) {
+    public void signIn(String userName, String password, UserRole role) {
         ArrayList<User> users = Utility.getUsers();
 
         User user = authenticateUser(users, userName, password);
@@ -104,10 +106,14 @@ public class CommonService {
             }
         } else {
             Utility.setCurrentUser(user);
+            System.out.println("Sign in successful. Redirecting to dashboard...");
+
             if (user.getRole() == UserRole.APPLICANT) {
+                System.out.println("Redirecting to Applicant dashboard...");
                 ApplicantService applicantService = new ApplicantService();
                 applicantService.viewApplicantDashboard();
             } else if (user.getRole() == UserRole.RECRUITER) {
+                System.out.println("Redirecting to Recruiter dashboard...");
                 RecruiterService recruiterService = new RecruiterService();
                 recruiterService.viewRecruiterDashboard();
             }

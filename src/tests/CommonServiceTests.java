@@ -19,6 +19,7 @@ import utility.Utility;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 
 import java.io.ByteArrayInputStream;
@@ -407,6 +408,30 @@ public void resetPasswordTest() throws IOException {
         User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "wrongpassword");
         Assert.assertNull(user);
     }
+    @Test
+    public void signInTest() {
+        CommonService service = CommonService.getInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
 
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+            User mockApplicantUser = new User("U101", "Mark", "Peter", "markpeter", "password", UserRole.APPLICANT);
+            User mockRecruiterUser = new User("U102", "Alice", "Smith", "recruiterAlice", "password", UserRole.RECRUITER);
+
+            mockedUtility.when(Utility::getUsers).thenReturn(new ArrayList<>(Arrays.asList(mockApplicantUser, mockRecruiterUser)));
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("y");
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("password");
+            service.signIn("markpeter", "password", UserRole.APPLICANT);
+            consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Sign in successful. Redirecting to dashboard..."));
+            outputStream.reset();
+
+            service.signIn("recruiterAlice", "password", UserRole.RECRUITER);
+            consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Sign in successful. Redirecting to dashboard..."));
+            outputStream.reset();
+        }
+    }
 
 }
