@@ -17,13 +17,11 @@ import service.RecruiterService;
 import utility.Utility;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.times;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -32,20 +30,7 @@ import java.util.List;
 
 import model.Application;
 import model.Assignment;
-import model.User;
-import model.User;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
-import org.mockito.MockedStatic;
-import service.CommonService;
-import model.Application;
-import service.CommonService;
-import service.RecruiterService;
-import utility.Utility;
 
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -562,7 +547,7 @@ public class RecruiterServiceTests {
         }
 
         @Test
-        public void logoutTest () {
+        public void logoutRecruiterTest() {
             RecruiterService service = RecruiterService.getInstance();
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outputStream));
@@ -572,13 +557,44 @@ public class RecruiterServiceTests {
 
                 CommonService mockCommonService = Mockito.mock(CommonService.class);
                 mockedCommonService.when(CommonService::getInstance).thenReturn(mockCommonService);
-                service.logout();
+                service.logoutRecruiter();
 
                 String consoleOutput = outputStream.toString();
-                assertTrue(consoleOutput.contains("Logging out..."));
+                assertTrue(consoleOutput.contains("Initializing logout process for Recruiter"));
                 assertTrue(consoleOutput.contains("Logged out successfully"));
                 mockedUtility.verify(() -> Utility.setCurrentUser(null));
             }
         }
+
+    @Test
+    public void visitSignInSignUpPageRecruiterTest() {
+        RecruiterService recruiterService = RecruiterService.getInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString()))
+                    .thenReturn("1", "2", "3", "invalid");
+
+            recruiterService.visitSignInSignUpPageRecruiter();
+            String consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Redirecting to Sign In page for Recruiter"));
+            outputStream.reset();
+
+            recruiterService.visitSignInSignUpPageRecruiter();
+            consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Redirecting to Sign Up page for Recruiter"));
+            outputStream.reset();
+
+            recruiterService.visitSignInSignUpPageRecruiter();
+            consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("Redirecting to the previous menu"));
+            outputStream.reset();
+
+            recruiterService.visitSignInSignUpPageRecruiter();
+            consoleOutput = outputStream.toString();
+            assertTrue(consoleOutput.contains("You entered an invalid option. Please try again."));
+        }
+    }
     }
 
