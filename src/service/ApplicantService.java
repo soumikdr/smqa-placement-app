@@ -18,6 +18,10 @@ public class ApplicantService {
         }
         return instance;
     }
+    
+   public void applicantLandingPage() {
+	   
+   }
 
     public void signIn() {
         ArrayList<User> users = Utility.getUsers();

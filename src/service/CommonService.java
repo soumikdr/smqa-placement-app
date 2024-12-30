@@ -22,23 +22,24 @@ public class CommonService {
         return instance;
     }
 
-
+    // ETY1 - STORY 1
     public void accessLandingPage() {
 
         System.out.println("Welcome to the Landing Page\n");
+        System.out.println("Are you Recruiter or Applicant?");
 
-        System.out.println("1. Sign In");
-        System.out.println("2. Sign Up\n");
+        System.out.println("1. Recruiter");
+        System.out.println("2. Applicant");
 
         switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1": {
-                System.out.println("directing to Sign In Page");
-                viewSignInPage();
+                System.out.println("Directing to Recruiter Landing Page");
+                RecruiterService.getInstance().recruiterLandingPage();
                 break;
             }
             case "2": {
-                System.out.println("directing to Sign Up Page");
-                viewSignUpPage();
+                System.out.println("Directing to Applicant Landing Page");
+                ApplicantService.getInstance().applicantLandingPage();
                 break;
             }
             default: {

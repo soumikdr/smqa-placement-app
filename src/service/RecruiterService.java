@@ -23,6 +23,10 @@ public class RecruiterService {
         }
         return instance;
     }
+    
+    public void recruiterLandingPage() {
+ 	   
+    }
 
     public void sendAssessment() {
     }
