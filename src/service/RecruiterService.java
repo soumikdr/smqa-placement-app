@@ -194,7 +194,7 @@ public class RecruiterService {
         commonService.accessLandingPage();
     }
 
-    public void updateRecruiterProfile(){
+    public void updateRecruiterProfile() {
         System.out.println("\nUpdate profile information (leave empty for no change)\n");
 
         String firstName = Utility.inputOutput("Enter new first name: ");
@@ -203,7 +203,7 @@ public class RecruiterService {
         if (!firstName.isEmpty()) {
             Utility.getCurrentUser().setName(firstName);
         }
-        
+
         if (!lastName.isEmpty()) {
             Utility.getCurrentUser().setLastName(lastName);
         }
@@ -213,7 +213,8 @@ public class RecruiterService {
         while (!uniqueUsername) {
             String userName = Utility.inputOutput("Enter new username: ");
 
-            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null) == null && !userName.isEmpty()) {
+            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst()
+                    .orElse(null) == null && !userName.isEmpty()) {
                 uniqueUsername = true;
                 Utility.getCurrentUser().setUserName(userName);
             } else {
@@ -225,6 +226,11 @@ public class RecruiterService {
         viewRecruiterProfilePage();
     }
 
+    
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 24
+     */
     public void viewAvailableJobs() {
         ArrayList<Job> jobs = Utility.getJobs();
         if (jobs == null || jobs.isEmpty()) {
@@ -355,6 +361,10 @@ public class RecruiterService {
         viewAvailableJobs();
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 33
+     */
     public void updateStatusOfJobPost(String jobId) {
         ArrayList<Job> jobs = Utility.getJobs();
         if (jobs == null || jobs.isEmpty()) {
@@ -389,6 +399,10 @@ public class RecruiterService {
 
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 23
+     */
     public void submitNewJobPost(String jobName, String jobDescription) {
         String id = UUID.randomUUID().toString();
         Job job = new Job(
@@ -608,7 +622,10 @@ public class RecruiterService {
         }
         return null;
     }
-
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 6
+     */
     public void recruiterSignInPage() {
         ArrayList<User> users = Utility.getUsers();
 
