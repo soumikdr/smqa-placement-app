@@ -17,6 +17,10 @@ public class ApplicantService {
         }
         return instance;
     }
+    
+   public void applicantLandingPage() {
+	   
+   }
 
      public void applicantViewSignInSignUpPage() {
         System.out.println("Welcome to Applicant Landing Pagen");
