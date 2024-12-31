@@ -91,7 +91,7 @@ public class RecruiterService {
                 viewJobPostingForm();
                 break;
             case "5":
-                logout();
+                logoutRecruiter();
                 break;
             default:
                 System.out.println("\nYou have entered an invalid option. Please try again.\n");
@@ -559,11 +559,41 @@ public class RecruiterService {
         }
     }
 
-    public void logout() {
-        System.out.println("Logging out...");
+    public void logoutRecruiter() {
+        System.out.println("Initiating logout process for Recruiter");
         Utility.setCurrentUser(null);
-        System.out.println("Logged out successfully");
+        System.out.println("You have been logged out successfully.");
         CommonService.getInstance().accessLandingPage();
     }
+    public void visitSignInSignUpPageRecruiter() {
+        System.out.println("Welcome to the Sign In/Sign Up page for Recruiter\n");
+        System.out.println("1. Sign In for Recruiter");
+        System.out.println("2. Sign Up for Recruiter");
+        System.out.println("3. Go back to the previous menu");
 
+        switch (Utility.inputOutput("Please select one of the options")) {
+            case "1":
+                System.out.println("Redirecting to Sign In page for Recruiter\n");
+                recruiterSignInPage();
+                break;
+            case "2":
+                System.out.println("Redirecting to Sign Up page for Recruiter\n");
+                recruiterSignUpPage();
+                break;
+            case "3":
+                System.out.println("Redirecting to the previous menu\n");
+                CommonService.getInstance().accessLandingPage();
+                break;
+            default:
+                System.out.println("You entered an invalid option. Please try again.\n");
+                visitSignInSignUpPageRecruiter();
+                break;
+        }
+    }
+
+    public void recruiterSignUpPage() {
+    }
+
+    public void recruiterSignInPage() {
+    }
 }
