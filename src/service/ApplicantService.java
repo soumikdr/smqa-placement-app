@@ -1,7 +1,6 @@
 package service;
 
 import model.*;
-import model.Job;
 import utility.Utility;
 
 import java.util.List;
@@ -17,6 +16,36 @@ public class ApplicantService {
             instance = new ApplicantService();
         }
         return instance;
+    }
+
+     public void applicantViewSignInSignUpPage() {
+        System.out.println("Welcome to Applicant Landing Pagen");
+        System.out.println("1. Sign In\n");
+        System.out.println("2. Sign Up\n");
+        System.out.println("3: Go back to the previous menu");
+
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1":
+                System.out.println("Redirecting to Applicant Sign In Page\n");
+                signIn();
+                break;
+            case "2":
+                System.out.println("\nRedirecting to Applicant Sign Up Page\n");
+                signUp();
+                break;
+            case "3":
+                System.out.println("\nRedirecting to previous menu\n");
+                CommonService.getInstance().accessLandingPage();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                applicantViewSignInSignUpPage();
+                break;
+        }
+    }
+
+    public void signUp() {
+
     }
 
     public void signIn() {

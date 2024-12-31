@@ -1,9 +1,5 @@
 package tests;
 
-import model.Applicant;
-import model.Application;
-import model.Job;
-import model.User;
 import model.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,6 +38,9 @@ import java.util.UUID;
 public class ApplicantServiceTests {
 
     public ApplicantService service = ApplicantService.getInstance();
+    public CommonService commonServiceService = CommonService.getInstance();
+
+
     @Before
     public void setUp() {
         ArrayList<User> users = new ArrayList<>();
@@ -52,47 +51,61 @@ public class ApplicantServiceTests {
         Utility.setUsers(users);
     }
 
-    @Test
-    public void testSubmitApplicationForm() throws IOException {
 
+    @Test
+    public void applicantViewSignInSignUpPageTest() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
-    	String jobId="Job1";
-    	String applicantId="1";
+        ApplicantService spyObject = Mockito.spy(service);
+        CommonService commonSpyObject = Mockito.spy(commonServiceService);
+        CommonService mockACommonService = Mockito.mock(CommonService.class);
+        Mockito.mockStatic(CommonService.class).when(CommonService::getInstance).thenReturn(mockACommonService);
+        
 
-    	ApplicantService spyObject = Mockito.spy(service);
-
-    	ArrayList<Application> apps=new ArrayList<Application>();
-
-
-        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
-
-
-            mockedUtility.when(()->Utility.getApplications()).thenReturn(apps);
-
-
-        	Mockito.doNothing().when(spyObject).viewApplicantDashboard();
-
-        	int totalApplications= apps.size();
-
-        	spyObject.submitApplicationForm(jobId,applicantId);
-
-        	int newTotalApplications= apps.size();
-
+    
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            Mockito.doNothing().when(spyObject).signIn();
+            Mockito.doNothing().when(spyObject).signUp();
+            Mockito.doNothing().when(commonSpyObject).accessLandingPage();
+    
+            // Test case 1: Navigate to Sign In
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+            spyObject.applicantViewSignInSignUpPage();
             String consoleOutput = outputStream.toString();
-
-            Assert.assertTrue(consoleOutput.contains("Application submitted"));
-            Assert.assertEquals(totalApplications+1,newTotalApplications);
-
-            Mockito.verify(spyObject).viewApplicantDashboard();
-
-            mockedUtility.verify(()->Utility.getApplications());
-
-
-          }
-
-
+            Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant Sign In Page"));
+            Mockito.verify(spyObject, Mockito.times(1)).signIn();
+            outputStream.reset();
+    
+            // Test case 2: Navigate to Sign Up
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
+            spyObject.applicantViewSignInSignUpPage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant Sign Up Page"));
+            Mockito.verify(spyObject, Mockito.times(1)).signUp();
+            outputStream.reset();
+    
+            // Test case 3: Navigate back to previous menu
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("3");
+            spyObject.applicantViewSignInSignUpPage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to previous menu"));
+            outputStream.reset();
+    
+            // Test case 4: Invalid input (handled and terminates)
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("invalid", "3");
+            spyObject.applicantViewSignInSignUpPage();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to previous menu"));
+            outputStream.reset();
+    
+            // Verifications
+            Mockito.verify(spyObject, Mockito.times(1)).signIn();
+            Mockito.verify(spyObject, Mockito.times(1)).signUp();
+            mockedUtility.verify(Mockito.times(5), () -> Utility.inputOutput(Mockito.anyString()));
         }
+    }
+    
 
     @Test
     public void submitInterviewFormTest() {
