@@ -1,14 +1,10 @@
 package service;
 
 import model.*;
-import model.Job;
 import utility.Utility;
 
-import java.util.Arrays;
 import java.util.List;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class ApplicantService {
@@ -22,6 +18,72 @@ public class ApplicantService {
         return instance;
     }
 
+     public void applicantViewSignInSignUpPage() {
+        System.out.println("Welcome to Applicant Landing Pagen");
+        System.out.println("1. Sign In\n");
+        System.out.println("2. Sign Up\n");
+        System.out.println("3: Go back to the previous menu");
+
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1":
+                System.out.println("Redirecting to Applicant Sign In Page\n");
+                signIn();
+                break;
+            case "2":
+                System.out.println("\nRedirecting to Applicant Sign Up Page\n");
+                signUp();
+                break;
+            case "3":
+                System.out.println("\nRedirecting to previous menu\n");
+                CommonService.getInstance().accessLandingPage();
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                applicantViewSignInSignUpPage();
+                break;
+        }
+    }
+
+    public void signUp() {
+
+    }
+
+    public void signIn() {
+        ArrayList<User> users = Utility.getUsers();
+        User applicant = null;
+
+        String userName = Utility.inputOutput("Enter your User name:");
+        String password = Utility.inputOutput("Enter your password:");
+
+        for (User user : users) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                applicant = user;
+            }
+        }
+
+        if (applicant == null) {
+            System.out.println("\n");
+            String tryAgain = Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)");
+            
+            if (tryAgain.equals("y")) {
+                signIn();
+            } else {
+                CommonService commonService = CommonService.getInstance();
+                commonService.accessLandingPage();
+            }
+        } else {
+            System.out.println("\nApplicant Signin successful. proceeding to applicant dashboard.. \n");
+            Utility.setCurrentUser(applicant);
+
+            if (applicant.getRole() == UserRole.APPLICANT) {
+                ApplicantService applicantService = new ApplicantService();
+                applicantService.viewApplicantDashboard();
+            } else if (applicant.getRole() == UserRole.RECRUITER) {
+                RecruiterService recruiterService = new RecruiterService();
+                recruiterService.viewRecruiterDashboard();
+            }
+        }
+    }
 
     public void submitAssessmentForm(String applicationId) {
         System.out.println("\n------ Submit your assignments ------\n");
@@ -334,11 +396,9 @@ public class ApplicantService {
         } else {
             System.out.println("Role: " + user.getRole().name());
         }
-        String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
 
-        if (!answer.isEmpty()) {
-            viewApplicantDashboard();
-        }
+        Utility.inputOutput("Type anything to go back to the dashboard?");
+        viewApplicantDashboard();
     }
 
     public void deleteProfileHelper() {
