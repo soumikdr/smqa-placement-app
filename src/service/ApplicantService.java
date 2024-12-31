@@ -51,7 +51,14 @@ public class ApplicantService {
         String lastName = Utility.inputOutput("Last Name: ");
         String userName = Utility.inputOutput("User Name: ");
         String password = Utility.inputOutput("Password: ");
-
+        if (firstName == null || firstName.isEmpty() ||
+                lastName == null || lastName.isEmpty() ||
+                userName == null || userName.isEmpty() ||
+                password == null || password.isEmpty()) {
+            System.out.println("All fields are required. Please try again.");
+            signUp();
+            return;
+        }
         String id = UUID.randomUUID().toString();
         User newUser = new Applicant(id, firstName, lastName, userName, password, new ArrayList<>());
         Utility.getUsers().add(newUser);
