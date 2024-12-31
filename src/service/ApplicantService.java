@@ -171,7 +171,7 @@ public class ApplicantService {
             }
         }
     }
-
+    // ETY1 - STORY 45
     public void submitInterviewForm(String applicationId) {
         Application application = null;
 
@@ -327,7 +327,7 @@ public class ApplicantService {
             });
         viewJobPost();
         }
-
+    // ETY1 - STORY 28
     public void submitApplicationForm(String jobId, String applicantId) {
 
     	String applicationId=UUID.randomUUID().toString();
@@ -340,7 +340,7 @@ public class ApplicantService {
     	viewApplicantDashboard();
 
     }
-
+    // ETY1 - 14
     public void viewApplicantDashboard() {
 
         System.out.println("Welcome to the Applicant Dashboard\n");

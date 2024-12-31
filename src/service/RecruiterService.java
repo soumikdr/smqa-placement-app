@@ -27,7 +27,7 @@ public class RecruiterService {
 
     public void sendAssessment() {
     }
-
+    // ETY1 - STORY 42
     public void viewAssessmentResult(String applicationId, String assignmentId) {
 
         Assignment result = new Assignment();
@@ -144,6 +144,7 @@ public class RecruiterService {
     }
 
 
+    // ETY1 - STORY 47
     public void approveRejectApplication(Application application) {
 
     	System.out.println("Do you want to Approve/Reject Application?");
@@ -396,7 +397,7 @@ public class RecruiterService {
         }
         System.out.println("No job post available with given id");
     }
-
+   // ETY1 - STORY 50
     public void viewTotalNumberOfApplications(String jobId) {
 
         AtomicInteger total= new AtomicInteger();
@@ -408,8 +409,21 @@ public class RecruiterService {
 
         System.out.println("Total Applications of : "+jobId+" is " + total);
     }
-
+    // ETY1 - STORY 22
     public void viewJobPostingForm() {
+
+        System.out.println("**** New Job Form ****");
+
+        String jobTitle = Utility.inputOutput("Enter the New Job Title");
+
+        String jobDesc = Utility.inputOutput("Enter the New Job Description");
+
+        System.out.println("Submitting new job post...");
+        if(jobTitle==null || jobTitle.isEmpty() || jobDesc==null || jobDesc.isEmpty()){
+            System.out.println("Job Title or Job Description empty, Please try again..");
+            viewJobPostingForm();
+        }
+        submitNewJobPost(jobTitle, jobDesc);
 
     }
 
