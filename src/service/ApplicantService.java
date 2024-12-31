@@ -78,7 +78,7 @@ public class ApplicantService {
         String password = Utility.inputOutput("Enter your password:");
 
         for (User user : users) {
-            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password) && user.getRole() == UserRole.APPLICANT) {
                 applicant = user;
             }
         }
@@ -96,14 +96,8 @@ public class ApplicantService {
         } else {
             System.out.println("\nApplicant Signin successful. proceeding to applicant dashboard.. \n");
             Utility.setCurrentUser(applicant);
-
-            if (applicant.getRole() == UserRole.APPLICANT) {
-                ApplicantService applicantService = new ApplicantService();
-                applicantService.viewApplicantDashboard();
-            } else if (applicant.getRole() == UserRole.RECRUITER) {
-                RecruiterService recruiterService = new RecruiterService();
-                recruiterService.viewRecruiterDashboard();
-            }
+            ApplicantService applicantService = new ApplicantService();
+            applicantService.viewApplicantDashboard();
         }
     }
 
@@ -424,6 +418,10 @@ public class ApplicantService {
         viewApplicantDashboard();
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 18
+     */
     public void deleteProfileHelper() {
         User user = Utility.getCurrentUser();
         ArrayList<User> users = Utility.getUsers();
@@ -432,6 +430,10 @@ public class ApplicantService {
         Utility.setCurrentUser(null);
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 18
+     */
     public void deleteApplicantProfile() {
         String input = Utility.inputOutput("Are you sure you want to delete your profile? (Y/N)");
         if (input.equalsIgnoreCase("Y")) {
@@ -446,17 +448,25 @@ public class ApplicantService {
         }
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 17
+     */
     public void updateProfile(User user) {
-//        Filter the user from the list and update the user
+        //        Filter the user from the list and update the user
         ArrayList<User> users = Utility.getUsers();
-//        Remove the user from the list
+        //        Remove the user from the list
         users.removeIf(u -> u.getId().equals(user.getId()));
-//        Add the updated user to the list
+        //        Add the updated user to the list
         users.add(user);
-//        Update the current user
+        //        Update the current user
         Utility.setCurrentUser(user);
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 17
+     */
     public void showUpdateProfilePage() {
         System.out.println("Welcome to Update profile page\n");
         User currentUser = Utility.getCurrentUser();
@@ -472,6 +482,10 @@ public class ApplicantService {
         updateProfile(currentUser);
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 29
+     */
     public void viewApplicantApplications() {
         User user = Utility.getCurrentUser();
         if (user instanceof Recruiter) {
@@ -595,7 +609,7 @@ public class ApplicantService {
         System.out.println("1: Confirm to withdraw application");
         System.out.println("2: Go back to applications page");
 
-        switch(Utility.inputOutput("Please Select One Of The Options")){
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
                 System.out.println("Withdrawing application \n");
                 ArrayList<Application> applications = Utility.getApplications();
@@ -612,6 +626,10 @@ public class ApplicantService {
         }
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 36
+     */
     public void viewJobDescFromApplication(String applicationId) {
         Application application = Utility.getApplications().stream()
                 .filter(a -> a.getId().equals(applicationId))
