@@ -45,8 +45,30 @@ public class ApplicantService {
     }
 
     public void signUp() {
+        System.out.println("Welcome to Applicant Sign Up Page\n");
+        System.out.println("Please enter the following details\n");
+        String firstName = Utility.inputOutput("First Name: ");
+        String lastName = Utility.inputOutput("Last Name: ");
+        String userName = Utility.inputOutput("User Name: ");
+        String password = Utility.inputOutput("Password: ");
+        if (firstName == null || firstName.isEmpty() ||
+                lastName == null || lastName.isEmpty() ||
+                userName == null || userName.isEmpty() ||
+                password == null || password.isEmpty()) {
+            System.out.println("All fields are required. Please try again.");
+            signUp();
+            return;
+        }
+        String id = UUID.randomUUID().toString();
+        User newUser = new Applicant(id, firstName, lastName, userName, password, new ArrayList<>());
+        Utility.getUsers().add(newUser);
 
+        System.out.println("Sign Up Successful for Applicant");
+        Utility.setCurrentUser(newUser);
+        System.out.println("Directing to Applicant Dashboard");
+        viewApplicantDashboard();
     }
+
 
     public void signIn() {
         ArrayList<User> users = Utility.getUsers();
