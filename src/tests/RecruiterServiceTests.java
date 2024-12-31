@@ -1,7 +1,6 @@
 package tests;
 
 import model.*;
-import model.User;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,10 +26,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Application;
-import model.Assignment;
-
 
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -596,5 +591,20 @@ public class RecruiterServiceTests {
             assertTrue(consoleOutput.contains("You entered an invalid option. Please try again."));
         }
     }
+
+    @Test
+    public void authenticateUser() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "bestpassword");
+        Assert.assertNotNull(user);
     }
+
+    @Test
+    public void authenticateUserInvalid() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "wrongpassword");
+        Assert.assertNull(user);
+    }
+
+}
 

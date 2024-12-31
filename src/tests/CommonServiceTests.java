@@ -394,19 +394,4 @@ public void resetPasswordTest() throws IOException {
         String consoleOutput = outputStream.toString();
         Assert.assertTrue(consoleOutput.contains("Sign Up Successful for Applicant"));
     }
-    @Test
-    public void authenticateUser() {
-        setUp();
-        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "bestpassword");
-        Assert.assertNotNull(user);
-    }
-
-    @Test
-    public void authenticateUserInvalid() {
-        setUp();
-        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "wrongpassword");
-        Assert.assertNull(user);
-    }
-
-
 }

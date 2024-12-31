@@ -7,9 +7,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import model.*;
-import model.Job;
-import model.User;
-import model.Application;
 import utility.Utility;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -197,7 +194,7 @@ public class RecruiterService {
         commonService.accessLandingPage();
     }
 
-    public void updateRecruiterProfile(){
+    public void updateRecruiterProfile() {
         System.out.println("\nUpdate profile information (leave empty for no change)\n");
 
         String firstName = Utility.inputOutput("Enter new first name: ");
@@ -206,7 +203,7 @@ public class RecruiterService {
         if (!firstName.isEmpty()) {
             Utility.getCurrentUser().setName(firstName);
         }
-        
+
         if (!lastName.isEmpty()) {
             Utility.getCurrentUser().setLastName(lastName);
         }
@@ -216,7 +213,8 @@ public class RecruiterService {
         while (!uniqueUsername) {
             String userName = Utility.inputOutput("Enter new username: ");
 
-            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null) == null && !userName.isEmpty()) {
+            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst()
+                    .orElse(null) == null && !userName.isEmpty()) {
                 uniqueUsername = true;
                 Utility.getCurrentUser().setUserName(userName);
             } else {
@@ -228,6 +226,11 @@ public class RecruiterService {
         viewRecruiterProfilePage();
     }
 
+    
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 24
+     */
     public void viewAvailableJobs() {
         ArrayList<Job> jobs = Utility.getJobs();
         if (jobs == null || jobs.isEmpty()) {
@@ -358,6 +361,10 @@ public class RecruiterService {
         viewAvailableJobs();
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 33
+     */
     public void updateStatusOfJobPost(String jobId) {
         ArrayList<Job> jobs = Utility.getJobs();
         if (jobs == null || jobs.isEmpty()) {
@@ -392,6 +399,10 @@ public class RecruiterService {
 
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 23
+     */
     public void submitNewJobPost(String jobName, String jobDescription) {
         String id = UUID.randomUUID().toString();
         Job job = new Job(
@@ -565,6 +576,7 @@ public class RecruiterService {
         System.out.println("You have been logged out successfully.");
         CommonService.getInstance().accessLandingPage();
     }
+
     public void visitSignInSignUpPageRecruiter() {
         System.out.println("Welcome to the Sign In/Sign Up page for Recruiter\n");
         System.out.println("1. Sign In for Recruiter");
@@ -591,9 +603,51 @@ public class RecruiterService {
         }
     }
 
+    
     public void recruiterSignUpPage() {
     }
 
+    
+    /**
+     * @param users    List of users from the database to look for the user
+     * @param userName username
+     * @param password password
+     * @return User object if authenticated, null otherwise
+     */
+    public User authenticateUser(ArrayList<User> users, String userName, String password) {
+        for (User user : users) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 6
+     */
     public void recruiterSignInPage() {
+        ArrayList<User> users = Utility.getUsers();
+
+        String userName = Utility.inputOutput("Enter your User name:");
+        String password = Utility.inputOutput("Enter your password:");
+        User recruiter = authenticateUser(users, userName, password);
+
+        if (recruiter == null || recruiter.getRole() != UserRole.RECRUITER) {
+            System.out.println("\n");
+            String tryAgain = Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)");
+            
+            if (tryAgain.equals("y")) {
+                recruiterSignInPage();
+            } else {
+                CommonService commonService = CommonService.getInstance();
+                commonService.accessLandingPage();
+            }
+        } else {
+            System.out.println("\nRecruiter Signin successful. proceeding to applicant dashboard.. \n");
+            Utility.setCurrentUser(recruiter);
+            ApplicantService applicantService = new ApplicantService();
+            applicantService.viewApplicantDashboard();
+        }
     }
 }
