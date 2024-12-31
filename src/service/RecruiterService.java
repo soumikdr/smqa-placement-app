@@ -60,7 +60,7 @@ public class RecruiterService {
         viewSpecificApplication(applicationId);
 
     }
-    
+
     /*
      * Author: Mayur Shinde (mss62)
      * User Story: 43
@@ -198,14 +198,14 @@ public class RecruiterService {
 		}
 
     }
-
+// UserStory: 21; ar668
     public void deleteRecruiterProfile(){
-        System.out.println("Deleting your profile...");
+        System.out.println("Deleting Recruiter profile");
         String userName = Utility.getCurrentUser().getUserName();
         Utility.getUsers().removeIf(user -> user.getUserName().equals(userName));
         Utility.setCurrentUser(null);
         System.out.println("Profile deleted successfully");
-        commonService.accessLandingPage();
+        CommonService.getInstance().accessLandingPage();
     }
 
     public void updateRecruiterProfile() {
@@ -240,7 +240,7 @@ public class RecruiterService {
         viewRecruiterProfilePage();
     }
 
-    
+
     /*
      * Author: Mayur Shinde (mss62)
      * User Story: 24
@@ -428,7 +428,7 @@ public class RecruiterService {
         Utility.addJob(job);
         System.out.println("Job posted successfully");
     }
-
+//UserStory: 30; ar668
     public void viewAllApplications() {
         User user = Utility.getCurrentUser();
         if(user instanceof Applicant)
@@ -449,7 +449,29 @@ public class RecruiterService {
         });
 
     }
-
+//UserStory: 13; ar668
+    public void resetPasswordRecruiter(String userName) {
+        System.out.println("\nWelcome to Reset Password Page for Recruiter\n");
+        System.out.println("\nYour entered username: " + userName + "\n");
+        String resetCode = "";
+        if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER) {
+            resetCode = Utility.inputOutput("Enter the Reset Code");
+        }
+        if (Utility.getCurrentUser().getUserName().equals(userName)) {
+            String password = Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(password);
+            for (User user : Utility.getUsers()) {
+                if (user.getUserName().equals(userName)) {
+                    if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER && !resetCode.equals("XVQTY")) {
+                        System.out.println("\nYou have entered wrong Reset Code\n");
+                        CommonService.getInstance().viewResetPasswordPage();
+                        break;
+                    }
+                    user.setPassword(password);
+                }
+            }
+        }
+    }
     public void viewSpecificApplication(String applicationId) {
         User userApplicant = null;
         Application application = null;
@@ -584,12 +606,14 @@ public class RecruiterService {
         }
     }
 
+    //UserStory: 9; ar668
     public void logoutRecruiter() {
         System.out.println("Initiating logout process for Recruiter");
         Utility.setCurrentUser(null);
         System.out.println("You have been logged out successfully.");
         CommonService.getInstance().accessLandingPage();
     }
+    //UserStory: 3; ar668
 
     public void visitSignInSignUpPageRecruiter() {
         System.out.println("Welcome to the Sign In/Sign Up page for Recruiter\n");
@@ -617,11 +641,11 @@ public class RecruiterService {
         }
     }
 
-    
+
     public void recruiterSignUpPage() {
     }
 
-    
+
     /**
      * @param users    List of users from the database to look for the user
      * @param userName username
@@ -650,7 +674,7 @@ public class RecruiterService {
         if (recruiter == null || recruiter.getRole() != UserRole.RECRUITER) {
             System.out.println("\n");
             String tryAgain = Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)");
-            
+
             if (tryAgain.equals("y")) {
                 recruiterSignInPage();
             } else {

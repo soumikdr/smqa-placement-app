@@ -43,7 +43,7 @@ public class ApplicantService {
                 break;
         }
     }
-
+//UserStory:4; ar668
     public void signUp() {
         System.out.println("Welcome to Applicant Sign Up Page\n");
         System.out.println("Please enter the following details\n");
@@ -153,7 +153,7 @@ public class ApplicantService {
         System.out.println("\nAll assignments submitted successfully\n");
         viewApplicationProcessDashboard(applicationId);
     }
-
+//UserStory:40; ar668
     public void viewAssessment(String applicationId) {
         System.out.println("Welcome to the Assessment Page\n");
 
@@ -269,7 +269,7 @@ public class ApplicantService {
         }
         viewApplicationProcessDashboard(applicationId);
     }
-
+//UserStory:26; ar668
     public void viewJobPost() {
         User user = Utility.getCurrentUser();
         if (user == null || user.getRole() != UserRole.APPLICANT) {
@@ -295,6 +295,7 @@ public class ApplicantService {
         System.out.println("Job Status: " + job.getJobStatus());
     }
 
+    //UserStory:27; ar668
     public void viewApplicationForm(Job job) {
         System.out.println("Welcome to the Job Application Form\n");
         System.out.print("Enter your education: ");
@@ -305,7 +306,7 @@ public class ApplicantService {
         String skills = Utility.inputOutput("Enter your skills: ");
         submitApplicationForm(job, education, experience, skills);
     }
-
+//UserStory:25; ar668
     public void viewAllAvailableJobs() {
         User user = Utility.getCurrentUser();
         if (user == null || user.getRole() == null || user.getRole() != UserRole.APPLICANT) {
