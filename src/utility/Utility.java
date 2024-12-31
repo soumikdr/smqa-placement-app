@@ -1,14 +1,16 @@
 package utility;
 
-import model.Application;
-import model.Assignment;
-import model.Job;
-import model.User;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import model.Application;
+import model.Assignment;
+import model.Job;
+import model.User;
 
 public class Utility {
 
@@ -21,6 +23,8 @@ public class Utility {
     private static ArrayList<Job> jobs;
 
     private static ArrayList<Application> applications;
+
+    private static Map<String, List<String>> questionMap;
 
 
     public static String inputOutput(String message) {
@@ -81,5 +85,22 @@ public class Utility {
 
     public static void setCurrentUser(User currentUser) {
         Utility.currentUser = currentUser;
+    }
+
+    public static Map<String, List<String>> getQuestionMap() {
+        return questionMap;
+    }
+
+    public static void setQuestionMap(Map<String, List<String>> qMap) {
+        Utility.questionMap = qMap;
+    }
+
+    public static ArrayList<String> getCommonInterviewQuestions() {
+        ArrayList<String> interviewQuestions = new ArrayList<>();
+        interviewQuestions.add("[1] Why are you interested in this position?");
+        interviewQuestions.add("[2] How do you handle conflict in a team environment?");
+        interviewQuestions.add("[3] What are your salary expectations?");
+
+        return interviewQuestions;
     }
 }
