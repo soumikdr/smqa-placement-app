@@ -1,21 +1,8 @@
 package tests;
 
-import model.*;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import service.CommonService;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
-import service.CommonService;
-
-import service.RecruiterService;
-import utility.Utility;
-
 import static org.junit.Assert.assertTrue;
-
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 
 import java.io.ByteArrayOutputStream;
@@ -24,14 +11,24 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Application;
-import model.Assignment;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
+import model.Applicant;
+import model.Application;
+import model.ApplicationStatus;
+import model.Assignment;
+import model.Job;
+import model.JobStatus;
+import model.Recruiter;
+import model.User;
+import model.UserRole;
+import service.CommonService;
+import service.RecruiterService;
 import utility.Utility;
-import utility.Utility;
-import java.util.ArrayList;
 
 public class RecruiterServiceTests {
 
@@ -609,4 +606,19 @@ public class RecruiterServiceTests {
             Assert.assertTrue(mockApplication.getStatus().equals(ApplicationStatus.INTERVIEW));
         }
     }
+
+    @Test
+    public void authenticateUser() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "bestpassword");
+        Assert.assertNotNull(user);
+    }
+
+    @Test
+    public void authenticateUserInvalid() {
+        setUp();
+        User user = service.authenticateUser(Utility.getUsers(), "johnDoe", "wrongpassword");
+        Assert.assertNull(user);
+    }
+
 }
