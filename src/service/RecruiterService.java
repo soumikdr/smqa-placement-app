@@ -30,36 +30,41 @@ public class RecruiterService {
 
     public void viewAssessmentResult(String applicationId, String assignmentId) {
 
-    	Assignment result=new Assignment();
+        Assignment result = new Assignment();
 
-    	for(Application a: Utility.getApplications()) {
-    		if(a.getId().equals(applicationId)) {
-    			for(Assignment assign: a.getAssignments()) {
-    				if(assign.getId().equals(assignmentId)) {
-    					result=assign;
-    					System.out.println("Assessment Found..");
-    				}
-    			}
-    		}
-    	}
-    	if(result.getId()==null || result.getId().isEmpty()) {
-    		System.out.println("There is no Coding Assessment Result for this application");
-    	}else {
-        	int answerCount=0;
-        	System.out.println("Assessment Questions and Answers : ");
-        	for(String question: result.getQuestions()) {
-        		System.out.println(question+"\n");
+        for (Application a : Utility.getApplications()) {
+            if (a.getId().equals(applicationId)) {
+                for (Assignment assign : a.getAssignments()) {
+                    if (assign.getId().equals(assignmentId)) {
+                        result = assign;
+                        System.out.println("Assessment Found..");
+                    }
+                }
+            }
+        }
+        if (result.getId() == null || result.getId().isEmpty()) {
+            System.out.println("There is no Coding Assessment Result for this application");
+        } else {
+            int answerCount = 0;
+            System.out.println("Assessment Questions and Answers : ");
+            for (String question : result.getQuestions()) {
+                System.out.println(question + "\n");
 
-        		System.out.println(result.getAnswers().get(answerCount)+"\n");
-        		answerCount++;
+                System.out.println(result.getAnswers().get(answerCount) + "\n");
+                answerCount++;
 
-        	}
-    	}
+            }
+        }
 
-    	System.out.println("Directing to Application Page..");
-    	viewSpecificApplication(applicationId);
+        System.out.println("Directing to Application Page..");
+        viewSpecificApplication(applicationId);
 
     }
+    
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 43
+     */
 
     public void sendInterview(Application application) {
         String interviewDate = Utility.inputOutput("Enter the interview date: ");
