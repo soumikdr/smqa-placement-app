@@ -396,11 +396,9 @@ public class ApplicantService {
         } else {
             System.out.println("Role: " + user.getRole().name());
         }
-        String answer = Utility.inputOutput("Type anything to go back to the dashboard?");
 
-        if (!answer.isEmpty()) {
-            viewApplicantDashboard();
-        }
+        Utility.inputOutput("Type anything to go back to the dashboard?");
+        viewApplicantDashboard();
     }
 
     public void deleteProfileHelper() {
