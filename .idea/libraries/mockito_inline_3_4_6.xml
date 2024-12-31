@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="mockito-inline-3.4.6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/mockito-inline-3.4.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="jar://$PROJECT_DIR$/lib/mockito-inline-3.4.6.jar!/" recursive="false" />
+  </library>
+</component>
