@@ -625,11 +625,19 @@ public class ApplicantService {
                 break;
         }
     }
-
+    // ETY1 - STORY 8
+    public void applicantLogOut() {
+        System.out.println("Applicant Logging Out....");
+        Utility.setCurrentUser(null);
+        System.out.println("Logged Out Successfully");
+        System.out.println("Directing to Common Landing Page");
+        CommonService.getInstance().accessLandingPage();
+    }
     /*
      * Author: Mayur Shinde (mss62)
      * User Story: 36
      */
+
     public void viewJobDescFromApplication(String applicationId) {
         Application application = Utility.getApplications().stream()
                 .filter(a -> a.getId().equals(applicationId))
