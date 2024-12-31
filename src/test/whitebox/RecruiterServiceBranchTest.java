@@ -1,6 +1,7 @@
 package test.whitebox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -10,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +145,84 @@ public class RecruiterServiceBranchTest {
         recruiterService.viewRecruiterDashboard();
 
         verify(recruiterService, times(1)).viewRecruiterDashboard();
+    }
+
+    @Test
+    public void testUpdateRecruiterProfile_ValidInputs() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange - user "John" "Doe" with username "johnDoe" provided
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUsers.get(0));
+            mockedUtility.when(() -> Utility.getUsers()).thenReturn(mockUsers);
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("Jack", "Dew", "jack");
+            doNothing().when(recruiterService).viewRecruiterProfilePage();
+
+            // Act
+            recruiterService.updateRecruiterProfile();
+
+            // Assert
+            assertEquals("Jack", Utility.getCurrentUser().getName());
+            assertEquals("Dew", Utility.getCurrentUser().getLastName());
+            assertEquals("jack", Utility.getCurrentUser().getUserName());
+        }
+    }
+
+    @Test
+    public void testUpdateRecruiterProfile_EmptyNameAndLastname() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange - user "John" "Doe" with username "johnDoe" provided
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUsers.get(0));
+            mockedUtility.when(() -> Utility.getUsers()).thenReturn(mockUsers);
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("", "", "jack");
+            doNothing().when(recruiterService).viewRecruiterProfilePage();
+
+            // Act
+            recruiterService.updateRecruiterProfile();
+
+            // Assert
+            assertEquals("John", Utility.getCurrentUser().getName());
+            assertEquals("Doe", Utility.getCurrentUser().getLastName());
+            assertEquals("jack", Utility.getCurrentUser().getUserName());
+        }
+    }
+
+    @Test
+    public void testUpdateRecruiterProfile_UsernameNotUnique() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange - user "John" "Doe" with username "johnDoe" provided
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUsers.get(0));
+            mockedUtility.when(() -> Utility.getUsers()).thenReturn(mockUsers);
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+
+            // jack is unique username, johnDoe is non-unique username. So, first invalid, then valid input provided
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("Jack", "Dew", "johnDoe", "jack");
+            doNothing().when(recruiterService).viewRecruiterProfilePage();
+
+            // Act
+            recruiterService.updateRecruiterProfile();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+
+            // Filter string
+            List<String> filteredLines = new ArrayList<>();
+
+            for (String str : lines) {
+                String trimmed = str.trim();
+                if (!trimmed.isEmpty()) {
+                    filteredLines.add(trimmed);
+                }
+            }
+
+            assertEquals("Jack", Utility.getCurrentUser().getName());
+            assertEquals("Dew", Utility.getCurrentUser().getLastName());
+            assertTrue(filteredLines.contains("Provided username is empty or already exists. Please try again."));
+        }
     }
 
     @Test

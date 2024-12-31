@@ -151,6 +151,26 @@ public class RecruiterServiceStatementTest {
     }
 
     @Test
+    public void testUpdateRecruiterProfile_Valid() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange - user "John" "Doe" with username "johnDoe" provided
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUsers.get(0));
+            mockedUtility.when(() -> Utility.getUsers()).thenReturn(mockUsers);
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("Jack", "Dew", "jack");
+            doNothing().when(recruiterService).viewRecruiterProfilePage();
+
+            // Act
+            recruiterService.updateRecruiterProfile();
+
+            // Assert
+            assertEquals("Jack", Utility.getCurrentUser().getName());
+            assertEquals("Dew", Utility.getCurrentUser().getLastName());
+            assertEquals("jack", Utility.getCurrentUser().getUserName());
+        }
+    }
+
+    @Test
     public void testViewSpecificApplication_ValidApplicationId() {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);

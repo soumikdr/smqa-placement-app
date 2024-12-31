@@ -216,11 +216,11 @@ public class RecruiterService {
         while (!uniqueUsername) {
             String userName = Utility.inputOutput("Enter new username: ");
 
-            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null) == null) {
+            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null) == null && !userName.isEmpty()) {
                 uniqueUsername = true;
                 Utility.getCurrentUser().setUserName(userName);
             } else {
-                System.out.println("Username already exists. Please try again.");
+                System.out.println("Provided username is empty or already exists. Please try again.");
             }
         }
 
