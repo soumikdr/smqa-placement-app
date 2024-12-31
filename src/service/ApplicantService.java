@@ -56,7 +56,7 @@ public class ApplicantService {
         String password = Utility.inputOutput("Enter your password:");
 
         for (User user : users) {
-            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password) && user.getRole() == UserRole.APPLICANT) {
                 applicant = user;
             }
         }
@@ -74,14 +74,8 @@ public class ApplicantService {
         } else {
             System.out.println("\nApplicant Signin successful. proceeding to applicant dashboard.. \n");
             Utility.setCurrentUser(applicant);
-
-            if (applicant.getRole() == UserRole.APPLICANT) {
-                ApplicantService applicantService = new ApplicantService();
-                applicantService.viewApplicantDashboard();
-            } else if (applicant.getRole() == UserRole.RECRUITER) {
-                RecruiterService recruiterService = new RecruiterService();
-                recruiterService.viewRecruiterDashboard();
-            }
+            ApplicantService applicantService = new ApplicantService();
+            applicantService.viewApplicantDashboard();
         }
     }
 
