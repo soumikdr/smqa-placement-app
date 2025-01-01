@@ -47,7 +47,8 @@ public class ApplicantService {
                 break;
         }
     }
-//UserStory:4; ar668
+
+    //UserStory:4; ar668
     public void signUp() {
         System.out.println("Welcome to Applicant Sign Up Page\n");
         System.out.println("Please enter the following details\n");
@@ -73,7 +74,10 @@ public class ApplicantService {
         viewApplicantDashboard();
     }
 
-
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 7
+     */
     public void signIn() {
         ArrayList<User> users = Utility.getUsers();
         User applicant = null;
@@ -105,6 +109,10 @@ public class ApplicantService {
         }
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 41
+     */
     public void submitAssessmentForm(String applicationId) {
         System.out.println("\n------ Submit your assignments ------\n");
         Application application = null;
@@ -157,7 +165,8 @@ public class ApplicantService {
         System.out.println("\nAll assignments submitted successfully\n");
         viewApplicationProcessDashboard(applicationId);
     }
-//UserStory:40; ar668
+
+    // UserStory:40; ar668
     public void viewAssessment(String applicationId) {
         System.out.println("Welcome to the Assessment Page\n");
 
@@ -175,6 +184,7 @@ public class ApplicantService {
             }
         }
     }
+
     // ETY1 - STORY 45
     public void submitInterviewForm(String applicationId) {
         Application application = null;
@@ -224,6 +234,10 @@ public class ApplicantService {
         viewApplicationProcessDashboard(application.getId());
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 44
+     */
     public void viewInterview(String applicationId) {
         System.out.println("\n------ View Interview Questions ------\n");
         Application application = null;
@@ -273,7 +287,8 @@ public class ApplicantService {
         }
         viewApplicationProcessDashboard(applicationId);
     }
-//UserStory:26; ar668
+
+    // UserStory:26; ar668
     public void viewJobPost() {
         User user = Utility.getCurrentUser();
         if (user == null || user.getRole() != UserRole.APPLICANT) {
@@ -310,7 +325,8 @@ public class ApplicantService {
         String skills = Utility.inputOutput("Enter your skills: ");
         submitApplicationForm(job, education, experience, skills);
     }
-//UserStory:25; ar668
+
+    // UserStory:25; ar668
     public void viewAllAvailableJobs() {
         User user = Utility.getCurrentUser();
         if (user == null || user.getRole() == null || user.getRole() != UserRole.APPLICANT) {
@@ -331,6 +347,7 @@ public class ApplicantService {
             });
         viewJobPost();
         }
+
     // ETY1 - STORY 28
     public void submitApplicationForm(String jobId, String applicantId) {
 
@@ -344,6 +361,7 @@ public class ApplicantService {
     	viewApplicantDashboard();
 
     }
+
     // ETY1 - 14
     public void viewApplicantDashboard() {
 
@@ -384,6 +402,10 @@ public class ApplicantService {
 
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 16
+     */
     public void viewApplicantProfilePage() {
         User user = Utility.getCurrentUser();
         System.out.println("\nApplicant Profile\n");
@@ -629,6 +651,7 @@ public class ApplicantService {
                 break;
         }
     }
+
     // ETY1 - STORY 8
     public void applicantLogOut() {
         System.out.println("Applicant Logging Out....");
@@ -637,11 +660,11 @@ public class ApplicantService {
         System.out.println("Directing to Common Landing Page");
         CommonService.getInstance().accessLandingPage();
     }
+
     /*
      * Author: Mayur Shinde (mss62)
      * User Story: 36
      */
-
     public void viewJobDescFromApplication(String applicationId) {
         Application application = Utility.getApplications().stream()
                 .filter(a -> a.getId().equals(applicationId))

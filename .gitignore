@@ -12,6 +12,7 @@ out/
 /.nb-gradle/
 /target/
 .settings/
+/bin/
 
 ### VS Code ###
 .vscode/
