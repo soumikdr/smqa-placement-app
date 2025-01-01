@@ -31,6 +31,7 @@ public class RecruiterService {
 
     public void sendAssessment() {
     }
+
     // ETY1 - STORY 42
     public void viewAssessmentResult(String applicationId, String assignmentId) {
 
@@ -69,7 +70,6 @@ public class RecruiterService {
      * Author: Mayur Shinde (mss62)
      * User Story: 43
      */
-
     public void sendInterview(Application application) {
         String interviewDate = Utility.inputOutput("Enter the interview date: ");
         String interviewTime = Utility.inputOutput("Enter the interview time: ");
@@ -83,6 +83,10 @@ public class RecruiterService {
 
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 15
+     */
     public void viewRecruiterDashboard() {
         System.out.println("Welcome to Recruiter Dashboard\n");
 
@@ -147,7 +151,6 @@ public class RecruiterService {
 
     }
 
-
     // ETY1 - STORY 47
     public void approveRejectApplication(Application application) {
 
@@ -203,7 +206,8 @@ public class RecruiterService {
 		}
 
     }
-// UserStory: 21; ar668
+
+    // UserStory: 21; ar668
     public void deleteRecruiterProfile(){
         System.out.println("Deleting Recruiter profile");
         String userName = Utility.getCurrentUser().getUserName();
@@ -213,6 +217,10 @@ public class RecruiterService {
         CommonService.getInstance().accessLandingPage();
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 20
+     */
     public void updateRecruiterProfile() {
         System.out.println("\nUpdate profile information (leave empty for no change)\n");
 
@@ -244,7 +252,6 @@ public class RecruiterService {
         System.out.println("\nProfile updated successfully!\n");
         viewRecruiterProfilePage();
     }
-
 
     /*
      * Author: Mayur Shinde (mss62)
@@ -332,6 +339,10 @@ public class RecruiterService {
 
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 32
+     */
     public void updateDescriptionOfJobPost(String jobId) {
         System.out.println("\n-------- Update job description --------\n");
         ArrayList<Job> jobs = Utility.getJobs();
@@ -401,6 +412,7 @@ public class RecruiterService {
         }
         System.out.println("No job post available with given id");
     }
+
    // ETY1 - STORY 50
     public void viewTotalNumberOfApplications(String jobId) {
 
@@ -413,6 +425,7 @@ public class RecruiterService {
 
         System.out.println("Total Applications of : "+jobId+" is " + total);
     }
+
     // ETY1 - STORY 22
     public void viewJobPostingForm() {
 
@@ -446,7 +459,8 @@ public class RecruiterService {
         Utility.addJob(job);
         System.out.println("Job posted successfully");
     }
-//UserStory: 30; ar668
+
+    // UserStory: 30; ar668
     public void viewAllApplications() {
         User user = Utility.getCurrentUser();
         if(user instanceof Applicant)
@@ -467,7 +481,8 @@ public class RecruiterService {
         });
 
     }
-//UserStory: 13; ar668
+
+    // UserStory: 13; ar668
     public void resetPasswordRecruiter(String userName) {
         System.out.println("\nWelcome to Reset Password Page for Recruiter\n");
         System.out.println("\nYour entered username: " + userName + "\n");
@@ -490,6 +505,11 @@ public class RecruiterService {
             }
         }
     }
+
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 37
+     */
     public void viewSpecificApplication(String applicationId) {
         User userApplicant = null;
         Application application = null;
@@ -564,6 +584,10 @@ public class RecruiterService {
         }
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 38
+     */
     public void sendAssignment(Application application) {
         System.out.println("\n-------- Send assignment to applicant --------\n");
         System.out.println("Please type one from the roles below to send the assignment questions (e.g. frontend)");
@@ -588,6 +612,10 @@ public class RecruiterService {
         viewSpecificApplication(application.getId());
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 48
+     */
     public void sendFeedback(Application application) {
         System.out.println("\n-------- Send feedback to applicant --------\n");
         String feedback = Utility.inputOutput("Please type your feedback here..");
@@ -631,8 +659,8 @@ public class RecruiterService {
         System.out.println("You have been logged out successfully.");
         CommonService.getInstance().accessLandingPage();
     }
-    //UserStory: 3; ar668
 
+    //UserStory: 3; ar668
     public void visitSignInSignUpPageRecruiter() {
         System.out.println("Welcome to the Sign In/Sign Up page for Recruiter\n");
         System.out.println("1. Sign In for Recruiter");
@@ -678,6 +706,7 @@ public class RecruiterService {
         }
         return null;
     }
+
     /*
      * Author: Mayur Shinde (mss62)
      * User Story: 6
