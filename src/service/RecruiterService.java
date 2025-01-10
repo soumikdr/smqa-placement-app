@@ -24,9 +24,9 @@ public class RecruiterService {
         }
         return instance;
     }
-    
+
     public void recruiterLandingPage() {
- 	   
+
     }
 
     public void sendAssessment() {
@@ -148,6 +148,30 @@ public class RecruiterService {
                 viewRecruiterProfilePage();
                 break;
         }
+
+    }
+    // ETY1 - STORY 5
+    public void recruiterSignUp(String recruiterCode, String firstName, String lastName, String userName, String password) {
+        System.out.println("Sign Up processing.... \n");
+
+        RecruiterService recruiterService = new RecruiterService();
+        String id = UUID.randomUUID().toString();
+        if (recruiterCode != null && recruiterCode.equals("XVQTY")) {
+            Recruiter newRecruiter = new Recruiter(id, firstName, lastName, userName, password);
+            Utility.getUsers().add(newRecruiter);
+            System.out.println("Sign Up Successful for Recruiter");
+            Utility.setCurrentUser(newRecruiter);
+            System.out.println("directing to Recruiter Dashboard");
+            viewRecruiterDashboard();
+        }
+        else {
+            System.out.println("Invalid Attempt");
+            System.out.println("Try Again..");
+            recruiterViewSignUp();
+        }
+
+    }
+    public void recruiterViewSignUp(){
 
     }
 
