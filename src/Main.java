@@ -53,7 +53,7 @@ public class Main {
             "As a Front End Developer you'll take ownership of technical projects, designing and developing user interfaces and client dashboards for cutting edge trading systems technology. ",
             JobStatus.PUBLIC));
 
-        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList()));
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword"));
         users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
         users.add(new Recruiter("3", "Shomik", "Datta", "xFireTomato", "12345"));
 

@@ -171,7 +171,7 @@ public class CommonService {
         // Applicant part
         else {
             ApplicantService applicantService = new ApplicantService();
-            User newUser = new Applicant(id, firstName, lastName, userName, password, new ArrayList<>());
+            User newUser = new Applicant(id, firstName, lastName, userName, password);
             Utility.getUsers().add(newUser);
             System.out.println("Sign Up Successful for Applicant");
             Utility.setCurrentUser(newUser);

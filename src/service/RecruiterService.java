@@ -178,7 +178,7 @@ public class RecruiterService {
 
         switch (selection) {
             case "1": {
-                application.setStatus("Approved");
+            application.setStatus(ApplicationStatus.SUCCESSFUL);
                 Utility.getApplications().stream().map(a -> {
                     if (a.getId().equals(application.getId())) {
                         a.setStatus(application.getStatus());
@@ -193,7 +193,7 @@ public class RecruiterService {
                 break;
             }
             case "2": {
-                application.setStatus("Rejected");
+                application.setStatus(ApplicationStatus.UNSUCCESSFUL);
                 Utility.getApplications().stream().map(a -> {
                     if (a.getId().equals(application.getId())) {
                         a.setStatus(application.getStatus());
@@ -283,9 +283,26 @@ public class RecruiterService {
             System.out.println(index + ". Job ID: " + job.getId() + " | Job Title: " + job.getJobName());
             index++;
         }
+        System.out.println("\n1: View specific job details");
+        System.out.println("2: Go back to dashboard");
+        boolean inLoop = true;
+        while (inLoop) {
+            String answer = Utility.inputOutput("Please select one of the options..");
+            switch (answer) {
+                case "1":
+                    inLoop = false;
+                    viewSpecificJobPost();
+                    break;
+                case "2":
+                    inLoop = false;
+                    viewRecruiterDashboard();
+                    break;
+                default:
+                    System.out.println(answer + " is not a valid option. Please try again.");
+                    break;
+            }
+        }
 
-        
-        viewSpecificJobPost();
     }
 
     public void viewSpecificJobPost() {
@@ -568,7 +585,6 @@ public class RecruiterService {
         System.out.println("Status: " + application.getStatus());
         System.out.println("Feedback: " + application.getFeedback());
         System.out.println("Assignments found: " + application.getAssignments().size());
-
         for (int i = 0; i < application.getAssignments().size(); i++) {
             System.out.println("\nAssignment " + i + ": " + application.getAssignments().get(i).getAssignmentName());
             System.out.println("Questions: ");
