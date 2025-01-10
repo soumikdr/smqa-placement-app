@@ -34,12 +34,12 @@ public class CommonService {
         switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1": {
                 System.out.println("Directing to Recruiter Landing Page");
-                RecruiterService.getInstance().recruiterLandingPage();
+                RecruiterService.getInstance().visitSignInSignUpPageRecruiter();
                 break;
             }
             case "2": {
                 System.out.println("Directing to Applicant Landing Page");
-                ApplicantService.getInstance().applicantLandingPage();
+                ApplicantService.getInstance().applicantViewSignInSignUpPage();
                 break;
             }
             default: {

@@ -1,5 +1,6 @@
 import model.*;
 import service.CommonService;
+import service.RecruiterService;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -94,9 +95,10 @@ public class Main {
         Utility.setApplications(applications);
         Utility.setQuestionMap(questionMap);
 
-
-        CommonService commonService = new CommonService();
-        commonService.accessLandingPage();
+        Utility.setCurrentUser(users.get(1));
+       RecruiterService.getInstance().viewRecruiterDashboard();
+        // CommonService commonService = new CommonService();
+        // commonService.accessLandingPage();
 
     }
 
