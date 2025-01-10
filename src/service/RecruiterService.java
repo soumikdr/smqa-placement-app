@@ -1,5 +1,10 @@
 package service;
 
+import model.Application;
+import model.Job;
+import model.JobStatus;
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,10 +12,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import model.*;
-import model.Job;
-import model.User;
-import model.Application;
-import utility.Utility;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecruiterService {
@@ -24,50 +25,68 @@ public class RecruiterService {
         return instance;
     }
 
+    public void recruiterLandingPage() {
+
+    }
+
     public void sendAssessment() {
     }
 
+    // ETY1 - STORY 42
     public void viewAssessmentResult(String applicationId, String assignmentId) {
 
-    	Assignment result=new Assignment();
+        Assignment result = new Assignment();
 
-    	for(Application a: Utility.getApplications()) {
-    		if(a.getId().equals(applicationId)) {
-    			for(Assignment assign: a.getAssignments()) {
-    				if(assign.getId().equals(assignmentId)) {
-    					result=assign;
-    					System.out.println("Assessment Found..");
-    				}
-    			}
-    		}
-    	}
-    	if(result.getId()==null || result.getId().isEmpty()) {
-    		System.out.println("There is no Coding Assessment Result for this application");
-    	}else {
-        	int answerCount=0;
-        	System.out.println("Assessment Questions and Answers : ");
-        	for(String question: result.getQuestions()) {
-        		System.out.println(question+"\n");
+        for (Application a : Utility.getApplications()) {
+            if (a.getId().equals(applicationId)) {
+                for (Assignment assign : a.getAssignments()) {
+                    if (assign.getId().equals(assignmentId)) {
+                        result = assign;
+                        System.out.println("Assessment Found..");
+                    }
+                }
+            }
+        }
+        if (result.getId() == null || result.getId().isEmpty()) {
+            System.out.println("There is no Coding Assessment Result for this application");
+        } else {
+            int answerCount = 0;
+            System.out.println("Assessment Questions and Answers : ");
+            for (String question : result.getQuestions()) {
+                System.out.println(question + "\n");
 
-        		System.out.println(result.getAnswers().get(answerCount)+"\n");
-        		answerCount++;
+                System.out.println(result.getAnswers().get(answerCount) + "\n");
+                answerCount++;
 
-        	}
-    	}
+            }
+        }
 
-    	System.out.println("Directing to Application Page..");
-    	viewSpecificApplication(applicationId);
+        System.out.println("Directing to Application Page..");
+        viewSpecificApplication(applicationId);
 
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 43
+     */
     public void sendInterview(Application application) {
-
+        String interviewDate = Utility.inputOutput("Enter the interview date: ");
+        String interviewTime = Utility.inputOutput("Enter the interview time: ");
+        application.setInterviewDate(interviewDate);
+        application.setInterviewTime(interviewTime);
+        application.setStatus(ApplicationStatus.INTERVIEW);
+        System.out.println("Interview scheduled successfully");
     }
 
     public void viewInterviewResult() {
 
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 15
+     */
     public void viewRecruiterDashboard() {
         System.out.println("Welcome to Recruiter Dashboard\n");
 
@@ -91,7 +110,7 @@ public class RecruiterService {
                 viewJobPostingForm();
                 break;
             case "5":
-                logout();
+                logoutRecruiter();
                 break;
             default:
                 System.out.println("\nYou have entered an invalid option. Please try again.\n");
@@ -156,6 +175,7 @@ public class RecruiterService {
 
     }
 
+    // ETY1 - STORY 47
     public void approveRejectApplication(Application application) {
 
     	System.out.println("Do you want to Approve/Reject Application?");
@@ -211,16 +231,21 @@ public class RecruiterService {
 
     }
 
+    // UserStory: 21; ar668
     public void deleteRecruiterProfile(){
-        System.out.println("Deleting your profile...");
+        System.out.println("Deleting Recruiter profile");
         String userName = Utility.getCurrentUser().getUserName();
         Utility.getUsers().removeIf(user -> user.getUserName().equals(userName));
         Utility.setCurrentUser(null);
         System.out.println("Profile deleted successfully");
-        commonService.accessLandingPage();
+        CommonService.getInstance().accessLandingPage();
     }
 
-    public void updateRecruiterProfile(){
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 20
+     */
+    public void updateRecruiterProfile() {
         System.out.println("\nUpdate profile information (leave empty for no change)\n");
 
         String firstName = Utility.inputOutput("Enter new first name: ");
@@ -229,7 +254,7 @@ public class RecruiterService {
         if (!firstName.isEmpty()) {
             Utility.getCurrentUser().setName(firstName);
         }
-        
+
         if (!lastName.isEmpty()) {
             Utility.getCurrentUser().setLastName(lastName);
         }
@@ -239,11 +264,12 @@ public class RecruiterService {
         while (!uniqueUsername) {
             String userName = Utility.inputOutput("Enter new username: ");
 
-            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null) == null) {
+            if (Utility.getUsers().stream().filter(u -> u.getUserName().equals(userName)).findFirst()
+                    .orElse(null) == null && !userName.isEmpty()) {
                 uniqueUsername = true;
                 Utility.getCurrentUser().setUserName(userName);
             } else {
-                System.out.println("Username already exists. Please try again.");
+                System.out.println("Provided username is empty or already exists. Please try again.");
             }
         }
 
@@ -251,6 +277,10 @@ public class RecruiterService {
         viewRecruiterProfilePage();
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 24
+     */
     public void viewAvailableJobs() {
         ArrayList<Job> jobs = Utility.getJobs();
         if (jobs == null || jobs.isEmpty()) {
@@ -333,6 +363,10 @@ public class RecruiterService {
 
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 32
+     */
     public void updateDescriptionOfJobPost(String jobId) {
         System.out.println("\n-------- Update job description --------\n");
         ArrayList<Job> jobs = Utility.getJobs();
@@ -381,6 +415,10 @@ public class RecruiterService {
         viewAvailableJobs();
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 33
+     */
     public void updateStatusOfJobPost(String jobId) {
         ArrayList<Job> jobs = Utility.getJobs();
         if (jobs == null || jobs.isEmpty()) {
@@ -399,6 +437,7 @@ public class RecruiterService {
         System.out.println("No job post available with given id");
     }
 
+   // ETY1 - STORY 50
     public void viewTotalNumberOfApplications(String jobId) {
 
         AtomicInteger total= new AtomicInteger();
@@ -411,10 +450,28 @@ public class RecruiterService {
         System.out.println("Total Applications of : "+jobId+" is " + total);
     }
 
+    // ETY1 - STORY 22
     public void viewJobPostingForm() {
+
+        System.out.println("**** New Job Form ****");
+
+        String jobTitle = Utility.inputOutput("Enter the New Job Title");
+
+        String jobDesc = Utility.inputOutput("Enter the New Job Description");
+
+        System.out.println("Submitting new job post...");
+        if(jobTitle==null || jobTitle.isEmpty() || jobDesc==null || jobDesc.isEmpty()){
+            System.out.println("Job Title or Job Description empty, Please try again..");
+            viewJobPostingForm();
+        }
+        submitNewJobPost(jobTitle, jobDesc);
 
     }
 
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 23
+     */
     public void submitNewJobPost(String jobName, String jobDescription) {
         String id = UUID.randomUUID().toString();
         Job job = new Job(
@@ -427,6 +484,7 @@ public class RecruiterService {
         System.out.println("Job posted successfully");
     }
 
+    // UserStory: 30; ar668
     public void viewAllApplications() {
         User user = Utility.getCurrentUser();
         if(user instanceof Applicant)
@@ -448,6 +506,34 @@ public class RecruiterService {
 
     }
 
+    // UserStory: 13; ar668
+    public void resetPasswordRecruiter(String userName) {
+        System.out.println("\nWelcome to Reset Password Page for Recruiter\n");
+        System.out.println("\nYour entered username: " + userName + "\n");
+        String resetCode = "";
+        if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER) {
+            resetCode = Utility.inputOutput("Enter the Reset Code");
+        }
+        if (Utility.getCurrentUser().getUserName().equals(userName)) {
+            String password = Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(password);
+            for (User user : Utility.getUsers()) {
+                if (user.getUserName().equals(userName)) {
+                    if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER && !resetCode.equals("XVQTY")) {
+                        System.out.println("\nYou have entered wrong Reset Code\n");
+                        CommonService.getInstance().viewResetPasswordPage();
+                        break;
+                    }
+                    user.setPassword(password);
+                }
+            }
+        }
+    }
+
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 37
+     */
     public void viewSpecificApplication(String applicationId) {
         User userApplicant = null;
         Application application = null;
@@ -522,6 +608,10 @@ public class RecruiterService {
         }
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 38
+     */
     public void sendAssignment(Application application) {
         System.out.println("\n-------- Send assignment to applicant --------\n");
         System.out.println("Please type one from the roles below to send the assignment questions (e.g. frontend)");
@@ -546,6 +636,10 @@ public class RecruiterService {
         viewSpecificApplication(application.getId());
     }
 
+    /*
+     * Author: Soumik Datta (sd631)
+     * User Story: 48
+     */
     public void sendFeedback(Application application) {
         System.out.println("\n-------- Send feedback to applicant --------\n");
         String feedback = Utility.inputOutput("Please type your feedback here..");
@@ -582,11 +676,87 @@ public class RecruiterService {
         }
     }
 
-    public void logout() {
-        System.out.println("Logging out...");
+    //UserStory: 9; ar668
+    public void logoutRecruiter() {
+        System.out.println("Initiating logout process for Recruiter");
         Utility.setCurrentUser(null);
-        System.out.println("Logged out successfully");
+        System.out.println("You have been logged out successfully.");
         CommonService.getInstance().accessLandingPage();
     }
 
+    //UserStory: 3; ar668
+    public void visitSignInSignUpPageRecruiter() {
+        System.out.println("Welcome to the Sign In/Sign Up page for Recruiter\n");
+        System.out.println("1. Sign In for Recruiter");
+        System.out.println("2. Sign Up for Recruiter");
+        System.out.println("3. Go back to the previous menu");
+
+        switch (Utility.inputOutput("Please select one of the options")) {
+            case "1":
+                System.out.println("Redirecting to Sign In page for Recruiter\n");
+                recruiterSignInPage();
+                break;
+            case "2":
+                System.out.println("Redirecting to Sign Up page for Recruiter\n");
+                recruiterSignUpPage();
+                break;
+            case "3":
+                System.out.println("Redirecting to the previous menu\n");
+                CommonService.getInstance().accessLandingPage();
+                break;
+            default:
+                System.out.println("You entered an invalid option. Please try again.\n");
+                visitSignInSignUpPageRecruiter();
+                break;
+        }
+    }
+
+
+    public void recruiterSignUpPage() {
+    }
+
+
+    /**
+     * @param users    List of users from the database to look for the user
+     * @param userName username
+     * @param password password
+     * @return User object if authenticated, null otherwise
+     */
+    public User authenticateUser(ArrayList<User> users, String userName, String password) {
+        for (User user : users) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 6
+     */
+    public void recruiterSignInPage() {
+        ArrayList<User> users = Utility.getUsers();
+
+        String userName = Utility.inputOutput("Enter your User name:");
+        String password = Utility.inputOutput("Enter your password:");
+        User recruiter = authenticateUser(users, userName, password);
+
+        if (recruiter == null || recruiter.getRole() != UserRole.RECRUITER) {
+            System.out.println("\n");
+            String tryAgain = Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)");
+
+            if (tryAgain.equals("y")) {
+                recruiterSignInPage();
+            } else {
+                CommonService commonService = CommonService.getInstance();
+                commonService.accessLandingPage();
+            }
+        } else {
+            System.out.println("\nRecruiter Signin successful. proceeding to applicant dashboard.. \n");
+            Utility.setCurrentUser(recruiter);
+            ApplicantService applicantService = new ApplicantService();
+            applicantService.viewApplicantDashboard();
+        }
+    }
 }
