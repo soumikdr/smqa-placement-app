@@ -144,6 +144,26 @@ public class RecruiterService {
 
     }
 
+    // ETY1 - STORY 5
+    public void recruiterSignUp(String recruiterCode, String firstName, String lastName, String userName,
+            String password) {
+        System.out.println("Sign Up processing.... \n");
+
+        String id = UUID.randomUUID().toString();
+        if (recruiterCode != null && recruiterCode.equals("XVQTY")) {
+            Recruiter newRecruiter = new Recruiter(id, firstName, lastName, userName, password);
+            Utility.getUsers().add(newRecruiter);
+            System.out.println("Sign Up Successful for Recruiter");
+            Utility.setCurrentUser(newRecruiter);
+            System.out.println("directing to Recruiter Dashboard");
+            viewRecruiterDashboard();
+        } else {
+            System.out.println("Invalid Attempt");
+            System.out.println("Try Again..");
+            viewRecruiterSignUpPage();
+        }
+    }
+
     // ETY1 - STORY 47
     public void approveRejectApplication(Application application) {
 
@@ -263,6 +283,8 @@ public class RecruiterService {
             System.out.println(index + ". Job ID: " + job.getId() + " | Job Title: " + job.getJobName());
             index++;
         }
+
+        
         viewSpecificJobPost();
     }
 
@@ -674,7 +696,7 @@ public class RecruiterService {
                 break;
             case "2":
                 System.out.println("Redirecting to Sign Up page for Recruiter\n");
-                recruiterSignUpPage();
+                viewRecruiterSignUpPage();
                 break;
             case "3":
                 System.out.println("Redirecting to the previous menu\n");
@@ -705,10 +727,7 @@ public class RecruiterService {
             viewRecruiterSignUpPage();
             return;
         }
-        recruiterSignUpPage();
-    }
-
-    public void recruiterSignUpPage() {
+        recruiterSignUp(recruiterCode, firstName, lastName, userName, password);
     }
 
     /**
