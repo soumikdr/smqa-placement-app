@@ -28,8 +28,4 @@ public class Applicant extends User {
 
         return _applications;
     }
-
-    public void setApplications(ArrayList<Application> applications) {
-        this.applications = applications;
-    }
 }

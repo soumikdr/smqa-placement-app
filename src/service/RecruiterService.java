@@ -11,6 +11,8 @@ import java.util.UUID;
 import model.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.swing.plaf.synth.SynthStyle;
+
 public class RecruiterService {
 
     private static RecruiterService instance = null;
@@ -178,7 +180,7 @@ public class RecruiterService {
 
         switch (selection) {
             case "1": {
-            application.setStatus(ApplicationStatus.SUCCESSFUL);
+                application.setStatus(ApplicationStatus.SUCCESSFUL);
                 Utility.getApplications().stream().map(a -> {
                     if (a.getId().equals(application.getId())) {
                         a.setStatus(application.getStatus());
@@ -302,7 +304,6 @@ public class RecruiterService {
                     break;
             }
         }
-
     }
 
     public void viewSpecificJobPost() {
@@ -516,8 +517,26 @@ public class RecruiterService {
                             + application.getStatus() + "|" + "Applicant ID: " + application.getApplicantId());
                 });
 
-        String applicationId = Utility.inputOutput("Enter the Application ID to view details");
-        viewSpecificApplication(applicationId);
+        System.out.println("\n1: View specific Application details");
+        System.out.println("2: Go back to dashboard");
+        boolean inLoop = true;
+        while (inLoop) {
+            String answer = Utility.inputOutput("Please select one of the options..");
+            switch (answer) {
+                case "1":
+                    String applicationId = Utility.inputOutput("Enter the Application ID to view details");
+                    viewSpecificApplication(applicationId);
+                    break;
+                case "2":
+                    inLoop = false;
+                    viewRecruiterDashboard();
+                    break;
+                default:
+                    System.out.println(answer + " is not a valid option. Please try again.");
+                    break;
+            }
+        }
+
     }
 
     // UserStory: 13; ar668
@@ -557,6 +576,7 @@ public class RecruiterService {
         for (Application app : allApplications) {
             if (app.getId().equals(applicationId)) {
                 application = app;
+                break;
             }
         }
 
@@ -569,6 +589,7 @@ public class RecruiterService {
         for (User user : allUsers) {
             if (user.getId().equals(application.getApplicantId())) {
                 userApplicant = user;
+                break;
             }
         }
 
@@ -585,26 +606,13 @@ public class RecruiterService {
         System.out.println("Status: " + application.getStatus());
         System.out.println("Feedback: " + application.getFeedback());
         System.out.println("Assignments found: " + application.getAssignments().size());
-        for (int i = 0; i < application.getAssignments().size(); i++) {
-            System.out.println("\nAssignment " + i + ": " + application.getAssignments().get(i).getAssignmentName());
-            System.out.println("Questions: ");
-
-            for (int j = 0; j < application.getAssignments().get(i).getQuestions().size(); j++) {
-                System.out.println(application.getAssignments().get(i).getQuestions().get(j));
-            }
-
-            System.out.println("Answers: ");
-
-            for (int j = 0; j < application.getAssignments().get(i).getAnswers().size(); j++) {
-                System.out.println(application.getAssignments().get(i).getAnswers().get(j));
-            }
-        }
 
         System.out.println("\n1: Update status of application");
         System.out.println("2: Send an assignment");
         System.out.println("3: Send interview questions");
         System.out.println("4: Send feedback");
-        System.out.println("5: Go back to All Applications");
+        System.out.println("5: View submitted answers");
+        System.out.println("6: Go back to All Applications");
         String answer = Utility.inputOutput("Please select one of the options..");
 
         switch (answer) {
@@ -612,7 +620,8 @@ public class RecruiterService {
             case "2" -> sendAssignment(application);
             case "3" -> sendInterview(application);
             case "4" -> sendFeedback(application);
-            case "5" -> viewAllApplications();
+            case "5" -> viewSubmittedAnswers(application);
+            case "6" -> viewAllApplications();
             default -> {
                 System.out.println("You entered invalid option");
                 viewSpecificApplication(applicationId);
@@ -665,29 +674,30 @@ public class RecruiterService {
 
         application.setFeedback(feedback);
         System.out.println("\nFeedback sent successfully\n");
-
         viewSpecificApplication(application.getId());
     }
 
-    public void viewSubmittedAnswers(String applicationId) {
-        System.out.println("\nWelcome to view submitted answers for the application " + applicationId);
+    public void viewSubmittedAnswers(Application application) {
+        System.out.println("\nWelcome to view submitted answers for the application " + application.getId());
         ArrayList<String> questions = new ArrayList<String>();
         ArrayList<String> answers = new ArrayList<String>();
-
-        for (Application application : Utility.getApplications()) {
-            if (application.getId().equals(applicationId)) {
-                for (Assignment assignment : application.getAssignments()) {
-                    questions = assignment.getQuestions();
-                    answers = assignment.getAnswers();
-                    for (int i = 0; i < questions.size(); i++) {
-                        System.out.println("\nQuestion: \n");
-                        System.out.println(questions.get(i));
-                        System.out.println("Answer: \n");
-                        System.out.println(answers.get(i));
-                    }
+        for (Assignment assignment : application.getAssignments()) {
+            questions = assignment.getQuestions();
+            answers = assignment.getAnswers();
+            System.out.println("Assignment: " + assignment.getAssignmentName());
+            for (int i = 0; i < questions.size(); i++) {
+                System.out.println("\nQuestion: ");
+                System.out.println(questions.get(i));
+                System.out.println("Answer:");
+                if (i < answers.size()) {
+                    System.out.println(answers.get(i));
+                } else {
+                    System.out.println("No answer submitted yet");
                 }
             }
+            System.out.println("--------------------------");
         }
+        viewSpecificApplication(application.getId());
     }
 
     // UserStory: 9; ar668
