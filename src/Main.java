@@ -11,7 +11,7 @@ import model.Job;
 import model.JobStatus;
 import model.Recruiter;
 import model.User;
-import service.ApplicantService;
+import service.CommonService;
 import utility.Utility;
 
 public class Main {
@@ -27,17 +27,6 @@ public class Main {
     private static ArrayList<Application> applications;
 
     public static void main(String[] args) {
-
-        // ArrayList<String> questions=new ArrayList<String>();
-        // questions.add("Q1");
-        // questions.add("Q2");
-
-        // assignments=new ArrayList<Assignment>();
-        // assignments.add(new Assignment("AS1", "AP1", "Interview", questions, new
-        // ArrayList<String>()));
-        // Utility.setAssignments(assignments);
-
-        // ApplicantService.getInstance().submitInterviewForm(assignments.get(0));
 
         users = new ArrayList<>();
         jobs = new ArrayList<>();
@@ -100,11 +89,8 @@ public class Main {
         Utility.setApplications(applications);
         Utility.setQuestionMap(questionMap);
 
-        Utility.setCurrentUser(users.get(0));
-        ApplicantService.getInstance().viewApplicantDashboard();
-        // RecruiterService.getInstance().viewRecruiterDashboard();
-        // CommonService commonService = new CommonService();
-        // commonService.accessLandingPage();
+        CommonService commonService = new CommonService();
+        commonService.accessLandingPage();
 
     }
 
