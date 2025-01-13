@@ -1,9 +1,9 @@
 package service;
 
-import java.util.ArrayList;
-
 import model.User;
 import utility.Utility;
+
+import java.util.ArrayList;
 
 public class CommonService {
 

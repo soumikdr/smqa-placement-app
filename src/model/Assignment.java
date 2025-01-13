@@ -16,7 +16,7 @@ public class Assignment {
     private AssignmentStatus status;
 
     public Assignment(String id, String applicantId, String assignmentName, ArrayList<String> questions,
-            ArrayList<String> answers) {
+                      ArrayList<String> answers) {
         this.id = id;
         this.applicantId = applicantId;
         this.assignmentName = assignmentName;

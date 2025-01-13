@@ -1,20 +1,11 @@
 package service;
 
+import model.*;
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import model.Applicant;
-import model.Application;
-import model.ApplicationStatus;
-import model.Assignment;
-import model.AssignmentStatus;
-import model.Job;
-import model.JobStatus;
-import model.Recruiter;
-import model.User;
-import model.UserRole;
-import utility.Utility;
 
 public class ApplicantService {
 
@@ -525,13 +516,9 @@ public class ApplicantService {
      * User Story: 17
      */
     public void updateProfile(User user) {
-        // Filter the user from the list and update the user
         ArrayList<User> users = Utility.getUsers();
-        // Remove the user from the list
         users.removeIf(u -> u.getId().equals(user.getId()));
-        // Add the updated user to the list
         users.add(user);
-        // Update the current user
         Utility.setCurrentUser(user);
     }
 
