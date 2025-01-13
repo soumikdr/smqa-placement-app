@@ -45,9 +45,9 @@ public class ApplicantServiceTests {
     public void setUp() {
         ArrayList<User> users = new ArrayList<>();
 
-        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword"));
         users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
-        users.add(new Applicant("3", "Jane", "Doe", "janeDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Applicant("3", "Jane", "Doe", "janeDoe", "bestpassword"));
         Utility.setUsers(users);
     }
 
@@ -198,7 +198,7 @@ public class ApplicantServiceTests {
         System.setOut(new PrintStream(outputStream));
 
         try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
-            User mockUser = new Applicant("U101", "Mark", "Peter", "markpeter", "password", new ArrayList<>());
+            User mockUser = new Applicant("U101", "Mark", "Peter", "markpeter", "password");
             List<Job> mockJobs = new ArrayList<>();
             mockJobs.add(new Job("1", "Data Analyst", "Analyze data", JobStatus.PUBLIC));
             mockJobs.add(new Job("2", "Backend Developer", "Develop backend services", JobStatus.PRIVATE));

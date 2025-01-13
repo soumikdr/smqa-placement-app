@@ -1,11 +1,20 @@
 package service;
 
-import model.*;
-import utility.Utility;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import model.Applicant;
+import model.Application;
+import model.ApplicationStatus;
+import model.Assignment;
+import model.AssignmentStatus;
+import model.Job;
+import model.JobStatus;
+import model.Recruiter;
+import model.User;
+import model.UserRole;
+import utility.Utility;
 
 public class ApplicantService {
 
@@ -17,28 +26,24 @@ public class ApplicantService {
         }
         return instance;
     }
-    
-   public void applicantLandingPage() {
-	   
-   }
 
-     public void applicantViewSignInSignUpPage() {
-        System.out.println("Welcome to Applicant Landing Pagen");
-        System.out.println("1. Sign In\n");
-        System.out.println("2. Sign Up\n");
+    public void applicantViewSignInSignUpPage() {
+        System.out.println("\nWelcome to Applicant Landing Page");
+        System.out.println("1. Sign In");
+        System.out.println("2. Sign Up");
         System.out.println("3: Go back to the previous menu");
 
         switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
-                System.out.println("Redirecting to Applicant Sign In Page\n");
+                System.out.println("Redirecting to Applicant Sign In Page");
                 signIn();
                 break;
             case "2":
-                System.out.println("\nRedirecting to Applicant Sign Up Page\n");
+                System.out.println("Redirecting to Applicant Sign Up Page");
                 signUp();
                 break;
             case "3":
-                System.out.println("\nRedirecting to previous menu\n");
+                System.out.println("Redirecting to previous menu");
                 CommonService.getInstance().accessLandingPage();
                 break;
             default:
@@ -48,7 +53,7 @@ public class ApplicantService {
         }
     }
 
-    //UserStory:4; ar668
+    // UserStory:4; ar668
     public void signUp() {
         System.out.println("Welcome to Applicant Sign Up Page\n");
         System.out.println("Please enter the following details\n");
@@ -65,7 +70,7 @@ public class ApplicantService {
             return;
         }
         String id = UUID.randomUUID().toString();
-        User newUser = new Applicant(id, firstName, lastName, userName, password, new ArrayList<>());
+        User newUser = new Applicant(id, firstName, lastName, userName, password);
         Utility.getUsers().add(newUser);
 
         System.out.println("Sign Up Successful for Applicant");
@@ -86,20 +91,18 @@ public class ApplicantService {
         String password = Utility.inputOutput("Enter your password:");
 
         for (User user : users) {
-            if (user.getUserName().equals(userName) && user.getPassword().equals(password) && user.getRole() == UserRole.APPLICANT) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)
+                    && user.getRole() == UserRole.APPLICANT) {
                 applicant = user;
             }
         }
 
         if (applicant == null) {
-            System.out.println("\n");
             String tryAgain = Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)");
-            
             if (tryAgain.equals("y")) {
                 signIn();
             } else {
-                CommonService commonService = CommonService.getInstance();
-                commonService.accessLandingPage();
+                applicantViewSignInSignUpPage();
             }
         } else {
             System.out.println("\nApplicant Signin successful. proceeding to applicant dashboard.. \n");
@@ -114,10 +117,9 @@ public class ApplicantService {
      * User Story: 41
      */
     public void submitAssessmentForm(String applicationId) {
-        System.out.println("\n------ Submit your assignments ------\n");
+        System.out.println("------ Submit your assignments ------\n");
         Application application = null;
-
-        for(Application app: Utility.getApplications()) {
+        for (Application app : Utility.getApplications()) {
             if (app.getId().equals(applicationId)) {
                 application = app;
                 break;
@@ -131,30 +133,16 @@ public class ApplicantService {
 
         ArrayList<Assignment> assignments = application.getAssignments();
 
-        // Check if there are any assignments for this application other than 'interview'
-        if (assignments.size() < 2) {
-            System.out.println("No assignments found for this application");
-            viewApplicationProcessDashboard(applicationId);
-            return;
-        }
-
-        for (Assignment assignment: assignments) {
-            if (assignment.getAssignmentName().equals("interview")) {
-                continue;
-            }
-
-            System.out.println("\nAssignment Name: " + assignment.getAssignmentName() + "\n");
-
+        for (Assignment assignment : assignments) {
+            System.out.println("\nAssignment Name: " + assignment.getAssignmentName());
             if (assignment.getStatus() == AssignmentStatus.SUBMITTED) {
                 System.out.println("This assignment is already submitted");
                 continue;
             }
-
             ArrayList<String> answers = new ArrayList<>();
-
             for (String question : assignment.getQuestions()) {
                 System.out.println("Question: " + question);
-                String answer = Utility.inputOutput("Type your answer here (include question number): ");
+                String answer = Utility.inputOutput("Type your answer here: ");
                 answers.add(answer);
             }
 
@@ -170,18 +158,35 @@ public class ApplicantService {
     public void viewAssessment(String applicationId) {
         System.out.println("Welcome to the Assessment Page\n");
 
-        for(Application application: Utility.getApplications()) {
+        for (Application application : Utility.getApplications()) {
             if (application.getId().equals(applicationId)) {
-                if(application.getAssignments().isEmpty()) {
+                if (application.getAssignments().isEmpty()) {
                     System.out.println("No assignments found");
                 } else {
                     System.out.println("Assignments for " + applicationId);
-                    for(Assignment assignment: application.getAssignments()) {
-                        System.out.println("Assignment ID: " + assignment.getId()+"|" +"Assignment Name: " + assignment.getAssignmentName() +"|"+"Assignment Status: " + assignment.getStatus());
+                    for (Assignment assignment : application.getAssignments()) {
+                        System.out.println("Assignment ID: " + assignment.getId() + " | " + "Assignment Name: "
+                                + assignment.getAssignmentName() + " | " + "Assignment Status: "
+                                + assignment.getStatus());
                     }
                     break;
                 }
             }
+        }
+
+        System.out.println("\n1. Submit Assignment");
+        System.out.println("2. Go back to the dashboard");
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1":
+                submitAssessmentForm(applicationId);
+                break;
+            case "2":
+                viewApplicationProcessDashboard(applicationId);
+                break;
+            default:
+                System.out.println("Invalid input. Redirecting to the dashboard.");
+                viewApplicationProcessDashboard(applicationId);
+                break;
         }
     }
 
@@ -189,47 +194,43 @@ public class ApplicantService {
     public void submitInterviewForm(String applicationId) {
         Application application = null;
 
-        for(Application app: Utility.getApplications()) {
+        for (Application app : Utility.getApplications()) {
             if (app.getId().equals(applicationId)) {
                 application = app;
                 break;
             }
         }
-
-        Assignment interview = null;
-
-        for(Assignment assignment: application.getAssignments()) {
-            if (assignment.getAssignmentName().equals("interview")) {
-                interview = assignment;
-                break;
-            }
-        }
-
-        if (interview == null) {
-            System.out.println("Interview not found for this application");
+        if (application == null) {
+            System.out.println("Application with given ID not found");
+            viewApplicantApplications();
             return;
         }
 
-    	System.out.println("Please answer questions to complete interview :");
+        ArrayList<Assignment> interviews = application.getInterviewAssignments();
+        if (interviews.isEmpty()) {
+            System.out.println("No interview questions found");
+            viewApplicantApplications();
+            return;
+        }
 
-    	for(String question:interview.getQuestions()) {
+        for (Assignment assignment : application.getInterviewAssignments()) {
+            System.out.println("Interview ID: " + assignment.getId());
+            if (assignment.getStatus() == AssignmentStatus.SUBMITTED) {
+                System.out.println("Interview already submitted");
+                continue;
+            }
+            ArrayList<String> answers = new ArrayList<>();
+            for (String question : assignment.getQuestions()) {
+                System.out.println("Question: " + question);
+                String answer = Utility.inputOutput("Type your answer here: ");
+                answers.add(answer);
+            }
+            assignment.setAnswers(answers);
+            assignment.setStatus(AssignmentStatus.SUBMITTED);
+        }
 
-
-    		interview.getAnswers().add(Utility.inputOutput(question));
-
-    	}
-    	System.out.println("Interview completed.");
-
-    	for(Assignment a: Utility.getAssignments())
-    	{
-    		if(a.getId().equals(interview.getId())) {
-    			a.setAnswers(interview.getAnswers());
-    	    	a.setStatus(AssignmentStatus.SUBMITTED);
-    		}
-    	}
-
-    	System.out.println("Answers Submitted.");
-    	System.out.println("Directing to application dashboard..");
+        System.out.println("Answers Submitted.");
+        System.out.println("Directing to application dashboard..");
 
         viewApplicationProcessDashboard(application.getId());
     }
@@ -242,7 +243,7 @@ public class ApplicantService {
         System.out.println("\n------ View Interview Questions ------\n");
         Application application = null;
 
-        for(Application app: Utility.getApplications()) {
+        for (Application app : Utility.getApplications()) {
             if (app.getId().equals(applicationId)) {
                 application = app;
                 break;
@@ -251,38 +252,40 @@ public class ApplicantService {
 
         if (application == null) {
             System.out.println("Application with given ID not found");
+            viewApplicantApplications();
             return;
         }
 
-        ArrayList<Assignment> assignments = application.getAssignments();
+        ArrayList<Assignment> assignments = application.getInterviewAssignments();
 
-        for (Assignment assignment: assignments) {
-            if (assignment.getAssignmentName().equals("interview")) {
+        if (assignments.isEmpty()) {
+            System.out.println("No interview questions found");
+        } else {
+            for (Assignment assignment : assignments) {
+                System.out.println("\nInterview Name: " + assignment.getAssignmentName());
                 System.out.println("Questions are: ");
-
-                for (String question: assignment.getQuestions()) {
+                for (String question : assignment.getQuestions()) {
                     System.out.println(question);
                 }
-
-                break;
             }
         }
 
-        System.out.println("\nRedirecting back to Application Dashboard..\n");
+        Utility.inputOutput("Press any key to go back to the dashboard");
+        System.out.println("\nRedirecting back to Application Dashboard..");
         viewApplicationProcessDashboard(applicationId);
     }
 
     public void viewFeedback(String applicationId) {
-        System.out.println("\nWelcoem to view feedback page");
-
-        for(Application application: Utility.getApplications()) {
+        System.out.println("\nWelcome to view feedback page");
+        for (Application application : Utility.getApplications()) {
             if (application.getId().equals(applicationId)) {
-                if(application.getFeedback().isEmpty()) {
-                    System.out.println("\n Feedback not received");
+                if (application.getFeedback().isEmpty()) {
+                    System.out.println("\nFeedback not received");
                 } else {
                     System.out.println("\nFeedback for " + applicationId);
                     System.out.println("\n" + application.getFeedback());
                 }
+                break;
             }
         }
         viewApplicationProcessDashboard(applicationId);
@@ -293,6 +296,7 @@ public class ApplicantService {
         User user = Utility.getCurrentUser();
         if (user == null || user.getRole() != UserRole.APPLICANT) {
             System.out.println("You are not authorized to view this page");
+            viewAllAvailableJobs();
             return;
         }
 
@@ -305,6 +309,7 @@ public class ApplicantService {
 
         if (job == null) {
             System.out.println("Job with ID " + jobId + " not found.");
+            viewAllAvailableJobs();
             return;
         }
         System.out.println("Welcome to the Job Post\n");
@@ -312,16 +317,30 @@ public class ApplicantService {
         System.out.println("Job Title: " + job.getJobName());
         System.out.println("Job Description: " + job.getJobDescription());
         System.out.println("Job Status: " + job.getJobStatus());
+
+        String input = Utility.inputOutput("Do you want to apply for this job? (or type anything to go back) (Y/N)");
+
+        if (input.equalsIgnoreCase("Y")) {
+            viewApplicationForm(job);
+        }
+        viewAllAvailableJobs();
     }
 
-    //UserStory:27; ar668
+    // UserStory:27; ar668
     public void viewApplicationForm(Job job) {
-        System.out.println("Welcome to the Job Application Form\n");
-        System.out.print("Enter your education: ");
+        System.out.println("\nWelcome to the Job Application Form\n");
         String education = Utility.inputOutput("Enter your education: ");
-        System.out.print("Enter your experience: ");
-        Integer experience = Integer.valueOf(Utility.inputOutput("Enter your experience: "));
-        System.out.print("Enter your skills: ");
+        String experiencInput = "";
+        Integer experience = 0;
+        while (true) {
+            experiencInput = Utility.inputOutput("Enter your number of experience experience: ");
+            try {
+                experience = Integer.parseInt(experiencInput);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number for experience");
+            }
+        }
         String skills = Utility.inputOutput("Enter your skills: ");
         submitApplicationForm(job, education, experience, skills);
     }
@@ -342,23 +361,36 @@ public class ApplicantService {
         }
         System.out.println("Available Jobs");
         openJobs.forEach(job -> {
-            System.out.println("Job ID: " + job.getId()+ "|"+"Job Name: " + job.getJobName());
+            System.out.println("Job ID: " + job.getId() + "|" + "Job Name: " + job.getJobName());
             System.out.println();
-            });
-        viewJobPost();
+        });
+        String input = Utility.inputOutput("Do you want to view a job post? (Y/N)");
+        if (input.equalsIgnoreCase("Y")) {
+            viewJobPost();
+        } else {
+            viewApplicantDashboard();
         }
+    }
 
     // ETY1 - STORY 28
-    public void submitApplicationForm(String jobId, String applicantId) {
+    public void submitApplicationForm(Job job, String education, Integer experience, String skills) {
+        String applicationId = UUID.randomUUID().toString();
+        Application newApplication = new Application(
+                applicationId,
+                job.getId(),
+                Utility.getCurrentUser().getId(),
+                ApplicationStatus.INPROGRESS,
+                new ArrayList<Assignment>(),
+                experience,
+                education,
+                skills,
+                "");
+        Utility.getApplications().add(newApplication);
 
-    	String applicationId=UUID.randomUUID().toString();
-    	Application newApplication=new Application(applicationId,jobId, applicantId,"Submitted", new ArrayList<Assignment>());
-    	Utility.getApplications().add(newApplication);
+        System.out.println("Application submitted : " + newApplication.getId());
+        System.out.println("Directing to Applicant Dashboard");
 
-    	System.out.println("Application submitted : "+newApplication.getId());
-    	System.out.println("Directing to Applicant Dashboard");
-
-    	viewApplicantDashboard();
+        viewApplicantDashboard();
 
     }
 
@@ -366,13 +398,11 @@ public class ApplicantService {
     public void viewApplicantDashboard() {
 
         System.out.println("Welcome to the Applicant Dashboard\n");
-
         System.out.println("1. View Profile");
         System.out.println("2. View Applications");
         System.out.println("3. View Available Jobs");
-
-        System.out.println("\n4. Log Out");
-        switch (Utility.inputOutput("Please Select One Of The Options")) {
+        System.out.println("4. Log Out");
+        switch (Utility.inputOutput("\nPlease Select One Of The Options")) {
             case "1": {
                 System.out.println("Directing to Profile Page...");
                 viewApplicantProfilePage();
@@ -390,7 +420,7 @@ public class ApplicantService {
             }
             case "4": {
                 System.out.println("Logging Out...");
-                CommonService.getInstance().logOut();
+                logOut();
                 break;
             }
             default: {
@@ -439,9 +469,25 @@ public class ApplicantService {
         } else {
             System.out.println("Role: " + user.getRole().name());
         }
-
-        Utility.inputOutput("Type anything to go back to the dashboard?");
-        viewApplicantDashboard();
+        System.out.println("\n1. Update Profile");
+        System.out.println("2. Delete Profile");
+        System.out.println("3. Reset password");
+        String input = Utility
+                .inputOutput("\nPlease Select One Of The Options (or type anything to go back to the dashboard)");
+        switch (input) {
+            case "1":
+                showUpdateProfilePage();
+                break;
+            case "2":
+                deleteApplicantProfile();
+                break;
+            case "3":
+                viewResetPasswordPage();
+                break;
+            default:
+                viewApplicantDashboard();
+                break;
+        }
     }
 
     /*
@@ -465,7 +511,7 @@ public class ApplicantService {
         if (input.equalsIgnoreCase("Y")) {
             System.out.println("Deleting Applicant Profile...");
             deleteProfileHelper();
-            CommonService.getInstance().accessLandingPage();
+            applicantViewSignInSignUpPage();
         } else if (input.equalsIgnoreCase("N")) {
             System.out.println("Profile deletion cancelled.");
             viewApplicantProfilePage();
@@ -479,13 +525,13 @@ public class ApplicantService {
      * User Story: 17
      */
     public void updateProfile(User user) {
-        //        Filter the user from the list and update the user
+        // Filter the user from the list and update the user
         ArrayList<User> users = Utility.getUsers();
-        //        Remove the user from the list
+        // Remove the user from the list
         users.removeIf(u -> u.getId().equals(user.getId()));
-        //        Add the updated user to the list
+        // Add the updated user to the list
         users.add(user);
-        //        Update the current user
+        // Update the current user
         Utility.setCurrentUser(user);
     }
 
@@ -506,6 +552,74 @@ public class ApplicantService {
         }
         System.out.println("Profile updated successfully\n");
         updateProfile(currentUser);
+        viewApplicantProfilePage();
+    }
+
+    public void logOut() {
+        Utility.setCurrentUser(null);
+        System.out.println("Logged Out Successfully");
+        applicantViewSignInSignUpPage();
+    }
+
+    public void viewResetPasswordPage() {
+
+        System.out.println("\nWelcome to reset password page");
+        System.out.println("1. Continue to reset password");
+        System.out.println("2. Go back to dashboard\n");
+
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1":
+                System.out.println("Welcome to reset password page\n");
+                String userName = Utility.inputOutput("Enter your User name");
+                resetPassword(userName);
+                break;
+            case "2":
+                System.out.println("\nRediredting to Dashboard\n");
+                if (Utility.getCurrentUser().getRole().equals(UserRole.APPLICANT)) {
+                    System.out.println("\nRedirecting to Applicant dashboard\n");
+                    ApplicantService.getInstance().viewApplicantDashboard();
+                } else {
+                    System.out.println("\nRedirecting to Recruiter dashboard\n");
+                    RecruiterService.getInstance().viewRecruiterDashboard();
+                }
+                break;
+            default:
+                System.out.println("You entered invalid option");
+                viewResetPasswordPage();
+                break;
+        }
+    }
+
+    public void resetPassword(String userName) {
+        System.out.println("\nYour entered username: " + userName);
+        String resetCode = "";
+        if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER) {
+            resetCode = Utility.inputOutput("Enter the Reset Code");
+        }
+        if (Utility.getCurrentUser().getUserName().equals(userName)) {
+            String password = Utility.inputOutput("Enter your New Password");
+            Utility.getCurrentUser().setPassword(password);
+            for (User user : Utility.getUsers()) {
+                if (user.getUserName().equals(userName)) {
+                    if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER && !resetCode.equals("XVQTY")) {
+                        System.out.println("\nYou have entered wrong Reset Code\n");
+                        viewResetPasswordPage();
+                        break;
+                    }
+                    user.setPassword(password);
+                }
+            }
+            if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT) {
+                System.out.println("\nRedirecting to Applicant dashboard");
+                ApplicantService.getInstance().viewApplicantDashboard();
+            } else {
+                System.out.println("\nRedirecting to Recruiter dashboard");
+                RecruiterService.getInstance().viewRecruiterDashboard();
+            }
+        } else {
+            System.out.println("\nYou have entered wrong Crediantials\n");
+            viewResetPasswordPage();
+        }
     }
 
     /*
@@ -516,114 +630,86 @@ public class ApplicantService {
         User user = Utility.getCurrentUser();
         if (user instanceof Recruiter) {
             System.out.println("You are not an applicant.");
+            viewApplicantDashboard();
             return;
         }
         ArrayList<Application> applications = ((Applicant) user).getApplications();
         if (applications == null || applications.isEmpty()) {
             System.out.println("No applications found.");
+            viewApplicantDashboard();
             return;
         }
-        System.out.println("Applications:");
-        System.out.println();
+        System.out.println("\nApplications:");
         int index = 1;
         for (Application application : applications) {
-            System.out.println(index + ". Application ID: " + application.getId() + " | " + "Status: " + application.getStatus());
-            System.out.println();
+            System.out.println(
+                    index + ". Application ID: " + application.getId() + " | " + "Status: " + application.getStatus());
             index++;
         }
-        viewSpecificApplication();
-    }
-
-    public void viewSpecificApplication() {
-        User user = Utility.getCurrentUser();
-
-        System.out.println("\nWelcome to specific application details\n");
-
-        String applicationId = Utility.inputOutput("\nEnter the Application Id\n");
-        Boolean invalidApplicationId = true;
-
-        for (Application application: Utility.getApplications()) {
-            if (application.getId().equals(applicationId) && user.getId().equals(application.getApplicantId())) {
-                System.out.println("\nApplication ID: " + application.getId());
-                System.out.println("\nJob Id: " + application.getJobId());
-                System.out.println("\nApplicant Id: " + application.getApplicantId());
-                System.out.println("\nApplication Status: " + application.getStatus());
-                System.out.println("\nAssignments: ");
-                if (application.getAssignments().isEmpty()) {
-                    System.out.println("\nNo assignemts for this applicaton");
-                } else {
-                    for(Assignment assignemt: application.getAssignments() ) {
-                        System.out.println("\nAssignment Id: " + assignemt.getId());
-                        System.out.println("\nApplicant Id: " + assignemt.getApplicantId());
-                        System.out.println("\nAssignment Name: " + assignemt.getAssignmentName());
-                        System.out.println("\nQuestions: ");
-                        if (assignemt.getQuestions().isEmpty()) {
-                            System.out.println("\nNo questions for this assignemt");
-                        } else {
-                            for(String question: assignemt.getQuestions()) {
-                                System.out.println("\n" + question);
-                            }
-                        }
-                        System.out.println("\nAnswers: ");
-                        if (assignemt.getAnswers().isEmpty()) {
-                            System.out.println("\nNo answers submitted for this assignemt");
-                        } else {
-                            for(String answer: assignemt.getAnswers()) {
-                                System.out.println("\n" + answer);
-                            }
-                        }
-                    }
-                }
-                if (application.getStatus().equals(ApplicationStatus.INPROGRESS)) {
-                    System.out.println("\n1: Complete your application\n");
-                    System.out.println("\n2: View Job Description");
-                    System.out.println("\n3: Withdraw application");
-                    System.out.println("\n4: Complete your application later\n");
-
-                    switch(Utility.inputOutput("Please Select One Of The Options")) {
-                        case "1":
-                            System.out.println("\nRedirecting to application process dashboard");
-                            viewApplicationProcessDashboard(applicationId);
-                            break;
-                        case "2":
-                        System.out.println("\nComplete your application soon");
-                        break;
-                        case "3":
-                            System.out.println("\nRedirecting to view job description page");
-                            viewJobDescFromApplication(applicationId);
-                            break;
-                        case "4":
-                            System.out.println("\nRedirecting to withdraw application page");
-                            withdrawApplication(applicationId);
-                            break;
-                        default:
-                            System.out.println("You entered invalid option");
-                            break;
-                    }
-                }
-                invalidApplicationId = false;
-                break;
-        }
-        }
-
-        if (invalidApplicationId) {
-            System.out.println("\nYou have entered a invalid application id\n");
-        }
-
-        System.out.println("\n1: View another Application details\n");
-        System.out.println("\n2: Go back to applications page\n");
-
-        switch(Utility.inputOutput("Please Select One Of The Options")){
+        System.out.println("\n1: View specific application details");
+        System.out.println("2: Go back to the dashboard");
+        String input = Utility.inputOutput("Please Select One Of The Options");
+        switch (input) {
             case "1":
-                System.out.println("Redirecting to view specific application details \n");
-                viewSpecificApplication();
+                String applicationId = Utility.inputOutput("Enter the Application ID");
+                viewSpecificApplication(applicationId);
                 break;
             case "2":
-                System.out.println("Redirecting to applications page\n");
-                viewApplicantApplications();
+                viewApplicantDashboard();
                 break;
             default:
-                System.out.println("You entered invalid option");
+                System.out.println("Invalid input. Redirecting to the dashboard.");
+                viewApplicantDashboard();
+                break;
+        }
+    }
+
+    public void viewSpecificApplication(String applicationId) {
+        if (applicationId == null || applicationId.isEmpty()) {
+            System.out.println("Application ID is required.");
+            viewApplicantApplications();
+            return;
+        }
+        User user = Utility.getCurrentUser();
+        System.out.println("\nWelcome to specific application details");
+
+        Application application = null;
+        for (Application app : Utility.getApplications()) {
+            if (app.getId().equals(applicationId) &&
+                    user.getId().equals(app.getApplicantId())) {
+                application = app;
+                break;
+            }
+        }
+        if (application == null) {
+            System.out.println("Application with ID " + applicationId + " not found.");
+            viewApplicantApplications();
+            return;
+        }
+        System.out.println("\nApplication ID: " + application.getId());
+        System.out.println("Job Id: " + application.getJobId());
+        System.out.println("Applicant Id: " + application.getApplicantId());
+        System.out.println("Application Status: " + application.getStatus());
+
+        System.out.println("\n1: View application process dashboard");
+        System.out.println("2: View Job Description");
+        System.out.println("3: Withdraw application");
+
+        switch (Utility.inputOutput("Please Select One Of The Options")) {
+            case "1":
+                System.out.println("Redirecting to application process dashboard");
+                viewApplicationProcessDashboard(applicationId);
+                break;
+            case "2":
+                System.out.println("Redirecting to view job description page");
+                viewJobDescFromApplication(applicationId);
+                break;
+            case "3":
+                System.out.println("Redirecting to withdraw application page");
+                withdrawApplication(applicationId);
+                break;
+            default:
+                System.out.println("You entered invalid option, redirecting to applications page");
                 viewApplicantApplications();
                 break;
         }
@@ -693,14 +779,14 @@ public class ApplicantService {
 
         System.out.println("\nWelcome to application process dashboard\n");
 
-
         System.out.println("1. View assignments");
-        System.out.println("2. Submit assignment\n");
-        System.out.println("3. View interview questions\n");
-        System.out.println("4. Submit interview answers\n");
-        System.out.println("5. View feedback\n");
+        System.out.println("2. Submit assignment");
+        System.out.println("3. View interview questions");
+        System.out.println("4. Submit interview answers");
+        System.out.println("5. View feedback");
+        System.out.println("6. Go back to Applications page");
 
-        switch (Utility.inputOutput("Please Select One Of The Options")) {
+        switch (Utility.inputOutput("\nPlease Select One Of The Options")) {
             case "1": {
                 System.out.println("Redirecting to View assignments page");
                 viewAssessment(applicationId);

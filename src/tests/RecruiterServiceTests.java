@@ -43,7 +43,7 @@ public class RecruiterServiceTests {
         outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         ArrayList<User> users = new ArrayList<>();
-        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword", new ArrayList<>()));
+        users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword"));
         users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
 
         Utility.setUsers(users);

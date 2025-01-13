@@ -1,18 +1,20 @@
 package service;
 
-import model.Application;
-import model.Job;
-import model.JobStatus;
-import utility.Utility;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-
-import model.*;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import model.Applicant;
+import model.Application;
+import model.ApplicationStatus;
+import model.Assignment;
+import model.Job;
+import model.JobStatus;
+import model.Recruiter;
+import model.User;
+import model.UserRole;
+import utility.Utility;
 
 public class RecruiterService {
 
@@ -23,10 +25,6 @@ public class RecruiterService {
             instance = new RecruiterService();
         }
         return instance;
-    }
-
-    public void recruiterLandingPage() {
-
     }
 
     public void sendAssessment() {
@@ -71,16 +69,42 @@ public class RecruiterService {
      * User Story: 43
      */
     public void sendInterview(Application application) {
-        String interviewDate = Utility.inputOutput("Enter the interview date: ");
-        String interviewTime = Utility.inputOutput("Enter the interview time: ");
-        application.setInterviewDate(interviewDate);
-        application.setInterviewTime(interviewTime);
-        application.setStatus(ApplicationStatus.INTERVIEW);
-        System.out.println("Interview scheduled successfully");
+
+        System.out.println("Send Interview Questions to the Applicant");
+
+        ArrayList<String> questions = new ArrayList<>();
+
+        String question = "";
+        while (true) {
+            question = Utility.inputOutput("Enter the question..(type 'exit' to go back)");
+            if (question.equals("exit")) {
+                viewSpecificApplication(application.getId());
+                return;
+            }
+            if (question.isEmpty()) {
+                System.out.println("Question cannot be empty");
+            } else {
+                questions.add(question);
+                String moreQuestions = Utility.inputOutput("Do you want to add more questions? (y/n)");
+                if (moreQuestions.equals("n")) {
+                    break;
+                }
+            }
+        }
+        String interviewTitle = "Interview " + (application.getAssignments().size() + 1);
+        Assignment interview = new Assignment(UUID.randomUUID().toString(), application.getApplicantId(),
+                interviewTitle,
+                questions, null);
+
+        ArrayList<Assignment> interviews = application.getInterviewAssignments();
+        interviews.add(interview);
+        application.setInterviewAssignments(interviews);
+        System.out.println("Interview questions sent successfully");
+        Utility.inputOutput("Press enter to go back.");
+        viewSpecificApplication(application.getId());
     }
 
     public void viewInterviewResult() {
-
     }
 
     /*
@@ -94,9 +118,10 @@ public class RecruiterService {
         System.out.println("2. View available jobs");
         System.out.println("3. View available applications");
         System.out.println("4. Post a new job");
-        System.out.println("5. Logout");
+        System.out.println("5. Reset Password");
+        System.out.println("6. Logout");
 
-        switch(Utility.inputOutput("\nPlease select one option to proceed..")){
+        switch (Utility.inputOutput("\nPlease select one option to proceed..")) {
             case "1":
                 viewRecruiterProfilePage();
                 break;
@@ -110,6 +135,8 @@ public class RecruiterService {
                 viewJobPostingForm();
                 break;
             case "5":
+                viewResetPasswordPage();
+            case "6":
                 logoutRecruiter();
                 break;
             default:
@@ -121,14 +148,14 @@ public class RecruiterService {
 
     public void viewRecruiterProfilePage() {
         System.out.println("\nWelcome to your profile page\n");
-        System.out.println("\nFirst Name: " + Utility.getCurrentUser().getName() + "\n");
-        System.out.println("\nLast Name: " + Utility.getCurrentUser().getLastName() + "\n");
-        System.out.println("\nUser Name: " + Utility.getCurrentUser().getUserName() + "\n");
-        System.out.println("\nRole: " + Utility.getCurrentUser().getRole());
-
-        System.out.println("\n1: Update your profile\n");
-        System.out.println("\n2: Delete your profile\n");
-        System.out.println("\n3: Go back to dashboard\n");
+        System.out.println("First Name: " + Utility.getCurrentUser().getName());
+        System.out.println("Last Name: " + Utility.getCurrentUser().getLastName());
+        System.out.println("User Name: " + Utility.getCurrentUser().getUserName());
+        System.out.println("Role: " + Utility.getCurrentUser().getRole());
+        System.out.println();
+        System.out.println("1: Update your profile");
+        System.out.println("2: Delete your profile");
+        System.out.println("3: Go back to dashboard");
 
         switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
@@ -150,11 +177,12 @@ public class RecruiterService {
         }
 
     }
+
     // ETY1 - STORY 5
-    public void recruiterSignUp(String recruiterCode, String firstName, String lastName, String userName, String password) {
+    public void recruiterSignUp(String recruiterCode, String firstName, String lastName, String userName,
+            String password) {
         System.out.println("Sign Up processing.... \n");
 
-        RecruiterService recruiterService = new RecruiterService();
         String id = UUID.randomUUID().toString();
         if (recruiterCode != null && recruiterCode.equals("XVQTY")) {
             Recruiter newRecruiter = new Recruiter(id, firstName, lastName, userName, password);
@@ -163,76 +191,70 @@ public class RecruiterService {
             Utility.setCurrentUser(newRecruiter);
             System.out.println("directing to Recruiter Dashboard");
             viewRecruiterDashboard();
-        }
-        else {
+        } else {
             System.out.println("Invalid Attempt");
             System.out.println("Try Again..");
-            recruiterViewSignUp();
+            viewRecruiterSignUpPage();
         }
-
-    }
-    public void recruiterViewSignUp(){
-
     }
 
     // ETY1 - STORY 47
     public void approveRejectApplication(Application application) {
 
-    	System.out.println("Do you want to Approve/Reject Application?");
+        System.out.println("Do you want to Approve/Reject Application?");
 
-    	System.out.println("1. Approve The Application");
-    	System.out.print("2. Reject The Application\n");
+        System.out.println("1. Approve The Application");
+        System.out.print("2. Reject The Application\n");
+        System.out.println("3. Go Back to Application Page");
 
-    	System.out.println("0. Go Back to Application Page");
+        String selection = Utility.inputOutput("Please Select One Of The Options");
 
-    	String selection=Utility.inputOutput("Please Select One Of The Options");
+        switch (selection) {
+            case "1": {
+                application.setStatus(ApplicationStatus.SUCCESSFUL);
+                Utility.getApplications().stream().map(a -> {
+                    if (a.getId().equals(application.getId())) {
+                        a.setStatus(application.getStatus());
+                    }
+                    return a;
+                });
+                System.out.println("Application Approved");
+                System.out.println("Directing to Application's Page");
 
-    	switch (selection) {
-		case "1": {
-              application.setStatus("Approved");
-              Utility.getApplications().stream().map(a -> {
-            	  if(a.getId().equals(application.getId())) {
-            		  a.setStatus(application.getStatus());
-            	  }
-            	  return a;
-              });
-              System.out.println("Application Approved");
-              System.out.println("Directing to Application's Page");
-
-              //has to redirect to application page
-              viewSpecificApplication(application.getId());
-               break;
-		}
-		case "2":{
-            application.setStatus("Rejected");
-            Utility.getApplications().stream().map(a -> {
-          	  if(a.getId().equals(application.getId())) {
-          		  a.setStatus(application.getStatus());
-          	  }
-          	  return a;
-            });
-            System.out.println("Application Rejected");
-            System.out.println("Directing to Application's Page");
-            //has to redirect to application page
-            viewSpecificApplication(application.getId());
-            break;
-		}
-		case "3":{
-			viewSpecificApplication(application.getId());
-            //has to redirect to application page
-            System.out.println("Directing to Application's Page");
-            break;
-		}
-		default:
-            System.out.println("You entered invalid option");
-            approveRejectApplication(application);
-            break;
-		}
+                // has to redirect to application page
+                viewSpecificApplication(application.getId());
+                break;
+            }
+            case "2": {
+                application.setStatus(ApplicationStatus.UNSUCCESSFUL);
+                Utility.getApplications().stream().map(a -> {
+                    if (a.getId().equals(application.getId())) {
+                        a.setStatus(application.getStatus());
+                    }
+                    return a;
+                });
+                System.out.println("Application Rejected");
+                System.out.println("Directing to Application's Page");
+                // has to redirect to application page
+                viewSpecificApplication(application.getId());
+                break;
+            }
+            case "3": {
+                viewSpecificApplication(application.getId());
+                // has to redirect to application page
+                System.out.println("Directing to Application's Page");
+                break;
+            }
+            default:
+                System.out.println("You entered invalid option");
+                approveRejectApplication(application);
+                break;
+        }
 
     }
 
     // UserStory: 21; ar668
-    public void deleteRecruiterProfile(){
+    public void deleteRecruiterProfile() {
         System.out.println("Deleting Recruiter profile");
         String userName = Utility.getCurrentUser().getUserName();
         Utility.getUsers().removeIf(user -> user.getUserName().equals(userName));
@@ -246,7 +268,7 @@ public class RecruiterService {
      * User Story: 20
      */
     public void updateRecruiterProfile() {
-        System.out.println("\nUpdate profile information (leave empty for no change)\n");
+        System.out.println("Update profile information (leave empty for no change)\n");
 
         String firstName = Utility.inputOutput("Enter new first name: ");
         String lastName = Utility.inputOutput("Enter new last name: ");
@@ -285,6 +307,7 @@ public class RecruiterService {
         ArrayList<Job> jobs = Utility.getJobs();
         if (jobs == null || jobs.isEmpty()) {
             System.out.println("No jobs available");
+            viewRecruiterDashboard();
             return;
         }
         System.out.println("Available Jobs");
@@ -293,48 +316,67 @@ public class RecruiterService {
             System.out.println(index + ". Job ID: " + job.getId() + " | Job Title: " + job.getJobName());
             index++;
         }
-        viewSpecificJobPost();
+        System.out.println("\n1: View specific job details");
+        System.out.println("2: Go back to dashboard");
+        boolean inLoop = true;
+        while (inLoop) {
+            String answer = Utility.inputOutput("Please select one of the options..");
+            switch (answer) {
+                case "1":
+                    inLoop = false;
+                    viewSpecificJobPost();
+                    break;
+                case "2":
+                    inLoop = false;
+                    viewRecruiterDashboard();
+                    break;
+                default:
+                    System.out.println(answer + " is not a valid option. Please try again.");
+                    break;
+            }
+        }
     }
 
     public void viewSpecificJobPost() {
-        System.out.println("Welocme to Specific Job Post Details\n");
-        String jobId = Utility.inputOutput("\nEnter the Job Id\n");
+        System.out.println("Welocme to Specific Job Post Details");
+        String jobId = Utility.inputOutput("Enter the Job Id");
         Boolean invalidJobId = true;
 
         for (Job job : Utility.getJobs()) {
             if (job.getId().equals(jobId)) {
-                System.out.println("\nJob ID: " + job.getId());
-                System.out.println("\nJob Name: " + job.getJobName());
-                System.out.println("\nJob Description: " + job.getJobDescription());
-                System.out.println("\nJob Status: " + job.getJobStatus());
+                System.out.println("Job ID: " + job.getId());
+                System.out.println("Job Name: " + job.getJobName());
+                System.out.println("Job Description: " + job.getJobDescription());
+                System.out.println("Job Status: " + job.getJobStatus());
                 invalidJobId = false;
                 break;
             }
         }
 
+        System.out.println();
         if (invalidJobId) {
-            System.out.println("\nYou have entered a invalid Job id\n");
+            System.out.println("You have entered a invalid Job id");
         } else {
-            System.out.println("\n1: Update job description\n");
-            System.out.println("\n2: Update job status\n");
-            System.out.println("\n3: View total applications for this job\n");
-            System.out.println("\n4: Continue to main menu\n");
+            System.out.println("1: Update job description");
+            System.out.println("2: Update job status");
+            System.out.println("3: View total applications for this job");
+            System.out.println("4: Continue to main menu");
 
-            switch(Utility.inputOutput("Please Select One Of The Options")){
+            switch (Utility.inputOutput("Please Select One Of The Options")) {
                 case "1":
-                    System.out.println("Redirecting to update job description page \n");
+                    System.out.println("Redirecting to update job description page");
                     updateDescriptionOfJobPost(jobId);
                     break;
                 case "2":
-                    System.out.println("Redirecting to total applications for the job\n");
+                    System.out.println("Redirecting to total applications for the job");
                     updateStatusOfJobPost(jobId);
                     break;
                 case "3":
-                    System.out.println("Redirecting to dashboard\n");
+                    System.out.println("Redirecting to dashboard");
                     viewTotalNumberOfApplications(jobId);
                     break;
                 case "4":
-                    System.out.println("Redirecting to main menu\n");
+                    System.out.println("Redirecting to main menu");
                     break;
                 default:
                     System.out.println("You entered invalid option");
@@ -343,16 +385,16 @@ public class RecruiterService {
             }
         }
 
-        System.out.println("\n1: View another job details\n");
-        System.out.println("\n2: Go back to dashboard\n");
+        System.out.println("\n1: View another job details");
+        System.out.println("2: Go back to dashboard");
 
         switch (Utility.inputOutput("Please Select One Of The Options")) {
             case "1":
-                System.out.println("Redirecting to view specific job details \n");
+                System.out.println("Redirecting to view specific job details");
                 viewSpecificJobPost();
                 break;
             case "2":
-                System.out.println("Redirecting to dashboard\n");
+                System.out.println("Redirecting to dashboard");
                 viewRecruiterDashboard();
                 break;
             default:
@@ -368,7 +410,7 @@ public class RecruiterService {
      * User Story: 32
      */
     public void updateDescriptionOfJobPost(String jobId) {
-        System.out.println("\n-------- Update job description --------\n");
+        System.out.println("-------- Update job description --------\n");
         ArrayList<Job> jobs = Utility.getJobs();
         Job job = null;
 
@@ -428,7 +470,8 @@ public class RecruiterService {
         for (Job job : jobs) {
             if (job.getId().equals(jobId)) {
                 System.out.println("Current status of job: " + job.getJobStatus());
-                JobStatus newStatus = Objects.equals(job.getJobStatus(), JobStatus.PRIVATE) ? JobStatus.PUBLIC : JobStatus.PRIVATE;
+                JobStatus newStatus = Objects.equals(job.getJobStatus(), JobStatus.PRIVATE) ? JobStatus.PUBLIC
+                        : JobStatus.PRIVATE;
                 job.setJobStatus(newStatus);
                 System.out.println("Status of job updated successfully");
                 return;
@@ -437,17 +480,17 @@ public class RecruiterService {
         System.out.println("No job post available with given id");
     }
 
-   // ETY1 - STORY 50
+    // ETY1 - STORY 50
     public void viewTotalNumberOfApplications(String jobId) {
 
-        AtomicInteger total= new AtomicInteger();
+        AtomicInteger total = new AtomicInteger();
         Utility.getApplications().stream().forEach(application -> {
-            if(application.getJobId().equals(jobId)){
+            if (application.getJobId().equals(jobId)) {
                 total.getAndIncrement();
             }
         });
 
-        System.out.println("Total Applications of : "+jobId+" is " + total);
+        System.out.println("Total Applications of : " + jobId + " is " + total);
     }
 
     // ETY1 - STORY 22
@@ -460,12 +503,12 @@ public class RecruiterService {
         String jobDesc = Utility.inputOutput("Enter the New Job Description");
 
         System.out.println("Submitting new job post...");
-        if(jobTitle==null || jobTitle.isEmpty() || jobDesc==null || jobDesc.isEmpty()){
+        if (jobTitle == null || jobTitle.isEmpty() || jobDesc == null || jobDesc.isEmpty()) {
             System.out.println("Job Title or Job Description empty, Please try again..");
             viewJobPostingForm();
         }
         submitNewJobPost(jobTitle, jobDesc);
-
+        viewRecruiterDashboard();
     }
 
     /*
@@ -478,32 +521,68 @@ public class RecruiterService {
                 id,
                 jobName,
                 jobDescription,
-                JobStatus.PUBLIC
-        );
+                JobStatus.PUBLIC);
         Utility.addJob(job);
         System.out.println("Job posted successfully");
+
     }
 
     // UserStory: 30; ar668
     public void viewAllApplications() {
         User user = Utility.getCurrentUser();
-        if(user instanceof Applicant)
-        {
+        if (user instanceof Applicant) {
             System.out.println("You are not authorized to view this page");
+            viewRecruiterDashboard();
             return;
         }
         ArrayList<Application> applications = Utility.getApplications();
-        if(applications == null || applications.isEmpty())
-        {
+        if (applications == null || applications.isEmpty()) {
             System.out.println("No applications available.");
+            viewRecruiterDashboard();
             return;
         }
 
-        applications.stream().filter(application -> ApplicationStatus.INPROGRESS.equals(application.getStatus())).
-                forEach(application -> {
-            System.out.println("Application ID: " + application.getId() + "|"+"Status: " + application.getStatus()+"|"+"Applicant ID: " + application.getApplicantId());
-        });
+        applications.stream().filter(application -> ApplicationStatus.INPROGRESS.equals(application.getStatus()))
+                .forEach(application -> {
+                    System.out.println("Application ID: " + application.getId() + "|" + "Status: "
+                            + application.getStatus() + "|" + "Applicant ID: " + application.getApplicantId());
+                });
 
+        System.out.println("\n1: View specific Application details");
+        System.out.println("2: Go back to dashboard");
+        boolean inLoop = true;
+        while (inLoop) {
+            String answer = Utility.inputOutput("Please select one of the options..");
+            switch (answer) {
+                case "1":
+                    String applicationId = Utility.inputOutput("Enter the Application ID to view details");
+                    viewSpecificApplication(applicationId);
+                    break;
+                case "2":
+                    inLoop = false;
+                    viewRecruiterDashboard();
+                    break;
+                default:
+                    System.out.println(answer + " is not a valid option. Please try again.");
+                    break;
+            }
+        }
+
+    }
+
+    /*
+     * Author: Mayur Shinde (mss62)
+     * User Story: 11
+     */
+    private void viewResetPasswordPage() {
+        String input = Utility.inputOutput("Do you want to reset your password? (y/n)");
+        if (input.equalsIgnoreCase("y")) {
+            String userName = Utility.inputOutput("Enter your User name");
+            resetPasswordRecruiter(userName);
+        } else {
+            System.out.println("Redirecting to dashboard");
+            viewRecruiterDashboard();
+        }
     }
 
     // UserStory: 13; ar668
@@ -521,12 +600,15 @@ public class RecruiterService {
                 if (user.getUserName().equals(userName)) {
                     if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER && !resetCode.equals("XVQTY")) {
                         System.out.println("\nYou have entered wrong Reset Code\n");
-                        CommonService.getInstance().viewResetPasswordPage();
+                        viewResetPasswordPage();
                         break;
                     }
                     user.setPassword(password);
                 }
             }
+        } else {
+            System.out.println("\nYou have entered wrong Crediantials\n");
+            viewResetPasswordPage();
         }
     }
 
@@ -543,6 +625,7 @@ public class RecruiterService {
         for (Application app : allApplications) {
             if (app.getId().equals(applicationId)) {
                 application = app;
+                break;
             }
         }
 
@@ -555,6 +638,7 @@ public class RecruiterService {
         for (User user : allUsers) {
             if (user.getId().equals(application.getApplicantId())) {
                 userApplicant = user;
+                break;
             }
         }
 
@@ -572,26 +656,12 @@ public class RecruiterService {
         System.out.println("Feedback: " + application.getFeedback());
         System.out.println("Assignments found: " + application.getAssignments().size());
 
-        for (int i = 0; i < application.getAssignments().size(); i++) {
-            System.out.println("\nAssignment " + i + ": " + application.getAssignments().get(i).getAssignmentName());
-            System.out.println("Questions: ");
-
-            for (int j = 0; j < application.getAssignments().get(i).getQuestions().size(); j++) {
-                System.out.println(application.getAssignments().get(i).getQuestions().get(j));
-            }
-
-            System.out.println("Answers: ");
-
-            for (int j = 0; j < application.getAssignments().get(i).getAnswers().size(); j++) {
-                System.out.println(application.getAssignments().get(i).getAnswers().get(j));
-            }
-        }
-
         System.out.println("\n1: Update status of application");
         System.out.println("2: Send an assignment");
         System.out.println("3: Send interview questions");
         System.out.println("4: Send feedback");
-        System.out.println("5: Go back to All Applications");
+        System.out.println("5: View submitted answers");
+        System.out.println("6: Go back to All Applications");
         String answer = Utility.inputOutput("Please select one of the options..");
 
         switch (answer) {
@@ -599,7 +669,8 @@ public class RecruiterService {
             case "2" -> sendAssignment(application);
             case "3" -> sendInterview(application);
             case "4" -> sendFeedback(application);
-            case "5" -> viewAllApplications();
+            case "5" -> viewSubmittedAnswers(application);
+            case "6" -> viewAllApplications();
             default -> {
                 System.out.println("You entered invalid option");
                 viewSpecificApplication(applicationId);
@@ -614,22 +685,42 @@ public class RecruiterService {
      */
     public void sendAssignment(Application application) {
         System.out.println("\n-------- Send assignment to applicant --------\n");
-        System.out.println("Please type one from the roles below to send the assignment questions (e.g. frontend)");
 
-        Map<String, List<String>> questionMap = Utility.getQuestionMap();
-        System.out.println(questionMap.keySet().toString());
-        String roleInput = Utility.inputOutput("\nType here..");
-        List<String> questions = questionMap.get(roleInput);
-
-        if (questions == null) {
-            System.out.println("\nNo questions found for the given role\n");
-            viewSpecificApplication(application.getId());
-            return;
+        String assessmentTitle = "";
+        while (assessmentTitle.isEmpty()) {
+            assessmentTitle = Utility.inputOutput("Enter the title of the assignment..");
+            if (assessmentTitle.isEmpty()) {
+                System.out.println("Assessment title cannot be empty.");
+            }
+        }
+        ArrayList<String> questions = new ArrayList<>();
+        String question = "";
+        while (true) {
+            question = Utility.inputOutput("Enter the question..(type 'exit' to go back)");
+            if (question.equals("exit")) {
+                viewSpecificApplication(application.getId());
+            }
+            if (question.isEmpty()) {
+                System.out.println("Question cannot be empty");
+            } else {
+                questions.add(question);
+                String moreQuestions = Utility.inputOutput("Do you want to add more questions? (y/n)");
+                if (moreQuestions.equals("n")) {
+                    break;
+                }
+            }
         }
 
-        Assignment newAssignment = new Assignment(UUID.randomUUID().toString(), application.getApplicantId(), "Assignment " + roleInput, new ArrayList<String>(questions), new ArrayList<>());
-        ArrayList <Assignment> assignments = application.getAssignments();
+        Assignment newAssignment = new Assignment(
+                UUID.randomUUID().toString(),
+                application.getApplicantId(),
+                assessmentTitle,
+                questions,
+                new ArrayList<>());
+
+        ArrayList<Assignment> assignments = application.getAssignments();
         assignments.add(newAssignment);
+
         application.setAssignments(assignments);
 
         System.out.println("\nAssignment sent successfully.\n");
@@ -651,32 +742,53 @@ public class RecruiterService {
 
         application.setFeedback(feedback);
         System.out.println("\nFeedback sent successfully\n");
+        viewSpecificApplication(application.getId());
+    }
+
+    public void viewSubmittedAnswers(Application application) {
+        System.out.println("\nWelcome to view submitted answers for the application " + application.getId());
+        ArrayList<String> questions = new ArrayList<String>();
+        ArrayList<String> answers = new ArrayList<String>();
+        System.out.println("Submitted Answers for assessments: ");
+        for (Assignment assignment : application.getAssignments()) {
+            questions = assignment.getQuestions();
+            answers = assignment.getAnswers();
+            System.out.println("Assignment: " + assignment.getAssignmentName());
+            for (int i = 0; i < questions.size(); i++) {
+                System.out.println("\nQuestion: ");
+                System.out.println(questions.get(i));
+                System.out.println("Answer:");
+                if (i < answers.size()) {
+                    System.out.println(answers.get(i));
+                } else {
+                    System.out.println("No answer submitted yet");
+                }
+            }
+            System.out.println("--------------------------");
+        }
+        System.out.println("Submitted Answers for interviews: ");
+
+        for (Assignment interview : application.getInterviewAssignments()) {
+            questions = interview.getQuestions();
+            answers = interview.getAnswers();
+            System.out.println("Interview: " + interview.getAssignmentName());
+            for (int i = 0; i < questions.size(); i++) {
+                System.out.println("\nQuestion: ");
+                System.out.println(questions.get(i));
+                System.out.println("Answer:");
+                if (i < answers.size()) {
+                    System.out.println(answers.get(i));
+                } else {
+                    System.out.println("No answer submitted yet");
+                }
+            }
+            System.out.println("--------------------------");
+        }
 
         viewSpecificApplication(application.getId());
     }
 
-    public void viewSubmittedAnswers(String applicationId) {
-        System.out.println("\nWelcome to view submitted answers for the application " + applicationId);
-        ArrayList<String> questions = new ArrayList<String>();
-        ArrayList<String> answers = new ArrayList<String>();
-
-        for (Application application: Utility.getApplications()) {
-            if (application.getId().equals(applicationId)) {
-                for (Assignment assignment : application.getAssignments()) {
-                    questions=assignment.getQuestions();
-                    answers=assignment.getAnswers();
-                    for(int i=0; i<questions.size(); i++) {
-                        System.out.println("\nQuestion: \n");
-                        System.out.println(questions.get(i));
-                        System.out.println("Answer: \n");
-                        System.out.println(answers.get(i));
-                    }
-                }
-            }
-        }
-    }
-
-    //UserStory: 9; ar668
+    // UserStory: 9; ar668
     public void logoutRecruiter() {
         System.out.println("Initiating logout process for Recruiter");
         Utility.setCurrentUser(null);
@@ -684,7 +796,7 @@ public class RecruiterService {
         CommonService.getInstance().accessLandingPage();
     }
 
-    //UserStory: 3; ar668
+    // UserStory: 3; ar668
     public void visitSignInSignUpPageRecruiter() {
         System.out.println("Welcome to the Sign In/Sign Up page for Recruiter\n");
         System.out.println("1. Sign In for Recruiter");
@@ -698,7 +810,7 @@ public class RecruiterService {
                 break;
             case "2":
                 System.out.println("Redirecting to Sign Up page for Recruiter\n");
-                recruiterSignUpPage();
+                viewRecruiterSignUpPage();
                 break;
             case "3":
                 System.out.println("Redirecting to the previous menu\n");
@@ -711,10 +823,26 @@ public class RecruiterService {
         }
     }
 
+    public void viewRecruiterSignUpPage() {
+        System.out.println("Welcome to Recruiter Sign Up Page\n");
+        System.out.println("Please enter the following details");
+        String firstName = Utility.inputOutput("First Name: ");
+        String lastName = Utility.inputOutput("Last Name: ");
+        String userName = Utility.inputOutput("User Name: ");
+        String password = Utility.inputOutput("Password: ");
+        String recruiterCode = Utility.inputOutput("Enter the Recruiter Code");
 
-    public void recruiterSignUpPage() {
+        if (firstName == null || firstName.isEmpty() ||
+                lastName == null || lastName.isEmpty() ||
+                userName == null || userName.isEmpty() ||
+                password == null || password.isEmpty() ||
+                recruiterCode == null || recruiterCode.isEmpty()) {
+            System.out.println("All fields are required. Please try again.");
+            viewRecruiterSignUpPage();
+            return;
+        }
+        recruiterSignUp(recruiterCode, firstName, lastName, userName, password);
     }
-
 
     /**
      * @param users    List of users from the database to look for the user
@@ -755,8 +883,7 @@ public class RecruiterService {
         } else {
             System.out.println("\nRecruiter Signin successful. proceeding to applicant dashboard.. \n");
             Utility.setCurrentUser(recruiter);
-            ApplicantService applicantService = new ApplicantService();
-            applicantService.viewApplicantDashboard();
+            RecruiterService.getInstance().viewRecruiterDashboard();
         }
     }
 }

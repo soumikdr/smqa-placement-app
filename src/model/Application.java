@@ -16,8 +16,7 @@ public class Application {
 
     private ArrayList<Assignment> assignments;
 
-    private String interviewDate;
-    private String interviewTime;
+    private ArrayList<Assignment> interviewAssignments;
 
     private Integer yearOfExperience;
 
@@ -121,20 +120,14 @@ public class Application {
         this.skills = skills;
     }
 
-    public String getInterviewDate() {
-        return interviewDate;
+    public ArrayList<Assignment> getInterviewAssignments() {
+        if (interviewAssignments == null) {
+            return new ArrayList<Assignment>();
+        }
+        return interviewAssignments;
     }
 
-    public void setInterviewDate(String interviewDate) {
-        this.interviewDate = interviewDate;
+    public void setInterviewAssignments(ArrayList<Assignment> interviewAssignments) {
+        this.interviewAssignments = interviewAssignments;
     }
-
-    public String getInterviewTime() {
-        return interviewTime;
-    }
-
-    public void setInterviewTime(String interviewTime) {
-        this.interviewTime = interviewTime;
-    }
-
 }
