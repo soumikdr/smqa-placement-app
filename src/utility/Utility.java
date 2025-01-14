@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import model.Application;
 import model.Assignment;
@@ -30,16 +31,27 @@ public class Utility {
     public static String inputOutput(String message) {
         System.out.println(message);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //   Below for preparation random testing since randoop can't put values to console input.
+        //   message=getRandomString();
         try {
-            message = br.readLine();
+           message = br.readLine();
         } catch (IOException e) {
             System.out.println("Error reading in value");
-            //return the page
         }
         return message;
     }
-
-
+//   Below for preparation random testing since randoop can't put values to console input.
+//    public static String getRandomString() {
+//        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+//        StringBuilder builder = new StringBuilder();
+//        Random rnd = new Random();
+//        while (builder.length() < 18) { // length of the random string.
+//            int index = (int) (rnd.nextFloat() * chars.length());
+//            builder.append(chars.charAt(index));
+//        }
+//        String randomString = builder.toString();
+//        return randomString;
+//    }
     public static ArrayList<Assignment> getAssignments() {
         return assignments;
     }
