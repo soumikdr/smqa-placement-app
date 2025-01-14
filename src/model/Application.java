@@ -33,7 +33,8 @@ public class Application {
         this.jobId = jobId;
         this.applicantId = applicantId;
         this.applicationStatus = status;
-        this.assignments = assignments;
+
+        this.assignments = assignments == null ? new ArrayList<Assignment>() : assignments;
         this.feedback = feedback;
         this.yearOfExperience = yearOfExperience;
         this.education = education;
