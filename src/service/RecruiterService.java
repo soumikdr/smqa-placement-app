@@ -1,20 +1,12 @@
 package service;
 
+import model.*;
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import model.Applicant;
-import model.Application;
-import model.ApplicationStatus;
-import model.Assignment;
-import model.Job;
-import model.JobStatus;
-import model.Recruiter;
-import model.User;
-import model.UserRole;
-import utility.Utility;
 
 public class RecruiterService {
 
@@ -180,7 +172,7 @@ public class RecruiterService {
 
     // ETY1 - STORY 5
     public void recruiterSignUp(String recruiterCode, String firstName, String lastName, String userName,
-            String password) {
+                                String password) {
         System.out.println("Sign Up processing.... \n");
 
         String id = UUID.randomUUID().toString();
