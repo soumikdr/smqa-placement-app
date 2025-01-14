@@ -7,15 +7,3 @@ Empty.
 JobDescription:
 NonEmpty.
 Empty.
-
-
-
-
-# Constraints
-# 1. JobName and JobDescription must be NonEmpty to create a job post.
-#    a. If JobName is Empty:
-#       i. Trigger an error indicating that the job title is required.
-#       ii. Prompt the recruiter to enter a valid job title.
-#    b. If JobDescription is Empty:
-#       i. Trigger an error indicating that the job description is required.
-#       ii. Prompt the recruiter to enter a valid job description.

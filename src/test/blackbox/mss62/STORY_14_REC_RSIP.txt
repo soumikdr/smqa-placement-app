@@ -25,35 +25,3 @@ RedirectOption:
 RecruiterDashboard. [Password=Correct]
 ErrorPage. [Password=Incorrect]
 PreviousMenu.
-
-# Constraints
-# 1. RecruiterRoleVerification:
-#    a. If UserRole=Recruiter:
-#       i. Proceed to the Sign In process.
-#    b. If UserRole!=Recruiter:
-#       i. Deny access to the Recruiter Sign In page.
-#       ii. Redirect to the appropriate landing page (e.g., Applicant Sign In page or error message).
-# 2. UserName:
-#    a. If UserName=Existing:
-#       i. Validate the password.
-#       ii. Allow Sign In only if Password=Correct.
-#    b. If UserName=NonExisting:
-#       i. Trigger an error indicating that the username does not exist.
-#       ii. Redirect to the Recruiter Sign In page with an appropriate error message.
-# 3. Password:
-#    a. If Password=Correct:
-#       i. Allow Sign In and redirect to the Recruiter Dashboard.
-#    b. If Password=Incorrect:
-#       i. Trigger an error indicating incorrect credentials.
-#       ii. Redirect to the Error Page with an option to retry.
-#    c. If UserName=NonExisting:
-#       i. Password validation is NotApplicable.
-# 4. SignInConfirmation:
-#    a. If Proceed:
-#       i. Validate RecruiterRoleVerification and credentials.
-#    b. If Cancel:
-#       i. Redirect to the PreviousMenu without attempting Sign In.
-# 5. RedirectOption:
-#    a. RecruiterDashboard: Redirect if SignInConfirmation=Proceed and Password=Correct.
-#    b. ErrorPage: Redirect if SignInConfirmation=Proceed and Password=Incorrect.
-#    c. PreviousMenu: Redirect if SignInConfirmation=Cancel.

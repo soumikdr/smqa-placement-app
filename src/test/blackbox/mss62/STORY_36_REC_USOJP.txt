@@ -14,12 +14,3 @@ UpdateConfirmation:
 Yes.
 No.
 Invalid.
-
-# Constraints
-# 1. If JobID is NonExisting:
-#    a. Trigger an error indicating that the job does not exist.
-#    b. Abort the update process.
-# 2. If JobID is Existing:
-#    a. Retrieve the current status of the job.
-#    b. Change from PUBLIC -> PRIVATE and vice-versa.
-# 3. Ensure that updating job status does not inadvertently affect other job attributes.
