@@ -806,7 +806,7 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testRecruiterSignInPage_validCredentialsButNotRecruiter() {
-        // The user is valid, but role is APPLICANT
+
         User applicantUser = new Recruiter("001", "Jane", "Doe", "appUser", "appPass");
         applicantUser.setRole(UserRole.APPLICANT);
 
@@ -820,13 +820,10 @@ public class RecruiterServiceBranchTest {
             mockedUtility.when(() -> Utility.inputOutput("Enter your password:"))
                     .thenReturn("appPass");
 
-            // After it checks role != RECRUITER, it’s invalid => asks user if they want to
-            // try again
             mockedUtility
                     .when(() -> Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)"))
                     .thenReturn("n");
 
-            // Mock CommonService
             CommonService mockCommonService = mock(CommonService.class);
             try (MockedStatic<CommonService> mockedCommonService = Mockito.mockStatic(CommonService.class)) {
                 mockedCommonService.when(CommonService::getInstance).thenReturn(mockCommonService);
@@ -836,14 +833,12 @@ public class RecruiterServiceBranchTest {
                         .mockStatic(RecruiterService.class)) {
                     mockedRecruiterService.when(RecruiterService::getInstance).thenReturn(spyRecruiterService);
 
-                    // Execute
                     spyRecruiterService.recruiterSignInPage();
 
-                    // Verify redirection
                     verify(mockCommonService, times(1)).accessLandingPage();
-                    // No call to setCurrentUser, no call to viewRecruiterDashboard
+
                     mockedUtility.verify(never(), () -> Utility.setCurrentUser(any()));
-                    // mockedUtility.verify(() -> Utility.setCurrentUser(any()), never());
+
                     verify(spyRecruiterService, never()).viewRecruiterDashboard();
                 }
             }
@@ -856,36 +851,28 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewResetPasswordPage_userChoosesYes() {
-        // 1. Spy the RecruiterService so we can verify internal method calls.
+
         RecruiterService spyService = Mockito.spy(recruiterService);
         User user = new Recruiter("1", "John", "Doe", "johnDoe", "bestpassword");
-        // 2. Mock static Utility methods in a try-with-resources
+
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
             mockedUtility
                     .when(() -> Utility.getCurrentUser())
                     .thenReturn(user);
-            // The first prompt
+
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to reset your password? (y/n)"))
                     .thenReturn("y");
 
-            // The second prompt (because user said 'y')
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter your User name"))
                     .thenReturn("johnDoe");
 
-            // 3. Call the method under test (assuming we've made it public or
-            // test-accessible)
-            // If it's truly private, you might need to call a public method that triggers
-            // it.
-            // For demonstration, assume we can do:
             spyService.viewResetPasswordPage();
 
-            // 4. Verify that resetPasswordRecruiter(...) was called with "johnDoe"
             verify(spyService, times(1)).resetPasswordRecruiter("johnDoe");
 
-            // 5. Verify that viewRecruiterDashboard() was NOT called
             verify(spyService, never()).viewRecruiterDashboard();
         }
     }
@@ -896,7 +883,7 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewResetPasswordPage_userChoosesNo() {
-        // 1. Spy the RecruiterService
+
         RecruiterService spyService = Mockito.spy(recruiterService);
         User user = new Recruiter("1", "John", "Doe", "johnDoe", "bestpassword");
 
@@ -904,22 +891,17 @@ public class RecruiterServiceBranchTest {
             mockedUtility
                     .when(() -> Utility.getCurrentUser())
                     .thenReturn(user);
-            // The first prompt
+
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to reset your password? (y/n)"))
                     .thenReturn("n");
 
-            // 2. Mock the resetPasswordRecruiter(...) method so we can verify it's not
-            // called
             doNothing().when(spyService).viewRecruiterDashboard();
 
-            // 3. Call the method
             spyService.viewResetPasswordPage();
 
-            // 4. Verify that we do NOT call resetPasswordRecruiter(...)
             verify(spyService, never()).resetPasswordRecruiter(anyString());
 
-            // 5. Verify we call viewRecruiterDashboard()
             verify(spyService, times(1)).viewRecruiterDashboard();
         }
     }
@@ -930,7 +912,7 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewResetPasswordPage_userChoosesSomethingElse() {
-        // Same as "no" scenario, because the code just checks `equalsIgnoreCase("y")`
+
         RecruiterService spyService = Mockito.spy(recruiterService);
         User user = new Recruiter("1", "John", "Doe", "johnDoe", "bestpassword");
 
@@ -957,7 +939,7 @@ public class RecruiterServiceBranchTest {
     @Test
     public void submitNewJobPost() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        System.setOut(new PrintStream(outputStream));
         ArrayList<Job> jobs = Utility.getJobs();
         int previousSize = jobs == null ? 0 : jobs.size();
         recruiterService.submitNewJobPost("Software Engineer", "Develop software");
@@ -972,33 +954,26 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_noJobs() {
-        // Scenario 1: jobs == null or empty
 
-        // We'll capture console output so we can assert the "No jobs available" message
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
 
-        // Spy on the recruiterService so we can verify calls to
-        // viewRecruiterDashboard()
         RecruiterService spyService = Mockito.spy(recruiterService);
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            // Mock Utility.getJobs() to return null or empty
-            mockedUtility.when(Utility::getJobs).thenReturn(new ArrayList<>()); // empty list
+
+            mockedUtility.when(Utility::getJobs).thenReturn(new ArrayList<>());
             doNothing().when(spyService).viewRecruiterDashboard();
-            // Act
+
             spyService.viewAvailableJobs();
 
-            // Assert:
-            // 1) "No jobs available" should be printed
             String consoleOutput = outContent.toString();
             assertTrue(consoleOutput.contains("No jobs available"));
 
-            // 2) It should call viewRecruiterDashboard()
             verify(spyService, times(1)).viewRecruiterDashboard();
         } finally {
-            // Restore original System.out
+
             System.setOut(originalOut);
         }
     }
@@ -1009,46 +984,36 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_jobsAvailable_userChooses1() {
-        // Scenario 2a: jobs available, user picks "1", calls viewSpecificJobPost()
 
-        // Prepare a non-empty list of jobs
         ArrayList<Job> jobs = new ArrayList<>();
         Job job1 = new Job("id1", "Title1", "Desc1", JobStatus.PUBLIC);
         Job job2 = new Job("id2", "Title2", "Desc2", JobStatus.PUBLIC);
         jobs.add(job1);
         jobs.add(job2);
 
-        // Capture console output (optional)
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
 
-        // Spy
         RecruiterService spyService = Mockito.spy(recruiterService);
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getJobs).thenReturn(jobs);
 
-            // We expect the method to prompt: "Please select one of the options.."
-            // Return "1" → calls viewSpecificJobPost() → exit loop
             mockedUtility
                     .when(() -> Utility.inputOutput("Please select one of the options.."))
                     .thenReturn("1");
             doNothing().when(spyService).viewSpecificJobPost();
 
-            // Act
             spyService.viewAvailableJobs();
 
-            // Assert the console output contains "Available Jobs" and the job list
             String consoleOutput = outContent.toString();
             assertTrue(consoleOutput.contains("Available Jobs"));
             assertTrue(consoleOutput.contains("Job ID: id1"));
             assertTrue(consoleOutput.contains("Job ID: id2"));
 
-            // Verify it calls viewSpecificJobPost()
             verify(spyService, times(1)).viewSpecificJobPost();
 
-            // Verify we never call viewRecruiterDashboard() in this scenario
             verify(spyService, never()).viewRecruiterDashboard();
         } finally {
             System.setOut(originalOut);
@@ -1061,7 +1026,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_jobsAvailable_userChooses2() {
-        // Scenario 2b: user picks "2" => calls viewRecruiterDashboard()
 
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job("id1", "Title1", "Desc1", JobStatus.PUBLIC));
@@ -1075,7 +1039,6 @@ public class RecruiterServiceBranchTest {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getJobs).thenReturn(jobs);
 
-            // Return "2" → should exit loop and call viewRecruiterDashboard()
             mockedUtility
                     .when(() -> Utility.inputOutput("Please select one of the options.."))
                     .thenReturn("2");
@@ -1095,8 +1058,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_jobsAvailable_invalidInputThenValid() {
-        // Scenario 2c: user inputs something invalid, then eventually picks "1" or "2"
-        // We'll simulate user typing "abc" (invalid) then "2" (go to dashboard)
 
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job("idX", "TitleX", "DescX", JobStatus.PUBLIC));
@@ -1110,8 +1071,6 @@ public class RecruiterServiceBranchTest {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getJobs).thenReturn(jobs);
 
-            // The user is prompted in a loop, so we return "abc" the first time (invalid),
-            // then "2" the second time (valid).
             mockedUtility
                     .when(() -> Utility.inputOutput("Please select one of the options.."))
                     .thenReturn("abc")
@@ -1121,15 +1080,12 @@ public class RecruiterServiceBranchTest {
 
             spyService.viewAvailableJobs();
 
-            // Check console output
             String output = outContent.toString();
-            // Should contain "is not a valid option. Please try again."
+
             assertTrue(output.contains("abc is not a valid option. Please try again."));
 
-            // Finally user enters "2" => calls viewRecruiterDashboard()
             verify(spyService, times(1)).viewRecruiterDashboard();
 
-            // No calls to viewSpecificJobPost()
             verify(spyService, never()).viewSpecificJobPost();
         } finally {
             System.setOut(originalOut);
@@ -1212,10 +1168,9 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_userImmediatelyExits() {
-        // Scenario 1: user types "exit" on the first prompt
+
         RecruiterService spyService = Mockito.spy(recruiterService);
 
-        // Prepare application
         Application application = new Application();
         application.setId("app123");
         application.setApplicantId("applicant123");
@@ -1224,19 +1179,15 @@ public class RecruiterServiceBranchTest {
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
-            // For the first question prompt, user types "exit"
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("exit");
             doNothing().when(spyService).viewSpecificApplication("app123");
-            // Act
+
             spyService.sendInterview(application);
 
-            // Assert:
-            // 1) We should call viewSpecificApplication(...) with "app123"
             verify(spyService, times(1)).viewSpecificApplication("app123");
 
-            // 2) We do NOT add any interview assignment to application
             assertTrue(application.getInterviewAssignments().isEmpty());
         }
     }
@@ -1247,61 +1198,38 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_userEntersEmptyQuestionThenValidQuestionThenNo() {
-        // Scenario 2 & 3 combined:
-        // - user first enters empty question => "Question cannot be empty"
-        // - user then enters a valid question => "some question"
-        // - user chooses "n" => break from while loop
 
         RecruiterService spyService = Mockito.spy(recruiterService);
 
-        // Prepare application
         Application application = new Application();
         application.setId("app123");
         application.setApplicantId("applicant123");
 
-        // Suppose there's already 1 assignment in the system (this will influence the
-        // interview title)
         ArrayList<Assignment> existingAssignments = new ArrayList<>();
         existingAssignments.add(new Assignment("a1", "applicant123", "FirstAssignment", null, null));
         application.setAssignments(existingAssignments);
 
-        // Interview assignments are initially empty
         application.setInterviewAssignments(new ArrayList<Assignment>());
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            // Mock user inputs in sequence:
-            // 1) user enters "" (empty)
-            // 2) user enters "some question"
-            // 3) user answers "n" to "Do you want to add more questions?"
-            // Then we expect the loop to break
 
-            // For the question prompt:
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("")
                     .thenReturn("some question");
 
-            // For the "Do you want to add more questions?" prompt:
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to add more questions? (y/n)"))
                     .thenReturn("n");
 
-            // For the final "Press enter to go back." prompt
             mockedUtility
                     .when(() -> Utility.inputOutput("Press enter to go back."))
-                    .thenReturn(""); // user presumably hits enter
+                    .thenReturn("");
 
-            // Do nothing when viewSpecificApplication is called
             doNothing().when(spyService).viewSpecificApplication("app123");
-            // Act
+
             spyService.sendInterview(application);
 
-            // Assert:
-            // 1) We should see "Question cannot be empty" printed once
-            // We can capture System.out or trust that message is printed.
-            // Usually verifying the logic is enough.
-
-            // 2) The second question is "some question", which is added
             assertEquals("Should have 1 interview assignment after valid question.", 1,
                     application.getInterviewAssignments().size());
 
@@ -1309,11 +1237,8 @@ public class RecruiterServiceBranchTest {
             assertEquals("The first question in the interview should match user input.", "some question",
                     createdInterview.getQuestions().get(0));
 
-            // The assignment name is "Interview (application.getAssignments().size() + 1)",
-            // i.e. "Interview 2" in this scenario because there's already 1 assignment.
             assertEquals("Interview 2", createdInterview.getAssignmentName());
 
-            // 3) Should call "viewSpecificApplication(...)" after finishing
             verify(spyService, times(1)).viewSpecificApplication("app123");
         }
     }
@@ -1324,9 +1249,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_multipleQuestionsAndExit() {
-        // Scenario: user enters 2 valid questions, chooses "y" after the first
-        // question,
-        // then "n" after the second question, then we finalize.
 
         RecruiterService spyService = Mockito.spy(recruiterService);
 
@@ -1337,10 +1259,7 @@ public class RecruiterServiceBranchTest {
         application.setInterviewAssignments(new ArrayList<Assignment>());
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            // 1st question: "What's your name?"
-            // user chooses "y" => another question
-            // 2nd question: "What's your experience?"
-            // user chooses "n" => break
+
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("What's your name?")
@@ -1351,18 +1270,13 @@ public class RecruiterServiceBranchTest {
                     .thenReturn("y")
                     .thenReturn("n");
 
-            // After finishing, print "Interview questions sent successfully",
-            // then Utility.inputOutput("Press enter to go back.");
             mockedUtility
                     .when(() -> Utility.inputOutput("Press enter to go back."))
                     .thenReturn("");
             doNothing().when(spyService).viewSpecificApplication("app999");
 
-            // Act
             spyService.sendInterview(application);
 
-            // Assert:
-            // We expect 1 new interview assignment
             assertEquals(1, application.getInterviewAssignments().size());
             Assignment newInterview = application.getInterviewAssignments().get(0);
 
@@ -1371,11 +1285,8 @@ public class RecruiterServiceBranchTest {
             assertEquals("What's your name?", questions.get(0));
             assertEquals("What's your experience?", questions.get(1));
 
-            // Because application.getAssignments() is empty => interview title is
-            // "Interview 1"
             assertEquals("Interview 1", newInterview.getAssignmentName());
 
-            // Finally, check we eventually call "viewSpecificApplication(app999)"
             verify(spyService, times(1)).viewSpecificApplication("app999");
         }
     }
@@ -1386,11 +1297,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_userTypesExitAfterSomeQuestions() {
-        // Another scenario: user enters 1 valid question, then types "exit"
-        // => We expect we call viewSpecificApplication(...) and do NOT add the
-        // interview
-        // Actually, note the code: if the user types "exit" at the question prompt,
-        // it immediately returns. No assignment is created.
 
         RecruiterService spyService = Mockito.spy(recruiterService);
 
@@ -1402,31 +1308,21 @@ public class RecruiterServiceBranchTest {
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
-            // The code is a while(true). If the user typed "exit" at ANY point
-            // in the question prompt, we do "viewSpecificApplication(application.getId());
-            // return;"
-            // Let's simulate 1 valid question, then user says "y" to add more,
-            // then next question is "exit".
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("First question")
                     .thenReturn("exit");
 
-            // After "First question", we ask "Do you want to add more questions? (y/n)"
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to add more questions? (y/n)"))
                     .thenReturn("y");
 
             doNothing().when(spyService).viewSpecificApplication("appX");
 
-            // Act
             spyService.sendInterview(application);
 
-            // The user typed "exit" => "return" from the method
-            // => no assignment is created
             assertTrue(application.getInterviewAssignments().isEmpty());
 
-            // Should have called viewSpecificApplication(appX)
             verify(spyService, times(1)).viewSpecificApplication("appX");
         }
     }
