@@ -1,0 +1,15 @@
+TEST CASE: TSL_REC_UST_01
+METHOD: updateStatusOfJobPost(String jobId)
+DESCRIPTION: Validates that if a job with the given ID is not found, the system prints a "No job post available" message.
+
+PRECONDITIONS:
+  - The system job list contains Job with ID = "J100" (for example).
+  - No job in the system has ID = "NOTFOUND".
+  - The current user is a Recruiter.
+
+ACTIONS:
+  1. updateStatusOfJobPost("NOTFOUND").
+
+EXPECTED OUTCOMES:
+  - The console prints "No job post available with given id".
+  - No changes are made to any existing job’s status.
