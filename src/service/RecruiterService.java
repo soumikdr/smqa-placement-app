@@ -498,6 +498,7 @@ public class RecruiterService {
         if (jobTitle == null || jobTitle.isEmpty() || jobDesc == null || jobDesc.isEmpty()) {
             System.out.println("Job Title or Job Description empty, Please try again..");
             viewJobPostingForm();
+            return;
         }
         submitNewJobPost(jobTitle, jobDesc);
         viewRecruiterDashboard();
@@ -516,7 +517,6 @@ public class RecruiterService {
                 JobStatus.PUBLIC);
         Utility.addJob(job);
         System.out.println("Job posted successfully");
-
     }
 
     // UserStory: 30; ar668
@@ -566,7 +566,7 @@ public class RecruiterService {
      * Author: Mayur Shinde (mss62)
      * User Story: 11
      */
-    private void viewResetPasswordPage() {
+    public void viewResetPasswordPage() {
         String input = Utility.inputOutput("Do you want to reset your password? (y/n)");
         if (input.equalsIgnoreCase("y")) {
             String userName = Utility.inputOutput("Enter your User name");

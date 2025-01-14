@@ -1,0 +1,17 @@
+TEST CASE: TSL_APP_UPD_02
+METHOD: showUpdateProfilePage()
+DESCRIPTION: Ensures that a user is prompted for new name/last name, and the system updates their profile accordingly.
+
+PRECONDITIONS:
+  - The current user is an Applicant with ID = "A201", named "Alice Old".
+  - The system is in a state ready to accept console input for name fields.
+
+ACTIONS:
+  1. User is prompted "Enter your name: " => user inputs "AliceNew".
+  2. User is prompted "Enter your last name: " => user inputs "LastNew".
+  3. showUpdateProfilePage() calls updateProfile() internally.
+
+EXPECTED OUTCOMES:
+  - The user’s new name is stored as "AliceNew", last name as "LastNew".
+  - A success message "Profile updated successfully" is displayed.
+  - The user is returned to their profile page afterward (or an equivalent step).
