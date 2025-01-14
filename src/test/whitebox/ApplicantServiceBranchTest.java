@@ -100,6 +100,290 @@ public class ApplicantServiceBranchTest {
         System.setOut(originalOut);
     }
 
+    @Test
+    public void testViewApplicantProfilePage_AllPropertiesNull() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            User mockUser = new User(null, null, null, null, null, null);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("continue");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicantDashboard();
+
+            // Test
+            applicantService.viewApplicantProfilePage();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+
+            // Filter string
+            List<String> filteredLines = new ArrayList<>();
+
+            for (String str : lines) {
+                String trimmed = str.trim();
+                if (!trimmed.isEmpty()) {
+                    filteredLines.add(trimmed);
+                }
+            }
+
+            assertTrue(filteredLines.contains("ID is missing."));
+            assertTrue(filteredLines.contains("Name is missing."));
+            assertTrue(filteredLines.contains("Last Name is missing."));
+            assertTrue(filteredLines.contains("Username is missing."));
+            assertTrue(filteredLines.contains("Role is missing."));
+        }
+    }
+
+    @Test
+    public void testViewApplicantProfilePage_AllPropertiesEmpty() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            User mockUser = new User("", "", "", "", "", null);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("continue");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicantDashboard();
+
+            // Test
+            applicantService.viewApplicantProfilePage();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+
+            // Filter string
+            List<String> filteredLines = new ArrayList<>();
+
+            for (String str : lines) {
+                String trimmed = str.trim();
+                if (!trimmed.isEmpty()) {
+                    filteredLines.add(trimmed);
+                }
+            }
+
+            assertTrue(filteredLines.contains("ID is missing."));
+            assertTrue(filteredLines.contains("Name is missing."));
+            assertTrue(filteredLines.contains("Last Name is missing."));
+            assertTrue(filteredLines.contains("Username is missing."));
+            assertTrue(filteredLines.contains("Role is missing."));
+        }
+    }
+
+    @Test
+    public void testViewApplicantProfilePage_AllPropertiesValid() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            User mockUser = new User("51", "John", "Doe", "john", "GyyGGyibkl",
+                    UserRole.APPLICANT);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("continue");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicantDashboard();
+
+            // Test
+            applicantService.viewApplicantProfilePage();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+
+            // Filter string
+            List<String> filteredLines = new ArrayList<>();
+
+            for (String str : lines) {
+                String trimmed = str.trim();
+                if (!trimmed.isEmpty()) {
+                    filteredLines.add(trimmed);
+                }
+            }
+
+            assertFalse(filteredLines.contains("ID is missing."));
+            assertFalse(filteredLines.contains("Name is missing."));
+            assertFalse(filteredLines.contains("Last Name is missing."));
+            assertFalse(filteredLines.contains("Username is missing."));
+            assertFalse(filteredLines.contains("Role is missing."));
+        }
+    }
+
+    @Test
+    public void testSubmitAssessmentForm_ApplicationNotFound() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+
+            // Invalid application ID given
+            applicantService.submitAssessmentForm("999g");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Application with given ID not found", lastMessage);
+        }
+    }
+
+    @Test
+    public void testSubmitAssessmentForm_NoAssignmentsForApplication() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            ArrayList<Assignment> assignmentsEmpty = new ArrayList<>();
+            ArrayList<Application> mockedApplications = new ArrayList<>();
+
+            Application app1 = new Application("1", "1", "1",
+                    ApplicationStatus.INPROGRESS, assignmentsEmpty, 2, "BSc",
+                    "JS, CSS", "");
+            mockedApplications.add(app1);
+            mockedUtility.when(Utility::getApplications).thenReturn(mockedApplications);
+
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicationProcessDashboard("1");
+
+            applicantService.submitAssessmentForm("1");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("No assignments found for this application", lastMessage);
+        }
+    }
+
+    @Test
+    public void testSubmitAssessmentForm_AssignmentAlreadySubmitted() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange (mocking the assignment as submitted)
+            mockAssignment.setStatus(AssignmentStatus.SUBMITTED);
+            ArrayList<Assignment> mockedAssignments = new ArrayList<>();
+            mockedAssignments.add(mockAssignment);
+            ArrayList<Application> mockedApplications = new ArrayList<>();
+
+            Application app1 = new Application("1", "1", "1",
+                    ApplicationStatus.INPROGRESS, mockedAssignments, 2, "BSc",
+                    "JS, CSS", "");
+            mockedApplications.add(app1);
+            mockedUtility.when(Utility::getApplications).thenReturn(mockedApplications);
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("Test Input");
+
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicationProcessDashboard("1");
+
+            applicantService.submitAssessmentForm("1");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+
+            // Filter string
+            List<String> filteredLines = new ArrayList<>();
+
+            for (String str : lines) {
+                String trimmed = str.trim();
+                if (!trimmed.isEmpty()) {
+                    filteredLines.add(trimmed);
+                }
+            }
+
+            assertTrue(filteredLines.contains("This assignment is already submitted"));
+        }
+    }
+
+    @Test
+    public void testSubmitAssessmentForm_SubmitAssignmentSuccessfully() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("Test Input");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicationProcessDashboard("1");
+
+            // Act
+            applicantService.submitAssessmentForm("1");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("All assignments submitted successfully", lastMessage.trim());
+        }
+    }
+
+    @Test
+    public void testViewInterview_ApplicationNotFound() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+
+            // Invalid application ID given
+            applicantService.viewInterview("999g");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Application with given ID not found", lastMessage);
+        }
+    }
+
+    @Test
+    public void testViewInterview_InterviewQuestionsFound() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicationProcessDashboard("1");
+
+            // Act
+            applicantService.viewInterview("1");
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+
+            // Filter string
+            List<String> filteredLines = new ArrayList<>();
+
+            for (String str : lines) {
+                String trimmed = str.trim();
+                if (!trimmed.isEmpty()) {
+                    filteredLines.add(trimmed);
+                }
+            }
+
+            assertTrue(filteredLines.contains("Questions are:"));
+        }
+    }
+
     /*
      * Author: Mayur Shinde (mss62)
      * User Story: 17
