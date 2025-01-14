@@ -1,0 +1,32 @@
+# Input Jobs Presence
+JobsPresence:
+NoJobs.
+HasJobs.
+
+# Input User Choice
+UserChoice:
+ViewSpecific.
+GoBack.
+Invalid.
+
+# Input Job ID
+JobID:
+Existing.
+NonExisting.
+
+# Constraints
+# 1. If JobsPresence is NoJobs:
+#    a. Notify the user that no jobs are available.
+#    b. Redirect appropriately (e.g., back to the dashboard).
+# 2. If JobsPresence is HasJobs:
+#    a. List all available jobs with brief details.
+#    b. Prompt for UserChoice.
+#       i. If UserChoice is ViewSpecific:
+#          	- Redirect to view specific page
+#       ii. If UserChoice is GoBack:
+#           - Redirect to the dashboard.
+#       iii. If UserChoice is Invalid:
+#           - Notify the user of invalid input.
+#           - Prompt to enter a valid choice.
+# 3. Ensure that viewing job descriptions accurately reflects the current job details.
+# 4. Prevent unauthorized access by verifying user permissions before displaying job details.

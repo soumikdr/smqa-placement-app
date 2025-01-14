@@ -1,0 +1,23 @@
+# Input Delete Profile Confirmation
+DeleteProfileConfirmation:
+Yes. [if Role=Applicant]
+No.
+Invalid.
+
+# Input User Role
+Role:
+Applicant.
+Recruiter.
+
+# Constraints
+# 1. If Role is Applicant:
+#    a. If DeleteProfileConfirmation is Yes:
+#       i. Invoke deleteProfileHelper().
+#       ii. Ensure that the user is redirected to the Sign In/Sign Up page.
+#    b. If DeleteProfileConfirmation is No:
+#       i. Cancel the deletion process.
+#       ii. Redirect back to the Profile Page.
+#    c. If DeleteProfileConfirmation is Invalid:
+#       i. Notify the user of invalid input.
+#       ii. Prompt the user to confirm again or redirect appropriately.
+# 2. Prevent unauthorized users from deleting profiles by verifying they can delete their account only.

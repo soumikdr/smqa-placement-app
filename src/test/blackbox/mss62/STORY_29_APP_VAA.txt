@@ -1,0 +1,48 @@
+# Input User Role
+Role:
+Applicant.
+Recruiter.
+
+# Input Applications Presence
+ApplicationsPresence:
+HasApplications.
+NoApplications.
+
+# Input View Choice
+ViewChoice:
+ViewSpecific.
+GoBack.
+Invalid.
+
+# Input Application ID
+ApplicationID:
+Existing.
+NonExisting.
+
+# Input Application Status
+ApplicationStatus:
+InProgress.
+Completed.
+Withdrawn.
+
+# Constraints
+# 1. If Role is Recruiter:
+#    a. Deny access to view applicant applications.
+#    b. Notify the user that they are not authorized.
+#    c. Redirect to the dashboard.
+# 2. If Role is Applicant:
+#    a. If ApplicationsPresence is HasApplications:
+#       i. List all applications with their statuses.
+#       ii. Prompt for ViewChoice.
+#           - If ViewChoice is ViewSpecific:
+#               * Redirect to the view specific page
+#           - If ViewChoice is GoBack:
+#               * Redirect to the dashboard.
+#           - If ViewChoice is Invalid:
+#               * Notify user of invalid input.
+#               * Prompt to enter a valid choice.
+#    b. If ApplicationsPresence is NoApplications:
+#       i. Notify the user that no applications are found.
+#       ii. Redirect to the dashboard.
+# 2. Ensure that viewing specific applications only displays data relevant to the current user.
+# 3. Prevent unauthorized access by verifying user roles before displaying application details.

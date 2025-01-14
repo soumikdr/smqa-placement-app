@@ -1,0 +1,23 @@
+# Input Application ID
+ApplicationID:
+Existing.
+NonExisting.
+
+# Input Job ID
+JobID:
+Existing.
+NonExisting.
+
+# Constraints
+# 1. If ApplicationID is NonExisting:
+#    a. Notify the user that the application does not exist.
+#    b. Abort the process of viewing job description.
+# 2. If ApplicationID is Existing:
+#    a. Retrieve the associated JobID from the application.
+#    b. If JobID is Existing:
+#       i. Display comprehensive job details (ID, Title, Description, Status).
+#    c. If JobID is NonExisting:
+#       i. Notify the user that the job does not exist.
+#       ii. Suggest contacting support or refreshing the job listings.
+# 3. Ensure that the job details correspond accurately to the application.
+# 4. Prevent unauthorized access by verifying user permissions before displaying job details.

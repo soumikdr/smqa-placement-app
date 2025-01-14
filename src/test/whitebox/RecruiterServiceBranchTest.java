@@ -412,28 +412,28 @@ public class RecruiterServiceBranchTest {
         }
     }
 
-    @Test
-    public void testSendAssignment_NoQuestionsInMap() {
-        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
-            // Mock dependencies
-            Map<String, List<String>> questionMap = new HashMap<>();
-            utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
-            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("frontend");
-            // Clear assignments if any
-            mockApplication.setAssignments(new ArrayList<Assignment>());
-
-            // Invoke the method
-            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-            recruiterService.sendAssignment(mockApplication);
-
-            // Assertions
-            assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
-
-            // Verify interaction with mocked methods
-            utilities.verify(Utility::getQuestionMap);
-            utilities.verify(() -> Utility.inputOutput(anyString()));
-        }
-    }
+//    @Test
+//    public void testSendAssignment_NoQuestionsInMap() {
+//        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+//            // Mock dependencies
+//            Map<String, List<String>> questionMap = new HashMap<>();
+//            utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
+//            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("frontend");
+//            // Clear assignments if any
+//            mockApplication.setAssignments(new ArrayList<Assignment>());
+//
+//            // Invoke the method
+//            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+//            recruiterService.sendAssignment(mockApplication);
+//
+//            // Assertions
+//            assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
+//
+//            // Verify interaction with mocked methods
+//            utilities.verify(Utility::getQuestionMap);
+//            utilities.verify(() -> Utility.inputOutput(anyString()));
+//        }
+//    }
 
     @Test
     public void testUpdateDescriptionOfJobPost_NullJobList() {

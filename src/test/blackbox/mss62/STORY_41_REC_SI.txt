@@ -1,0 +1,42 @@
+# Input Application ID
+ApplicationID:
+Existing.
+NonExisting.
+
+# Input Interview Questions
+InterviewQuestions:
+ValidList.
+EmptyList.
+InvalidList.
+
+# Input Send Confirmation
+SendConfirmation:
+Yes.
+No.
+Invalid.
+
+# Constraints
+# 1. If ApplicationID is NonExisting:
+#    a. Trigger an error indicating that the application does not exist.
+#    b. Abort the process of sending interviews.
+# 2. If ApplicationID is Existing:
+#    a. Check InterviewQuestions:
+#       i. If ValidList:
+#           - Proceed to send interview questions upon SendConfirmation.
+#       ii. If EmptyList:
+#           - Trigger an error indicating that no interview questions are available.
+#           - Prompt the recruiter to add interview questions.
+#       iii. If InvalidList:
+#           - Trigger an error indicating malformed interview questions.
+#           - Suggest reviewing the interview questions format.
+#    b. SendConfirmation:
+#       i. If Yes:
+#           - Proceed to send the interview.
+#           - Notify the recruiter of the successful dispatch.
+#       ii. If No:
+#           - Cancel the sending process.
+#           - Redirect to the application details.
+#       iii. If Invalid:
+#           - Handle invalid inputs gracefully.
+#           - Prompt the recruiter to confirm again or redirect appropriately.
+# 3. Ensure that sending interviews updates the application status appropriately.

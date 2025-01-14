@@ -1,0 +1,15 @@
+# Input Reset Password Confirmation
+ResetPasswordConfirmation:
+Yes.
+No.
+Invalid.
+
+# Input User Name
+UserName:
+NonEmpty.
+
+# Constraints
+# 1. If ResetPasswordConfirmation is Yes:
+#    a. UserName must be NonEmpty.
+# 2. If ResetPasswordConfirmation is No or Invalid:
+#    a. Password reset process should be aborted without changes.

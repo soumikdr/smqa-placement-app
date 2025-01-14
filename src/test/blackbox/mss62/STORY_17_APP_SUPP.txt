@@ -1,0 +1,19 @@
+# Input First Name
+FirstName:
+Change.
+NoChange.
+
+# Input Last Name
+LastName:
+Change.
+NoChange.
+
+# Constraints
+# 1. At least one of FirstName or LastName must be Change to perform an update.
+# 2. If FirstName is Change:
+#    a. Prompt for the new first name.
+#    b. Validate that the new first name is non-empty.
+# 3. If LastName is Change:
+#    a. Prompt for the new last name.
+#    b. Validate that the new last name is non-empty.
+# 4. Ensure that updates do not allow duplicate or invalid usernames.
