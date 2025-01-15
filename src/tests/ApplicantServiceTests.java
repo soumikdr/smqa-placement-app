@@ -759,11 +759,11 @@ public void viewSpecificApplicationTest1() throws IOException {
             // Mocked applications list
             ArrayList<Application> mockApplications = new ArrayList<>();
             mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
-                new ArrayList<>(), "Excellent performance, keep it up!"));
+                new ArrayList<>(), null, null, null, "Excellent performance, keep it up!"));
             mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL,
-                new ArrayList<>(), ""));
+                new ArrayList<>(), null, "", null, null));
             mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.UNSUCCESSFUL,
-                new ArrayList<>(), "Needs improvement, better luck next time."));
+                new ArrayList<>(), null, "Needs improvement, better luck next time.", null, null));
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 
@@ -819,9 +819,9 @@ public void viewSpecificApplicationTest1() throws IOException {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
             ArrayList<Application> mockApplications = new ArrayList<>();
-            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS, new ArrayList<>(), null));
-            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
-            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.UNSUCCESSFUL, new ArrayList<>(), null));
+            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS, new ArrayList<>(), null, null, null, null));
+            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null, null, null, null));
+            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.UNSUCCESSFUL, new ArrayList<>(), null, null, null, null));
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 
