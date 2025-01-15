@@ -1,9 +1,9 @@
 package model;
 
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-import utility.Utility;
 
 public class Applicant extends User {
 

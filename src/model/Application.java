@@ -1,9 +1,9 @@
 package model;
 
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.UUID;
-
-import utility.Utility;
 
 public class Application {
     private String id;
@@ -27,13 +27,14 @@ public class Application {
     private String feedback;
 
     public Application(String id, String jobId, String applicantId, ApplicationStatus status,
-            ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills,
-            String feedback) {
+                       ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills,
+                       String feedback) {
         this.id = id;
         this.jobId = jobId;
         this.applicantId = applicantId;
         this.applicationStatus = status;
-        this.assignments = assignments;
+
+        this.assignments = assignments == null ? new ArrayList<Assignment>() : assignments;
         this.feedback = feedback;
         this.yearOfExperience = yearOfExperience;
         this.education = education;

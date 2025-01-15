@@ -1,0 +1,15 @@
+TEST CASE: TSL_REC_SUBJOB_01
+METHOD: submitNewJobPost(String jobName, String jobDescription)
+DESCRIPTION: Checks that a newly submitted job post is added to the system with PUBLIC status by default (or however your code sets it).
+
+PRECONDITIONS:
+  - The system has zero or any number of existing jobs in the job list.
+  - The recruiter has provided a valid jobName = "NewJob", jobDescription = "JobDesc".
+
+ACTIONS:
+  1. Invoke submitNewJobPost("NewJob", "JobDesc").
+
+EXPECTED OUTCOMES:
+  - A new Job is created with a unique ID, jobName = "NewJob", jobDescription = "JobDesc", jobStatus = PUBLIC.
+  - The console prints "Job posted successfully".
+  - The new Job is appended to the global job list (job count increments by 1).

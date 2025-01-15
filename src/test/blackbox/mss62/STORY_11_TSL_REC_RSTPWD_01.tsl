@@ -1,0 +1,168 @@
+
+Test Case 1  		(Key = 1.1.1.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 2  		(Key = 1.1.1.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 3  		(Key = 1.1.1.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+
+
+Test Case 4  		(Key = 1.1.2.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  The user is prompted "Do you want to reset your password? (y/n)" => user types "n\
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 5  		(Key = 1.1.2.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  The user is prompted "Do you want to reset your password? (y/n)" => user types "n\
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 6  		(Key = 1.1.2.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  The user is prompted "Do you want to reset your password? (y/n)" => user types "n\
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+
+
+Test Case 7  		(Key = 1.1.3.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 8  		(Key = 1.1.3.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 9  		(Key = 1.1.3.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+
+
+Test Case 10 		(Key = 1.1.4.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  viewResetPasswordPage() interprets that choice
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 11 		(Key = 1.1.4.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  viewResetPasswordPage() interprets that choice
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 12 		(Key = 1.1.4.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The current user is a Recruiter with username = "RecruiterX"
+   ACTIONS           :  viewResetPasswordPage() interprets that choice
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+
+
+Test Case 13 		(Key = 1.2.1.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 14 		(Key = 1.2.1.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 15 		(Key = 1.2.1.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+
+
+Test Case 16 		(Key = 1.2.2.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  The user is prompted "Do you want to reset your password? (y/n)" => user types "n\
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 17 		(Key = 1.2.2.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  The user is prompted "Do you want to reset your password? (y/n)" => user types "n\
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 18 		(Key = 1.2.2.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  The user is prompted "Do you want to reset your password? (y/n)" => user types "n\
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+
+
+Test Case 19 		(Key = 1.2.3.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 20 		(Key = 1.2.3.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 21 		(Key = 1.2.3.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+
+
+Test Case 22 		(Key = 1.2.4.1.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  viewResetPasswordPage() interprets that choice
+   EXPECTED OUTCOMES :  - The system prints "Redirecting to dashboard"
+
+
+Test Case 23 		(Key = 1.2.4.2.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  viewResetPasswordPage() interprets that choice
+   EXPECTED OUTCOMES :  - Control flows back to the Recruiter Dashboard screen
+
+
+Test Case 24 		(Key = 1.2.4.3.)
+   DESCRIPTION       :  Ensures that if the user chooses not to reset the password (typing 'n'), the syst4
+   PRECONDITIONS     :  - The system is on the "Reset password?" prompt
+   ACTIONS           :  viewResetPasswordPage() interprets that choice
+   EXPECTED OUTCOMES :  - No password reset flow is triggered
+

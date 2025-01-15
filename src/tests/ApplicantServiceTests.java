@@ -6,34 +6,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
-
 import service.ApplicantService;
-import utility.Utility;
 import service.CommonService;
 import utility.Utility;
 
-import static org.mockito.Mockito.times;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import static org.mockito.Mockito.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.MockedStatic;
-import java.util.ArrayList;
-import java.util.List;
 
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
-import java.util.UUID;
+import static org.mockito.Mockito.mockStatic;
 
 public class ApplicantServiceTests {
 
@@ -60,14 +45,13 @@ public class ApplicantServiceTests {
         CommonService commonSpyObject = Mockito.spy(commonServiceService);
         CommonService mockACommonService = Mockito.mock(CommonService.class);
         Mockito.mockStatic(CommonService.class).when(CommonService::getInstance).thenReturn(mockACommonService);
-        
 
-    
+
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             Mockito.doNothing().when(spyObject).signIn();
             Mockito.doNothing().when(spyObject).signUp();
             Mockito.doNothing().when(commonSpyObject).accessLandingPage();
-    
+
             // Test case 1: Navigate to Sign In
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("1");
             spyObject.applicantViewSignInSignUpPage();
@@ -75,7 +59,7 @@ public class ApplicantServiceTests {
             Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant Sign In Page"));
             Mockito.verify(spyObject, Mockito.times(1)).signIn();
             outputStream.reset();
-    
+
             // Test case 2: Navigate to Sign Up
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
             spyObject.applicantViewSignInSignUpPage();
@@ -83,14 +67,14 @@ public class ApplicantServiceTests {
             Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant Sign Up Page"));
             Mockito.verify(spyObject, Mockito.times(1)).signUp();
             outputStream.reset();
-    
+
             // Test case 3: Navigate back to previous menu
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("3");
             spyObject.applicantViewSignInSignUpPage();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("Redirecting to previous menu"));
             outputStream.reset();
-    
+
             // Test case 4: Invalid input (handled and terminates)
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("invalid", "3");
             spyObject.applicantViewSignInSignUpPage();
@@ -98,14 +82,14 @@ public class ApplicantServiceTests {
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
             Assert.assertTrue(consoleOutput.contains("Redirecting to previous menu"));
             outputStream.reset();
-    
+
             // Verifications
             Mockito.verify(spyObject, Mockito.times(1)).signIn();
             Mockito.verify(spyObject, Mockito.times(1)).signUp();
             mockedUtility.verify(Mockito.times(5), () -> Utility.inputOutput(Mockito.anyString()));
         }
     }
-    
+
 
     @Test
     public void submitInterviewFormTest() {
@@ -113,19 +97,19 @@ public class ApplicantServiceTests {
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
         ApplicantService spyObject = Mockito.spy(service);
 
-    	ArrayList<String> questions=new ArrayList<String>();
-    	questions.add("Q1");
-    	questions.add("Q2");
+        ArrayList<String> questions = new ArrayList<String>();
+        questions.add("Q1");
+        questions.add("Q2");
 
-    	Assignment interview=new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>());
-
-
-        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
-
-        	Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard();
+        Assignment interview = new Assignment("AS1", "AP1", "Interview", questions, new ArrayList<String>());
 
 
-            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("Answer1").thenReturn("Answer2");
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard();
+
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("Answer1").thenReturn("Answer2");
 
             spyObject.submitInterviewForm(interview);
 
@@ -138,10 +122,10 @@ public class ApplicantServiceTests {
 
             Mockito.verify(spyObject).viewApplicationProcessDashboard();
 
-            mockedUtility.verify(Mockito.times(2),()->Utility.inputOutput(Mockito.anyString()));
+            mockedUtility.verify(Mockito.times(2), () -> Utility.inputOutput(Mockito.anyString()));
 
 
-          }
+        }
     }
 
     @Test
@@ -212,7 +196,6 @@ public class ApplicantServiceTests {
             assertTrue(consoleOutput.contains("Job ID: 1|Job Name: Data Analyst"));
         }
     }
-
 
 
     @Test
@@ -286,6 +269,7 @@ public class ApplicantServiceTests {
         Assert.assertTrue(consoleOutput.contains(expectedOutput));
 //        TODO: Add view specific application test
     }
+
     @Test
     public void updateProfileTest() {
         User newUserProfile = Utility.getUsers().get(0);
@@ -405,7 +389,7 @@ public class ApplicantServiceTests {
         System.setOut(printStream);
         try (MockedStatic<Utility> mockedUtility = mockStatic(Utility.class)) {
 
-           mockedUtility.when(() -> Utility.inputOutput("Enter your education: ")).thenReturn("Bachelor's Degree");
+            mockedUtility.when(() -> Utility.inputOutput("Enter your education: ")).thenReturn("Bachelor's Degree");
             mockedUtility.when(() -> Utility.inputOutput("Enter your experience: ")).thenReturn("5");
             mockedUtility.when(() -> Utility.inputOutput("Enter your skills: ")).thenReturn("Java, Spring");
 
@@ -420,67 +404,67 @@ public class ApplicantServiceTests {
     }
 
     @Test
-public void viewApplicationProcessDashboardTest() throws IOException {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    System.setOut(new PrintStream(outputStream)); // Redirect System.out
-    ApplicantService spyObject = Mockito.spy(service);
+    public void viewApplicationProcessDashboardTest() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService spyObject = Mockito.spy(service);
 
-    try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString()))
-            .thenReturn("1", "2", "3", "4", "5", "6", "invalid", "6", "2");
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString()))
+                    .thenReturn("1", "2", "3", "4", "5", "6", "invalid", "6", "2");
 
-        Mockito.doNothing().when(spyObject).viewAssessment(Mockito.anyString());
-        Mockito.doNothing().when(spyObject).submitAssessmentForm(Mockito.anyString());
-        Mockito.doNothing().when(spyObject).viewInterview(Mockito.anyString());
-        Mockito.doNothing().when(spyObject).submitInterviewForm(Mockito.anyString());
-        Mockito.doNothing().when(spyObject).viewFeedback(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).viewAssessment(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).submitAssessmentForm(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).viewInterview(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).submitInterviewForm(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).viewFeedback(Mockito.anyString());
 
-        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
-        String consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Redirecting to View assignments page"));
-        Mockito.verify(spyObject, Mockito.times(1)).viewAssessment(Mockito.anyString());
-        outputStream.reset();
+            spyObject.viewApplicationProcessDashboard(Mockito.anyString());
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to View assignments page"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewAssessment(Mockito.anyString());
+            outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Redirecting to submit assignments page"));
-        Mockito.verify(spyObject, Mockito.times(1)).submitAssessmentForm(Mockito.anyString());
-        outputStream.reset();
+            spyObject.viewApplicationProcessDashboard(Mockito.anyString());
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to submit assignments page"));
+            Mockito.verify(spyObject, Mockito.times(1)).submitAssessmentForm(Mockito.anyString());
+            outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Redirecting to view interview questions page"));
-        Mockito.verify(spyObject, Mockito.times(1)).viewInterview(Mockito.anyString());
-        outputStream.reset();
+            spyObject.viewApplicationProcessDashboard(Mockito.anyString());
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to view interview questions page"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewInterview(Mockito.anyString());
+            outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Redirecting to submit interview answers page"));
-        Mockito.verify(spyObject, Mockito.times(1)).submitInterviewForm(Mockito.anyString());
-        outputStream.reset();
+            spyObject.viewApplicationProcessDashboard(Mockito.anyString());
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to submit interview answers page"));
+            Mockito.verify(spyObject, Mockito.times(1)).submitInterviewForm(Mockito.anyString());
+            outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Redirecting to view feedback page"));
-        Mockito.verify(spyObject, Mockito.times(1)).viewFeedback(Mockito.anyString());
-        outputStream.reset();
+            spyObject.viewApplicationProcessDashboard(Mockito.anyString());
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to view feedback page"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewFeedback(Mockito.anyString());
+            outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Go back to Applications page"));
-        Mockito.verify(spyObject, Mockito.times(1)).viewApplicantApplications();
-        outputStream.reset();
+            spyObject.viewApplicationProcessDashboard(Mockito.anyString());
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Go back to Applications page"));
+            Mockito.verify(spyObject, Mockito.times(1)).viewApplicantApplications();
+            outputStream.reset();
 
-        spyObject.viewApplicationProcessDashboard(Mockito.anyString());
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
-        Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard(Mockito.anyString());
-        outputStream.reset();
+            spyObject.viewApplicationProcessDashboard(Mockito.anyString());
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard(Mockito.anyString());
+            outputStream.reset();
 
-        Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard(Mockito.anyString());
-        mockedUtility.verify(Mockito.times(8), () -> Utility.inputOutput(Mockito.anyString()));
+            Mockito.verify(spyObject, Mockito.times(8)).viewApplicationProcessDashboard(Mockito.anyString());
+            mockedUtility.verify(Mockito.times(8), () -> Utility.inputOutput(Mockito.anyString()));
+        }
     }
-}
 
     @Test
     public void viewSpecificApplicationTest() throws IOException {
@@ -505,11 +489,11 @@ public void viewApplicationProcessDashboardTest() throws IOException {
 
             ArrayList<Application> mockApplications = new ArrayList<>();
             mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
-                new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", questions, answers))), null));
+                    new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", questions, answers))), null));
             mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
-            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.SUCCESSFUL, new ArrayList<>(),  null));
+            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
             mockApplications.add(new Application("A104", "J104", "U101", ApplicationStatus.INPROGRESS,
-                new ArrayList<>(List.of(new Assignment("Assign2", "U101", "Assignment 1", new ArrayList<>(), new ArrayList<>()))), null));
+                    new ArrayList<>(List.of(new Assignment("Assign2", "U101", "Assignment 1", new ArrayList<>(), new ArrayList<>()))), null));
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 
@@ -598,7 +582,7 @@ public void viewApplicationProcessDashboardTest() throws IOException {
             Assert.assertTrue(consoleOutput.contains("Redirecting to withdraw application page"));
             outputStream.reset();
 
-            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A103","invalid");
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A103", "invalid");
             spyObject.viewSpecificApplication();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You have entered a invalid application id"));
@@ -635,118 +619,118 @@ public void viewApplicationProcessDashboardTest() throws IOException {
     }
 
     @Test
-public void viewSpecificApplicationTest1() throws IOException {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    System.setOut(new PrintStream(outputStream)); // Redirect System.out
-    ApplicantService spyObject = Mockito.spy(service);
-    ArrayList<String> questions = new ArrayList<>();
-    ArrayList<String> answers = new ArrayList<>();
+    public void viewSpecificApplicationTest1() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService spyObject = Mockito.spy(service);
+        ArrayList<String> questions = new ArrayList<>();
+        ArrayList<String> answers = new ArrayList<>();
 
-    try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
-        // Mock dependent methods
-        Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard(Mockito.anyString());
-        Mockito.doNothing().when(spyObject).viewApplicantApplications();
-        Mockito.doNothing().when(spyObject).withdrawApplication(Mockito.anyString());
-        Mockito.doNothing().when(spyObject).viewJobDescFromApplication(Mockito.anyString());
+            // Mock dependent methods
+            Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).viewApplicantApplications();
+            Mockito.doNothing().when(spyObject).withdrawApplication(Mockito.anyString());
+            Mockito.doNothing().when(spyObject).viewJobDescFromApplication(Mockito.anyString());
 
-        // Mock current user
-        User mockUser = new User("U101", "John", "Doe", "johndoe", "bestpassword", UserRole.APPLICANT);
-        mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+            // Mock current user
+            User mockUser = new User("U101", "John", "Doe", "johndoe", "bestpassword", UserRole.APPLICANT);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
 
-        // Create mock questions and answers
-        questions.add("Q1");
-        answers.add("A1");
+            // Create mock questions and answers
+            questions.add("Q1");
+            answers.add("A1");
 
-        // Mock application list
-        ArrayList<Application> mockApplications = new ArrayList<>();
-        mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
-            new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", questions, answers))), null));
-        mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
-        mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
-        mockApplications.add(new Application("A104", "J104", "U101", ApplicationStatus.INPROGRESS,
-            new ArrayList<>(List.of(new Assignment("Assign2", "U101", "Assignment 2", new ArrayList<>(), new ArrayList<>()))), null));
-        mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            // Mock application list
+            ArrayList<Application> mockApplications = new ArrayList<>();
+            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS,
+                    new ArrayList<>(List.of(new Assignment("Assign1", "U101", "Assignment 1", questions, answers))), null));
+            mockApplications.add(new Application("A102", "J102", "U101", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
+            mockApplications.add(new Application("A103", "J103", "U102", ApplicationStatus.SUCCESSFUL, new ArrayList<>(), null));
+            mockApplications.add(new Application("A104", "J104", "U101", ApplicationStatus.INPROGRESS,
+                    new ArrayList<>(List.of(new Assignment("Assign2", "U101", "Assignment 2", new ArrayList<>(), new ArrayList<>()))), null));
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
 
-        // Test Case 1: Valid application ID with questions and answers (A101)
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "1", "2");
-        spyObject.viewSpecificApplication();
-        String consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Application ID: A101"));
-        Assert.assertTrue(consoleOutput.contains("Job Id: J101"));
-        Assert.assertTrue(consoleOutput.contains("Application Status: INPROGRESS"));
-        Assert.assertTrue(consoleOutput.contains("Assignment Id: Assign1"));
-        Assert.assertTrue(consoleOutput.contains("Questions:"));
-        Assert.assertTrue(consoleOutput.contains("Q1"));
-        Assert.assertTrue(consoleOutput.contains("Answers:"));
-        Assert.assertTrue(consoleOutput.contains("A1"));
-        Assert.assertTrue(consoleOutput.contains("Redirecting to application process dashboard"));
-        outputStream.reset();
+            // Test Case 1: Valid application ID with questions and answers (A101)
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "1", "2");
+            spyObject.viewSpecificApplication();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Application ID: A101"));
+            Assert.assertTrue(consoleOutput.contains("Job Id: J101"));
+            Assert.assertTrue(consoleOutput.contains("Application Status: INPROGRESS"));
+            Assert.assertTrue(consoleOutput.contains("Assignment Id: Assign1"));
+            Assert.assertTrue(consoleOutput.contains("Questions:"));
+            Assert.assertTrue(consoleOutput.contains("Q1"));
+            Assert.assertTrue(consoleOutput.contains("Answers:"));
+            Assert.assertTrue(consoleOutput.contains("A1"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to application process dashboard"));
+            outputStream.reset();
 
-        // Test Case 2: Valid application ID with no questions or answers (A104)
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A104", "4");
-        spyObject.viewSpecificApplication();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Application ID: A104"));
-        Assert.assertTrue(consoleOutput.contains("Job Id: J104"));
-        Assert.assertTrue(consoleOutput.contains("Application Status: INPROGRESS"));
-        Assert.assertTrue(consoleOutput.contains("Assignment Id: Assign2"));
-        Assert.assertTrue(consoleOutput.contains("No questions for this assignemt"));
-        Assert.assertTrue(consoleOutput.contains("No answers submitted for this assignemt"));
-        Assert.assertTrue(consoleOutput.contains("Complete your application soon"));
-        outputStream.reset();
+            // Test Case 2: Valid application ID with no questions or answers (A104)
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A104", "4");
+            spyObject.viewSpecificApplication();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Application ID: A104"));
+            Assert.assertTrue(consoleOutput.contains("Job Id: J104"));
+            Assert.assertTrue(consoleOutput.contains("Application Status: INPROGRESS"));
+            Assert.assertTrue(consoleOutput.contains("Assignment Id: Assign2"));
+            Assert.assertTrue(consoleOutput.contains("No questions for this assignemt"));
+            Assert.assertTrue(consoleOutput.contains("No answers submitted for this assignemt"));
+            Assert.assertTrue(consoleOutput.contains("Complete your application soon"));
+            outputStream.reset();
 
-        // Test Case 3: Invalid application ID (A999)
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A999", "2");
-        spyObject.viewSpecificApplication();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("You have entered a invalid application id"));
-        Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
-        outputStream.reset();
+            // Test Case 3: Invalid application ID (A999)
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A999", "2");
+            spyObject.viewSpecificApplication();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You have entered a invalid application id"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
+            outputStream.reset();
 
-        // Test Case 4: Application for another user (A103)
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A103", "2");
-        spyObject.viewSpecificApplication();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("You have entered a invalid application id"));
-        Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
-        outputStream.reset();
+            // Test Case 4: Application for another user (A103)
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A103", "2");
+            spyObject.viewSpecificApplication();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You have entered a invalid application id"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
+            outputStream.reset();
 
-        // Test Case 5: Successful application (A102)
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A102", "2");
-        spyObject.viewSpecificApplication();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Application ID: A102"));
-        Assert.assertTrue(consoleOutput.contains("Job Id: J102"));
-        Assert.assertTrue(consoleOutput.contains("Application Status: SUCCESSFUL"));
-        Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
-        outputStream.reset();
+            // Test Case 5: Successful application (A102)
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A102", "2");
+            spyObject.viewSpecificApplication();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Application ID: A102"));
+            Assert.assertTrue(consoleOutput.contains("Job Id: J102"));
+            Assert.assertTrue(consoleOutput.contains("Application Status: SUCCESSFUL"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
+            outputStream.reset();
 
-        // Test Case 6: Recursive option to view another application
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "1", "1", "A104", "2");
-        spyObject.viewSpecificApplication();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("Redirecting to view specific application details"));
-        Assert.assertTrue(consoleOutput.contains("Application ID: A104"));
-        Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
-        outputStream.reset();
+            // Test Case 6: Recursive option to view another application
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "1", "1", "A104", "2");
+            spyObject.viewSpecificApplication();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to view specific application details"));
+            Assert.assertTrue(consoleOutput.contains("Application ID: A104"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
+            outputStream.reset();
 
-        // Test Case 7: Invalid option for the main menu
-        mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "invalid");
-        spyObject.viewSpecificApplication();
-        consoleOutput = outputStream.toString();
-        Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
-        Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
-        outputStream.reset();
+            // Test Case 7: Invalid option for the main menu
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("A101", "invalid");
+            spyObject.viewSpecificApplication();
+            consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to applications page"));
+            outputStream.reset();
 
-        // Verify interactions
-        Mockito.verify(spyObject, Mockito.atLeastOnce()).viewSpecificApplication();
-        Mockito.verify(spyObject, Mockito.times(1)).viewApplicationProcessDashboard("A101");
-        Mockito.verify(spyObject, Mockito.times(1)).viewApplicantApplications();
-        Mockito.verify(spyObject, Mockito.times(1)).withdrawApplication("A104");
-        mockedUtility.verify(Mockito.atLeastOnce(), () -> Utility.inputOutput(Mockito.anyString()));
+            // Verify interactions
+            Mockito.verify(spyObject, Mockito.atLeastOnce()).viewSpecificApplication();
+            Mockito.verify(spyObject, Mockito.times(1)).viewApplicationProcessDashboard("A101");
+            Mockito.verify(spyObject, Mockito.times(1)).viewApplicantApplications();
+            Mockito.verify(spyObject, Mockito.times(1)).withdrawApplication("A104");
+            mockedUtility.verify(Mockito.atLeastOnce(), () -> Utility.inputOutput(Mockito.anyString()));
+        }
     }
-}
 
 
     @Test
@@ -810,6 +794,7 @@ public void viewSpecificApplicationTest1() throws IOException {
             mockedUtility.verify(Mockito.times(4), Utility::getApplications);
         }
     }
+
     @Test
     public void withdrawApplicationTest() throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -859,15 +844,6 @@ public void viewSpecificApplicationTest1() throws IOException {
     }
 
 
-
-
-
-
-
-
-
-
-
     @Test
     public void viewAssessmentTest() {
         ApplicantService service = ApplicantService.getInstance();
@@ -878,8 +854,8 @@ public void viewSpecificApplicationTest1() throws IOException {
             // Mocked applications list
             ArrayList<Application> mockApplications = new ArrayList<>();
             ArrayList<Assignment> assignments = new ArrayList<>();
-            assignments.add(new Assignment("1", "1","Assignment 1", new ArrayList<>(), new ArrayList<>()));
-            mockApplications.add(new Application("A101", "J101", "U101",ApplicationStatus.INPROGRESS,new ArrayList<>(), 3, "MS", "Java", ""));
+            assignments.add(new Assignment("1", "1", "Assignment 1", new ArrayList<>(), new ArrayList<>()));
+            mockApplications.add(new Application("A101", "J101", "U101", ApplicationStatus.INPROGRESS, new ArrayList<>(), 3, "MS", "Java", ""));
 
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
             service.viewAssessment("A101");
