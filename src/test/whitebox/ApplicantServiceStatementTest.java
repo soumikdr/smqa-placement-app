@@ -529,7 +529,7 @@ public class ApplicantServiceStatementTest {
                 }
             }
 
-            assertTrue(filteredLines.contains("No interview questions found"));
+            assertTrue(filteredLines.contains("Redirecting back to Application Dashboard.."));
         }
     }
 
