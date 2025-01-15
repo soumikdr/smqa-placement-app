@@ -1,0 +1,21 @@
+# Reset Password Page [map66 - userstory 12]
+
+Username Input: 
+null.                               [error]
+invalid string.                     [error]
+valid string.                       [property username_exists]
+
+Role Check: 
+null.                               [if !username_exists] [error]
+Applicant.                         [property applicant_role]
+Recruiter.                         [property recruiter_role]
+
+Reset Code for Applicant: 
+null.                               [if applicant_role] [error]
+invalid string.                     [error]
+valid string.                       [property reset_code_valid]
+
+New Password Input: 
+null.                               [error]
+invalid string.                     [error]
+valid string.                       [property password_strength]

@@ -133,6 +133,10 @@ public class RecruiterService {
         }
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 19
+     */  
     public void viewRecruiterProfilePage() {
         System.out.println("\nWelcome to your profile page\n");
         System.out.println("First Name: " + Utility.getCurrentUser().getName());
@@ -324,6 +328,11 @@ public class RecruiterService {
         }
     }
 
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */ 
     public void viewSpecificJobPost() {
         System.out.println("Welocme to Specific Job Post Details");
         String jobId = Utility.inputOutput("Enter the Job Id");
@@ -355,15 +364,16 @@ public class RecruiterService {
                     updateDescriptionOfJobPost(jobId);
                     break;
                 case "2":
-                    System.out.println("Redirecting to total applications for the job");
+                    System.out.println("Redirecting to update job status page");
                     updateStatusOfJobPost(jobId);
                     break;
                 case "3":
-                    System.out.println("Redirecting to dashboard");
+                    System.out.println("Redirecting to total applications for the job");
                     viewTotalNumberOfApplications(jobId);
                     break;
                 case "4":
                     System.out.println("Redirecting to main menu");
+                    viewRecruiterDashboard();
                     break;
                 default:
                     System.out.println("You entered invalid option");
@@ -733,6 +743,10 @@ public class RecruiterService {
         viewSpecificApplication(application.getId());
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 46
+     */    
     public void viewSubmittedAnswers(Application application) {
         System.out.println("\nWelcome to view submitted answers for the application " + application.getId());
         ArrayList<String> questions = new ArrayList<String>();

@@ -1,0 +1,20 @@
+
+Test Case 1  		(Key = 1.1.)
+   JobName        :  NonEmpty
+   JobDescription :  NonEmpty
+
+
+Test Case 2  		(Key = 1.2.)
+   JobName        :  NonEmpty
+   JobDescription :  Empty
+
+
+Test Case 3  		(Key = 2.1.)
+   JobName        :  Empty
+   JobDescription :  NonEmpty
+
+
+Test Case 4  		(Key = 2.2.)
+   JobName        :  Empty
+   JobDescription :  Empty
+

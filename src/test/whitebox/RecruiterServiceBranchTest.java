@@ -14,24 +14,19 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import java.io.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -836,6 +831,1028 @@ public class RecruiterServiceBranchTest {
         }
     }
 
+    @Test
+    public void testVisitSignInSignUpPageRecruiter_option1() {
+
+        RecruiterService spyService = Mockito.spy(new RecruiterService());
+
+        try (MockedStatic<Utility> utilityMock = Mockito.mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = Mockito.mockStatic(CommonService.class)) {
+
+            utilityMock.when(() -> Utility.inputOutput("Please select one of the options")).thenReturn("1");
+
+
+            doNothing().when(spyService).recruiterSignInPage();
+
+
+            spyService.visitSignInSignUpPageRecruiter();
+
+
+            verify(spyService, times(1)).recruiterSignInPage();
+
+            verify(spyService, never()).viewRecruiterSignUpPage();
+            commonServiceMock.verify( never(),() -> CommonService.getInstance());
+        }
+    }
+
+
+    @Test
+    public void testVisitSignInSignUpPageRecruiter_option2() {
+
+        RecruiterService spyService = Mockito.spy(new RecruiterService());
+
+        try (MockedStatic<Utility> utilityMock = Mockito.mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = Mockito.mockStatic(CommonService.class)) {
+
+            utilityMock.when(() -> Utility.inputOutput("Please select one of the options")).thenReturn("2");
+
+
+            doNothing().when(spyService).viewRecruiterSignUpPage();
+
+
+            spyService.visitSignInSignUpPageRecruiter();
+
+
+            verify(spyService, times(1)).viewRecruiterSignUpPage();
+
+            verify(spyService, never()).recruiterSignInPage();
+            commonServiceMock.verify(never(),()->CommonService.getInstance());
+        }
+    }
+
+
+    @Test
+    public void testVisitSignInSignUpPageRecruiter_option3() {
+
+        RecruiterService spyService = Mockito.spy(new RecruiterService());
+
+        try (MockedStatic<Utility> utilityMock = Mockito.mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = Mockito.mockStatic(CommonService.class)) {
+
+
+            utilityMock.when(() -> Utility.inputOutput("Please select one of the options")).thenReturn("3");
+
+
+            CommonService mockCommonService = mock(CommonService.class);
+            commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
+            doNothing().when(mockCommonService).accessLandingPage();
+
+
+            spyService.visitSignInSignUpPageRecruiter();
+
+
+            commonServiceMock.verify(times(1),() -> CommonService.getInstance());
+            verify(mockCommonService, times(1)).accessLandingPage();
+
+            verify(spyService, never()).recruiterSignInPage();
+            verify(spyService, never()).viewRecruiterSignUpPage();
+        }
+    }
+
+
+    @Test
+    public void testVisitSignInSignUpPageRecruiter() {
+
+        RecruiterService spyService = Mockito.spy(new RecruiterService());
+
+        try (MockedStatic<Utility> utilityMock = Mockito.mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = Mockito.mockStatic(CommonService.class)) {
+
+
+            utilityMock.when(() -> Utility.inputOutput("Please select one of the options"))
+                      .thenReturn("4")
+                      .thenReturn("1");
+
+            doNothing().when(spyService).recruiterSignInPage();
+
+
+            spyService.visitSignInSignUpPageRecruiter();
+
+
+            verify(spyService, times(2)).visitSignInSignUpPageRecruiter();
+
+
+            verify(spyService, times(1)).recruiterSignInPage();
+
+
+            verify(spyService, never()).viewRecruiterSignUpPage();
+
+
+            commonServiceMock.verify(never(),() -> CommonService.getInstance() );
+
+
+            String consoleOutput = outContent.toString();
+            assertTrue(consoleOutput.contains("You entered an invalid option. Please try again."));
+            assertTrue(consoleOutput.contains("Welcome to the Sign In/Sign Up page for Recruiter"));
+            assertTrue(consoleOutput.contains("1. Sign In for Recruiter"));
+            assertTrue(consoleOutput.contains("2. Sign Up for Recruiter"));
+            assertTrue(consoleOutput.contains("3. Go back to the previous menu"));
+        }
+    }
+
+
+
+    @Test
+    public void testVisitSignInSignUpPageRecruiter_invalidOption_tryAgainNo() {
+
+        RecruiterService spyService = Mockito.spy(new RecruiterService());
+
+        try (MockedStatic<Utility> utilityMock = Mockito.mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = Mockito.mockStatic(CommonService.class)) {
+
+            utilityMock.when(() -> Utility.inputOutput("Please select one of the options"))
+                      .thenReturn("abc") // First input: invalid
+                      .thenReturn("1");  // Second input: valid
+
+
+            doNothing().when(spyService).recruiterSignInPage();
+
+
+            spyService.visitSignInSignUpPageRecruiter();
+
+
+            verify(spyService, times(2)).visitSignInSignUpPageRecruiter();
+
+
+            verify(spyService, times(1)).recruiterSignInPage();
+
+
+            verify(spyService, never()).viewRecruiterSignUpPage();
+
+
+            commonServiceMock.verify( never(),() -> CommonService.getInstance());
+        }
+    }
+
+    //UserStory:9
+    @Test
+    public void testLogoutRecruiter_SuccessfulLogout() {
+
+    	RecruiterService spyService = Mockito.spy(new RecruiterService());
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = mockStatic(CommonService.class)) {
+
+
+            utilityMock.when(() -> Utility.setCurrentUser(null)).thenAnswer(invocation -> null);
+
+
+            CommonService mockCommonService = mock(CommonService.class);
+            commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
+
+
+            doNothing().when(mockCommonService).accessLandingPage();
+
+
+            spyService.logoutRecruiter();
+
+
+            String consoleOutput = outContent.toString();
+            assertTrue(
+                       "Initiating logout message should be printed.",consoleOutput.contains("Initiating logout process for Recruiter"));
+
+
+            utilityMock.verify( times(1),() -> Utility.setCurrentUser(null));
+
+
+            commonServiceMock.verify(times(1),CommonService::getInstance);
+
+
+            verify(mockCommonService, times(1)).accessLandingPage();
+        }
+    }
+//UserStory: 21
+    @Test
+    public void testDeleteRecruiterProfile_SuccessfulDeletion() {
+    	RecruiterService spyService = Mockito.spy(new RecruiterService());
+
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = mockStatic(CommonService.class)) {
+
+
+            User mockUser = mock(User.class);
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter123");
+            utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
+
+
+            List<User> mockUsers = new ArrayList<>();
+            mockUsers.add(mockUser);
+            utilityMock.when(Utility::getUsers).thenReturn(mockUsers);
+
+
+            utilityMock.when(() -> Utility.setCurrentUser(null)).thenAnswer(invocation -> null);
+
+
+            CommonService mockCommonService = mock(CommonService.class);
+            commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
+            doNothing().when(mockCommonService).accessLandingPage();
+
+
+            spyService.deleteRecruiterProfile();
+
+
+            String consoleOutput = outContent.toString();
+            assertTrue(
+                       "Should print 'Deleting Recruiter profile'",consoleOutput.contains("Deleting Recruiter profile"));
+            assertTrue("Should print 'Profile deleted successfully'",consoleOutput.contains("Profile deleted successfully")
+                       );
+
+            utilityMock.verify(times(1),Utility::getCurrentUser);
+
+            utilityMock.verify(times(1),Utility::getUsers);
+
+
+            assertTrue( "User should be removed from the users list",mockUsers.isEmpty());
+
+
+            utilityMock.verify( times(1),() -> Utility.setCurrentUser(null));
+
+
+            commonServiceMock.verify( times(1),CommonService::getInstance);
+
+
+            verify(mockCommonService, times(1)).accessLandingPage();
+        }
+    }
+
+    @Test
+    public void testDeleteRecruiterProfile() {
+
+    	RecruiterService spyService = Mockito.spy(new RecruiterService());
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = mockStatic(CommonService.class)) {
+
+
+            User mockUser = mock(User.class);
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter123");
+            utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
+
+
+            List<User> mockUsers = new ArrayList<>();
+            User anotherUser = mock(User.class);
+            Mockito. when(anotherUser.getUserName()).thenReturn("recruiter456");
+            mockUsers.add(anotherUser);
+            utilityMock.when(Utility::getUsers).thenReturn(mockUsers);
+
+
+            utilityMock.when(() -> Utility.setCurrentUser(null)).thenAnswer(invocation -> null);
+
+
+            CommonService mockCommonService = mock(CommonService.class);
+            commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
+            doNothing().when(mockCommonService).accessLandingPage();
+
+
+            spyService.deleteRecruiterProfile();
+
+
+            String consoleOutput = outContent.toString();
+            assertTrue(
+                       "Should print 'Deleting Recruiter profile'",consoleOutput.contains("Deleting Recruiter profile"));
+
+
+            utilityMock.verify( times(1),Utility::getCurrentUser);
+
+
+
+
+            assertTrue("No user should be removed from the users list",mockUsers.size() == 1);
+
+
+            utilityMock.verify( times(1),() -> Utility.setCurrentUser(null));
+
+
+            commonServiceMock.verify(times(1),CommonService::getInstance);
+
+
+            verify(mockCommonService, times(1)).accessLandingPage();
+        }
+    }
+
+ // UserStory: 30; ar668 (Amisha Rastogi)
+
+    @Test
+    public void testViewAllApplications_UserIsApplicant() {
+
+    	RecruiterService spyService = Mockito.spy(new RecruiterService());
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class)) {
+
+            User mockApplicant = mock(Applicant.class);
+            utilityMock.when(Utility::getCurrentUser).thenReturn(mockApplicant);
+            doNothing().when(spyService).viewRecruiterDashboard();
+
+            spyService.viewAllApplications();
+
+
+            String consoleOutput = outContent.toString();
+            assertTrue("Should print unauthorized access message.",consoleOutput.contains("You are not authorized to view this page")
+                       );
+
+            verify(spyService, times(1)).viewRecruiterDashboard();
+
+        }
+    }
+    @Test
+    public void testViewAllApplications_ApplicationsNull() {
+
+    	 RecruiterService spyService = Mockito.spy(new RecruiterService());
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = mockStatic(CommonService.class)) {
+
+
+            User mockRecruiter = mock(User.class);
+            utilityMock.when(Utility::getCurrentUser).thenReturn(mockRecruiter);
+
+
+            utilityMock.when(Utility::getApplications).thenReturn(null);
+
+
+            utilityMock.when(() -> Utility.inputOutput("Please select one of the options.."))
+            .thenReturn("2");
+            doNothing().when(spyService).viewRecruiterDashboard();
+
+            CommonService mockCommonService = mock(CommonService.class);
+            commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
+            doNothing().when(mockCommonService).accessLandingPage();
+
+
+            spyService.viewAllApplications();
+
+
+            String consoleOutput = outContent.toString();
+            assertTrue(
+                       "Should print 'No applications available.' message.",consoleOutput.contains("No applications available."));
+
+
+            verify(spyService, times(1)).viewRecruiterDashboard();
+
+
+            utilityMock.verify(times(1),Utility::getApplications );
+
+
+        }
+    }
+    @Test
+    public void testViewAllApplications_ApplicationsAvailable() {
+        // Arrange
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class);
+             MockedStatic<CommonService> commonServiceMock = mockStatic(CommonService.class)) {
+
+
+            User mockRecruiter = mock(User.class);
+            utilityMock.when(Utility::getCurrentUser).thenReturn(mockRecruiter);
+
+
+            Application mockApplication = mock(Application.class);
+            Mockito.when(mockApplication.getId()).thenReturn("app123");
+            Mockito.when(mockApplication.getStatus()).thenReturn(ApplicationStatus.INPROGRESS);
+            Mockito.when(mockApplication.getApplicantId()).thenReturn("applicant456");
+
+            RecruiterService spyService = Mockito.spy(new RecruiterService());
+            List<Application> mockApplications = new ArrayList<>();
+            mockApplications.add(mockApplication);
+            utilityMock.when(Utility::getApplications).thenReturn(new ArrayList<>(mockApplications));
+
+
+            utilityMock.when(() -> Utility.setCurrentUser(null)).thenAnswer(invocation -> null);
+
+
+            CommonService mockCommonService = mock(CommonService.class);
+            commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
+            doNothing().when(mockCommonService).accessLandingPage();
+
+
+            utilityMock.when(() -> Utility.inputOutput("Please select one of the options.."))
+                       .thenReturn("1","2");
+            utilityMock.when(() -> Utility.inputOutput("Enter the Application ID to view details"))
+                       .thenReturn("app123");
+            doNothing().when(spyService).viewRecruiterDashboard();
+            doNothing().when(spyService).viewSpecificApplication("app123");
+
+            spyService.viewAllApplications();
+
+
+            String consoleOutput = outContent.toString();
+
+            assertTrue(
+                       "Should list the application details",consoleOutput.contains("Application ID: app123|Status: INPROGRESS|Applicant ID: applicant456"));
+            assertTrue(
+                       "Should print option '1: View specific Application details'",consoleOutput.contains("1: View specific Application details"));
+
+
+            verify(spyService, times(1)).viewSpecificApplication("app123");
+
+
+            utilityMock.verify(times(1),Utility::getCurrentUser );
+
+            utilityMock.verify(times(1),Utility::getApplications);
+
+        }
+    }
+
+
+ // UserStory: 13; ar668
+
+    @Test
+    public void testResetPasswordRecruiter() {
+
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class)) {
+
+
+            User mockUser = mock(User.class);
+            Mockito.when(mockUser.getRole()).thenReturn(UserRole.RECRUITER);
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter1");
+            Mockito.when(mockUser.getPassword()).thenReturn("oldPassword");
+            utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
+
+
+            User anotherUser = mock(User.class);
+            Mockito.when(anotherUser.getUserName()).thenReturn("user2");
+            List<User> users = new ArrayList<>();
+            users.add(mockUser);
+            users.add(anotherUser);
+            utilityMock.when(Utility::getUsers).thenReturn(users);
+
+
+            utilityMock.when(() -> Utility.inputOutput("Enter the Reset Code")).thenReturn("XVQTY");
+            utilityMock.when(() -> Utility.inputOutput("Enter your New Password")).thenReturn("newSecurePassword");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+
+            doNothing().when(recruiterService).viewResetPasswordPage();
+
+
+            recruiterService.resetPasswordRecruiter("recruiter1");
+
+
+            String consoleOutput = outContent.toString();
+            assertTrue( "Should print welcome message.",consoleOutput.contains("Welcome to Reset Password Page for Recruiter")
+                      );
+            assertTrue("Should display entered username.",consoleOutput.contains("Your entered username: recruiter1"));
+                       ;
+
+
+
+
+            verify(mockUser, times(2)).setPassword("newSecurePassword");
+
+            verify(anotherUser, never()).setPassword(anyString());
+
+        }
+    }
+
+
+    @Test
+    public void testResetPasswordRecruiter_UserDoesNotMatch() {
+
+        try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class)) {
+
+
+            User mockUser = mock(User.class);
+            Mockito.when(mockUser.getRole()).thenReturn(UserRole.RECRUITER);
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter3");
+            Mockito.when(mockUser.getPassword()).thenReturn("oldPassword");
+            utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            // 2. Mock getUsers() to return a list containing the current user
+            List<User> users = new ArrayList<>();
+            users.add(mockUser);
+            utilityMock.when(Utility::getUsers).thenReturn(users);
+
+
+            doNothing().when(recruiterService).viewResetPasswordPage();
+
+
+
+            recruiterService.resetPasswordRecruiter("wrongUsername");
+
+
+            String consoleOutput = outContent.toString();
+
+            assertTrue( "Should display entered username.",consoleOutput.contains("Your entered username: wrongUsername")
+                      );
+
+
+            verify(mockUser, never()).setPassword(anyString());
+
+
+            verify(recruiterService, times(1)).viewResetPasswordPage();
+        }
+    }
+
+
+
+
+
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */
+    @Test
+    public void testViewSpecificJobPost_Case1() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("Job1", "HR", "Manage resources", JobStatus.PRIVATE));
+            mockJobs.add(new Job("Job2", "Manager", "Manage team", JobStatus.PUBLIC));
+
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+
+            Mockito.doNothing().when(recruiterSpyObject).updateDescriptionOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).updateStatusOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewTotalNumberOfApplications(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("Job1", "1", "2");
+            recruiterSpyObject.viewSpecificJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Job ID: Job1"));
+            Assert.assertTrue(consoleOutput.contains("Job Name: HR"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to update job description page"));
+            Mockito.verify(recruiterSpyObject, Mockito.times(1)).updateDescriptionOfJobPost("Job1");
+            outputStream.reset();
+        }
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */
+    @Test
+    public void testViewSpecificJobPost_Case2() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("Job1", "HR", "Manage resources", JobStatus.PRIVATE));
+            mockJobs.add(new Job("Job2", "Manager", "Manage team", JobStatus.PUBLIC));
+
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+
+            Mockito.doNothing().when(recruiterSpyObject).updateDescriptionOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).updateStatusOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewTotalNumberOfApplications(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("Job2", "2");
+            recruiterSpyObject.viewSpecificJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Job ID: Job2"));
+            Assert.assertTrue(consoleOutput.contains("Job Name: Manager"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to update job status page"));
+            Mockito.verify(recruiterSpyObject, Mockito.times(1)).updateStatusOfJobPost("Job2");
+            outputStream.reset();
+        }
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */
+    @Test
+    public void testViewSpecificJobPost_Case3() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("Job1", "HR", "Manage resources", JobStatus.PRIVATE));
+            mockJobs.add(new Job("Job2", "Manager", "Manage team", JobStatus.PUBLIC));
+
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+
+            Mockito.doNothing().when(recruiterSpyObject).updateDescriptionOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).updateStatusOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewTotalNumberOfApplications(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("Job2", "3");
+            recruiterSpyObject.viewSpecificJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to total applications for the job"));
+            Mockito.verify(recruiterSpyObject, Mockito.times(1)).viewTotalNumberOfApplications("Job2");
+            outputStream.reset();
+        }
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */
+    @Test
+    public void testViewSpecificJobPost_Case4() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("Job1", "HR", "Manage resources", JobStatus.PRIVATE));
+            mockJobs.add(new Job("Job2", "Manager", "Manage team", JobStatus.PUBLIC));
+
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+
+            Mockito.doNothing().when(recruiterSpyObject).updateDescriptionOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).updateStatusOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewTotalNumberOfApplications(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("Job2", "4");
+            recruiterSpyObject.viewSpecificJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to main menu"));
+            Mockito.verify(recruiterSpyObject, Mockito.times(2)).viewRecruiterDashboard();
+            outputStream.reset();
+        }
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */
+    @Test
+    public void testViewSpecificJobPost_Default() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("Job1", "HR", "Manage resources", JobStatus.PRIVATE));
+            mockJobs.add(new Job("Job2", "Manager", "Manage team", JobStatus.PUBLIC));
+
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+
+            Mockito.doNothing().when(recruiterSpyObject).updateDescriptionOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).updateStatusOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewTotalNumberOfApplications(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("Job2", "invalid");
+            recruiterSpyObject.viewSpecificJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            Mockito.verify(recruiterSpyObject, Mockito.times(2)).viewRecruiterDashboard();
+            outputStream.reset();
+        }
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */
+    @Test
+    public void testViewSpecificJobPost_ViewAnotherJob() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            ArrayList<Job> mockJobs = new ArrayList<>();
+            mockJobs.add(new Job("Job1", "HR", "Manage resources", JobStatus.PRIVATE));
+            mockJobs.add(new Job("Job2", "Manager", "Manage team", JobStatus.PUBLIC));
+
+            mockedUtility.when(Utility::getJobs).thenReturn(mockJobs);
+
+            Mockito.doNothing().when(recruiterSpyObject).updateDescriptionOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).updateStatusOfJobPost(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewTotalNumberOfApplications(Mockito.anyString());
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("Job2", "2", "1", "Job2");
+            recruiterSpyObject.viewSpecificJobPost();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Job ID: Job2"));
+            Assert.assertTrue(consoleOutput.contains("Job Name: Manager"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to update job status page"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to view specific job details"));
+            Mockito.verify(recruiterSpyObject, Mockito.times(1)).updateStatusOfJobPost("Job2");
+            outputStream.reset();
+        }
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 19
+     */  
+    @Test
+    public void viewRecruiterProfilePageTest_Case1() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            Mockito.doNothing().when(recruiterSpyObject).updateRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).deleteRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            User mockUser = new User("User1", "Ansar", "Patil", "ansarpatil", "123qwe", UserRole.RECRUITER);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+            recruiterSpyObject.viewRecruiterProfilePage();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to update profile page..."));
+            outputStream.reset();
+            Mockito.verify(recruiterSpyObject, Mockito.atLeastOnce()).viewRecruiterProfilePage();
+            mockedUtility.verify(Mockito.atLeastOnce(), () -> Utility.inputOutput(Mockito.anyString()));
+        }
+
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 19
+     */  
+    @Test
+    public void viewRecruiterProfilePageTest_Case2() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            Mockito.doNothing().when(recruiterSpyObject).updateRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).deleteRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            User mockUser = new User("User1", "Ansar", "Patil", "ansarpatil", "123qwe", UserRole.RECRUITER);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
+            recruiterSpyObject.viewRecruiterProfilePage();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to delete profile page..."));
+            outputStream.reset();
+            Mockito.verify(recruiterSpyObject, Mockito.atLeastOnce()).viewRecruiterProfilePage();
+            mockedUtility.verify(Mockito.atLeastOnce(), () -> Utility.inputOutput(Mockito.anyString()));
+        }
+
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 19
+     */  
+    @Test
+    public void viewRecruiterProfilePageTest_Case3() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            Mockito.doNothing().when(recruiterSpyObject).updateRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).deleteRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            User mockUser = new User("User1", "Ansar", "Patil", "ansarpatil", "123qwe", UserRole.RECRUITER);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("3");
+            recruiterSpyObject.viewRecruiterProfilePage();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Redirecting to dashboard..."));
+            outputStream.reset();
+            Mockito.verify(recruiterSpyObject, Mockito.atLeastOnce()).viewRecruiterProfilePage();
+            mockedUtility.verify(Mockito.atLeastOnce(), () -> Utility.inputOutput(Mockito.anyString()));
+        }
+
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 19
+     */  
+    @Test
+    public void viewRecruiterProfilePageTest_Default() throws IOException {
+        RecruiterService recruiterService = new RecruiterService();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        RecruiterService recruiterSpyObject = Mockito.spy(recruiterService);
+
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+
+            Mockito.doNothing().when(recruiterSpyObject).updateRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).deleteRecruiterProfile();
+            Mockito.doNothing().when(recruiterSpyObject).viewRecruiterDashboard();
+
+            User mockUser = new User("User1", "Ansar", "Patil", "ansarpatil", "123qwe", UserRole.RECRUITER);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
+
+            mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("invalid", "1");
+            recruiterSpyObject.viewRecruiterProfilePage();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+            outputStream.reset();
+            Mockito.verify(recruiterSpyObject, Mockito.atLeastOnce()).viewRecruiterProfilePage();
+            mockedUtility.verify(Mockito.atLeastOnce(), () -> Utility.inputOutput(Mockito.anyString()));
+        }
+
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 46
+     */
+    @Test
+    public void testViewSubmittedAnswers_AssignmentWithAnswers() {
+        Application mockApplication = mock(Application.class);
+        RecruiterService service = new RecruiterService();
+        RecruiterService spyObject = Mockito.spy(service);
+        Mockito.doNothing().when(spyObject).viewSpecificApplication(Mockito.anyString());
+
+        ArrayList<String> questions = new ArrayList<>();
+        questions.add("What is Java?");
+        questions.add("What is OOP?");
+        
+        ArrayList<String> answers = new ArrayList<>();
+        answers.add("Java is a programming language.");
+        answers.add("OOP stands for Object-Oriented Programming.");
+        
+        Assignment mockAssignment = new Assignment("A1", "U101", "Assessment 1", questions, answers);
+        ArrayList<Assignment> mockAssignments = new ArrayList<>();
+        mockAssignments.add(mockAssignment);
+
+        when(mockApplication.getAssignments()).thenReturn(mockAssignments);
+        when(mockApplication.getId()).thenReturn("A101");
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        spyObject.viewSubmittedAnswers(mockApplication);
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Welcome to view submitted answers for the application A101"));
+        Assert.assertTrue(consoleOutput.contains("Assignment: Assessment 1"));
+        Assert.assertTrue(consoleOutput.contains("Question: "));
+        Assert.assertTrue(consoleOutput.contains("What is Java?"));
+        Assert.assertTrue(consoleOutput.contains("Answer:"));
+        Assert.assertTrue(consoleOutput.contains("Java is a programming language."));
+        Assert.assertTrue(consoleOutput.contains("Question: "));
+        Assert.assertTrue(consoleOutput.contains("What is OOP?"));
+        Assert.assertTrue(consoleOutput.contains("Answer:"));
+        Assert.assertTrue(consoleOutput.contains("OOP stands for Object-Oriented Programming."));
+        Assert.assertTrue(consoleOutput.contains("Submitted Answers for interviews:"));
+        outputStream.reset();
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 46
+     */
+    @Test
+    public void testViewSubmittedAnswers_AssignmentWithoutAnswers() {
+        Application mockApplication = mock(Application.class);
+        RecruiterService service = new RecruiterService();
+        RecruiterService spyObject = Mockito.spy(service);
+        Mockito.doNothing().when(spyObject).viewSpecificApplication(Mockito.anyString());
+
+        ArrayList<String> questions = new ArrayList<>();
+        questions.add("What is Java?");
+        questions.add("What is OOP?");
+        
+        Assignment mockAssignment = new Assignment("A2", "U102", "Assessment 2", questions, new ArrayList<>());
+        ArrayList<Assignment> mockAssignments = new ArrayList<>();
+        mockAssignments.add(mockAssignment);
+
+        when(mockApplication.getId()).thenReturn("A101");
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        when(mockApplication.getAssignments()).thenReturn(mockAssignments);
+
+        spyObject.viewSubmittedAnswers(mockApplication);
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Assignment: Assessment 2"));
+        Assert.assertTrue(consoleOutput.contains("No answer submitted yet"));
+        Assert.assertTrue(consoleOutput.contains("No answer submitted yet"));
+        outputStream.reset();
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 46
+     */
+    @Test
+    public void testViewSubmittedAnswers_EmptyAssignment() {
+        Application mockApplication = mock(Application.class);
+        RecruiterService service = new RecruiterService();
+        RecruiterService spyObject = Mockito.spy(service);
+        Mockito.doNothing().when(spyObject).viewSpecificApplication(Mockito.anyString());
+
+        ArrayList<Assignment> mockAssignments = new ArrayList<>();
+
+        when(mockApplication.getId()).thenReturn("A101");
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        when(mockApplication.getAssignments()).thenReturn(mockAssignments);
+
+        spyObject.viewSubmittedAnswers(mockApplication);
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Submitted Answers for assessments:"));
+        Assert.assertTrue(consoleOutput.contains("Submitted Answers for interviews:"));
+        outputStream.reset();
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 46
+     */
+    @Test
+    public void testViewSubmittedAnswers_InterviewWithoutAnswers() {
+        Application mockApplication = mock(Application.class);
+        RecruiterService service = new RecruiterService();
+        RecruiterService spyObject = Mockito.spy(service);
+        Mockito.doNothing().when(spyObject).viewSpecificApplication(Mockito.anyString());
+
+        ArrayList<String> interviewQuestions = new ArrayList<>();
+        interviewQuestions.add("What are your strengths?");
+        interviewQuestions.add("Why do you want this job?");
+        ArrayList<Assignment> mockInterviewAssignments = new ArrayList<>();
+        mockInterviewAssignments.add(new Assignment("I1", "U101", "Interview", interviewQuestions, new ArrayList<>()));
+        
+        when(mockApplication.getId()).thenReturn("A101");
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        when(mockApplication.getInterviewAssignments()).thenReturn(mockInterviewAssignments);
+
+        spyObject.viewSubmittedAnswers(mockApplication);
+        String consoleOutput = outputStream.toString();
+        Assert.assertTrue(consoleOutput.contains("Interview: Interview"));
+        Assert.assertTrue(consoleOutput.contains("Question: "));
+        Assert.assertTrue(consoleOutput.contains("What are your strengths?"));
+        Assert.assertTrue(consoleOutput.contains("No answer submitted yet"));
+        Assert.assertTrue(consoleOutput.contains("Question: "));
+        Assert.assertTrue(consoleOutput.contains("Why do you want this job?"));
+        Assert.assertTrue(consoleOutput.contains("No answer submitted yet"));
+    }
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 46
+     */
+    @Test
+    public void testViewSubmittedAnswers_InterviewWithAnswers() {
+        Application mockApplication = mock(Application.class);
+        RecruiterService service = new RecruiterService();
+        RecruiterService spyObject = Mockito.spy(service);
+        Mockito.doNothing().when(spyObject).viewSpecificApplication(Mockito.anyString());
+
+        ArrayList<String> interviewQuestions = new ArrayList<>();
+        interviewQuestions.add("What are your strengths?");
+        interviewQuestions.add("Why do you want this job?");
+
+        ArrayList<String> interviewAnswers = new ArrayList<>();
+        interviewAnswers.add("I can manage time very well");
+        interviewAnswers.add("To achieve my goals");
+        ArrayList<Assignment> mockInterviewAssignmentsWithAnswers = new ArrayList<>();
+        mockInterviewAssignmentsWithAnswers.add(new Assignment("I1", "U101", "Interview", interviewQuestions, interviewAnswers));
+        
+        when(mockApplication.getId()).thenReturn("A101");
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        when(mockApplication.getInterviewAssignments()).thenReturn(mockInterviewAssignmentsWithAnswers);
+ 
+         spyObject.viewSubmittedAnswers(mockApplication); 
+         String consoleOutput = outputStream.toString();
+         Assert.assertTrue(consoleOutput.contains("Interview: Interview"));
+         Assert.assertTrue(consoleOutput.contains("Question: "));
+         Assert.assertTrue(consoleOutput.contains("What are your strengths?"));
+         Assert.assertTrue(consoleOutput.contains("Answer:"));
+         Assert.assertTrue(consoleOutput.contains("I can manage time very well"));
+         Assert.assertTrue(consoleOutput.contains("Question: "));
+         Assert.assertTrue(consoleOutput.contains("Why do you want this job?"));
+         Assert.assertTrue(consoleOutput.contains("Answer:"));
+         Assert.assertTrue(consoleOutput.contains("To achieve my goals"));
+    }
     /*
      * Author: Mayur Shinde (mss62)
      * User Story: 6
@@ -1026,7 +2043,7 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testRecruiterSignInPage_validCredentialsButNotRecruiter() {
-        // The user is valid, but role is APPLICANT
+
         User applicantUser = new Recruiter("001", "Jane", "Doe", "appUser", "appPass");
         applicantUser.setRole(UserRole.APPLICANT);
 
@@ -1040,13 +2057,10 @@ public class RecruiterServiceBranchTest {
             mockedUtility.when(() -> Utility.inputOutput("Enter your password:"))
                     .thenReturn("appPass");
 
-            // After it checks role != RECRUITER, it’s invalid => asks user if they want to
-            // try again
             mockedUtility
                     .when(() -> Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)"))
                     .thenReturn("n");
 
-            // Mock CommonService
             CommonService mockCommonService = mock(CommonService.class);
             try (MockedStatic<CommonService> mockedCommonService = Mockito.mockStatic(CommonService.class)) {
                 mockedCommonService.when(CommonService::getInstance).thenReturn(mockCommonService);
@@ -1056,14 +2070,12 @@ public class RecruiterServiceBranchTest {
                         .mockStatic(RecruiterService.class)) {
                     mockedRecruiterService.when(RecruiterService::getInstance).thenReturn(spyRecruiterService);
 
-                    // Execute
                     spyRecruiterService.recruiterSignInPage();
 
-                    // Verify redirection
                     verify(mockCommonService, times(1)).accessLandingPage();
-                    // No call to setCurrentUser, no call to viewRecruiterDashboard
+
                     mockedUtility.verify(never(), () -> Utility.setCurrentUser(any()));
-                    // mockedUtility.verify(() -> Utility.setCurrentUser(any()), never());
+
                     verify(spyRecruiterService, never()).viewRecruiterDashboard();
                 }
             }
@@ -1076,36 +2088,28 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewResetPasswordPage_userChoosesYes() {
-        // 1. Spy the RecruiterService so we can verify internal method calls.
+
         RecruiterService spyService = Mockito.spy(recruiterService);
         User user = new Recruiter("1", "John", "Doe", "johnDoe", "bestpassword");
-        // 2. Mock static Utility methods in a try-with-resources
+
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
             mockedUtility
                     .when(() -> Utility.getCurrentUser())
                     .thenReturn(user);
-            // The first prompt
+
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to reset your password? (y/n)"))
                     .thenReturn("y");
 
-            // The second prompt (because user said 'y')
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter your User name"))
                     .thenReturn("johnDoe");
 
-            // 3. Call the method under test (assuming we've made it public or
-            // test-accessible)
-            // If it's truly private, you might need to call a public method that triggers
-            // it.
-            // For demonstration, assume we can do:
             spyService.viewResetPasswordPage();
 
-            // 4. Verify that resetPasswordRecruiter(...) was called with "johnDoe"
             verify(spyService, times(1)).resetPasswordRecruiter("johnDoe");
 
-            // 5. Verify that viewRecruiterDashboard() was NOT called
             verify(spyService, never()).viewRecruiterDashboard();
         }
     }
@@ -1116,7 +2120,7 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewResetPasswordPage_userChoosesNo() {
-        // 1. Spy the RecruiterService
+
         RecruiterService spyService = Mockito.spy(recruiterService);
         User user = new Recruiter("1", "John", "Doe", "johnDoe", "bestpassword");
 
@@ -1124,22 +2128,17 @@ public class RecruiterServiceBranchTest {
             mockedUtility
                     .when(() -> Utility.getCurrentUser())
                     .thenReturn(user);
-            // The first prompt
+
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to reset your password? (y/n)"))
                     .thenReturn("n");
 
-            // 2. Mock the resetPasswordRecruiter(...) method so we can verify it's not
-            // called
             doNothing().when(spyService).viewRecruiterDashboard();
 
-            // 3. Call the method
             spyService.viewResetPasswordPage();
 
-            // 4. Verify that we do NOT call resetPasswordRecruiter(...)
             verify(spyService, never()).resetPasswordRecruiter(anyString());
 
-            // 5. Verify we call viewRecruiterDashboard()
             verify(spyService, times(1)).viewRecruiterDashboard();
         }
     }
@@ -1150,7 +2149,7 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewResetPasswordPage_userChoosesSomethingElse() {
-        // Same as "no" scenario, because the code just checks `equalsIgnoreCase("y")`
+
         RecruiterService spyService = Mockito.spy(recruiterService);
         User user = new Recruiter("1", "John", "Doe", "johnDoe", "bestpassword");
 
@@ -1177,7 +2176,7 @@ public class RecruiterServiceBranchTest {
     @Test
     public void submitNewJobPost() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        System.setOut(new PrintStream(outputStream));
         ArrayList<Job> jobs = Utility.getJobs();
         int previousSize = jobs == null ? 0 : jobs.size();
         recruiterService.submitNewJobPost("Software Engineer", "Develop software");
@@ -1192,33 +2191,26 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_noJobs() {
-        // Scenario 1: jobs == null or empty
 
-        // We'll capture console output so we can assert the "No jobs available" message
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
 
-        // Spy on the recruiterService so we can verify calls to
-        // viewRecruiterDashboard()
         RecruiterService spyService = Mockito.spy(recruiterService);
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            // Mock Utility.getJobs() to return null or empty
-            mockedUtility.when(Utility::getJobs).thenReturn(new ArrayList<>()); // empty list
+
+            mockedUtility.when(Utility::getJobs).thenReturn(new ArrayList<>());
             doNothing().when(spyService).viewRecruiterDashboard();
-            // Act
+
             spyService.viewAvailableJobs();
 
-            // Assert:
-            // 1) "No jobs available" should be printed
             String consoleOutput = outContent.toString();
             assertTrue(consoleOutput.contains("No jobs available"));
 
-            // 2) It should call viewRecruiterDashboard()
             verify(spyService, times(1)).viewRecruiterDashboard();
         } finally {
-            // Restore original System.out
+
             System.setOut(originalOut);
         }
     }
@@ -1229,46 +2221,36 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_jobsAvailable_userChooses1() {
-        // Scenario 2a: jobs available, user picks "1", calls viewSpecificJobPost()
 
-        // Prepare a non-empty list of jobs
         ArrayList<Job> jobs = new ArrayList<>();
         Job job1 = new Job("id1", "Title1", "Desc1", JobStatus.PUBLIC);
         Job job2 = new Job("id2", "Title2", "Desc2", JobStatus.PUBLIC);
         jobs.add(job1);
         jobs.add(job2);
 
-        // Capture console output (optional)
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
 
-        // Spy
         RecruiterService spyService = Mockito.spy(recruiterService);
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getJobs).thenReturn(jobs);
 
-            // We expect the method to prompt: "Please select one of the options.."
-            // Return "1" → calls viewSpecificJobPost() → exit loop
             mockedUtility
                     .when(() -> Utility.inputOutput("Please select one of the options.."))
                     .thenReturn("1");
             doNothing().when(spyService).viewSpecificJobPost();
 
-            // Act
             spyService.viewAvailableJobs();
 
-            // Assert the console output contains "Available Jobs" and the job list
             String consoleOutput = outContent.toString();
             assertTrue(consoleOutput.contains("Available Jobs"));
             assertTrue(consoleOutput.contains("Job ID: id1"));
             assertTrue(consoleOutput.contains("Job ID: id2"));
 
-            // Verify it calls viewSpecificJobPost()
             verify(spyService, times(1)).viewSpecificJobPost();
 
-            // Verify we never call viewRecruiterDashboard() in this scenario
             verify(spyService, never()).viewRecruiterDashboard();
         } finally {
             System.setOut(originalOut);
@@ -1281,7 +2263,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_jobsAvailable_userChooses2() {
-        // Scenario 2b: user picks "2" => calls viewRecruiterDashboard()
 
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job("id1", "Title1", "Desc1", JobStatus.PUBLIC));
@@ -1295,7 +2276,6 @@ public class RecruiterServiceBranchTest {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getJobs).thenReturn(jobs);
 
-            // Return "2" → should exit loop and call viewRecruiterDashboard()
             mockedUtility
                     .when(() -> Utility.inputOutput("Please select one of the options.."))
                     .thenReturn("2");
@@ -1315,8 +2295,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testViewAvailableJobs_jobsAvailable_invalidInputThenValid() {
-        // Scenario 2c: user inputs something invalid, then eventually picks "1" or "2"
-        // We'll simulate user typing "abc" (invalid) then "2" (go to dashboard)
 
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job("idX", "TitleX", "DescX", JobStatus.PUBLIC));
@@ -1330,8 +2308,6 @@ public class RecruiterServiceBranchTest {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getJobs).thenReturn(jobs);
 
-            // The user is prompted in a loop, so we return "abc" the first time (invalid),
-            // then "2" the second time (valid).
             mockedUtility
                     .when(() -> Utility.inputOutput("Please select one of the options.."))
                     .thenReturn("abc")
@@ -1341,15 +2317,12 @@ public class RecruiterServiceBranchTest {
 
             spyService.viewAvailableJobs();
 
-            // Check console output
             String output = outContent.toString();
-            // Should contain "is not a valid option. Please try again."
+
             assertTrue(output.contains("abc is not a valid option. Please try again."));
 
-            // Finally user enters "2" => calls viewRecruiterDashboard()
             verify(spyService, times(1)).viewRecruiterDashboard();
 
-            // No calls to viewSpecificJobPost()
             verify(spyService, never()).viewSpecificJobPost();
         } finally {
             System.setOut(originalOut);
@@ -1432,10 +2405,9 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_userImmediatelyExits() {
-        // Scenario 1: user types "exit" on the first prompt
+
         RecruiterService spyService = Mockito.spy(recruiterService);
 
-        // Prepare application
         Application application = new Application();
         application.setId("app123");
         application.setApplicantId("applicant123");
@@ -1444,19 +2416,15 @@ public class RecruiterServiceBranchTest {
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
-            // For the first question prompt, user types "exit"
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("exit");
             doNothing().when(spyService).viewSpecificApplication("app123");
-            // Act
+
             spyService.sendInterview(application);
 
-            // Assert:
-            // 1) We should call viewSpecificApplication(...) with "app123"
             verify(spyService, times(1)).viewSpecificApplication("app123");
 
-            // 2) We do NOT add any interview assignment to application
             assertTrue(application.getInterviewAssignments().isEmpty());
         }
     }
@@ -1467,61 +2435,38 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_userEntersEmptyQuestionThenValidQuestionThenNo() {
-        // Scenario 2 & 3 combined:
-        // - user first enters empty question => "Question cannot be empty"
-        // - user then enters a valid question => "some question"
-        // - user chooses "n" => break from while loop
 
         RecruiterService spyService = Mockito.spy(recruiterService);
 
-        // Prepare application
         Application application = new Application();
         application.setId("app123");
         application.setApplicantId("applicant123");
 
-        // Suppose there's already 1 assignment in the system (this will influence the
-        // interview title)
         ArrayList<Assignment> existingAssignments = new ArrayList<>();
         existingAssignments.add(new Assignment("a1", "applicant123", "FirstAssignment", null, null));
         application.setAssignments(existingAssignments);
 
-        // Interview assignments are initially empty
         application.setInterviewAssignments(new ArrayList<Assignment>());
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            // Mock user inputs in sequence:
-            // 1) user enters "" (empty)
-            // 2) user enters "some question"
-            // 3) user answers "n" to "Do you want to add more questions?"
-            // Then we expect the loop to break
 
-            // For the question prompt:
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("")
                     .thenReturn("some question");
 
-            // For the "Do you want to add more questions?" prompt:
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to add more questions? (y/n)"))
                     .thenReturn("n");
 
-            // For the final "Press enter to go back." prompt
             mockedUtility
                     .when(() -> Utility.inputOutput("Press enter to go back."))
-                    .thenReturn(""); // user presumably hits enter
+                    .thenReturn("");
 
-            // Do nothing when viewSpecificApplication is called
             doNothing().when(spyService).viewSpecificApplication("app123");
-            // Act
+
             spyService.sendInterview(application);
 
-            // Assert:
-            // 1) We should see "Question cannot be empty" printed once
-            // We can capture System.out or trust that message is printed.
-            // Usually verifying the logic is enough.
-
-            // 2) The second question is "some question", which is added
             assertEquals("Should have 1 interview assignment after valid question.", 1,
                     application.getInterviewAssignments().size());
 
@@ -1529,11 +2474,8 @@ public class RecruiterServiceBranchTest {
             assertEquals("The first question in the interview should match user input.", "some question",
                     createdInterview.getQuestions().get(0));
 
-            // The assignment name is "Interview (application.getAssignments().size() + 1)",
-            // i.e. "Interview 2" in this scenario because there's already 1 assignment.
             assertEquals("Interview 2", createdInterview.getAssignmentName());
 
-            // 3) Should call "viewSpecificApplication(...)" after finishing
             verify(spyService, times(1)).viewSpecificApplication("app123");
         }
     }
@@ -1544,9 +2486,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_multipleQuestionsAndExit() {
-        // Scenario: user enters 2 valid questions, chooses "y" after the first
-        // question,
-        // then "n" after the second question, then we finalize.
 
         RecruiterService spyService = Mockito.spy(recruiterService);
 
@@ -1557,10 +2496,7 @@ public class RecruiterServiceBranchTest {
         application.setInterviewAssignments(new ArrayList<Assignment>());
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            // 1st question: "What's your name?"
-            // user chooses "y" => another question
-            // 2nd question: "What's your experience?"
-            // user chooses "n" => break
+
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("What's your name?")
@@ -1571,18 +2507,13 @@ public class RecruiterServiceBranchTest {
                     .thenReturn("y")
                     .thenReturn("n");
 
-            // After finishing, print "Interview questions sent successfully",
-            // then Utility.inputOutput("Press enter to go back.");
             mockedUtility
                     .when(() -> Utility.inputOutput("Press enter to go back."))
                     .thenReturn("");
             doNothing().when(spyService).viewSpecificApplication("app999");
 
-            // Act
             spyService.sendInterview(application);
 
-            // Assert:
-            // We expect 1 new interview assignment
             assertEquals(1, application.getInterviewAssignments().size());
             Assignment newInterview = application.getInterviewAssignments().get(0);
 
@@ -1591,11 +2522,8 @@ public class RecruiterServiceBranchTest {
             assertEquals("What's your name?", questions.get(0));
             assertEquals("What's your experience?", questions.get(1));
 
-            // Because application.getAssignments() is empty => interview title is
-            // "Interview 1"
             assertEquals("Interview 1", newInterview.getAssignmentName());
 
-            // Finally, check we eventually call "viewSpecificApplication(app999)"
             verify(spyService, times(1)).viewSpecificApplication("app999");
         }
     }
@@ -1606,11 +2534,6 @@ public class RecruiterServiceBranchTest {
      */
     @Test
     public void testSendInterview_userTypesExitAfterSomeQuestions() {
-        // Another scenario: user enters 1 valid question, then types "exit"
-        // => We expect we call viewSpecificApplication(...) and do NOT add the
-        // interview
-        // Actually, note the code: if the user types "exit" at the question prompt,
-        // it immediately returns. No assignment is created.
 
         RecruiterService spyService = Mockito.spy(recruiterService);
 
@@ -1622,31 +2545,21 @@ public class RecruiterServiceBranchTest {
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
 
-            // The code is a while(true). If the user typed "exit" at ANY point
-            // in the question prompt, we do "viewSpecificApplication(application.getId());
-            // return;"
-            // Let's simulate 1 valid question, then user says "y" to add more,
-            // then next question is "exit".
             mockedUtility
                     .when(() -> Utility.inputOutput("Enter the question..(type 'exit' to go back)"))
                     .thenReturn("First question")
                     .thenReturn("exit");
 
-            // After "First question", we ask "Do you want to add more questions? (y/n)"
             mockedUtility
                     .when(() -> Utility.inputOutput("Do you want to add more questions? (y/n)"))
                     .thenReturn("y");
 
             doNothing().when(spyService).viewSpecificApplication("appX");
 
-            // Act
             spyService.sendInterview(application);
 
-            // The user typed "exit" => "return" from the method
-            // => no assignment is created
             assertTrue(application.getInterviewAssignments().isEmpty());
 
-            // Should have called viewSpecificApplication(appX)
             verify(spyService, times(1)).viewSpecificApplication("appX");
         }
     }

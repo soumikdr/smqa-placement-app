@@ -1,0 +1,15 @@
+# Input Jobs Presence
+JobsPresence:
+NoJobs.
+HasJobs.
+
+# Input User Choice
+UserChoice:
+ViewSpecific.
+GoBack.
+Invalid.
+
+# Input Job ID
+JobID:
+Existing.
+NonExisting.

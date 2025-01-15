@@ -1,0 +1,18 @@
+# View Submitted Answers for Application [map66 - userstory 46]
+
+Application ID: 
+null.                               [error]
+invalid string.                     [error]
+valid string.                       [property application_exists]
+
+Submitted Answers for Assessments: 
+null.                               [if !application_exists] [error]
+Assignment.
+Question.
+Answer.
+
+Submitted Answers for Interviews: 
+null.                               [if !application_exists] [error]
+Interview.
+Question.
+Answer.
