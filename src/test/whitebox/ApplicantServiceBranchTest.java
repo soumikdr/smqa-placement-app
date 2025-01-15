@@ -1404,8 +1404,6 @@ public class ApplicantServiceBranchTest {
         System.setOut(new PrintStream(outputStream));
         ApplicantService spyObject = Mockito.spy(service);
         CommonService commonSpyObject = Mockito.spy(commonServiceService);
-        // CommonService mockACommonService = Mockito.mock(CommonService.class);
-        // Mockito.mockStatic(CommonService.class).when(CommonService::getInstance).thenReturn(mockACommonService);
         
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class);
             MockedStatic<CommonService> mockACommonService = Mockito.mockStatic(CommonService.class)
@@ -1438,8 +1436,6 @@ public class ApplicantServiceBranchTest {
         System.setOut(new PrintStream(outputStream));
         ApplicantService spyObject = Mockito.spy(service);
         CommonService commonSpyObject = Mockito.spy(commonServiceService);
-        // CommonService mockACommonService = Mockito.mock(CommonService.class);
-        // Mockito.mockStatic(CommonService.class).when(CommonService::getInstance).thenReturn(mockACommonService);
         
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class);
             MockedStatic<CommonService> mockACommonService = Mockito.mockStatic(CommonService.class)
@@ -1470,8 +1466,6 @@ public class ApplicantServiceBranchTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         ApplicantService spyObject = Mockito.spy(service);
-        // CommonService mockACommonService = Mockito.mock(CommonService.class);
-        // Mockito.mockStatic(CommonService.class).when(CommonService::getInstance).thenReturn(mockACommonService);
     
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class);
             MockedStatic<CommonService> mockACommonService = Mockito.mockStatic(CommonService.class)
@@ -1504,8 +1498,6 @@ public class ApplicantServiceBranchTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         ApplicantService spyObject = Mockito.spy(service);
-        // CommonService mockACommonService = Mockito.mock(CommonService.class);
-        // Mockito.mockStatic(CommonService.class).when(CommonService::getInstance).thenReturn(mockACommonService);
     
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class);
             MockedStatic<CommonService> mockACommonService = Mockito.mockStatic(CommonService.class)
@@ -1694,8 +1686,6 @@ public class ApplicantServiceBranchTest {
             Mockito.doNothing().when(service).resetPassword(Mockito.anyString());
     
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
-            // ApplicantService mockApplicantService = Mockito.mock(ApplicantService.class);
-            // Mockito.mockStatic(ApplicantService.class).when(ApplicantService::getInstance).thenReturn(mockApplicantService);
             Mockito.doNothing().when(mockApp).viewApplicantDashboard();
             Mockito.doNothing().when(mockRec).viewRecruiterDashboard();
 
@@ -1707,8 +1697,6 @@ public class ApplicantServiceBranchTest {
     
             mockUser.setRole(UserRole.RECRUITER);
             mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUser);
-            // RecruiterService mockRecruiterService = Mockito.mock(RecruiterService.class);
-            // Mockito.mockStatic(RecruiterService.class).when(RecruiterService::getInstance).thenReturn(mockRecruiterService);
             Mockito.doNothing().when(mockRec).viewRecruiterDashboard();
     
             service.viewResetPasswordPage();
@@ -1742,8 +1730,6 @@ public class ApplicantServiceBranchTest {
             Mockito.doNothing().when(service).resetPassword(Mockito.anyString());
 
             mockedUtility.when(() -> Utility.inputOutput(Mockito.anyString())).thenReturn("2");
-            // ApplicantService mockApplicantService = Mockito.mock(ApplicantService.class);
-            // Mockito.mockStatic(ApplicantService.class).when(ApplicantService::getInstance).thenReturn(mockApplicantService);
             mockApplicantService.when(ApplicantService::getInstance).thenReturn(mockApp);
 
             Mockito.doNothing().when(mockApp).viewApplicantDashboard();

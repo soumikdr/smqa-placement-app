@@ -1,0 +1,32 @@
+
+Test Case 1  		<error>
+   Menu Options :  null
+
+
+Test Case 2  		<error>
+   Menu Options :  invalid option
+
+
+Test Case 3  		(Key = 2.)
+   Menu Options :  "1"
+
+
+Test Case 4  		(Key = 3.)
+   Menu Options :  "2"
+
+
+Test Case 5  		(Key = 4.)
+   Menu Options :  "3"
+
+
+Test Case 6  		(Key = 5.)
+   Menu Options :  "4"
+
+
+Test Case 7  		(Key = 6.)
+   Menu Options :  "5"
+
+
+Test Case 8  		(Key = 7.)
+   Menu Options :  "6"
+

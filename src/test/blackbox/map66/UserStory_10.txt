@@ -1,0 +1,13 @@
+# Reset Password Page [map66 - userstory 10]
+
+Menu Options: 
+null.                               [error]
+"1".                                [redirect reset_password]
+"2".                                [redirect dashboard]
+invalid option.                     [error]
+
+User Name Input: 
+null.                               [error]
+invalid string.                     [error]
+valid string.                       [property user_exists]
+

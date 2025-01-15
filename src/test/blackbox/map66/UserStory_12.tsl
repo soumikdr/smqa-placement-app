@@ -1,0 +1,42 @@
+
+Test Case 1  		<error>
+   Username Input :  null
+
+
+Test Case 2  		<error>
+   Username Input :  invalid string
+
+
+Test Case 3  		<error>  (follows [if])
+   Role Check :  null
+
+
+Test Case 4  		<error>  (follows [if])
+   Reset Code for Applicant :  null
+
+
+Test Case 5  		<error>
+   Reset Code for Applicant :  invalid string
+
+
+Test Case 6  		<error>
+   New Password Input :  null
+
+
+Test Case 7  		<error>
+   New Password Input :  invalid string
+
+
+Test Case 8  		(Key = 3.2.3.3.)
+   Username Input           :  valid string
+   Role Check               :  Applicant
+   Reset Code for Applicant :  valid string
+   New Password Input       :  valid string
+
+
+Test Case 9  		(Key = 3.3.3.3.)
+   Username Input           :  valid string
+   Role Check               :  Recruiter
+   Reset Code for Applicant :  valid string
+   New Password Input       :  valid string
+
