@@ -1,0 +1,21 @@
+# user story 7
+# method signIn (ApplicantService)
+
+
+users:
+    empty. [error]
+    non-empty.
+userName:
+    valid.
+    invalid. [error]
+    null. [error]
+    empty. [error]
+password:
+    valid.
+    invalid. [error]
+    null. [error]
+    empty. [error]
+userRole:
+    APPLICANT.
+    RECRUITER. [error]
+

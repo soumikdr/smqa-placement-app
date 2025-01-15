@@ -1,0 +1,14 @@
+# user story 44
+# method viewInterview (ApplicantService)
+
+
+applicationExists:
+    true. [property applicationExist]
+    false.
+interviewAssignments:
+    empty. [if applicationExist]
+    non-empty. [if applicationExist] [property hasInterviewAssignment]
+questions:
+    empty. [if applicationExist && hasInterviewAssignment]
+    non-empty. [if applicationExist && hasInterviewAssignment]
+
