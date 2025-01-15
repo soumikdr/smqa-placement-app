@@ -1,0 +1,11 @@
+# Input Navigation Option
+NavigationOption:
+SignIn. [property GoToSignIn]
+SignUp. [property GoToSignUp]
+PreviousMenu. [property GoToPreviousMenu]
+
+# Input Redirect Option
+RedirectOption:
+SignInPage. [if GoToSignIn]
+SignUpPage. [if GoToSignUp]
+LandingPage. [if GoToPreviousMenu]
