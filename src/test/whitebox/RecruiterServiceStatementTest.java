@@ -221,40 +221,26 @@ public class RecruiterServiceStatementTest {
         }
     }
 
-    //
-    // @Test
-    // public void testSendAssignment_ValidRole() {
-    // try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
-    // // Setup and Mocking
-    // Application application = new Application();
-    // application.setApplicantId("applicant123");
-    // application.setAssignments(new ArrayList<>());
-    //
-    // Map<String, List<String>> mockQuestionMap = new HashMap<>();
-    // mockQuestionMap.put("frontend", Arrays.asList("Question 1", "Question 2"));
-    //
-    // utilities.when(Utility::getQuestionMap).thenReturn(mockQuestionMap);
-    // utilities.when(() ->
-    // Utility.inputOutput(anyString())).thenReturn("frontend");
-    // RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-    //
-    // // Test
-    // recruiterService.sendAssignment(application);
-    //
-    // // Assertions
-    // assertEquals(1, application.getAssignments().size());
-    // Assignment assignment = application.getAssignments().get(0);
-    // assertEquals("applicant123", assignment.getApplicantId());
-    // assertTrue(assignment.getAssignmentName().contains("Assignment frontend"));
-    // assertEquals(Arrays.asList("Question 1", "Question 2"),
-    // assignment.getQuestions());
-    //
-    // // Verify interactions
-    // utilities.verify(Utility::getQuestionMap);
-    // utilities.verify(() -> Utility.inputOutput(anyString()));
-    // }
-    // }
-    //
+    @Test
+    public void testSendAssignment_ValidInputs() {
+        try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+            // Arrange and mock dependencies
+            utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Backend Assignment").thenReturn("How database indexing work?").thenReturn("n");
+            // Clear assignments if any
+            mockApplication.setAssignments(new ArrayList<Assignment>());
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewSpecificApplication(mockApplication.getId());
+
+            // Act
+            recruiterService.sendAssignment(mockApplication);
+
+            // Assert
+            assertEquals(1, mockApplication.getAssignments().size());
+            Assignment assignment = mockApplication.getAssignments().get(0);
+            assertEquals("Backend Assignment", assignment.getAssignmentName());
+        }
+    }
+    
     @Test
     public void testUpdateDescriptionOfJobPost_JobFoundAndUpdated() {
         try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
