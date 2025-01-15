@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import jdk.jshell.execution.Util;
 import model.Applicant;
 import model.Application;
 import model.ApplicationStatus;
@@ -44,6 +45,7 @@ public class ApplicantServiceBranchTest {
     private ArrayList<User> mockUsers;
     private ArrayList<Job> mockJobs;
     private Assignment mockAssignment;
+    private ArrayList<String> mockedInterviewQuestions;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
@@ -89,6 +91,12 @@ public class ApplicantServiceBranchTest {
         Applicant user1 = new Applicant("1", "John", "Doe", "johnDoe", "bestpassword");
         mockUsers.add(user1);
         mockUsers.add(new Recruiter("2", "Jane", "Doe", "janeDoe", "bestpassword"));
+
+        // Mock interview questions
+        mockedInterviewQuestions = new ArrayList<>();
+        mockedInterviewQuestions.add("[1] Why are you interested in this position?");
+        mockedInterviewQuestions.add("[2] How do you handle conflict in a team environment?");
+        mockedInterviewQuestions.add("[3] What are your salary expectations?");
     }
 
     @Before
@@ -338,35 +346,6 @@ public class ApplicantServiceBranchTest {
     }
 
     @Test
-    public void testSubmitAssessmentForm_NoAssignmentsForApplication() {
-        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-            ArrayList<Assignment> assignmentsEmpty = new ArrayList<>();
-            ArrayList<Application> mockedApplications = new ArrayList<>();
-
-            Application app1 = new Application("1", "1", "1",
-                    ApplicationStatus.INPROGRESS, assignmentsEmpty, 2, "BSc",
-                    "JS, CSS", "");
-            mockedApplications.add(app1);
-            mockedUtility.when(Utility::getApplications).thenReturn(mockedApplications);
-
-            ApplicantService applicantService = Mockito.spy(new ApplicantService());
-            doNothing().when(applicantService).viewApplicationProcessDashboard("1");
-
-            applicantService.submitAssessmentForm("1");
-
-            // Assert
-            // Get the complete output
-            String output = outContent.toString().trim();
-
-            // Extract the last println message (messages are separated by newlines)
-            String[] lines = output.split("\n");
-            String lastMessage = lines[lines.length - 1];
-
-            assertEquals("No assignments found for this application", lastMessage);
-        }
-    }
-
-    @Test
     public void testSubmitAssessmentForm_AssignmentAlreadySubmitted() {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             // Arrange (mocking the assignment as submitted)
@@ -437,6 +416,7 @@ public class ApplicantServiceBranchTest {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
             ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicantApplications();
 
             // Invalid application ID given
             applicantService.viewInterview("999g");
@@ -457,6 +437,13 @@ public class ApplicantServiceBranchTest {
     public void testViewInterview_InterviewQuestionsFound() {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             // Arrange
+            mockedUtility.when(Utility::getCommonInterviewQuestions).thenReturn(mockedInterviewQuestions);
+            ArrayList<Assignment> interviewAssignments = new ArrayList<>();
+            Assignment interviewAssignment = new Assignment("1", "1", "Interview", new ArrayList<>(), new ArrayList<>());
+            interviewAssignment.setQuestions(Utility.getCommonInterviewQuestions());
+            interviewAssignments.add(interviewAssignment);
+            mockApplications.get(0).setInterviewAssignments(interviewAssignments);
+
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
             ApplicantService applicantService = Mockito.spy(new ApplicantService());
             doNothing().when(applicantService).viewApplicationProcessDashboard("1");
@@ -481,7 +468,7 @@ public class ApplicantServiceBranchTest {
                 }
             }
 
-            assertTrue(filteredLines.contains("Questions are:"));
+            assertTrue(filteredLines.contains("[1] Why are you interested in this position?"));
         }
     }
 

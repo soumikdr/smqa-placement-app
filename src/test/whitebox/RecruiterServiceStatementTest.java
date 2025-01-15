@@ -183,8 +183,9 @@ public class RecruiterServiceStatementTest {
             mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
             mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
             mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("1");
-
-            RecruiterService recruiterService = new RecruiterService();
+            
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).approveRejectApplication(mockApplications.get(0));
 
             recruiterService.viewSpecificApplication("1"); // No exception expected
         }

@@ -665,7 +665,7 @@ public class RecruiterService {
             case "6" -> viewAllApplications();
             default -> {
                 System.out.println("You entered invalid option");
-                viewSpecificApplication(applicationId);
+                viewAllApplications();
                 return;
             }
         }
