@@ -1,0 +1,19 @@
+# user story 20
+# method updateRecruiterProfile (RecruiterService)
+
+[Parameters]
+    firstName: String [valid, empty]
+    lastName: String [valid, empty]
+    userName: String [unique, non-unique, empty]
+
+[Categories]
+    - firstName:
+        - valid: A non-empty string for the first name.
+        - empty: An empty string indicating no change to the first name. [error]
+    - lastName:
+        - valid: A non-empty string for the last name.
+        - empty: An empty string indicating no change to the last name. [error]
+    - userName:
+        - unique: A username that is unique in the system.
+        - non-unique: A username that already exists in the system. [error]
+        - empty: An empty string for the username. [error]

@@ -1,0 +1,57 @@
+
+Test Case 1  		<error>
+   - null :  User ID is null
+
+
+Test Case 2  		<error>
+   - empty :  User ID is an empty string
+
+
+Test Case 3  		<error>
+   - null :  Username is null
+
+
+Test Case 4  		<error>
+   - empty :  Username is an empty string
+
+
+Test Case 5  		<error>
+   - null :  First name is null
+
+
+Test Case 6  		<error>
+   - empty :  First name is an empty string
+
+
+Test Case 7  		<error>
+   - null :  Last name is null
+
+
+Test Case 8  		<error>
+   - empty :  Last name is an empty string
+
+
+Test Case 9  		<error>
+   - null :  User role not assigned
+
+
+Test Case 10 		(Key = 1.0.0.1.0.0.1.0.0.1.0.0.1.0.1.1.1.1.)
+   - valid         :  A valid user ID is present
+   - null          :  <n/a>
+   - empty         :  <n/a>
+   - valid         :  A valid username is present
+   - null          :  <n/a>
+   - empty         :  <n/a>
+   - valid         :  A valid first name is present
+   - null          :  <n/a>
+   - empty         :  <n/a>
+   - valid         :  A valid last name is present
+   - null          :  <n/a>
+   - empty         :  <n/a>
+   - APPLICANT     :  The user has the role of an applicant
+   - null          :  <n/a>
+   - 1             :  User selects the option to update the profile
+   - 2             :  User selects the option to delete the profile
+   - 3             :  User selects the option to reset the password
+   - other         :  User selects an invalid option, returning to the dashboard
+

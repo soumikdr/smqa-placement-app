@@ -1,0 +1,27 @@
+# user story 7
+# method signIn (ApplicantService)
+
+[Parameters]
+    users: List of User [empty, non-empty]
+    userName: String [valid, invalid, null, empty]
+    password: String [valid, invalid, null, empty]
+    userRole: Enum UserRole [APPLICANT, RECRUITER]
+
+[Categories]
+    - users:
+        - empty: No users are present in the system. [error]
+        - non-empty: One or more users are present in the system.
+    - userName:
+        - valid: A username that exists in the system.
+        - invalid: A username that does not exist in the system. [error]
+        - null: Null input for the username. [error]
+        - empty: An empty string for the username. [error]
+    - password:
+        - valid: The correct password for the given username.
+        - invalid: An incorrect password for the given username. [error]
+        - null: Null input for the password. [error]
+        - empty: An empty string for the password. [error]
+    - userRole:
+        - APPLICANT: User has the role of an applicant.
+        - RECRUITER: User does not have the role of an applicant. [error]
+

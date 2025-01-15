@@ -1,0 +1,15 @@
+# user story 15
+# method viewRecruiterDashboard (RecruiterService)
+
+[Parameters]
+    option: String ["1", "2", "3", "4", "5", "6", invalid]
+
+[Categories]
+    - option:
+        - "1": Recruiter chooses to view their profile.
+        - "2": Recruiter chooses to view available jobs.
+        - "3": Recruiter chooses to view all applications.
+        - "4": Recruiter chooses to post a new job.
+        - "5": Recruiter chooses to reset their password.
+        - "6": Recruiter chooses to log out.
+        - invalid: Recruiter enters an invalid option. [error]

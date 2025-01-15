@@ -1,0 +1,26 @@
+
+Test Case 1  		<error>
+   - empty :  An empty string indicating no change to the first name
+
+
+Test Case 2  		<error>
+   - empty :  An empty string indicating no change to the last name
+
+
+Test Case 3  		<error>
+   - non-unique :  A username that already exists in the system
+
+
+Test Case 4  		<error>
+   - empty :  An empty string for the username
+
+
+Test Case 5  		(Key = 1.0.1.0.1.0.0.)
+   - valid      :  A non-empty string for the first name
+   - empty      :  <n/a>
+   - valid      :  A non-empty string for the last name
+   - empty      :  <n/a>
+   - unique     :  A username that is unique in the system
+   - non-unique :  <n/a>
+   - empty      :  <n/a>
+

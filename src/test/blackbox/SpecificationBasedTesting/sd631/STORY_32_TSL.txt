@@ -1,0 +1,25 @@
+# user story 32
+# method updateDescriptionOfJobPost (RecruiterService)
+
+[Parameters]
+    jobs: List of Job [null, empty, non-empty]
+    jobId: String [valid, invalid, null, empty]
+    newName: String [non-empty, empty]
+    newDescription: String [non-empty, empty]
+
+[Categories]
+    - jobs:
+        - null: No jobs are present in the system (jobs list is null). [error]
+        - empty: Jobs list is present but contains no jobs. [error]
+        - non-empty: Jobs list contains one or more jobs.
+    - jobId:
+        - valid: An ID that matches a job in the jobs list.
+        - invalid: An ID that does not match any job in the jobs list. [error]
+        - null: Null input for the job ID. [error]
+        - empty: An empty string for the job ID. [error]
+    - newName:
+        - non-empty: A valid non-empty new job title.
+        - empty: An empty string for the new job title.
+    - newDescription:
+        - non-empty: A valid non-empty new job description.
+        - empty: An empty string for the new job description.
