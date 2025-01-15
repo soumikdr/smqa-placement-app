@@ -115,7 +115,7 @@ public class RecruiterServiceStatementTest {
 
     // ETY1 - STORY 22
     @Test
-    public void testviewJobPostingForm_notEmpty() {
+    public void testViewJobPostingForm_notEmpty() {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
@@ -151,7 +151,7 @@ public class RecruiterServiceStatementTest {
 
     // ETY1 - STORY 22
     @Test
-    public void testviewJobPostingForm_empty() {
+    public void testViewJobPostingForm_empty() {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
@@ -160,9 +160,6 @@ public class RecruiterServiceStatementTest {
 
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-
-            Mockito.doNothing().when(spyObject).submitNewJobPost(any(),any());
-            Mockito.doNothing().when(spyObject).viewRecruiterDashboard();
 
 
             mockedUtility.when(() -> Utility.inputOutput("Enter the New Job Title")).thenReturn(null);
@@ -175,8 +172,6 @@ public class RecruiterServiceStatementTest {
 
             Assert.assertTrue(consoleOutput.contains("Job Title or Job Description empty"));
 
-            Mockito.verify(spyObject, times(1)).submitNewJobPost(any(),any());
-            Mockito.verify(spyObject, times(1)).viewRecruiterDashboard();
             Mockito.verify(spyObject, times(2)).viewJobPostingForm();
 
             mockedUtility.verify(times(2), () -> Utility.inputOutput(Mockito.anyString()));

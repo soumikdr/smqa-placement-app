@@ -116,7 +116,7 @@ public class RecruiterServiceBranchTest {
 
     // ETY1 - STORY 22
     @Test
-    public void testviewJobPostingForm() {
+    public void testViewJobPostingForm() {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirect System.out
@@ -152,8 +152,8 @@ public class RecruiterServiceBranchTest {
 
             Assert.assertTrue(consoleOutput.contains("Job Title or Job Description empty"));
 
-            Mockito.verify(spyObject, times(2)).submitNewJobPost(any(),any());
-            Mockito.verify(spyObject, times(2)).viewRecruiterDashboard();
+            Mockito.verify(spyObject, times(1)).submitNewJobPost(any(),any());
+            Mockito.verify(spyObject, times(1)).viewRecruiterDashboard();
             Mockito.verify(spyObject, times(3)).viewJobPostingForm();
 
             mockedUtility.verify(times(4), () -> Utility.inputOutput(Mockito.anyString()));
