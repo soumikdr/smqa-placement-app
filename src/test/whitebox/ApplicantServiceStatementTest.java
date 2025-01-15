@@ -10,11 +10,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.*;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
@@ -29,6 +32,7 @@ import model.JobStatus;
 import model.User;
 import model.UserRole;
 import service.ApplicantService;
+import service.CommonService;
 import utility.Utility;
 
 public class ApplicantServiceStatementTest {
@@ -39,6 +43,7 @@ public class ApplicantServiceStatementTest {
     private ArrayList<User> mockUsers;
     private ArrayList<Job> mockJobs;
     private Application mockApplication;
+    private ArrayList<Assignment> mockInterviews;
     private Assignment mockAssignment;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
@@ -71,10 +76,14 @@ public class ApplicantServiceStatementTest {
         ArrayList<Assignment> assignments = new ArrayList<>();
         assignments.add(assignment);
 
+        Assignment mockInterview=new Assignment("1", "1", "Interview", questions, answers);
+
         // Mock applications
         mockApplications = new ArrayList<>();
-        Application app1 = new Application("1", "1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc",
-                "JS, CSS", "");
+        Application app1 = new Application("1", "1", "1", ApplicationStatus.INPROGRESS, assignments, 2, "BSc", "JS, CSS", "");
+        mockInterviews=new ArrayList<>();
+        mockInterviews.add(mockInterview);
+        app1.setInterviewAssignments(mockInterviews);
         mockApplication = app1;
 
         app1.setAssignments(assignments);
@@ -122,6 +131,282 @@ public class ApplicantServiceStatementTest {
             assertEquals("Applicant Signin successful. proceeding to applicant dashboard..", lastMessage);
         }
     }
+
+    // ETY1 - STORY 28
+    @Test
+    public void submitApplicationFormTest_submitApplication() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService service = ApplicantService.getInstance();
+        ApplicantService spyObject = Mockito.spy(service);
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)) {
+            Mockito.doNothing().when(spyObject).viewApplicantDashboard();
+
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+            mockedUtility.when(Utility::getCurrentUser).thenReturn(mockUsers.get(0));
+
+            spyObject.submitApplicationForm(mockJobs.get(0),mockApplication.getEducation(),mockApplication.getYearOfExperience(),mockApplication.getSkills());
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Application submitted : "));
+
+            mockedUtility.verify(Mockito.times(1),()->Utility.getApplications());
+
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantDashboard();
+
+        }
+    }
+
+    // ETY1 - STORY 8
+    @Test
+    public void applicantLogOutTest_logOut() throws IOException {
+        try(MockedStatic<CommonService> spyCommonService = Mockito.mockStatic(CommonService.class);
+        ) {
+            CommonService mockCommonService=Mockito.mock(CommonService.class);
+
+            spyCommonService.when(CommonService::getInstance).thenReturn(mockCommonService);
+
+            Mockito.doNothing().when(mockCommonService).accessLandingPage();
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outputStream)); // Redirect System.out
+            ApplicantService service = ApplicantService.getInstance();
+
+            service.applicantLogOut();
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Logged Out Successfully"));
+
+            Mockito.verify(mockCommonService).accessLandingPage();
+
+        }
+    }
+
+    // ETY1 - STORY 14
+    @Test
+    public void viewApplicantDashboardTest_input1() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService service = ApplicantService.getInstance();
+
+        ApplicantService spyObject = Mockito.spy(service);
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)) {
+            Mockito.doNothing().when(spyObject).viewApplicantProfilePage();
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("1");
+
+            spyObject.viewApplicantDashboard();
+
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Directing to Profile Page..."));
+
+
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantProfilePage();
+            mockedUtility.verify(Mockito.times(1),()->Utility.inputOutput(Mockito.anyString()));
+
+        }
+    }
+
+    // ETY1 - STORY 14
+    @Test
+    public void viewApplicantDashboardTest_input2() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService service = ApplicantService.getInstance();
+
+        ApplicantService spyObject = Mockito.spy(service);
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)) {
+            Mockito.doNothing().when(spyObject).viewApplicantApplications();
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("2");
+
+            spyObject.viewApplicantDashboard();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Directing to Applications Page..."));
+
+            outputStream.reset();
+
+            mockedUtility.verify(Mockito.times(1),()->Utility.inputOutput(Mockito.anyString()));
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantDashboard();
+
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantApplications();
+        }
+    }
+    // ETY1 - STORY 14
+    @Test
+    public void viewApplicantDashboardTest_input3() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService service = ApplicantService.getInstance();
+
+        ApplicantService spyObject = Mockito.spy(service);
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)) {
+
+            Mockito.doNothing().when(spyObject).viewAllAvailableJobs();
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("3");
+
+            spyObject.viewApplicantDashboard();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Directing to Available Jobs Page..."));
+
+            Mockito.verify(spyObject,Mockito.times(1)).viewAllAvailableJobs();
+
+            mockedUtility.verify(Mockito.times(1),()->Utility.inputOutput(Mockito.anyString()));
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantDashboard();
+
+        }
+    }
+
+    // ETY1 - STORY 14
+    @Test
+    public void viewApplicantDashboardTest_logOut() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService service = ApplicantService.getInstance();
+
+        ApplicantService spyObject = Mockito.spy(service);
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)) {
+
+            Mockito.doNothing().when(spyObject).applicantLogOut();
+
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("4");
+
+            spyObject.viewApplicantDashboard();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("Logging Out..."));
+
+
+            mockedUtility.verify(Mockito.times(1),()->Utility.inputOutput(Mockito.anyString()));
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantDashboard();
+
+            Mockito.verify(spyObject,Mockito.times(1)).applicantLogOut();
+        }
+    }
+
+    // ETY1 - STORY 14
+    @Test
+    public void viewApplicantDashboardTest_invalidInput() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService service = ApplicantService.getInstance();
+
+        ApplicantService spyObject = Mockito.spy(service);
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)) {
+
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("invalidInput");
+
+            Mockito.doCallRealMethod().doNothing().when(spyObject).viewApplicantDashboard();
+
+            spyObject.viewApplicantDashboard();
+            String consoleOutput = outputStream.toString();
+            Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
+
+
+            mockedUtility.verify(Mockito.times(1),()->Utility.inputOutput(Mockito.anyString()));
+            Mockito.verify(spyObject,Mockito.times(2)).viewApplicantDashboard();
+
+        }
+    }
+    // ETY1 - STORY 45
+    @Test
+    public void submitInterviewFormTest_noApplicationId() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService spyObject = Mockito.spy(new ApplicantService());
+
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
+
+            Mockito.doNothing().when(spyObject).viewApplicantApplications();
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+
+            spyObject.submitInterviewForm("nonExistentId");
+
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Application with given ID not found"));
+
+            mockedUtility.verify(Mockito.times(1),()->Utility.getApplications());
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantApplications();
+
+
+        }
+    }
+
+    // ETY1 - STORY 45
+    @Test
+    public void submitInterviewFormTest_noInterview() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService spyObject = Mockito.spy(new ApplicantService());
+
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
+
+
+            Mockito.doNothing().when(spyObject).viewApplicantApplications();
+
+            mockApplications.get(0).setInterviewAssignments(new ArrayList<>());
+
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+
+            spyObject.submitInterviewForm(mockApplications.get(0).getId());
+
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("No interview questions found"));
+
+
+
+            mockedUtility.verify(Mockito.times(1),()->Utility.getApplications());
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicantApplications();
+
+
+        }
+    }
+
+    // ETY1 - STORY 45
+    @Test
+    public void submitInterviewFormTest_alreadySubmitted() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream)); // Redirect System.out
+        ApplicantService spyObject = Mockito.spy(new ApplicantService());
+
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class)){
+
+            Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard(any());
+
+            mockedUtility.when(Utility::getApplications).thenReturn(mockApplications);
+
+            mockInterviews.get(0).setStatus(AssignmentStatus.SUBMITTED);
+
+            mockApplications.get(0).setInterviewAssignments(mockInterviews);
+
+            spyObject.submitInterviewForm(mockApplications.get(0).getId());
+
+            String consoleOutput = outputStream.toString();
+
+            Assert.assertTrue(consoleOutput.contains("Interview already submitted"));
+
+
+            Mockito.verify(spyObject,Mockito.times(1)).viewApplicationProcessDashboard(any());
+            mockedUtility.verify(Mockito.times(1),()->Utility.getApplications());
+
+
+        }
+    }
+
+
 
     @Test
     public void testViewApplicantProfilePage_Valid() {

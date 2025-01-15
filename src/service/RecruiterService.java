@@ -19,8 +19,6 @@ public class RecruiterService {
         return instance;
     }
 
-    public void sendAssessment() {
-    }
 
     // ETY1 - STORY 42
     public void viewAssessmentResult(String applicationId, String assignmentId) {
@@ -94,9 +92,6 @@ public class RecruiterService {
         System.out.println("Interview questions sent successfully");
         Utility.inputOutput("Press enter to go back.");
         viewSpecificApplication(application.getId());
-    }
-
-    public void viewInterviewResult() {
     }
 
     /*

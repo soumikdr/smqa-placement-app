@@ -1,0 +1,15 @@
+# Input Applicant Information
+ApplicantInfo:
+Complete. [property InfoComplete]
+Incomplete. [property InfoIncomplete]
+
+# Input Sign-Up Confirmation
+SignUpConfirm:
+Confirm. [property SignUpConfirmed]
+Cancel. [property SignUpCancelled]
+
+# Input Redirect Option
+RedirectOption:
+Dashboard. [if SignUpConfirmed]
+Retry. [if !SignUpConfirmed]
+ErrorPage. [if InfoIncomplete]

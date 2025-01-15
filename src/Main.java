@@ -11,7 +11,6 @@ public class Main {
 
     private static ArrayList<User> users;
     private static ArrayList<Assignment> assignments;
-
     private static ArrayList<Job> jobs;
     private static ArrayList<Application> applications;
 
@@ -36,8 +35,8 @@ public class Main {
                 JobStatus.PUBLIC));
 
         users.add(new Applicant("1", "John", "Doe", "johnDoe", "bestpassword"));
-        users.add(new Recruiter("2", "Ansar", "Patil", "darkAngel", "123qwe"));
-        users.add(new Recruiter("3", "Shomik", "Datta", "xFireTomato", "12345"));
+        users.add(new Recruiter("2", "Ansar", "Patil", "ansarPatil", "123qwe"));
+        users.add(new Recruiter("3", "Shomik", "Datta", "shomikDatta", "12345"));
 
         questions.add("What is class in Java");
         questions.add("What is object in Java");

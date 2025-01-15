@@ -1,0 +1,10 @@
+# Input Application Status
+ApplicationStatus:
+InProgress. [property InProgress]
+Completed. [property Completed]
+NoneAvailable. [property NoneAvailable]
+
+# Input Navigation Option
+NavigationOption:
+ViewSpecificApplication. [if Completed]
+ErrorPage. [if NoneAvailable]

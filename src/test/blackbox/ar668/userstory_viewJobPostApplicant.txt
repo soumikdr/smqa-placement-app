@@ -1,0 +1,15 @@
+# Input Job Post Availability
+JobPostAvailability:
+Available. [property JobAvailable]
+NotAvailable. [property JobNotAvailable]
+
+# Input Application Status
+ApplicationStatus:
+Applied. [if JobAvailable]
+NotApplied. [if JobAvailable]
+
+# Input Redirect Option
+RedirectOption:
+JobDetails. [if JobAvailable]
+ErrorPage. [if JobNotAvailable]
+ApplicationForm. [if JobNotAvailable]
