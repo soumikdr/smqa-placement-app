@@ -1,0 +1,17 @@
+TEST CASE: TSL_APP_DEL_02
+METHOD: deleteApplicantProfile()
+DESCRIPTION: Confirms that when a user confirms deletion, their profile is removed and they are logged out.
+
+PRECONDITIONS:
+  - The current user is an Applicant with ID = "A101".
+  - The system user list includes this Applicant with username "janeUser".
+  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)".
+
+ACTIONS:
+  1. User inputs "Y" (Yes) in response to the confirmation prompt.
+  2. deleteApplicantProfile() processes the confirmation.
+
+EXPECTED OUTCOMES:
+  - The user’s profile (ID "A101") is deleted from the system user list.
+  - The current user is set to null (user is effectively logged out).
+  - The system navigates to the Sign In/Sign Up page (or landing page).

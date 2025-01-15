@@ -1,0 +1,252 @@
+
+Test Case 1  		(Key = 1.1.1.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 2  		(Key = 1.1.1.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 3  		(Key = 1.1.1.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 4  		(Key = 1.1.2.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 5  		(Key = 1.1.2.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 6  		(Key = 1.1.2.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 7  		(Key = 1.1.3.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 8  		(Key = 1.1.3.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 9  		(Key = 1.1.3.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 10 		(Key = 1.1.4.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 11 		(Key = 1.1.4.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 12 		(Key = 1.1.4.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The current user is an Applicant with ID = "A101"
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 13 		(Key = 1.2.1.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 14 		(Key = 1.2.1.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 15 		(Key = 1.2.1.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 16 		(Key = 1.2.2.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 17 		(Key = 1.2.2.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 18 		(Key = 1.2.2.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 19 		(Key = 1.2.3.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 20 		(Key = 1.2.3.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 21 		(Key = 1.2.3.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 22 		(Key = 1.2.4.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 23 		(Key = 1.2.4.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 24 		(Key = 1.2.4.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The system user list includes this Applicant with username "janeUser"
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 25 		(Key = 1.3.1.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 26 		(Key = 1.3.1.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 27 		(Key = 1.3.1.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 28 		(Key = 1.3.2.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 29 		(Key = 1.3.2.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 30 		(Key = 1.3.2.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  User inputs "Y" (Yes) in response to the confirmation prompt
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 31 		(Key = 1.3.3.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 32 		(Key = 1.3.3.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 33 		(Key = 1.3.3.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+
+
+Test Case 34 		(Key = 1.3.4.1.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The user’s profile (ID "A101") is deleted from the system user list
+
+
+Test Case 35 		(Key = 1.3.4.2.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The current user is set to null (user is effectively logged out)
+
+
+Test Case 36 		(Key = 1.3.4.3.)
+   DESCRIPTION       :  Confirms that when a user confirms deletion, their profile is removed and they art
+   PRECONDITIONS     :  - The user is prompted with "Are you sure you want to delete your profile? (Y/N)"i
+   ACTIONS           :  deleteApplicantProfile() processes the confirmation
+   EXPECTED OUTCOMES :  - The system navigates to the Sign In/Sign Up page (or landing page)
+

@@ -1,20 +1,12 @@
 package service;
 
+import model.*;
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import model.Applicant;
-import model.Application;
-import model.ApplicationStatus;
-import model.Assignment;
-import model.Job;
-import model.JobStatus;
-import model.Recruiter;
-import model.User;
-import model.UserRole;
-import utility.Utility;
 
 public class RecruiterService {
 
@@ -175,7 +167,7 @@ public class RecruiterService {
 
     // ETY1 - STORY 5
     public void recruiterSignUp(String recruiterCode, String firstName, String lastName, String userName,
-            String password) {
+                                String password) {
         System.out.println("Sign Up processing.... \n");
 
         String id = UUID.randomUUID().toString();
@@ -501,6 +493,7 @@ public class RecruiterService {
         if (jobTitle == null || jobTitle.isEmpty() || jobDesc == null || jobDesc.isEmpty()) {
             System.out.println("Job Title or Job Description empty, Please try again..");
             viewJobPostingForm();
+            return;
         }
         submitNewJobPost(jobTitle, jobDesc);
         viewRecruiterDashboard();
@@ -519,7 +512,6 @@ public class RecruiterService {
                 JobStatus.PUBLIC);
         Utility.addJob(job);
         System.out.println("Job posted successfully");
-
     }
 
     // UserStory: 30; ar668
@@ -569,7 +561,7 @@ public class RecruiterService {
      * Author: Mayur Shinde (mss62)
      * User Story: 11
      */
-    private void viewResetPasswordPage() {
+    public void viewResetPasswordPage() {
         String input = Utility.inputOutput("Do you want to reset your password? (y/n)");
         if (input.equalsIgnoreCase("y")) {
             String userName = Utility.inputOutput("Enter your User name");
@@ -668,7 +660,7 @@ public class RecruiterService {
             case "6" -> viewAllApplications();
             default -> {
                 System.out.println("You entered invalid option");
-                viewSpecificApplication(applicationId);
+                viewAllApplications();
                 return;
             }
         }

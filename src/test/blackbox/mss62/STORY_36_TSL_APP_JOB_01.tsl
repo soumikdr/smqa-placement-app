@@ -1,0 +1,48 @@
+
+Test Case 1  		(Key = 1.1.1.1.1.)
+   DESCRIPTION                  :  Verifies that the system retrieves and displays the job description of the job lit
+   PRECONDITIONS                :  - There is an Application with ID = "APP500", jobId = "JOB123"
+   ACTIONS                      :  1
+   EXPECTED OUTCOMES            :  - The system retrieves the job with ID = "JOB123"
+   "Job Description             :  - No error or denial-of-access message is displayed
+
+
+Test Case 2  		(Key = 1.1.2.1.1.)
+   DESCRIPTION                  :  Verifies that the system retrieves and displays the job description of the job lit
+   PRECONDITIONS                :  - There is an Application with ID = "APP500", jobId = "JOB123"
+   ACTIONS                      :  Invoke viewJobDescFromApplication("APP500")
+   EXPECTED OUTCOMES            :  - The system retrieves the job with ID = "JOB123"
+   "Job Description             :  - No error or denial-of-access message is displayed
+
+
+Test Case 3  		(Key = 1.2.1.1.1.)
+   DESCRIPTION                  :  Verifies that the system retrieves and displays the job description of the job lit
+   PRECONDITIONS                :  jobName = "Software Engineer", jobDescription = "Develop software"
+   ACTIONS                      :  1
+   EXPECTED OUTCOMES            :  - The system retrieves the job with ID = "JOB123"
+   "Job Description             :  - No error or denial-of-access message is displayed
+
+
+Test Case 4  		(Key = 1.2.2.1.1.)
+   DESCRIPTION                  :  Verifies that the system retrieves and displays the job description of the job lit
+   PRECONDITIONS                :  jobName = "Software Engineer", jobDescription = "Develop software"
+   ACTIONS                      :  Invoke viewJobDescFromApplication("APP500")
+   EXPECTED OUTCOMES            :  - The system retrieves the job with ID = "JOB123"
+   "Job Description             :  - No error or denial-of-access message is displayed
+
+
+Test Case 5  		(Key = 1.3.1.1.1.)
+   DESCRIPTION                  :  Verifies that the system retrieves and displays the job description of the job lit
+   PRECONDITIONS                :  - The current user’s ID matches the applicantId of "APP500" (ensuring permissioi
+   ACTIONS                      :  1
+   EXPECTED OUTCOMES            :  - The system retrieves the job with ID = "JOB123"
+   "Job Description             :  - No error or denial-of-access message is displayed
+
+
+Test Case 6  		(Key = 1.3.2.1.1.)
+   DESCRIPTION                  :  Verifies that the system retrieves and displays the job description of the job lit
+   PRECONDITIONS                :  - The current user’s ID matches the applicantId of "APP500" (ensuring permissioi
+   ACTIONS                      :  Invoke viewJobDescFromApplication("APP500")
+   EXPECTED OUTCOMES            :  - The system retrieves the job with ID = "JOB123"
+   "Job Description             :  - No error or denial-of-access message is displayed
+

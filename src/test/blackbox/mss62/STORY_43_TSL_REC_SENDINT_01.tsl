@@ -1,0 +1,504 @@
+
+Test Case 1  		(Key = 1.1.1.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 2  		(Key = 1.1.1.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 3  		(Key = 1.1.1.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 4  		(Key = 1.1.1.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 5  		(Key = 1.1.2.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 6  		(Key = 1.1.2.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 7  		(Key = 1.1.2.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 8  		(Key = 1.1.2.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 9  		(Key = 1.1.3.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 10 		(Key = 1.1.3.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 11 		(Key = 1.1.3.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 12 		(Key = 1.1.3.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 13 		(Key = 1.1.4.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 14 		(Key = 1.1.4.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 15 		(Key = 1.1.4.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 16 		(Key = 1.1.4.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 17 		(Key = 1.1.5.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 18 		(Key = 1.1.5.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 19 		(Key = 1.1.5.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 20 		(Key = 1.1.5.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 21 		(Key = 1.1.6.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 22 		(Key = 1.1.6.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 23 		(Key = 1.1.6.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 24 		(Key = 1.1.6.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - An Application with ID = "APP600" belongs to applicant ID = "U600"
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 25 		(Key = 1.2.1.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 26 		(Key = 1.2.1.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 27 		(Key = 1.2.1.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 28 		(Key = 1.2.1.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 29 		(Key = 1.2.2.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 30 		(Key = 1.2.2.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 31 		(Key = 1.2.2.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 32 		(Key = 1.2.2.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 33 		(Key = 1.2.3.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 34 		(Key = 1.2.3.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 35 		(Key = 1.2.3.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 36 		(Key = 1.2.3.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 37 		(Key = 1.2.4.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 38 		(Key = 1.2.4.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 39 		(Key = 1.2.4.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 40 		(Key = 1.2.4.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 41 		(Key = 1.2.5.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 42 		(Key = 1.2.5.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 43 		(Key = 1.2.5.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 44 		(Key = 1.2.5.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 45 		(Key = 1.2.6.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 46 		(Key = 1.2.6.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 47 		(Key = 1.2.6.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 48 		(Key = 1.2.6.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The recruiter is currently viewing that application
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 49 		(Key = 1.3.1.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 50 		(Key = 1.3.1.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 51 		(Key = 1.3.1.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 52 		(Key = 1.3.1.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  1
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 53 		(Key = 1.3.2.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 54 		(Key = 1.3.2.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 55 		(Key = 1.3.2.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 56 		(Key = 1.3.2.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Enter the question (type 'exit' to go back)" => user types "DL
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 57 		(Key = 1.3.3.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 58 		(Key = 1.3.3.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 59 		(Key = 1.3.3.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 60 		(Key = 1.3.3.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  2
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 61 		(Key = 1.3.4.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 62 		(Key = 1.3.4.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 63 		(Key = 1.3.4.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 64 		(Key = 1.3.4.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  The system prompts "Do you want to add more questions? (y/n)" => user types "n"
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 65 		(Key = 1.3.5.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 66 		(Key = 1.3.5.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 67 		(Key = 1.3.5.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 68 		(Key = 1.3.5.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  3
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+
+
+Test Case 69 		(Key = 1.3.6.1.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  "Describe your experience"
+
+
+Test Case 70 		(Key = 1.3.6.2.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The application’s interviewAssignments list now has size = 1
+
+
+Test Case 71 		(Key = 1.3.6.3.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - The system prints "Interview questions sent successfully"
+
+
+Test Case 72 		(Key = 1.3.6.4.)
+   DESCRIPTION                                                                       :  Confirms that the recruiter can add interview questions to a candidate’s applic4
+   PRECONDITIONS                                                                     :  - The application’s interviewAssignments list is initially empty
+   ACTIONS                                                                           :  sendInterview(APP600) finalizes the interview assignment
+   - A new Assignment is created with assignmentName = "Interview 1", containing 1 q :  - Control returns to the application detail view
+

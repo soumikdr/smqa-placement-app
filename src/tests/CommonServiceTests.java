@@ -354,7 +354,7 @@ public void resetPasswordTest() throws IOException {
 
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
             User mockApplicantUser = new Applicant("U101", "Mark", "Peter", "markpeter", "oldpassword", new ArrayList<>());
-            User mockRecruiterUser = new Recruiter("U102", "Alice", "Smith", "recruiterAlice", "oldpassword";
+            User mockRecruiterUser = new Recruiter("U102", "Alice", "Smith", "recruiterAlice", "oldpassword");
 
             mockedUtility.when(Utility::getCurrentUser).thenReturn(mockApplicantUser);
             mockedUtility.when(Utility::getUsers).thenReturn(new ArrayList<>(Arrays.asList(mockApplicantUser, mockRecruiterUser)));
