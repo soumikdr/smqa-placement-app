@@ -1,0 +1,70 @@
+
+Test Case 1  		<error>
+   Application ID :  null
+
+
+Test Case 2  		<error>
+   Application ID :  invalid string
+
+
+Test Case 3  		<error>  (follows [if])
+   Submitted Answers for Assessments :  null
+
+
+Test Case 4  		<error>  (follows [if])
+   Submitted Answers for Interviews :  null
+
+
+Test Case 5  		(Key = 3.2.2.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Assignment
+   Submitted Answers for Interviews  :  Interview
+
+
+Test Case 6  		(Key = 3.2.3.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Assignment
+   Submitted Answers for Interviews  :  Question
+
+
+Test Case 7  		(Key = 3.2.4.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Assignment
+   Submitted Answers for Interviews  :  Answer
+
+
+Test Case 8  		(Key = 3.3.2.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Question
+   Submitted Answers for Interviews  :  Interview
+
+
+Test Case 9  		(Key = 3.3.3.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Question
+   Submitted Answers for Interviews  :  Question
+
+
+Test Case 10 		(Key = 3.3.4.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Question
+   Submitted Answers for Interviews  :  Answer
+
+
+Test Case 11 		(Key = 3.4.2.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Answer
+   Submitted Answers for Interviews  :  Interview
+
+
+Test Case 12 		(Key = 3.4.3.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Answer
+   Submitted Answers for Interviews  :  Question
+
+
+Test Case 13 		(Key = 3.4.4.)
+   Application ID                    :  valid string
+   Submitted Answers for Assessments :  Answer
+   Submitted Answers for Interviews  :  Answer
+

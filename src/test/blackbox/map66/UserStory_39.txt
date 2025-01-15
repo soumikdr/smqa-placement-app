@@ -1,0 +1,11 @@
+# Application Process Dashboard [map66 - userstory 39]
+
+Menu Options: 
+null.                               [error]
+"1".                                [redirect view_assignments]
+"2".                                [redirect submit_assignments]
+"3".                                [redirect view_interview_questions]
+"4".                                [redirect submit_interview_answers]
+"5".                                [redirect view_feedback]
+"6".                                [redirect applications_page]
+invalid option.                     [error]

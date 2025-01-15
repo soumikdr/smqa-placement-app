@@ -1,0 +1,8 @@
+# Applicant Sign In/Sign Up Page [map66 - userstory 02]
+
+Menu Options: 
+null.                               [error]
+"1".                                [redirect sign_in]
+"2".                                [redirect sign_up]
+"3".                                [redirect previous_menu]
+invalid option.                     [error]

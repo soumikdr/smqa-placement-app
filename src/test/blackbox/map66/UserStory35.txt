@@ -1,0 +1,7 @@
+# Withdraw Application [map66 - userstory 35]
+
+Menu Options: 
+null.                               [error]
+"1".                                [withdraw_application]
+"2".                                [redirect applications_page]
+invalid option.                     [error]

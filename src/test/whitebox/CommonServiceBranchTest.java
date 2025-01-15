@@ -28,15 +28,15 @@ public class CommonServiceBranchTest {
 
 
         try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
-            MockedStatic<RecruiterService> spyRecruiterService = Mockito.mockStatic(RecruiterService.class);
-            MockedStatic<ApplicantService> spyApplicantService = Mockito.mockStatic(ApplicantService.class);
+            MockedStatic<RecruiterService> mockRecruiterService = Mockito.mockStatic(RecruiterService.class);
+            MockedStatic<ApplicantService> mockApplicantService = Mockito.mockStatic(ApplicantService.class);
         ){
 
             RecruiterService mockRec=Mockito.mock(RecruiterService.class);
             ApplicantService mockAppl=Mockito.mock(ApplicantService.class);
 
-            spyRecruiterService.when(RecruiterService::getInstance).thenReturn(mockRec);
-            spyApplicantService.when(ApplicantService::getInstance).thenReturn(mockAppl);
+            mockRecruiterService.when(RecruiterService::getInstance).thenReturn(mockRec);
+            mockApplicantService.when(ApplicantService::getInstance).thenReturn(mockAppl);
 
             Mockito.doNothing().when(mockRec).visitSignInSignUpPageRecruiter();
             Mockito.doNothing().when(mockAppl).applicantViewSignInSignUpPage();
