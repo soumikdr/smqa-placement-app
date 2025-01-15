@@ -1,0 +1,20 @@
+
+Test Case 1  		(Key = 1.1.)
+   ApplicationID :  Existing
+   JobID         :  Existing
+
+
+Test Case 2  		(Key = 1.2.)
+   ApplicationID :  Existing
+   JobID         :  NonExisting
+
+
+Test Case 3  		(Key = 2.1.)
+   ApplicationID :  NonExisting
+   JobID         :  Existing
+
+
+Test Case 4  		(Key = 2.2.)
+   ApplicationID :  NonExisting
+   JobID         :  NonExisting
+

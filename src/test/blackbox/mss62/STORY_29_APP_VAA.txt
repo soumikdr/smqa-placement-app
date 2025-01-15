@@ -1,0 +1,26 @@
+# Input User Role
+Role:
+Applicant.
+Recruiter.
+
+# Input Applications Presence
+ApplicationsPresence:
+HasApplications.
+NoApplications.
+
+# Input View Choice
+ViewChoice:
+ViewSpecific.
+GoBack.
+Invalid.
+
+# Input Application ID
+ApplicationID:
+Existing.
+NonExisting.
+
+# Input Application Status
+ApplicationStatus:
+InProgress.
+Completed.
+Withdrawn.

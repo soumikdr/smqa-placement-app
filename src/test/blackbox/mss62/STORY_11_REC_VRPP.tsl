@@ -1,0 +1,15 @@
+
+Test Case 1  		(Key = 1.1.)
+   ResetPasswordConfirmation :  Yes
+   UserName                  :  NonEmpty
+
+
+Test Case 2  		(Key = 2.1.)
+   ResetPasswordConfirmation :  No
+   UserName                  :  NonEmpty
+
+
+Test Case 3  		(Key = 3.1.)
+   ResetPasswordConfirmation :  Invalid
+   UserName                  :  NonEmpty
+
