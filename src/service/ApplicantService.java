@@ -89,7 +89,8 @@ public class ApplicantService {
         }
 
         if (applicant == null) {
-            String tryAgain = Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)");
+            System.out.println("\nInvalid credentials or Not an Applicant.");
+            String tryAgain = Utility.inputOutput("\nDo you want to try again? (y/n)");
             if (tryAgain.equals("y")) {
                 signIn();
             } else {
@@ -98,8 +99,7 @@ public class ApplicantService {
         } else {
             System.out.println("\nApplicant Signin successful. proceeding to applicant dashboard.. \n");
             Utility.setCurrentUser(applicant);
-            ApplicantService applicantService = new ApplicantService();
-            applicantService.viewApplicantDashboard();
+            viewApplicantDashboard();
         }
     }
 

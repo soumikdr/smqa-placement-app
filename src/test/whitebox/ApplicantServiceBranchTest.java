@@ -9,6 +9,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -98,6 +99,106 @@ public class ApplicantServiceBranchTest {
     @After
     public void restoreStreams() {
         System.setOut(originalOut);
+    }
+
+
+    @Test
+    public void testSignIn_ValidApplicant() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("johnDoe").thenReturn("bestpassword");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicantDashboard();
+
+            // Act
+            applicantService.signIn();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Applicant Signin successful. proceeding to applicant dashboard..", lastMessage);
+        }
+    }
+
+    @Test
+    public void testSignIn_InvalidUser_RetryNo() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("johnDoe").thenReturn("wrongPassword").thenReturn("no");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).applicantViewSignInSignUpPage();
+
+            // Act
+            applicantService.signIn();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Invalid credentials or Not an Applicant.", lastMessage);
+        }
+    }
+
+    @Test
+    public void testSignIn_InvalidUser_RetryYes() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
+            mockedUtility.when(() -> Utility.inputOutput(anyString()))
+                .thenReturn("johnDoe").thenReturn("wrongPassword").thenReturn("y").thenReturn("johnDoe").thenReturn("bestpassword");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicantDashboard();
+
+            // Act
+            applicantService.signIn();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            // Sign in successful message after retry
+            assertEquals("Applicant Signin successful. proceeding to applicant dashboard..", lastMessage);
+        }
+    }
+
+    @Test
+    public void testSignIn_NonApplicantUser() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
+            // Provide recruiter credentials
+            mockedUtility.when(() -> Utility.inputOutput(anyString())).thenReturn("janeDoe").thenReturn("wrongPassword").thenReturn("no");
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).applicantViewSignInSignUpPage();
+
+            // Act
+            applicantService.signIn();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Invalid credentials or Not an Applicant.", lastMessage);
+        }
     }
 
     @Test
