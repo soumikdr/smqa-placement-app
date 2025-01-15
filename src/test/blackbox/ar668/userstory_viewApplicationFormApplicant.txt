@@ -1,0 +1,15 @@
+# Input Application Information
+ApplicationInfo:
+Complete. [property AppInfoComplete]
+Incomplete. [property AppInfoIncomplete]
+
+# Input Submission Confirmation
+SubmitConfirm:
+Confirm. [property SubmitConfirmed]
+Cancel. [property SubmitCancelled]
+
+# Input Redirect Option
+RedirectOption:
+ApplicationDashboard. [if SubmitConfirmed]
+RetryForm. [if !SubmitConfirmed]
+ErrorPage. [if AppInfoIncomplete]
