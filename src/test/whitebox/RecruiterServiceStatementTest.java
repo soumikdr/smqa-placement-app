@@ -2,7 +2,6 @@ package test.whitebox;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -13,26 +12,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import model.*;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockedStatic;
@@ -838,7 +827,7 @@ public class RecruiterServiceStatementTest {
             utilityMock.when(() -> Utility.setCurrentUser(null)).thenAnswer(invocation -> null);
 
 
-            CommonService mockCommonService = mock(CommonService.class);
+            CommonService mockCommonService = Mockito.mock(CommonService.class);
             commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
 
 
@@ -873,7 +862,7 @@ public class RecruiterServiceStatementTest {
              MockedStatic<CommonService> commonServiceMock = mockStatic(CommonService.class)) {
 
 
-            User mockUser = mock(User.class);
+            User mockUser = Mockito.mock(User.class);
             when(mockUser.getUserName()).thenReturn("recruiter123");
             utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
 
@@ -886,7 +875,7 @@ public class RecruiterServiceStatementTest {
             utilityMock.when(() -> Utility.setCurrentUser(null)).thenAnswer(invocation -> null);
 
 
-            CommonService mockCommonService = mock(CommonService.class);
+            CommonService mockCommonService = Mockito.mock(CommonService.class);
             commonServiceMock.when(CommonService::getInstance).thenReturn(mockCommonService);
             doNothing().when(mockCommonService).accessLandingPage();
 
@@ -917,14 +906,14 @@ public class RecruiterServiceStatementTest {
         try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class)) {
 
 
-            User mockUser = mock(User.class);
+            User mockUser = Mockito.mock(User.class);
             when(mockUser.getRole()).thenReturn(UserRole.RECRUITER);
             when(mockUser.getUserName()).thenReturn("recruiter1");
             when(mockUser.getPassword()).thenReturn("oldPassword");
             utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
 
 
-            User anotherUser = mock(User.class);
+            User anotherUser = Mockito.mock(User.class);
             when(anotherUser.getUserName()).thenReturn("user2");
             List<User> users = new ArrayList<>();
             users.add(mockUser);

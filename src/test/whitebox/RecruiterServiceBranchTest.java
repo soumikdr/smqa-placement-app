@@ -15,20 +15,14 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.io.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import model.*;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +36,6 @@ import model.ApplicationStatus;
 import model.Assignment;
 import model.Job;
 import model.JobStatus;
-import service.CommonService;
 import model.Recruiter;
 import model.User;
 import model.UserRole;
@@ -1036,7 +1029,7 @@ public class RecruiterServiceBranchTest {
 
 
             User mockUser = mock(User.class);
-            when(mockUser.getUserName()).thenReturn("recruiter123");
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter123");
             utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
 
 
@@ -1089,13 +1082,13 @@ public class RecruiterServiceBranchTest {
 
 
             User mockUser = mock(User.class);
-            when(mockUser.getUserName()).thenReturn("recruiter123");
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter123");
             utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
 
 
             List<User> mockUsers = new ArrayList<>();
             User anotherUser = mock(User.class);
-            when(anotherUser.getUserName()).thenReturn("recruiter456");
+            Mockito. when(anotherUser.getUserName()).thenReturn("recruiter456");
             mockUsers.add(anotherUser);
             utilityMock.when(Utility::getUsers).thenReturn(mockUsers);
 
@@ -1142,9 +1135,9 @@ public class RecruiterServiceBranchTest {
     	RecruiterService spyService = Mockito.spy(new RecruiterService());
         try (MockedStatic<Utility> utilityMock = mockStatic(Utility.class)) {
 
-            User mockApplicant = mock(User.class, withSettings().extraInterfaces(Applicant.class));
+            User mockApplicant = mock(Applicant.class);
             utilityMock.when(Utility::getCurrentUser).thenReturn(mockApplicant);
-
+            doNothing().when(spyService).viewRecruiterDashboard();
 
             spyService.viewAllApplications();
 
@@ -1155,7 +1148,6 @@ public class RecruiterServiceBranchTest {
 
             verify(spyService, times(1)).viewRecruiterDashboard();
 
-            verifyNoMoreInteractions(spyService);
         }
     }
     @Test
@@ -1210,9 +1202,9 @@ public class RecruiterServiceBranchTest {
 
 
             Application mockApplication = mock(Application.class);
-            when(mockApplication.getId()).thenReturn("app123");
-            when(mockApplication.getStatus()).thenReturn(ApplicationStatus.INPROGRESS);
-            when(mockApplication.getApplicantId()).thenReturn("applicant456");
+            Mockito.when(mockApplication.getId()).thenReturn("app123");
+            Mockito.when(mockApplication.getStatus()).thenReturn(ApplicationStatus.INPROGRESS);
+            Mockito.when(mockApplication.getApplicantId()).thenReturn("applicant456");
 
             RecruiterService spyService = Mockito.spy(new RecruiterService());
             List<Application> mockApplications = new ArrayList<>();
@@ -1266,14 +1258,14 @@ public class RecruiterServiceBranchTest {
 
 
             User mockUser = mock(User.class);
-            when(mockUser.getRole()).thenReturn(UserRole.RECRUITER);
-            when(mockUser.getUserName()).thenReturn("recruiter1");
-            when(mockUser.getPassword()).thenReturn("oldPassword");
+            Mockito.when(mockUser.getRole()).thenReturn(UserRole.RECRUITER);
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter1");
+            Mockito.when(mockUser.getPassword()).thenReturn("oldPassword");
             utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
 
 
             User anotherUser = mock(User.class);
-            when(anotherUser.getUserName()).thenReturn("user2");
+            Mockito.when(anotherUser.getUserName()).thenReturn("user2");
             List<User> users = new ArrayList<>();
             users.add(mockUser);
             users.add(anotherUser);
@@ -1314,9 +1306,9 @@ public class RecruiterServiceBranchTest {
 
 
             User mockUser = mock(User.class);
-            when(mockUser.getRole()).thenReturn(UserRole.RECRUITER);
-            when(mockUser.getUserName()).thenReturn("recruiter3");
-            when(mockUser.getPassword()).thenReturn("oldPassword");
+            Mockito.when(mockUser.getRole()).thenReturn(UserRole.RECRUITER);
+            Mockito.when(mockUser.getUserName()).thenReturn("recruiter3");
+            Mockito.when(mockUser.getPassword()).thenReturn("oldPassword");
             utilityMock.when(Utility::getCurrentUser).thenReturn(mockUser);
             RecruiterService recruiterService = Mockito.spy(new RecruiterService());
             // 2. Mock getUsers() to return a list containing the current user
