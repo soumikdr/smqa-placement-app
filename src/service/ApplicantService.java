@@ -385,10 +385,10 @@ public class ApplicantService {
 
     }
 
-    // ETY1 - 14
+    // ETY1 - STORY 14
     public void viewApplicantDashboard() {
 
-        System.out.println("Welcome to the Applicant Dashboard\n");
+        System.out.println("Welcome to the Applicant Dashboard");
         System.out.println("1. View Profile");
         System.out.println("2. View Applications");
         System.out.println("3. View Available Jobs");
@@ -411,7 +411,7 @@ public class ApplicantService {
             }
             case "4": {
                 System.out.println("Logging Out...");
-                logOut();
+                applicantLogOut();
                 break;
             }
             default: {
@@ -542,11 +542,7 @@ public class ApplicantService {
         viewApplicantProfilePage();
     }
 
-    public void logOut() {
-        Utility.setCurrentUser(null);
-        System.out.println("Logged Out Successfully");
-        applicantViewSignInSignUpPage();
-    }
+
 
     public void viewResetPasswordPage() {
 
