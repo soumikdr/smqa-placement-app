@@ -1,20 +1,11 @@
 package service;
 
+import model.*;
+import utility.Utility;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import model.Applicant;
-import model.Application;
-import model.ApplicationStatus;
-import model.Assignment;
-import model.AssignmentStatus;
-import model.Job;
-import model.JobStatus;
-import model.Recruiter;
-import model.User;
-import model.UserRole;
-import utility.Utility;
 
 public class ApplicantService {
 
@@ -98,7 +89,8 @@ public class ApplicantService {
         }
 
         if (applicant == null) {
-            String tryAgain = Utility.inputOutput("\nInvalid username or password. Do you want to try again? (y/n)");
+            System.out.println("\nInvalid credentials or Not an Applicant.");
+            String tryAgain = Utility.inputOutput("\nDo you want to try again? (y/n)");
             if (tryAgain.equals("y")) {
                 signIn();
             } else {
@@ -107,8 +99,7 @@ public class ApplicantService {
         } else {
             System.out.println("\nApplicant Signin successful. proceeding to applicant dashboard.. \n");
             Utility.setCurrentUser(applicant);
-            ApplicantService applicantService = new ApplicantService();
-            applicantService.viewApplicantDashboard();
+            viewApplicantDashboard();
         }
     }
 
@@ -394,10 +385,10 @@ public class ApplicantService {
 
     }
 
-    // ETY1 - 14
+    // ETY1 - STORY 14
     public void viewApplicantDashboard() {
 
-        System.out.println("Welcome to the Applicant Dashboard\n");
+        System.out.println("Welcome to the Applicant Dashboard");
         System.out.println("1. View Profile");
         System.out.println("2. View Applications");
         System.out.println("3. View Available Jobs");
@@ -420,7 +411,7 @@ public class ApplicantService {
             }
             case "4": {
                 System.out.println("Logging Out...");
-                logOut();
+                applicantLogOut();
                 break;
             }
             default: {
@@ -525,13 +516,9 @@ public class ApplicantService {
      * User Story: 17
      */
     public void updateProfile(User user) {
-        // Filter the user from the list and update the user
         ArrayList<User> users = Utility.getUsers();
-        // Remove the user from the list
         users.removeIf(u -> u.getId().equals(user.getId()));
-        // Add the updated user to the list
         users.add(user);
-        // Update the current user
         Utility.setCurrentUser(user);
     }
 
@@ -555,11 +542,7 @@ public class ApplicantService {
         viewApplicantProfilePage();
     }
 
-    public void logOut() {
-        Utility.setCurrentUser(null);
-        System.out.println("Logged Out Successfully");
-        applicantViewSignInSignUpPage();
-    }
+
 
     public void viewResetPasswordPage() {
 

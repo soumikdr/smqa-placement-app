@@ -1,0 +1,252 @@
+
+Test Case 1  		(Key = 1.1.1.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 2  		(Key = 1.1.1.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 3  		(Key = 1.1.1.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 4  		(Key = 1.1.2.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 5  		(Key = 1.1.2.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 6  		(Key = 1.1.2.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 7  		(Key = 1.1.3.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 8  		(Key = 1.1.3.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 9  		(Key = 1.1.3.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 10 		(Key = 1.1.4.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 11 		(Key = 1.1.4.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 12 		(Key = 1.1.4.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The system user list contains an Applicant user with ID = "A200"
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 13 		(Key = 1.2.1.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 14 		(Key = 1.2.1.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 15 		(Key = 1.2.1.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 16 		(Key = 1.2.2.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 17 		(Key = 1.2.2.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 18 		(Key = 1.2.2.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 19 		(Key = 1.2.3.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 20 		(Key = 1.2.3.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 21 		(Key = 1.2.3.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 22 		(Key = 1.2.4.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 23 		(Key = 1.2.4.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 24 		(Key = 1.2.4.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user’s current firstName = "OldName", lastName = "OldLast"
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 25 		(Key = 1.3.1.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 26 		(Key = 1.3.1.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 27 		(Key = 1.3.1.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  1
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 28 		(Key = 1.3.2.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 29 		(Key = 1.3.2.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 30 		(Key = 1.3.2.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  firstName = "NewName", lastName = "NewLast"
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 31 		(Key = 1.3.3.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 32 		(Key = 1.3.3.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 33 		(Key = 1.3.3.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  2
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+
+
+Test Case 34 		(Key = 1.3.4.1.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - The user list no longer contains "OldName OldLast" for ID = "A200"
+
+
+Test Case 35 		(Key = 1.3.4.2.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - Instead, it contains "NewName NewLast" for ID = "A200"
+
+
+Test Case 36 		(Key = 1.3.4.3.)
+   DESCRIPTION       :  Verifies that the provided updated user replaces the old version in the user listt
+   PRECONDITIONS     :  - The user is also the current user in the system
+   ACTIONS           :  Call updateProfile(updatedUser)
+   EXPECTED OUTCOMES :  - The system’s current user also reflects the updated information
+

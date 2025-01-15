@@ -1,0 +1,20 @@
+TEST CASE: TSL_APP_JOB_01
+METHOD: viewJobDescFromApplication(String applicationId)
+DESCRIPTION: Verifies that the system retrieves and displays the job description of the job linked to the given application.
+
+PRECONDITIONS:
+  - There is an Application with ID = "APP500", jobId = "JOB123".
+  - A Job with ID = "JOB123" exists in the system with
+    jobName = "Software Engineer", jobDescription = "Develop software".
+  - The current user’s ID matches the applicantId of "APP500" (ensuring permission).
+
+ACTIONS:
+  1. Invoke viewJobDescFromApplication("APP500").
+
+EXPECTED OUTCOMES:
+  - The system retrieves the job with ID = "JOB123".
+  - The console or UI displays:
+      "Job ID: JOB123"
+      "Job Title: Software Engineer"
+      "Job Description: Develop software"
+  - No error or denial-of-access message is displayed.
