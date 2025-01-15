@@ -1,0 +1,16 @@
+# Input Job ID
+JobID:
+Existing.
+NonExisting.
+
+# Input Current Job Status
+CurrentJobStatus:
+Private.
+Public.
+
+
+# Input Update Confirmation
+UpdateConfirmation:
+Yes.
+No.
+Invalid.

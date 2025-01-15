@@ -1,0 +1,72 @@
+
+Test Case 1  		(Key = 1.1.1.)
+   JobID              :  Existing
+   CurrentJobStatus   :  Private
+   UpdateConfirmation :  Yes
+
+
+Test Case 2  		(Key = 1.1.2.)
+   JobID              :  Existing
+   CurrentJobStatus   :  Private
+   UpdateConfirmation :  No
+
+
+Test Case 3  		(Key = 1.1.3.)
+   JobID              :  Existing
+   CurrentJobStatus   :  Private
+   UpdateConfirmation :  Invalid
+
+
+Test Case 4  		(Key = 1.2.1.)
+   JobID              :  Existing
+   CurrentJobStatus   :  Public
+   UpdateConfirmation :  Yes
+
+
+Test Case 5  		(Key = 1.2.2.)
+   JobID              :  Existing
+   CurrentJobStatus   :  Public
+   UpdateConfirmation :  No
+
+
+Test Case 6  		(Key = 1.2.3.)
+   JobID              :  Existing
+   CurrentJobStatus   :  Public
+   UpdateConfirmation :  Invalid
+
+
+Test Case 7  		(Key = 2.1.1.)
+   JobID              :  NonExisting
+   CurrentJobStatus   :  Private
+   UpdateConfirmation :  Yes
+
+
+Test Case 8  		(Key = 2.1.2.)
+   JobID              :  NonExisting
+   CurrentJobStatus   :  Private
+   UpdateConfirmation :  No
+
+
+Test Case 9  		(Key = 2.1.3.)
+   JobID              :  NonExisting
+   CurrentJobStatus   :  Private
+   UpdateConfirmation :  Invalid
+
+
+Test Case 10 		(Key = 2.2.1.)
+   JobID              :  NonExisting
+   CurrentJobStatus   :  Public
+   UpdateConfirmation :  Yes
+
+
+Test Case 11 		(Key = 2.2.2.)
+   JobID              :  NonExisting
+   CurrentJobStatus   :  Public
+   UpdateConfirmation :  No
+
+
+Test Case 12 		(Key = 2.2.3.)
+   JobID              :  NonExisting
+   CurrentJobStatus   :  Public
+   UpdateConfirmation :  Invalid
+

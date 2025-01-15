@@ -1,9 +1,6 @@
 package service;
 
-import model.User;
 import utility.Utility;
-
-import java.util.ArrayList;
 
 public class CommonService {
 
@@ -49,20 +46,4 @@ public class CommonService {
         }
 
     }
-
-    /**
-     * @param users    List of users from the database to look for the user
-     * @param userName username
-     * @param password password
-     * @return User object if authenticated, null otherwise
-     */
-    public User authenticateUser(ArrayList<User> users, String userName, String password) {
-        for (User user : users) {
-            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
 }
