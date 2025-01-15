@@ -96,6 +96,33 @@ public class ApplicantServiceStatementTest {
         System.setOut(originalOut);
     }
 
+
+    @Test
+    public void testSignIn_Valid() {
+        try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
+            // Arrange
+            mockedUtility.when(Utility::getUsers).thenReturn(mockUsers);
+            // First invalid password, then correct password
+            mockedUtility.when(() -> Utility.inputOutput(anyString()))
+                .thenReturn("johnDoe").thenReturn("wrongPassword").thenReturn("y").thenReturn("johnDoe").thenReturn("bestpassword");;
+            ApplicantService applicantService = Mockito.spy(new ApplicantService());
+            doNothing().when(applicantService).viewApplicantDashboard();
+
+            // Act
+            applicantService.signIn();
+
+            // Assert
+            // Get the complete output
+            String output = outContent.toString().trim();
+
+            // Extract the last println message (messages are separated by newlines)
+            String[] lines = output.split("\n");
+            String lastMessage = lines[lines.length - 1];
+
+            assertEquals("Applicant Signin successful. proceeding to applicant dashboard..", lastMessage);
+        }
+    }
+
     @Test
     public void testViewApplicantProfilePage_Valid() {
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
