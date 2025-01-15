@@ -1,0 +1,33 @@
+
+Test Case 1  		<error>
+   ApplicationId :  NullApplicationId
+
+
+Test Case 2  		<error>
+   InterviewAssignments :  NoInterviewQuestions
+
+
+Test Case 3  		<error>
+   SubmissionStatus :  AlreadySubmitted
+
+
+Test Case 4  		(Key = 1.1.1.1.)
+   ApplicationId        :  ValidApplicationId
+   InterviewAssignments :  InterviewQuestionsAvailable
+   SubmissionStatus     :  NotSubmitted
+   Answer               :  ValidAnswer
+
+
+Test Case 5  		(Key = 2.1.1.1.)
+   ApplicationId        :  InvalidApplicationId
+   InterviewAssignments :  InterviewQuestionsAvailable
+   SubmissionStatus     :  NotSubmitted
+   Answer               :  ValidAnswer
+
+
+Test Case 6  		(Key = 4.1.1.1.)
+   ApplicationId        :  EmptyApplicationId
+   InterviewAssignments :  InterviewQuestionsAvailable
+   SubmissionStatus     :  NotSubmitted
+   Answer               :  ValidAnswer
+

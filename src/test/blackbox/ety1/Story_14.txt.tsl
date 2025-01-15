@@ -1,0 +1,20 @@
+
+Test Case 1  		(Key = 1.)
+   MenuOption :  ViewProfileOption
+
+
+Test Case 2  		(Key = 2.)
+   MenuOption :  ViewApplicationsOption
+
+
+Test Case 3  		(Key = 3.)
+   MenuOption :  ViewAvailableJobsOption
+
+
+Test Case 4  		(Key = 4.)
+   MenuOption :  LogOutOption
+
+
+Test Case 5  		(Key = 5.)
+   MenuOption :  InvalidOption
+

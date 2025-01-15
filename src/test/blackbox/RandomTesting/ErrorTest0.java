@@ -24,85 +24,95 @@ public class ErrorTest0 {
     public void test001() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test001");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewRecruiterProfilePage();
+        applicantService0.viewApplicantApplications();
     }
 
     @Test
     public void test002() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test002");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewRecruiterProfilePage();
+        applicantService0.viewAssessment("hi!");
     }
 
     @Test
     public void test003() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test003");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.deleteRecruiterProfile();
+        applicantService0.resetPassword("");
     }
 
     @Test
     public void test004() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test004");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewTotalNumberOfApplications("hi!");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test005() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test005");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewRecruiterProfilePage();
+        applicantService0.submitInterviewForm("hi!");
     }
 
     @Test
     public void test006() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test006");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewSpecificApplication("");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test007() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test007");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewApplicantProfilePage();
+        recruiterService0.updateRecruiterProfile();
     }
 
     @Test
     public void test008() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test008");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.withdrawApplication("");
+        recruiterService0.deleteRecruiterProfile();
     }
 
     @Test
     public void test009() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test009");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.deleteProfileHelper();
+        recruiterService0.viewSpecificApplication("hi!");
     }
 
     @Test
@@ -110,62 +120,63 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test010");
         service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
-        recruiterService0.sendAssessment();
-        model.User[] userArray4 = new model.User[] {};
-        java.util.ArrayList<model.User> userList5 = new java.util.ArrayList<model.User>();
-        boolean boolean6 = java.util.Collections.addAll((java.util.Collection<model.User>) userList5, userArray4);
-        model.User user9 = recruiterService0.authenticateUser(userList5, "", "");
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.updateRecruiterProfile();
+        recruiterService0.recruiterSignInPage();
     }
 
     @Test
     public void test011() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test011");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitAssessmentForm("hi!");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test012() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test012");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewJobDescFromApplication("");
+        recruiterService0.viewRecruiterProfilePage();
     }
 
     @Test
     public void test013() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test013");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.deleteProfileHelper();
+        applicantService0.submitAssessmentForm("hi!");
     }
 
     @Test
     public void test014() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test014");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewInterview("");
+        applicantService0.viewFeedback("");
     }
 
     @Test
     public void test015() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test015");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signUp();
+        recruiterService0.deleteRecruiterProfile();
     }
 
     @Test
@@ -173,136 +184,133 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test016");
         service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewSpecificApplication("hi!");
+        recruiterService0.resetPasswordRecruiter("");
     }
 
     @Test
     public void test017() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test017");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewAssessment("");
+        applicantService0.viewSpecificApplication("hi!");
     }
 
     @Test
     public void test018() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test018");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signIn();
+        recruiterService0.updateRecruiterProfile();
     }
 
     @Test
     public void test019() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test019");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewApplicantApplications();
+        applicantService0.viewInterview("");
     }
 
     @Test
     public void test020() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test020");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
+        model.User[] userArray3 = new model.User[] {};
+        java.util.ArrayList<model.User> userList4 = new java.util.ArrayList<model.User>();
+        boolean boolean5 = java.util.Collections.addAll((java.util.Collection<model.User>) userList4, userArray3);
+        model.User user8 = recruiterService0.authenticateUser(userList4, "", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.showUpdateProfilePage();
+        recruiterService0.updateRecruiterProfile();
     }
 
     @Test
     public void test021() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test021");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewAssessment("hi!");
+        applicantService0.viewApplicantProfilePage();
     }
 
     @Test
     public void test022() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test022");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
-        recruiterService0.sendAssessment();
-        model.User[] userArray4 = new model.User[] {};
-        java.util.ArrayList<model.User> userList5 = new java.util.ArrayList<model.User>();
-        boolean boolean6 = java.util.Collections.addAll((java.util.Collection<model.User>) userList5, userArray4);
-        model.User user9 = recruiterService0.authenticateUser(userList5, "", "");
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewAssessmentResult("hi!", "hi!");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test023() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test023");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewFeedback("hi!");
+        recruiterService0.viewAssessmentResult("hi!", "hi!");
     }
 
     @Test
     public void test024() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test024");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
-        recruiterService0.sendAssessment();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewSpecificApplication("hi!");
+        applicantService0.viewInterview("hi!");
     }
 
     @Test
     public void test025() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test025");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewAllAvailableJobs();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.showUpdateProfilePage();
+        recruiterService0.viewTotalNumberOfApplications("");
     }
 
     @Test
     public void test026() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test026");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewSpecificApplication("hi!");
+        applicantService0.viewJobDescFromApplication("");
     }
 
     @Test
     public void test027() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test027");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewAllAvailableJobs();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewAssessment("hi!");
+        applicantService0.viewApplicantProfilePage();
     }
 
     @Test
     public void test028() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test028");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.resetPasswordRecruiter("");
+        applicantService0.viewInterview("");
     }
 
     @Test
@@ -311,17 +319,17 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test029");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("hi!");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test030() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test030");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewAllAvailableJobs();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signUp();
+        applicantService0.withdrawApplication("hi!");
     }
 
     @Test
@@ -329,19 +337,18 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test031");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewApplicantProfilePage();
+        applicantService0.submitAssessmentForm("");
     }
 
     @Test
     public void test032() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test032");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.sendAssessment();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.updateRecruiterProfile();
+        applicantService0.viewAssessment("hi!");
     }
 
     @Test
@@ -349,60 +356,58 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test033");
         service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
-        recruiterService0.sendAssessment();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewRecruiterProfilePage();
+        recruiterService0.viewAssessmentResult("", "hi!");
     }
 
     @Test
     public void test034() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test034");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewJobDescFromApplication("");
+        applicantService0.viewAssessment("hi!");
     }
 
     @Test
     public void test035() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test035");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewSpecificApplication("");
+        recruiterService0.viewAssessmentResult("hi!", "");
     }
 
     @Test
     public void test036() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test036");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewAllAvailableJobs();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewJobDescFromApplication("");
+        recruiterService0.resetPasswordRecruiter("");
     }
 
     @Test
     public void test037() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test037");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.showUpdateProfilePage();
+        recruiterService0.viewRecruiterProfilePage();
     }
 
     @Test
     public void test038() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test038");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitInterviewForm("");
+        applicantService0.viewInterview("");
     }
 
     @Test
@@ -410,46 +415,51 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test039");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitAssessmentForm("");
+        applicantService0.signUp();
     }
 
     @Test
     public void test040() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test040");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewInterview("hi!");
+        applicantService0.viewSpecificApplication("hi!");
     }
 
     @Test
     public void test041() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test041");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewAllAvailableJobs();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.withdrawApplication("hi!");
+        applicantService0.signIn();
     }
 
     @Test
     public void test042() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test042");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.deleteApplicantProfile();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitAssessmentForm("");
+        applicantService0.submitAssessmentForm("hi!");
     }
 
     @Test
     public void test043() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test043");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
         recruiterService0.resetPasswordRecruiter("hi!");
     }
@@ -458,80 +468,80 @@ public class ErrorTest0 {
     public void test044() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test044");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewAllAvailableJobs();
+        service.RecruiterService recruiterService0 = new service.RecruiterService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("");
+        recruiterService0.viewSpecificApplication("hi!");
     }
 
     @Test
     public void test045() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test045");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
+        model.User[] userArray3 = new model.User[] {};
+        java.util.ArrayList<model.User> userList4 = new java.util.ArrayList<model.User>();
+        boolean boolean5 = java.util.Collections.addAll((java.util.Collection<model.User>) userList4, userArray3);
+        model.User user8 = recruiterService0.authenticateUser(userList4, "", "hi!");
+        service.RecruiterService recruiterService9 = service.RecruiterService.getInstance();
+        recruiterService9.updateStatusOfJobPost("hi!");
+        model.User[] userArray12 = new model.User[] {};
+        java.util.ArrayList<model.User> userList13 = new java.util.ArrayList<model.User>();
+        boolean boolean14 = java.util.Collections.addAll((java.util.Collection<model.User>) userList13, userArray12);
+        model.User user17 = recruiterService9.authenticateUser(userList13, "", "hi!");
+        model.User user20 = recruiterService0.authenticateUser(userList13, "hi!", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.deleteProfileHelper();
+        recruiterService0.viewAssessmentResult("", "hi!");
     }
 
     @Test
     public void test046() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test046");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signIn();
+        applicantService0.submitAssessmentForm("hi!");
     }
 
     @Test
     public void test047() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test047");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewTotalNumberOfApplications("");
+        applicantService0.viewInterview("");
     }
 
     @Test
     public void test048() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test048");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
-        recruiterService0.sendAssessment();
-        model.User[] userArray4 = new model.User[] {};
-        java.util.ArrayList<model.User> userList5 = new java.util.ArrayList<model.User>();
-        boolean boolean6 = java.util.Collections.addAll((java.util.Collection<model.User>) userList5, userArray4);
-        model.User user9 = recruiterService0.authenticateUser(userList5, "", "");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.deleteRecruiterProfile();
+        applicantService0.viewAssessment("hi!");
     }
 
     @Test
     public void test049() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test049");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewApplicantProfilePage();
+        applicantService0.viewAssessment("");
     }
 
     @Test
     public void test050() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test050");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
-        recruiterService0.sendAssessment();
-        model.User[] userArray4 = new model.User[] {};
-        java.util.ArrayList<model.User> userList5 = new java.util.ArrayList<model.User>();
-        boolean boolean6 = java.util.Collections.addAll((java.util.Collection<model.User>) userList5, userArray4);
-        model.User user9 = recruiterService0.authenticateUser(userList5, "", "");
-        recruiterService0.viewInterviewResult();
+        service.RecruiterService recruiterService0 = new service.RecruiterService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
         recruiterService0.updateRecruiterProfile();
     }
@@ -540,9 +550,12 @@ public class ErrorTest0 {
     public void test051() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test051");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.showUpdateProfilePage();
+        applicantService0.submitInterviewForm("");
     }
 
     @Test
@@ -551,51 +564,48 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test052");
         service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("");
+        applicantService0.viewAssessment("");
     }
 
     @Test
     public void test053() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test053");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.withdrawApplication("");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test054() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test054");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.updateRecruiterProfile();
+        applicantService0.resetPassword("hi!");
     }
 
     @Test
     public void test055() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test055");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
-        recruiterService0.sendAssessment();
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewAssessmentResult("", "");
+        applicantService0.withdrawApplication("hi!");
     }
 
     @Test
     public void test056() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test056");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.withdrawApplication("hi!");
+        applicantService0.viewFeedback("");
     }
 
     @Test
@@ -604,56 +614,62 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test057");
         service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.showUpdateProfilePage();
+        applicantService0.withdrawApplication("");
     }
 
     @Test
     public void test058() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test058");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = new service.RecruiterService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewJobDescFromApplication("");
+        recruiterService0.viewTotalNumberOfApplications("hi!");
     }
 
     @Test
     public void test059() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test059");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("hi!");
+        applicantService0.withdrawApplication("hi!");
     }
 
     @Test
     public void test060() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test060");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.deleteApplicantProfile();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signIn();
+        applicantService0.withdrawApplication("");
     }
 
     @Test
     public void test061() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test061");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.submitNewJobPost("hi!", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signIn();
+        recruiterService0.recruiterSignInPage();
     }
 
     @Test
     public void test062() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test062");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = new service.RecruiterService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("");
+        recruiterService0.recruiterSignInPage();
     }
 
     @Test
@@ -661,40 +677,41 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test063");
         service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewApplicantApplications();
+        applicantService0.showUpdateProfilePage();
     }
 
     @Test
     public void test064() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test064");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewSpecificApplication("");
+        applicantService0.signUp();
     }
 
     @Test
     public void test065() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test065");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
-        recruiterService0.sendAssessment();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.updateRecruiterProfile();
+        applicantService0.submitAssessmentForm("");
     }
 
     @Test
     public void test066() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test066");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewSpecificApplication("hi!");
+        recruiterService0.recruiterSignInPage();
     }
 
     @Test
@@ -702,28 +719,34 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test067");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("hi!");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test068() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test068");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewAllAvailableJobs();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.updateStatusOfJobPost("hi!");
+        recruiterService0.submitNewJobPost("hi!", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitAssessmentForm("");
+        recruiterService0.updateRecruiterProfile();
     }
 
     @Test
     public void test069() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test069");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.deleteApplicantProfile();
         applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
         applicantService0.viewApplicantProfilePage();
     }
@@ -732,13 +755,12 @@ public class ErrorTest0 {
     public void test070() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test070");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
-        recruiterService0.sendAssessment();
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewSpecificApplication("hi!");
+        applicantService0.viewSpecificApplication("hi!");
     }
 
     @Test
@@ -747,7 +769,7 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test071");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signIn();
+        applicantService0.viewFeedback("");
     }
 
     @Test
@@ -756,7 +778,7 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test072");
         service.ApplicantService applicantService0 = new service.ApplicantService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.showUpdateProfilePage();
+        applicantService0.signUp();
     }
 
     @Test
@@ -764,17 +786,23 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test073");
         service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewFeedback("");
+        applicantService0.withdrawApplication("");
     }
 
     @Test
     public void test074() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test074");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.deleteRecruiterProfile();
+        applicantService0.signUp();
     }
 
     @Test
@@ -783,57 +811,57 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test075");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
         applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitInterviewForm("");
+        applicantService0.viewJobDescFromApplication("");
     }
 
     @Test
     public void test076() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test076");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewSpecificApplication("hi!");
+        applicantService0.submitInterviewForm("hi!");
     }
 
     @Test
     public void test077() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test077");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
-        recruiterService0.viewInterviewResult();
-        service.RecruiterService recruiterService2 = service.RecruiterService.getInstance();
-        recruiterService2.updateStatusOfJobPost("hi!");
-        recruiterService2.sendAssessment();
-        model.User[] userArray6 = new model.User[] {};
-        java.util.ArrayList<model.User> userList7 = new java.util.ArrayList<model.User>();
-        boolean boolean8 = java.util.Collections.addAll((java.util.Collection<model.User>) userList7, userArray6);
-        model.User user11 = recruiterService2.authenticateUser(userList7, "", "");
-        model.User user14 = recruiterService0.authenticateUser(userList7, "hi!", "hi!");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewRecruiterProfilePage();
+        applicantService0.viewSpecificApplication("");
     }
 
     @Test
     public void test078() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test078");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.resetPasswordRecruiter("hi!");
+        applicantService0.signIn();
     }
 
     @Test
     public void test079() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test079");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        model.User[] userArray7 = new model.User[] {};
+        java.util.ArrayList<model.User> userList8 = new java.util.ArrayList<model.User>();
+        boolean boolean9 = java.util.Collections.addAll((java.util.Collection<model.User>) userList8, userArray7);
+        model.User user12 = recruiterService0.authenticateUser(userList8, "", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.withdrawApplication("");
+        recruiterService0.updateRecruiterProfile();
     }
 
     @Test
@@ -842,22 +870,19 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test080");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitInterviewForm("");
+        applicantService0.viewSpecificApplication("");
     }
 
     @Test
     public void test081() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test081");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
-        model.User[] userArray3 = new model.User[] {};
-        java.util.ArrayList<model.User> userList4 = new java.util.ArrayList<model.User>();
-        boolean boolean5 = java.util.Collections.addAll((java.util.Collection<model.User>) userList4, userArray3);
-        model.User user8 = recruiterService0.authenticateUser(userList4, "hi!", "");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.deleteRecruiterProfile();
+        applicantService0.viewApplicantApplications();
     }
 
     @Test
@@ -865,17 +890,28 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test082");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewFeedback("");
+        applicantService0.submitAssessmentForm("hi!");
     }
 
     @Test
     public void test083() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test083");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        model.User[] userArray7 = new model.User[] {};
+        java.util.ArrayList<model.User> userList8 = new java.util.ArrayList<model.User>();
+        boolean boolean9 = java.util.Collections.addAll((java.util.Collection<model.User>) userList8, userArray7);
+        model.User user12 = recruiterService0.authenticateUser(userList8, "", "hi!");
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewAssessmentResult("hi!", "hi!");
+        recruiterService0.viewRecruiterProfilePage();
     }
 
     @Test
@@ -884,71 +920,69 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test084");
         service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("hi!");
+        applicantService0.showUpdateProfilePage();
     }
 
     @Test
     public void test085() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test085");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
-        model.User[] userArray3 = new model.User[] {};
-        java.util.ArrayList<model.User> userList4 = new java.util.ArrayList<model.User>();
-        boolean boolean5 = java.util.Collections.addAll((java.util.Collection<model.User>) userList4, userArray3);
-        model.User user8 = recruiterService0.authenticateUser(userList4, "hi!", "");
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.updateRecruiterProfile();
+        applicantService0.withdrawApplication("");
     }
 
     @Test
     public void test086() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test086");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signUp();
+        recruiterService0.viewTotalNumberOfApplications("hi!");
     }
 
     @Test
     public void test087() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test087");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewSpecificApplication("hi!");
+        applicantService0.viewApplicantApplications();
     }
 
     @Test
     public void test088() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test088");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
-        recruiterService0.sendAssessment();
-        model.User[] userArray4 = new model.User[] {};
-        java.util.ArrayList<model.User> userList5 = new java.util.ArrayList<model.User>();
-        boolean boolean6 = java.util.Collections.addAll((java.util.Collection<model.User>) userList5, userArray4);
-        model.User user9 = recruiterService0.authenticateUser(userList5, "", "");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewRecruiterProfilePage();
+        applicantService0.resetPassword("hi!");
     }
 
     @Test
     public void test089() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test089");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
-        recruiterService0.viewInterviewResult();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.updateStatusOfJobPost("hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.recruiterSignInPage();
+        recruiterService0.deleteRecruiterProfile();
     }
 
     @Test
@@ -957,47 +991,44 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test090");
         service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewInterview("hi!");
+        applicantService0.viewApplicantApplications();
     }
 
     @Test
     public void test091() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test091");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
+        service.RecruiterService recruiterService0 = new service.RecruiterService();
+        recruiterService0.submitNewJobPost("", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.resetPasswordRecruiter("hi!");
+        recruiterService0.viewAssessmentResult("hi!", "hi!");
     }
 
     @Test
     public void test092() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test092");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.signIn();
+        applicantService0.submitAssessmentForm("");
     }
 
     @Test
     public void test093() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test093");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
-        recruiterService0.viewInterviewResult();
-        service.RecruiterService recruiterService2 = service.RecruiterService.getInstance();
-        recruiterService2.updateStatusOfJobPost("hi!");
-        recruiterService2.sendAssessment();
-        model.User[] userArray6 = new model.User[] {};
-        java.util.ArrayList<model.User> userList7 = new java.util.ArrayList<model.User>();
-        boolean boolean8 = java.util.Collections.addAll((java.util.Collection<model.User>) userList7, userArray6);
-        model.User user11 = recruiterService2.authenticateUser(userList7, "", "");
-        model.User user14 = recruiterService0.authenticateUser(userList7, "hi!", "hi!");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.resetPasswordRecruiter("hi!");
+        applicantService0.signUp();
     }
 
     @Test
@@ -1005,41 +1036,39 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test094");
         service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitInterviewForm("");
+        applicantService0.showUpdateProfilePage();
     }
 
     @Test
     public void test095() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test095");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = new service.RecruiterService();
+        recruiterService0.submitNewJobPost("", "");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewInterview("");
+        recruiterService0.resetPasswordRecruiter("hi!");
     }
 
     @Test
     public void test096() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test096");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
-        recruiterService0.sendAssessment();
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewSpecificApplication("hi!");
+        applicantService0.viewInterview("");
     }
 
     @Test
     public void test097() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test097");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
         applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewInterview("hi!");
+        applicantService0.submitInterviewForm("hi!");
     }
 
     @Test
@@ -1048,18 +1077,22 @@ public class ErrorTest0 {
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test098");
         service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewApplicantProfilePage();
+        applicantService0.viewFeedback("hi!");
     }
 
     @Test
     public void test099() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test099");
-        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.updateStatusOfJobPost("hi!");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewSpecificApplication("hi!");
+        applicantService0.submitAssessmentForm("");
     }
 
     @Test
@@ -1067,46 +1100,51 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test100");
         service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
-        applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitAssessmentForm("hi!");
+        applicantService0.showUpdateProfilePage();
     }
 
     @Test
     public void test101() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test101");
-        service.RecruiterService recruiterService0 = new service.RecruiterService();
-        recruiterService0.viewInterviewResult();
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.updateRecruiterProfile();
+        applicantService0.submitAssessmentForm("");
     }
 
     @Test
     public void test102() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test102");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
-        applicantService0.viewAllAvailableJobs();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.submitNewJobPost("hi!", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.withdrawApplication("");
+        recruiterService0.viewAssessmentResult("hi!", "hi!");
     }
 
     @Test
     public void test103() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test103");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
-        applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        model.User[] userArray7 = new model.User[] {};
+        java.util.ArrayList<model.User> userList8 = new java.util.ArrayList<model.User>();
+        boolean boolean9 = java.util.Collections.addAll((java.util.Collection<model.User>) userList8, userArray7);
+        model.User user12 = recruiterService0.authenticateUser(userList8, "", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.withdrawApplication("");
+        recruiterService0.deleteRecruiterProfile();
     }
 
     @Test
@@ -1114,29 +1152,30 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test104");
         service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewJobDescFromApplication("hi!");
+        applicantService0.deleteProfileHelper();
     }
 
     @Test
     public void test105() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test105");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.viewJobPost();
-        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.resetPassword("");
+        applicantService0.viewInterview("hi!");
     }
 
     @Test
     public void test106() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test106");
-        service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = new service.RecruiterService();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewAssessment("");
+        recruiterService0.viewAssessmentResult("", "hi!");
     }
 
     @Test
@@ -1144,10 +1183,6 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test107");
         service.ApplicantService applicantService0 = new service.ApplicantService();
-        applicantService0.deleteApplicantProfile();
-        applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
         applicantService0.viewApplicantProfilePage();
     }
@@ -1156,10 +1191,19 @@ public class ErrorTest0 {
     public void test108() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test108");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
-        applicantService0.deleteApplicantProfile();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        model.User[] userArray7 = new model.User[] {};
+        java.util.ArrayList<model.User> userList8 = new java.util.ArrayList<model.User>();
+        boolean boolean9 = java.util.Collections.addAll((java.util.Collection<model.User>) userList8, userArray7);
+        model.User user12 = recruiterService0.authenticateUser(userList8, "", "hi!");
+        recruiterService0.updateStatusOfJobPost("hi!");
+        recruiterService0.updateStatusOfJobPost("");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewApplicantProfilePage();
+        recruiterService0.viewRecruiterProfilePage();
     }
 
     @Test
@@ -1169,10 +1213,8 @@ public class ErrorTest0 {
         service.ApplicantService applicantService0 = new service.ApplicantService();
         applicantService0.deleteApplicantProfile();
         applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
-        applicantService0.viewAllAvailableJobs();
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.submitAssessmentForm("");
+        applicantService0.viewApplicantProfilePage();
     }
 
     @Test
@@ -1180,54 +1222,245 @@ public class ErrorTest0 {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test110");
         service.RecruiterService recruiterService0 = new service.RecruiterService();
-        recruiterService0.viewInterviewResult();
-        service.RecruiterService recruiterService2 = service.RecruiterService.getInstance();
-        recruiterService2.updateStatusOfJobPost("hi!");
-        recruiterService2.sendAssessment();
-        model.User[] userArray6 = new model.User[] {};
-        java.util.ArrayList<model.User> userList7 = new java.util.ArrayList<model.User>();
-        boolean boolean8 = java.util.Collections.addAll((java.util.Collection<model.User>) userList7, userArray6);
-        model.User user11 = recruiterService2.authenticateUser(userList7, "", "");
-        model.User user14 = recruiterService0.authenticateUser(userList7, "hi!", "hi!");
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.submitNewJobPost("", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.viewSpecificApplication("");
+        recruiterService0.viewTotalNumberOfApplications("hi!");
     }
 
     @Test
     public void test111() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test111");
-        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
+        model.User[] userArray3 = new model.User[] {};
+        java.util.ArrayList<model.User> userList4 = new java.util.ArrayList<model.User>();
+        boolean boolean5 = java.util.Collections.addAll((java.util.Collection<model.User>) userList4, userArray3);
+        model.User user8 = recruiterService0.authenticateUser(userList4, "", "hi!");
+        service.RecruiterService recruiterService9 = service.RecruiterService.getInstance();
+        recruiterService9.updateStatusOfJobPost("hi!");
+        model.User[] userArray12 = new model.User[] {};
+        java.util.ArrayList<model.User> userList13 = new java.util.ArrayList<model.User>();
+        boolean boolean14 = java.util.Collections.addAll((java.util.Collection<model.User>) userList13, userArray12);
+        model.User user17 = recruiterService9.authenticateUser(userList13, "", "hi!");
+        model.User user20 = recruiterService0.authenticateUser(userList13, "hi!", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        applicantService0.viewFeedback("hi!");
+        recruiterService0.deleteRecruiterProfile();
     }
 
     @Test
     public void test112() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test112");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.resetPassword("");
+    }
+
+    @Test
+    public void test113() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test113");
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        applicantService0.viewAllAvailableJobs();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.signUp();
+    }
+
+    @Test
+    public void test114() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test114");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.viewSpecificApplication("");
+    }
+
+    @Test
+    public void test115() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test115");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewJobPost();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.deleteProfileHelper();
+    }
+
+    @Test
+    public void test116() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test116");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.viewSpecificApplication("");
+    }
+
+    @Test
+    public void test117() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test117");
         service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
-        recruiterService0.viewInterviewResult();
-        recruiterService0.sendAssessment();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.submitNewJobPost("hi!", "hi!");
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        recruiterService0.viewAssessmentResult("hi!", "");
+    }
+
+    @Test
+    public void test118() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test118");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewAllAvailableJobs();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.signUp();
+    }
+
+    @Test
+    public void test119() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test119");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.viewJobPost();
+        applicantService0.viewAllAvailableJobs();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.signIn();
+    }
+
+    @Test
+    public void test120() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test120");
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        recruiterService0.updateStatusOfJobPost("hi!");
         model.User[] userArray3 = new model.User[] {};
         java.util.ArrayList<model.User> userList4 = new java.util.ArrayList<model.User>();
         boolean boolean5 = java.util.Collections.addAll((java.util.Collection<model.User>) userList4, userArray3);
-        model.User user8 = recruiterService0.authenticateUser(userList4, "hi!", "");
-        recruiterService0.viewInterviewResult();
-        service.CommonService commonService10 = service.CommonService.getInstance();
-        service.CommonService commonService11 = service.CommonService.getInstance();
-        service.RecruiterService recruiterService12 = service.RecruiterService.getInstance();
-        recruiterService12.viewInterviewResult();
-        recruiterService12.sendAssessment();
-        model.User[] userArray15 = new model.User[] {};
-        java.util.ArrayList<model.User> userList16 = new java.util.ArrayList<model.User>();
-        boolean boolean17 = java.util.Collections.addAll((java.util.Collection<model.User>) userList16, userArray15);
-        model.User user20 = recruiterService12.authenticateUser(userList16, "hi!", "");
-        model.User user23 = commonService11.authenticateUser(userList16, "", "hi!");
-        model.User user26 = commonService10.authenticateUser(userList16, "hi!", "hi!");
-        model.User user29 = recruiterService0.authenticateUser(userList16, "", "");
+        model.User user8 = recruiterService0.authenticateUser(userList4, "", "hi!");
+        service.RecruiterService recruiterService9 = service.RecruiterService.getInstance();
+        recruiterService9.updateStatusOfJobPost("hi!");
+        model.User[] userArray12 = new model.User[] {};
+        java.util.ArrayList<model.User> userList13 = new java.util.ArrayList<model.User>();
+        boolean boolean14 = java.util.Collections.addAll((java.util.Collection<model.User>) userList13, userArray12);
+        model.User user17 = recruiterService9.authenticateUser(userList13, "", "hi!");
+        model.User user20 = recruiterService0.authenticateUser(userList13, "hi!", "hi!");
         // during test generation this statement threw an exception of type java.lang.NullPointerException in error
-        recruiterService0.deleteRecruiterProfile();
+        recruiterService0.recruiterSignInPage();
+    }
+
+    @Test
+    public void test121() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test121");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.viewAllAvailableJobs();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.viewApplicantApplications();
+    }
+
+    @Test
+    public void test122() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test122");
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        recruiterService0.submitNewJobPost("hi!", "hi!");
+        service.RecruiterService recruiterService10 = service.RecruiterService.getInstance();
+        recruiterService10.updateStatusOfJobPost("hi!");
+        model.User[] userArray13 = new model.User[] {};
+        java.util.ArrayList<model.User> userList14 = new java.util.ArrayList<model.User>();
+        boolean boolean15 = java.util.Collections.addAll((java.util.Collection<model.User>) userList14, userArray13);
+        model.User user18 = recruiterService10.authenticateUser(userList14, "", "hi!");
+        service.RecruiterService recruiterService19 = service.RecruiterService.getInstance();
+        recruiterService19.updateStatusOfJobPost("hi!");
+        model.User[] userArray22 = new model.User[] {};
+        java.util.ArrayList<model.User> userList23 = new java.util.ArrayList<model.User>();
+        boolean boolean24 = java.util.Collections.addAll((java.util.Collection<model.User>) userList23, userArray22);
+        model.User user27 = recruiterService19.authenticateUser(userList23, "", "hi!");
+        model.User user30 = recruiterService10.authenticateUser(userList23, "hi!", "hi!");
+        model.User user33 = recruiterService0.authenticateUser(userList23, "hi!", "hi!");
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        recruiterService0.viewSpecificApplication("");
+    }
+
+    @Test
+    public void test123() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test123");
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        applicantService0.viewAllAvailableJobs();
+        applicantService0.deleteApplicantProfile();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.viewFeedback("hi!");
+    }
+
+    @Test
+    public void test124() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test124");
+        service.ApplicantService applicantService0 = service.ApplicantService.getInstance();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.viewFeedback("hi!");
+    }
+
+    @Test
+    public void test125() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test125");
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        model.User[] userArray1 = new model.User[] {};
+        java.util.ArrayList<model.User> userList2 = new java.util.ArrayList<model.User>();
+        boolean boolean3 = java.util.Collections.addAll((java.util.Collection<model.User>) userList2, userArray1);
+        model.User user6 = recruiterService0.authenticateUser(userList2, "", "");
+        model.User[] userArray7 = new model.User[] {};
+        java.util.ArrayList<model.User> userList8 = new java.util.ArrayList<model.User>();
+        boolean boolean9 = java.util.Collections.addAll((java.util.Collection<model.User>) userList8, userArray7);
+        model.User user12 = recruiterService0.authenticateUser(userList8, "", "hi!");
+        recruiterService0.updateStatusOfJobPost("hi!");
+        recruiterService0.submitNewJobPost("", "hi!");
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        recruiterService0.resetPasswordRecruiter("hi!");
+    }
+
+    @Test
+    public void test126() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test126");
+        service.RecruiterService recruiterService0 = service.RecruiterService.getInstance();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        recruiterService0.viewAssessmentResult("", "hi!");
+    }
+
+    @Test
+    public void test127() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "test.blackbox.RandomTesting.ErrorTest0.test127");
+        service.ApplicantService applicantService0 = new service.ApplicantService();
+        applicantService0.deleteApplicantProfile();
+        applicantService0.viewJobPost();
+        // during test generation this statement threw an exception of type java.lang.NullPointerException in error
+        applicantService0.viewApplicantApplications();
     }
 }
 
