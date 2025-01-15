@@ -1,0 +1,43 @@
+# user story 37
+# method viewSpecificApplication (RecruiterService)
+
+
+allApplications:
+    empty. [error]
+    non-empty. [property hasApplication]
+allUsers:
+    empty. [error]
+    non-empty. [property hasUser]
+applicationId:
+    valid. [if hasApplication] [property validApplicationId]
+    invalid. [error]
+    null. [error]
+    empty. [error]
+applicationStatus:
+    INPROGRESS. [if hasApplication] [if hasUser] [single]
+    SUCCESSFUL. [if hasApplication] [if hasUser] [single]
+    UNSUCCESSFUL. [if hasApplication] [if hasUser] [single]
+applicationFeedback:
+    null. [if hasApplication] [if hasUser] [single]
+    empty. [if hasApplication] [if hasUser] [single]
+    non-empty. [if hasApplication] [if hasUser] [single]
+applicationAssignments:
+    empty. [if hasApplication] [if hasUser] [single]
+    non-empty. [if hasApplication] [if hasUser] [single]
+applicantName:
+    valid. [if hasApplication] [if hasUser]
+    null. [if hasApplication] [if hasUser] [error]
+    empty. [if hasApplication] [if hasUser] [error]
+applicantLastName:
+    valid. [if hasApplication] [if hasUser]
+    null. [if hasApplication] [if hasUser] [error]
+    empty. [if hasApplication] [if hasUser] [error]
+userResponse:
+    1 - update the status of the application. [if hasApplication] [if hasUser]
+    2 - send an assignment. [if hasApplication] [if hasUser]
+    3 - send interview questions. [if hasApplication] [if hasUser]
+    4 - send feedback. [if hasApplication] [if hasUser]
+    5 - view submitted answers. [if hasApplication] [if hasUser]
+    6 - go back to All Applications. [if hasApplication] [if hasUser]
+    invalid - User enters an invalid option. [if hasApplication] [if hasUser] [error]
+

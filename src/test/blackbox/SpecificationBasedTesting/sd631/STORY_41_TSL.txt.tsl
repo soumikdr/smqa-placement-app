@@ -1,0 +1,48 @@
+
+Test Case 1  		(Key = 1.1.0.0.0.)
+   applicationExists :  true
+   assignments       :  none
+   assignmentStatus  :  <n/a>
+   questions         :  <n/a>
+   answers           :  <n/a>
+
+
+Test Case 2  		(Key = 1.2.1.0.0.)
+   applicationExists :  true
+   assignments       :  one or more
+   assignmentStatus  :  SUBMITTED
+   questions         :  <n/a>
+   answers           :  <n/a>
+
+
+Test Case 3  		(Key = 1.2.2.1.0.)
+   applicationExists :  true
+   assignments       :  one or more
+   assignmentStatus  :  NOT_SUBMITTED
+   questions         :  none
+   answers           :  <n/a>
+
+
+Test Case 4  		(Key = 1.2.2.2.1.)
+   applicationExists :  true
+   assignments       :  one or more
+   assignmentStatus  :  NOT_SUBMITTED
+   questions         :  some
+   answers           :  valid
+
+
+Test Case 5  		(Key = 1.2.2.2.2.)
+   applicationExists :  true
+   assignments       :  one or more
+   assignmentStatus  :  NOT_SUBMITTED
+   questions         :  some
+   answers           :  empty
+
+
+Test Case 6  		(Key = 2.0.0.0.0.)
+   applicationExists :  false
+   assignments       :  <n/a>
+   assignmentStatus  :  <n/a>
+   questions         :  <n/a>
+   answers           :  <n/a>
+

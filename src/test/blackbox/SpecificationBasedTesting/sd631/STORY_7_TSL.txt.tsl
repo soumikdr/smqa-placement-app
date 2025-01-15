@@ -1,47 +1,39 @@
 
 Test Case 1  		<error>
-   - empty :  No users are present in the system
+   users :  empty
 
 
 Test Case 2  		<error>
-   - invalid :  A username that does not exist in the system
+   userName :  invalid
 
 
 Test Case 3  		<error>
-   - null :  Null input for the username
+   userName :  null
 
 
 Test Case 4  		<error>
-   - empty :  An empty string for the username
+   userName :  empty
 
 
 Test Case 5  		<error>
-   - invalid :  An incorrect password for the given username
+   password :  invalid
 
 
 Test Case 6  		<error>
-   - null :  Null input for the password
+   password :  null
 
 
 Test Case 7  		<error>
-   - empty :  An empty string for the password
+   password :  empty
 
 
 Test Case 8  		<error>
-   - RECRUITER :  User does not have the role of an applicant
+   userRole :  RECRUITER
 
 
-Test Case 9  		(Key = 0.1.1.0.0.0.1.0.0.0.1.0.)
-   - empty     :  <n/a>
-   - non-empty :  One or more users are present in the system
-   - valid     :  A username that exists in the system
-   - invalid   :  <n/a>
-   - null      :  <n/a>
-   - empty     :  <n/a>
-   - valid     :  The correct password for the given username
-   - invalid   :  <n/a>
-   - null      :  <n/a>
-   - empty     :  <n/a>
-   - APPLICANT :  User has the role of an applicant
-   - RECRUITER :  <n/a>
+Test Case 9  		(Key = 2.1.1.1.)
+   users    :  non-empty
+   userName :  valid
+   password :  valid
+   userRole :  APPLICANT
 

@@ -1,0 +1,24 @@
+
+Test Case 1  		(Key = 1.1.0.)
+   applicationExists    :  true
+   interviewAssignments :  empty
+   questions            :  <n/a>
+
+
+Test Case 2  		(Key = 1.2.1.)
+   applicationExists    :  true
+   interviewAssignments :  non-empty
+   questions            :  empty
+
+
+Test Case 3  		(Key = 1.2.2.)
+   applicationExists    :  true
+   interviewAssignments :  non-empty
+   questions            :  non-empty
+
+
+Test Case 4  		(Key = 2.0.0.)
+   applicationExists    :  false
+   interviewAssignments :  <n/a>
+   questions            :  <n/a>
+
