@@ -1,0 +1,9 @@
+# Input Reset Password Confirmation
+ResetPasswordConfirmation:
+Yes.
+No.
+Invalid.
+
+# Input User Name
+UserName:
+NonEmpty.

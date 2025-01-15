@@ -1,0 +1,41 @@
+# View Specific Job Post Details [map66 - userstory 31]
+
+Job ID: 
+null.                               [error]
+invalid string.                     [error]
+valid string.                       [property job_exists]
+
+Job Details Display: 
+null.                               [if !job_exists] [error]
+Job ID.
+Job Name.
+Job Description.
+Job Status.
+
+Invalid Job ID Message: 
+"Invalid Job ID entered.".          [if !job_exists]
+null.                               [if job_exists]
+
+Menu Options (After Valid Job ID): 
+null.                               [error]
+"1".                                [property update_description]
+"2".                                [property update_status]
+"3".                                [property view_applications]
+"4".                                [property main_menu]
+invalid option.                     [error]
+
+Job Description Update Redirection: 
+Redirect successful.                [if update_description]
+Redirect failed.                    [if !update_description]
+
+Job Status Update Redirection: 
+Redirect successful.                [if update_status]
+Redirect failed.                    [if !update_status]
+
+View Applications Redirection: 
+Redirect successful.                [if view_applications]
+Redirect failed.                    [if !view_applications]
+
+Main Menu Redirection: 
+Redirect successful.                [if main_menu]
+Redirect failed.                    [if !main_menu]

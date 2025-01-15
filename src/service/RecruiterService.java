@@ -133,6 +133,10 @@ public class RecruiterService {
         }
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 19
+     */  
     public void viewRecruiterProfilePage() {
         System.out.println("\nWelcome to your profile page\n");
         System.out.println("First Name: " + Utility.getCurrentUser().getName());
@@ -324,6 +328,11 @@ public class RecruiterService {
         }
     }
 
+
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 31
+     */ 
     public void viewSpecificJobPost() {
         System.out.println("Welocme to Specific Job Post Details");
         String jobId = Utility.inputOutput("Enter the Job Id");
@@ -355,15 +364,16 @@ public class RecruiterService {
                     updateDescriptionOfJobPost(jobId);
                     break;
                 case "2":
-                    System.out.println("Redirecting to total applications for the job");
+                    System.out.println("Redirecting to update job status page");
                     updateStatusOfJobPost(jobId);
                     break;
                 case "3":
-                    System.out.println("Redirecting to dashboard");
+                    System.out.println("Redirecting to total applications for the job");
                     viewTotalNumberOfApplications(jobId);
                     break;
                 case "4":
                     System.out.println("Redirecting to main menu");
+                    viewRecruiterDashboard();
                     break;
                 default:
                     System.out.println("You entered invalid option");
@@ -672,43 +682,44 @@ public class RecruiterService {
      */
     public void sendAssignment(Application application) {
         System.out.println("\n-------- Send assignment to applicant --------\n");
+        String assignmentmentTitle = "";
 
-        String assessmentTitle = "";
-        while (assessmentTitle.isEmpty()) {
-            assessmentTitle = Utility.inputOutput("Enter the title of the assignment..");
-            if (assessmentTitle.isEmpty()) {
-                System.out.println("Assessment title cannot be empty.");
+        while (assignmentmentTitle.isEmpty()) {
+            assignmentmentTitle = Utility.inputOutput("Enter the title of the assignment..");
+            if (assignmentmentTitle.isEmpty()) {
+                System.out.println("Assignment title cannot be empty.");
             }
         }
-        ArrayList<String> questions = new ArrayList<>();
+
         String question = "";
+        ArrayList<String> assignmentQuestions = new ArrayList<>();
+
         while (true) {
-            question = Utility.inputOutput("Enter the question..(type 'exit' to go back)");
-            if (question.equals("exit")) {
+            question = Utility.inputOutput("Enter the question.. (type 'back' to go back)");
+
+            if (question.equals("back")) {
+                System.out.println("Redirecting to application page..\n");
                 viewSpecificApplication(application.getId());
             }
-            if (question.isEmpty()) {
-                System.out.println("Question cannot be empty");
-            } else {
-                questions.add(question);
-                String moreQuestions = Utility.inputOutput("Do you want to add more questions? (y/n)");
-                if (moreQuestions.equals("n")) {
+
+            if(question.isEmpty()){
+                System.out.println("Question can not be empty");
+            }else{
+                assignmentQuestions.add(question);
+                String more = Utility.inputOutput("Want to add more questions? (y/n)");
+
+                if(more.equals("n")){
                     break;
                 }
             }
         }
 
-        Assignment newAssignment = new Assignment(
-                UUID.randomUUID().toString(),
-                application.getApplicantId(),
-                assessmentTitle,
-                questions,
-                new ArrayList<>());
+        Assignment newAssignment = new Assignment(UUID.randomUUID().toString(), application.getApplicantId(), assignmentmentTitle, assignmentQuestions, new ArrayList<>());
 
-        ArrayList<Assignment> assignments = application.getAssignments();
-        assignments.add(newAssignment);
+        ArrayList<Assignment> appAssignments = application.getAssignments();
+        appAssignments.add(newAssignment);
 
-        application.setAssignments(assignments);
+        application.setAssignments(appAssignments);
 
         System.out.println("\nAssignment sent successfully.\n");
         viewSpecificApplication(application.getId());
@@ -732,6 +743,10 @@ public class RecruiterService {
         viewSpecificApplication(application.getId());
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 46
+     */    
     public void viewSubmittedAnswers(Application application) {
         System.out.println("\nWelcome to view submitted answers for the application " + application.getId());
         ArrayList<String> questions = new ArrayList<String>();

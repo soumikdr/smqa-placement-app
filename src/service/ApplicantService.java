@@ -18,6 +18,10 @@ public class ApplicantService {
         return instance;
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 02
+     */ 
     public void applicantViewSignInSignUpPage() {
         System.out.println("\nWelcome to Applicant Landing Page");
         System.out.println("1. Sign In");
@@ -266,6 +270,10 @@ public class ApplicantService {
         viewApplicationProcessDashboard(applicationId);
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 49
+     */ 
     public void viewFeedback(String applicationId) {
         System.out.println("\nWelcome to view feedback page");
         for (Application application : Utility.getApplications()) {
@@ -544,6 +552,10 @@ public class ApplicantService {
 
 
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 10
+     */ 
     public void viewResetPasswordPage() {
 
         System.out.println("\nWelcome to reset password page");
@@ -573,10 +585,14 @@ public class ApplicantService {
         }
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 12
+     */ 
     public void resetPassword(String userName) {
         System.out.println("\nYour entered username: " + userName);
         String resetCode = "";
-        if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER) {
+        if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT) {
             resetCode = Utility.inputOutput("Enter the Reset Code");
         }
         if (Utility.getCurrentUser().getUserName().equals(userName)) {
@@ -584,7 +600,7 @@ public class ApplicantService {
             Utility.getCurrentUser().setPassword(password);
             for (User user : Utility.getUsers()) {
                 if (user.getUserName().equals(userName)) {
-                    if (Utility.getCurrentUser().getRole() == UserRole.RECRUITER && !resetCode.equals("XVQTY")) {
+                    if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT && !resetCode.equals("XVQTY")) {
                         System.out.println("\nYou have entered wrong Reset Code\n");
                         viewResetPasswordPage();
                         break;
@@ -594,10 +610,7 @@ public class ApplicantService {
             }
             if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT) {
                 System.out.println("\nRedirecting to Applicant dashboard");
-                ApplicantService.getInstance().viewApplicantDashboard();
-            } else {
-                System.out.println("\nRedirecting to Recruiter dashboard");
-                RecruiterService.getInstance().viewRecruiterDashboard();
+                viewApplicantDashboard();
             }
         } else {
             System.out.println("\nYou have entered wrong Crediantials\n");
@@ -647,6 +660,10 @@ public class ApplicantService {
         }
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 34
+     */ 
     public void viewSpecificApplication(String applicationId) {
         if (applicationId == null || applicationId.isEmpty()) {
             System.out.println("Application ID is required.");
@@ -658,8 +675,8 @@ public class ApplicantService {
 
         Application application = null;
         for (Application app : Utility.getApplications()) {
-            if (app.getId().equals(applicationId) &&
-                    user.getId().equals(app.getApplicantId())) {
+            if ( user.getId().equals(app.getApplicantId()) && 
+                app.getId().equals(applicationId)) {
                 application = app;
                 break;
             }
@@ -698,6 +715,10 @@ public class ApplicantService {
         }
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 35
+     */ 
     public void withdrawApplication(String applicationId) {
         System.out.println("\nWelcome to withdraw application page");
 
@@ -758,6 +779,10 @@ public class ApplicantService {
         System.out.println("Job Description: " + job.getJobDescription());
     }
 
+    /*
+     * Author: Mohammad Ansar Patil (map66)
+     * User Story: 39
+     */ 
     public void viewApplicationProcessDashboard(String applicationId) {
 
         System.out.println("\nWelcome to application process dashboard\n");

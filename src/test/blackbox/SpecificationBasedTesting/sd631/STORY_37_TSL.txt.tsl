@@ -1,0 +1,144 @@
+
+Test Case 1  		<error>
+   allApplications :  empty
+
+
+Test Case 2  		<error>
+   allUsers :  empty
+
+
+Test Case 3  		<error>
+   applicationId :  invalid
+
+
+Test Case 4  		<error>
+   applicationId :  null
+
+
+Test Case 5  		<error>
+   applicationId :  empty
+
+
+Test Case 6  		<single>  (follows [if])
+   applicationStatus :  INPROGRESS
+
+
+Test Case 7  		<single>  (follows [if])
+   applicationStatus :  SUCCESSFUL
+
+
+Test Case 8  		<single>  (follows [if])
+   applicationStatus :  UNSUCCESSFUL
+
+
+Test Case 9  		<single>  (follows [if])
+   applicationFeedback :  null
+
+
+Test Case 10 		<single>  (follows [if])
+   applicationFeedback :  empty
+
+
+Test Case 11 		<single>  (follows [if])
+   applicationFeedback :  non-empty
+
+
+Test Case 12 		<single>  (follows [if])
+   applicationAssignments :  empty
+
+
+Test Case 13 		<single>  (follows [if])
+   applicationAssignments :  non-empty
+
+
+Test Case 14 		<error>  (follows [if])
+   applicantName :  null
+
+
+Test Case 15 		<error>  (follows [if])
+   applicantName :  empty
+
+
+Test Case 16 		<error>  (follows [if])
+   applicantLastName :  null
+
+
+Test Case 17 		<error>  (follows [if])
+   applicantLastName :  empty
+
+
+Test Case 18 		<error>  (follows [if])
+   userResponse :  invalid - User enters an invalid option
+
+
+Test Case 19 		(Key = 2.2.1.0.0.0.1.1.1.)
+   allApplications        :  non-empty
+   allUsers               :  non-empty
+   applicationId          :  valid
+   applicationStatus      :  <n/a>
+   applicationFeedback    :  <n/a>
+   applicationAssignments :  <n/a>
+   applicantName          :  valid
+   applicantLastName      :  valid
+   userResponse           :  1 - update the status of the application
+
+
+Test Case 20 		(Key = 2.2.1.0.0.0.1.1.2.)
+   allApplications        :  non-empty
+   allUsers               :  non-empty
+   applicationId          :  valid
+   applicationStatus      :  <n/a>
+   applicationFeedback    :  <n/a>
+   applicationAssignments :  <n/a>
+   applicantName          :  valid
+   applicantLastName      :  valid
+   userResponse           :  2 - send an assignment
+
+
+Test Case 21 		(Key = 2.2.1.0.0.0.1.1.3.)
+   allApplications        :  non-empty
+   allUsers               :  non-empty
+   applicationId          :  valid
+   applicationStatus      :  <n/a>
+   applicationFeedback    :  <n/a>
+   applicationAssignments :  <n/a>
+   applicantName          :  valid
+   applicantLastName      :  valid
+   userResponse           :  3 - send interview questions
+
+
+Test Case 22 		(Key = 2.2.1.0.0.0.1.1.4.)
+   allApplications        :  non-empty
+   allUsers               :  non-empty
+   applicationId          :  valid
+   applicationStatus      :  <n/a>
+   applicationFeedback    :  <n/a>
+   applicationAssignments :  <n/a>
+   applicantName          :  valid
+   applicantLastName      :  valid
+   userResponse           :  4 - send feedback
+
+
+Test Case 23 		(Key = 2.2.1.0.0.0.1.1.5.)
+   allApplications        :  non-empty
+   allUsers               :  non-empty
+   applicationId          :  valid
+   applicationStatus      :  <n/a>
+   applicationFeedback    :  <n/a>
+   applicationAssignments :  <n/a>
+   applicantName          :  valid
+   applicantLastName      :  valid
+   userResponse           :  5 - view submitted answers
+
+
+Test Case 24 		(Key = 2.2.1.0.0.0.1.1.6.)
+   allApplications        :  non-empty
+   allUsers               :  non-empty
+   applicationId          :  valid
+   applicationStatus      :  <n/a>
+   applicationFeedback    :  <n/a>
+   applicationAssignments :  <n/a>
+   applicantName          :  valid
+   applicantLastName      :  valid
+   userResponse           :  6 - go back to All Applications
+

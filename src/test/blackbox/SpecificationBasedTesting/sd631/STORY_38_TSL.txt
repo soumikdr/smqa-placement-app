@@ -1,0 +1,16 @@
+# user story 38
+# method sendAssignment (RecruiterService)
+
+
+application:
+    valid.
+assignmentTitle:
+    valid.
+    empty. [error]
+question:
+    valid.
+    empty. [error]
+    "back". [single]
+moreQuestion:
+    y.
+    n.

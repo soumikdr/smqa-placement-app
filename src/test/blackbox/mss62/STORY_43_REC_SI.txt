@@ -1,0 +1,16 @@
+# Input Application ID
+ApplicationID:
+Existing.
+NonExisting.
+
+# Input Interview Questions
+InterviewQuestions:
+ValidList.
+EmptyList.
+InvalidList.
+
+# Input Send Confirmation
+SendConfirmation:
+Yes.
+No.
+Invalid.

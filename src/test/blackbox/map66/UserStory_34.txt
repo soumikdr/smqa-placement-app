@@ -1,0 +1,25 @@
+# View Specific Application Details [map66 - userstory 34]
+
+Application ID Input: 
+null.                               [error]
+invalid string.                     [error]
+valid string.                       [property application_exists]
+
+Application Details: 
+null.                               [if !application_exists] [error]
+Application ID.
+Job ID.
+Applicant ID.
+Status.
+
+Invalid Application ID: 
+null.                               [error]
+Application with ID 		    [if application_exists]
+
+Menu Options (After Valid Application ID): 
+null.                               [error]
+"1".                                [redirect application_process_dashboard]
+"2".                                [redirect view_job_desc]
+"3".                                [redirect withdraw_application]
+invalid option.                     [error]
+

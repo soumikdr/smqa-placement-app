@@ -1,0 +1,20 @@
+# user story 41
+# method submitAssessmentForm (ApplicantService)
+
+
+applicationExists:
+    true. [property applicationFound]
+    false.
+assignments:
+    none. [if applicationFound]
+    one or more. [if applicationFound] [property hasAssignment]
+assignmentStatus:
+    SUBMITTED. [if applicationFound && hasAssignment] [property hasSubmitted]
+    NOT_SUBMITTED. [if applicationFound && hasAssignment]
+questions:
+    none. [if applicationFound && hasAssignment && !hasSubmitted]
+    some. [if applicationFound && hasAssignment && !hasSubmitted] [property hasQuestion]
+answers:
+    valid. [if applicationFound && hasAssignment && !hasSubmitted && hasQuestion]
+    empty. [if applicationFound && hasAssignment && !hasSubmitted && hasQuestion]
+
