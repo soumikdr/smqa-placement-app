@@ -554,105 +554,103 @@ public class RecruiterServiceBranchTest {
         }
     }
 
-    @Test
-    public void testSendAssignment_ValidRole() {
-        // try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
-        //     // Mock dependencies
-        //     Map<String, List<String>> questionMap = new HashMap<>();
-        //     questionMap.put("frontend", Arrays.asList("Q1", "Q2"));
-        //     utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
-        //     utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("frontend");
-        //     // Clear assignments if any
-        //     mockApplication.setAssignments(new ArrayList<Assignment>());
+   @Test
+   public void testSendAssignment_ValidInputs() {
+       try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+           // Arrange and mock dependencies
+           utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Math Assignment").thenReturn("What is 2 + 2?").thenReturn("n");
+           // Clear assignments if any
+           mockApplication.setAssignments(new ArrayList<Assignment>());
+           RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+           doNothing().when(recruiterService).viewSpecificApplication(mockApplication.getId());
 
-        //     // Invoke the method
-        //     RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        //     recruiterService.sendAssignment(mockApplication);
+           // Act
+           recruiterService.sendAssignment(mockApplication);
 
-        //     // Assertions
-        //     assertEquals(1, mockApplication.getAssignments().size());
-        //     Assignment assignment = mockApplication.getAssignments().get(0);
-        //     assertEquals("Assignment frontend", assignment.getAssignmentName());
-        //     assertEquals(Arrays.asList("Q1", "Q2"), assignment.getQuestions());
-        //     assertEquals("1", assignment.getApplicantId());
+           // Assert
+           assertEquals(1, mockApplication.getAssignments().size());
+           Assignment assignment = mockApplication.getAssignments().get(0);
+           assertEquals("Math Assignment", assignment.getAssignmentName());
+       }
+   }
 
-        //     // Verify interaction with mocked methods
-        //     utilities.verify(Utility::getQuestionMap);
-        //     utilities.verify(() -> Utility.inputOutput(anyString()));
-        // }
-    }
+   @Test
+   public void testSendAssignment_EmptyTitle() {
+       try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+           // Arrange
+           // First empty title, then valid title
+           utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("").thenReturn("Math Assignment").thenReturn("What is 2 + 2?").thenReturn("n");
+           // Clear assignments if any
+           mockApplication.setAssignments(new ArrayList<Assignment>());
+           RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+           doNothing().when(recruiterService).viewSpecificApplication(mockApplication.getId());
 
-    @Test
-    public void testSendAssignment_InvalidRole() {
-        // try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
-        //     // Arrange and mock dependencies
-        //     Map<String, List<String>> questionMap = new HashMap<>();
-        //     questionMap.put("frontend", Arrays.asList("Q1", "Q2"));
-        //     utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
-        //     utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("invalid_role");
-        //     // Clear assignments if any
-        //     mockApplication.setAssignments(new ArrayList<Assignment>());
+           // Act
+           recruiterService.sendAssignment(mockApplication);
 
-        //     // Invoke the method
-        //     RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        //     recruiterService.sendAssignment(mockApplication);
+           // Assert
+           // Get the complete output
+           String output = outContent.toString().trim();
 
-        //     // Assertions
-        //     assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
+           // Extract the last println message (messages are separated by newlines)
+           String[] lines = output.split("\n");
 
-        //     // Verify interaction with mocked methods
-        //     utilities.verify(Utility::getQuestionMap);
-        //     utilities.verify(() -> Utility.inputOutput(anyString()));
-        // }
-    }
+           // Filter string
+           List<String> filteredLines = new ArrayList<>();
 
-    @Test
-    public void testSendAssignment_NullRole() {
-        // try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
-        //     // Mock dependencies
-        //     Map<String, List<String>> questionMap = new HashMap<>();
-        //     questionMap.put("frontend", Arrays.asList("Q1", "Q2"));
-        //     utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
-        //     utilities.when(() -> Utility.inputOutput(anyString())).thenReturn(null);
-        //     // Clear assignments if any
-        //     mockApplication.setAssignments(new ArrayList<Assignment>());
+           for (String str : lines) {
+               String trimmed = str.trim();
+               if (!trimmed.isEmpty()) {
+                   filteredLines.add(trimmed);
+               }
+           }
 
-        //     // Invoke the method
-        //     RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        //     recruiterService.sendAssignment(mockApplication);
+           assertEquals(1, mockApplication.getAssignments().size());
+           Assignment assignment = mockApplication.getAssignments().get(0);
+           assertEquals("Math Assignment", assignment.getAssignmentName());
+           assertTrue(filteredLines.contains("Assignment title cannot be empty."));
+       }
+   }
 
-        //     // Assertions
-        //     assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
+   @Test
+   public void testSendAssignment_EmptyQuestion() {
+       try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
+           // Arrange
+           // First empty question, then valid question
+           utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("Math Assignment").thenReturn("").thenReturn("What is 2 + 2?").thenReturn("n");
+           // Clear assignments if any
+           mockApplication.setAssignments(new ArrayList<Assignment>());
+           RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+           doNothing().when(recruiterService).viewSpecificApplication(mockApplication.getId());
 
-        //     // Verify interaction with mocked methods
-        //     utilities.verify(Utility::getQuestionMap);
-        //     utilities.verify(() -> Utility.inputOutput(anyString()));
-        // }
-    }
+           // Act
+           recruiterService.sendAssignment(mockApplication);
 
-    @Test
-    public void testSendAssignment_NoQuestionsInMap() {
-        // try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
-        //     // Mock dependencies
-        //     Map<String, List<String>> questionMap = new HashMap<>();
-        //     utilities.when(Utility::getQuestionMap).thenReturn(questionMap);
-        //     utilities.when(() -> Utility.inputOutput(anyString())).thenReturn("frontend");
-        //     // Clear assignments if any
-        //     mockApplication.setAssignments(new ArrayList<Assignment>());
+           // Assert
+           // Get the complete output
+           String output = outContent.toString().trim();
 
-        //     // Invoke the method
-        //     RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        //     recruiterService.sendAssignment(mockApplication);
+           // Extract the last println message (messages are separated by newlines)
+           String[] lines = output.split("\n");
 
-        //     // Assertions
-        //     assertEquals("0", Integer.toString(mockApplication.getAssignments().size()));
+           // Filter string
+           List<String> filteredLines = new ArrayList<>();
 
-        //     // Verify interaction with mocked methods
-        //     utilities.verify(Utility::getQuestionMap);
-        //     utilities.verify(() -> Utility.inputOutput(anyString()));
-        // }
-    }
+           for (String str : lines) {
+               String trimmed = str.trim();
+               if (!trimmed.isEmpty()) {
+                   filteredLines.add(trimmed);
+               }
+           }
 
+           assertEquals(1, mockApplication.getAssignments().size());
+           Assignment assignment = mockApplication.getAssignments().get(0);
+           assertEquals("Math Assignment", assignment.getAssignmentName());
+           assertTrue(filteredLines.contains("Question can not be empty"));
+       }
+   }
+
+   
     @Test
     public void testUpdateDescriptionOfJobPost_NullJobList() {
         try (MockedStatic<Utility> utilities = mockStatic(Utility.class)) {
