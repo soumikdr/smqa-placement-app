@@ -1,0 +1,21 @@
+
+Test Case 1  		<error>
+   JobTitle :  EmptyJobTitle
+
+
+Test Case 2  		<error>
+   JobTitle :  NullJobTitle
+
+
+Test Case 3  		<error>
+   JobDescription :  EmptyJobDescription
+
+
+Test Case 4  		<error>
+   JobDescription :  NullJobDescription
+
+
+Test Case 5  		(Key = 1.1.)
+   JobTitle       :  ValidJobTitle
+   JobDescription :  ValidJobDescription
+

@@ -1,0 +1,18 @@
+ApplicationId:
+    ValidApplicationId. 
+    InvalidApplicationId. 
+    NullApplicationId. [error]
+    EmptyApplicationId. 
+
+InterviewAssignments:
+    InterviewQuestionsAvailable. 
+    NoInterviewQuestions. [error]
+
+SubmissionStatus:
+    NotSubmitted. 
+    AlreadySubmitted. [error]
+
+Answer:
+    ValidAnswer.
+
+	

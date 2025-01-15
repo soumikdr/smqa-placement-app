@@ -1,0 +1,8 @@
+  MenuOption:
+    ViewProfileOption. # The user selects "1" to view their profile.
+    ViewApplicationsOption. # The user selects "2" to view their applications.
+    ViewAvailableJobsOption. # The user selects "3" to view available jobs.
+    LogOutOption. # The user selects "4" to log out.
+    InvalidOption. # The user enters an invalid option (non-numeric, out of range, or unexpected string).
+
+
