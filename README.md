@@ -54,10 +54,36 @@ To perform black box testing Right Click on `test.blackbox` package and follow `
 
 ## Running Application
 
+
+
 To run and test the application, if you have previously followed the steps in `Utility.java` to run the blackbox tests, you need to undo these steps. Otherwise, the console will receive random string values instead of user inputs.
 
 To run the application Right click on `Main.java` and do `Run As > Java Application`
 
----
+If you're registering as a recruiter you'll be asked a recruiter code,
+usually this code is provided by the organizations but for a simple system like ours we have hard coded it as `XVQTY` for now.
+
+
+### Sample User Authentications for Initial Data
+
+```
+Recruiter 
+
+Username:ansarPatil
+
+Password:123qwe
+```
+```
+Applicant
+
+Username:johnDoe
+
+Password:bestpassword
+```
+
+
+
+
+
 &copy; Group 15
 Authors (Amisha Rastogi, Ansar Patil, Emir Yücel, Mayur Shinde, Soumik Datta)

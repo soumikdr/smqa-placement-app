@@ -1,5 +1,0 @@
-choice:
-  Recruiter.
-  Applicant.
-  Exit.
-  InvalidOption. [error]

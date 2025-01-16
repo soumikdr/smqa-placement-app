@@ -1,6 +1,0 @@
-  JobId:
-    ValidJobIdWithApplications. # A valid job ID that has applications.
-    ValidJobIdNoApplications. # A valid job ID that has no applications.
-    InvalidJobId. # An invalid job ID that does not exist in the system.
-    NullJobId. [error] # A null value for the job ID.
-    EmptyJobId. [error] # An empty string "" for the job ID.
