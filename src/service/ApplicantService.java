@@ -373,6 +373,11 @@ public class ApplicantService {
 
     // ETY1 - STORY 28
     public void submitApplicationForm(Job job, String education, Integer experience, String skills) {
+        if(Utility.getCurrentUser() == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         String applicationId = UUID.randomUUID().toString();
         Application newApplication = new Application(
                 applicationId,
@@ -437,6 +442,11 @@ public class ApplicantService {
      */
     public void viewApplicantProfilePage() {
         User user = Utility.getCurrentUser();
+        if(user == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         System.out.println("\nApplicant Profile\n");
 
         if (user.getId() == null || user.getId().isEmpty()) {
@@ -495,6 +505,11 @@ public class ApplicantService {
      */
     public void deleteProfileHelper() {
         User user = Utility.getCurrentUser();
+        if(user == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         ArrayList<User> users = Utility.getUsers();
         users.removeIf(u -> u.getId().equals(user.getId()));
         Utility.setUsers(users);
@@ -535,8 +550,13 @@ public class ApplicantService {
      * User Story: 17
      */
     public void showUpdateProfilePage() {
-        System.out.println("Welcome to Update profile page\n");
         User currentUser = Utility.getCurrentUser();
+        if(currentUser == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
+        System.out.println("Welcome to Update profile page\n");
         String name = Utility.inputOutput("Enter your name: ");
         if (name != null && !name.isEmpty()) {
             currentUser.setName(name);
@@ -569,7 +589,7 @@ public class ApplicantService {
                 resetPassword(userName);
                 break;
             case "2":
-                System.out.println("\nRediredting to Dashboard\n");
+                System.out.println("\nRedirecting to Dashboard\n");
                 if (Utility.getCurrentUser().getRole().equals(UserRole.APPLICANT)) {
                     System.out.println("\nRedirecting to Applicant dashboard\n");
                     ApplicantService.getInstance().viewApplicantDashboard();
@@ -590,6 +610,11 @@ public class ApplicantService {
      * User Story: 12
      */ 
     public void resetPassword(String userName) {
+        if(Utility.getCurrentUser() == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         System.out.println("\nYour entered username: " + userName);
         String resetCode = "";
         if (Utility.getCurrentUser().getRole() == UserRole.APPLICANT) {
@@ -624,6 +649,11 @@ public class ApplicantService {
      */
     public void viewApplicantApplications() {
         User user = Utility.getCurrentUser();
+        if(user == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         if (user instanceof Recruiter) {
             System.out.println("You are not an applicant.");
             viewApplicantDashboard();
@@ -671,6 +701,11 @@ public class ApplicantService {
             return;
         }
         User user = Utility.getCurrentUser();
+        if(user == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         System.out.println("\nWelcome to specific application details");
 
         Application application = null;

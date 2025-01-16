@@ -138,6 +138,11 @@ public class RecruiterService {
      * User Story: 19
      */  
     public void viewRecruiterProfilePage() {
+        if(Utility.getCurrentUser() == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         System.out.println("\nWelcome to your profile page\n");
         System.out.println("First Name: " + Utility.getCurrentUser().getName());
         System.out.println("Last Name: " + Utility.getCurrentUser().getLastName());
@@ -246,6 +251,11 @@ public class RecruiterService {
 
     // UserStory: 21; ar668
     public void deleteRecruiterProfile() {
+        if(Utility.getCurrentUser() == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         System.out.println("Deleting Recruiter profile");
         String userName = Utility.getCurrentUser().getUserName();
         Utility.getUsers().removeIf(user -> user.getUserName().equals(userName));
@@ -259,6 +269,11 @@ public class RecruiterService {
      * User Story: 20
      */
     public void updateRecruiterProfile() {
+        if(Utility.getCurrentUser() == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         System.out.println("Update profile information (leave empty for no change)\n");
 
         String firstName = Utility.inputOutput("Enter new first name: ");
@@ -527,6 +542,11 @@ public class RecruiterService {
     // UserStory: 30; ar668
     public void viewAllApplications() {
         User user = Utility.getCurrentUser();
+        if(user == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         if (user instanceof Applicant) {
             System.out.println("You are not authorized to view this page");
             viewRecruiterDashboard();
@@ -584,6 +604,11 @@ public class RecruiterService {
 
     // UserStory: 13; ar668
     public void resetPasswordRecruiter(String userName) {
+        if(Utility.getCurrentUser() == null){
+            System.out.println("You are not logged in. Redirecting to landing page..");
+            CommonService.getInstance().accessLandingPage();
+            return;
+        }
         System.out.println("\nWelcome to Reset Password Page for Recruiter\n");
         System.out.println("\nYour entered username: " + userName + "\n");
         String resetCode = "";
