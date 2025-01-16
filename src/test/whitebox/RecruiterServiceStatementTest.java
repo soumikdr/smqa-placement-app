@@ -432,9 +432,13 @@ public class RecruiterServiceStatementTest {
 
     @Test
     public void testViewRecruiterDashboard_Option1() {
-        // Simulate user input "1"
-        provideInput("1");
 
+
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
+
+        ){
+        mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+        
         // Mock the viewRecruiterProfilePage method to prevent actual execution
         RecruiterService mockRecruiterService = Mockito.spy(new RecruiterService());
         Mockito.doNothing().when(mockRecruiterService).viewRecruiterProfilePage();
@@ -442,48 +446,76 @@ public class RecruiterServiceStatementTest {
         mockRecruiterService.viewRecruiterDashboard();
 
         Mockito.verify(mockRecruiterService).viewRecruiterProfilePage();
+        
+        
+        }
+
+
     }
 
     @Test
     public void testViewRecruiterDashboard_Option2() {
         // Simulate user input "2"
-        provideInput("2");
 
-        // Mock the viewAvailableJobs method
-        RecruiterService mockRecruiterService = Mockito.spy(new RecruiterService());
-        Mockito.doNothing().when(mockRecruiterService).viewAvailableJobs();
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
 
-        mockRecruiterService.viewRecruiterDashboard();
+        ){
+        	
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("2");
+            // Mock the viewAvailableJobs method
+            RecruiterService mockRecruiterService = Mockito.spy(new RecruiterService());
+            Mockito.doNothing().when(mockRecruiterService).viewAvailableJobs();
 
-        Mockito.verify(mockRecruiterService).viewAvailableJobs();
+            mockRecruiterService.viewRecruiterDashboard();
+
+            Mockito.verify(mockRecruiterService).viewAvailableJobs();
+        	
+        }
+
+
     }
 
     @Test
     public void testViewRecruiterDashboard_Option3() {
-        // Simulate user input "3"
-        provideInput("3");
+        
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
 
-        // Mock the viewAllApplications method
-        RecruiterService mockRecruiterService = Mockito.spy(new RecruiterService());
-        Mockito.doNothing().when(mockRecruiterService).viewAllApplications();
+        ){
+        	
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("3");
+            // Mock the viewAllApplications method
+            RecruiterService mockRecruiterService = Mockito.spy(new RecruiterService());
+            Mockito.doNothing().when(mockRecruiterService).viewAllApplications();
 
-        mockRecruiterService.viewRecruiterDashboard();
+            mockRecruiterService.viewRecruiterDashboard();
 
-        Mockito.verify(mockRecruiterService).viewAllApplications();
+            Mockito.verify(mockRecruiterService).viewAllApplications();
+        	
+        }
+
+
     }
 
     @Test
     public void testViewRecruiterDashboard_InvalidOption() {
         // Simulate invalid input, then valid input to exit the recursion
-        provideInput("111");
+        
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
 
-        // Mock the viewRecruiterDashboard method to prevent actual execution
-        RecruiterService mockRecruiterService = Mockito.spy(new RecruiterService());
-        Mockito.doNothing().when(mockRecruiterService).viewRecruiterDashboard();
+        ){
+        	
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("invalid");
+            // Mock the viewRecruiterDashboard method to prevent actual execution
+            RecruiterService mockRecruiterService = Mockito.spy(new RecruiterService());
+            Mockito.doNothing().when(mockRecruiterService).viewRecruiterDashboard();
 
-        mockRecruiterService.viewRecruiterDashboard();
+            mockRecruiterService.viewRecruiterDashboard();
 
-        Mockito.verify(mockRecruiterService).viewRecruiterDashboard();
+            Mockito.verify(mockRecruiterService).viewRecruiterDashboard();
+        	
+        }
+
+
     }
 
     @Test
