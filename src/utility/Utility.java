@@ -35,6 +35,7 @@ public class Utility {
         //   Below for preparation random testing since randoop can't put values to console input.
 
         //   1. Uncomment below line
+
         //   message=getRandomString();
 
         //   2. Comment whole try-catch block
@@ -47,7 +48,6 @@ public class Utility {
         return message;
     }
 //          3. Uncomment method below and import java.util.Random and other libraries if they won't import automatically;
-
 //    public static String getRandomString() {
 //        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 //        StringBuilder builder = new StringBuilder();
@@ -59,8 +59,11 @@ public class Utility {
 //        String randomString = builder.toString();
 //        return randomString;
 //    }
-
+//
     public static ArrayList<Assignment> getAssignments() {
+        if(assignments == null) {
+            assignments= new ArrayList<>();
+        }
         return assignments;
     }
 
@@ -69,6 +72,9 @@ public class Utility {
     }
 
     public static ArrayList<Job> getJobs() {
+        if(jobs == null) {
+            jobs= new ArrayList<>();
+        }
         return jobs;
     }
 
@@ -84,6 +90,9 @@ public class Utility {
     }
 
     public static ArrayList<Application> getApplications() {
+        if(applications == null) {
+            applications= new ArrayList<>();
+        }
         return applications;
     }
 
@@ -96,8 +105,10 @@ public class Utility {
     }
 
     public static ArrayList<User> getUsers() {
-        return users;
-    }
+        if(users == null) {
+            users= new ArrayList<>();
+        }
+        return users;    }
 
     public static User getCurrentUser() {
         return currentUser;
