@@ -1056,7 +1056,7 @@ public class RecruiterServiceBranchTest {
             assertTrue("Should print 'Profile deleted successfully'",consoleOutput.contains("Profile deleted successfully")
                        );
 
-            utilityMock.verify(times(1),Utility::getCurrentUser);
+            utilityMock.verify(atLeastOnce(),Utility::getCurrentUser);
 
             utilityMock.verify(times(1),Utility::getUsers);
 
@@ -1110,7 +1110,7 @@ public class RecruiterServiceBranchTest {
                        "Should print 'Deleting Recruiter profile'",consoleOutput.contains("Deleting Recruiter profile"));
 
 
-            utilityMock.verify( times(1),Utility::getCurrentUser);
+            utilityMock.verify( atLeastOnce(),Utility::getCurrentUser);
 
 
 

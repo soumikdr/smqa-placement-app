@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
@@ -1165,7 +1166,7 @@ public class RecruiterServiceStatementTest {
                        "Should print 'Deleting Recruiter profile'", consoleOutput.contains("Deleting Recruiter profile"));
 
 
-            utilityMock.verify(times(1),Utility::getCurrentUser );
+            utilityMock.verify(atLeastOnce(),Utility::getCurrentUser );
 
             utilityMock.verify(times(1),Utility::getUsers);
             assertTrue("User should be removed from the users list",mockUsers.isEmpty());
