@@ -1,0 +1,16 @@
+
+Test Case 1  		<error>
+   choice :  InvalidOption
+
+
+Test Case 2  		(Key = 1.)
+   choice :  Recruiter
+
+
+Test Case 3  		(Key = 2.)
+   choice :  Applicant
+
+
+Test Case 4  		(Key = 3.)
+   choice :  Exit
+

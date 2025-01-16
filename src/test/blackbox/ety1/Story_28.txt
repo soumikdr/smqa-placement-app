@@ -1,0 +1,22 @@
+Job:
+    ValidJob. # A valid job with a non-null ID and details.
+    NullJob. [error] # Null job object.
+
+Education:
+    HighSchool. # High school education.
+    BachelorDegree. # Bachelor's degree.
+    MasterDegree. # Master's degree.
+    DoctorateDegree. # Doctorate degree.
+    EmptyEducation. # An empty string "".
+    NullEducation. [error] # A null value for education.
+
+Experience:
+    NoExperience. # 0 years of experience.
+    SomeExperience. # 1 to 5 years of experience.
+    ExtensiveExperience. # More than 5 years of experience.
+    NullExperience. [error] # A null value for experience.
+
+Skills:
+    ValidSkills. # A valid skills string (e.g., "Java, Python, SQL").
+    EmptySkills. # An empty string "".
+    NullSkills. [error] # A null value for skills.
