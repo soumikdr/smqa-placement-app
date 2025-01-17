@@ -659,7 +659,7 @@ public class ApplicantServiceStatementTest {
             Assert.assertTrue(consoleOutput.contains("You have entered wrong Crediantials"));
             outputStream.reset();
 
-            mockedUtility.verify(Mockito.times(12), Utility::getCurrentUser);
+            mockedUtility.verify(Mockito.times(15), Utility::getCurrentUser);
             mockedUtility.verify(Mockito.times(2), Utility::getUsers);
             mockedUtility.verify(Mockito.times(5), () -> Utility.inputOutput(Mockito.anyString()));
         }

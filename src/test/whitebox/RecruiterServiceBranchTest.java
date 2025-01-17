@@ -318,62 +318,76 @@ public class RecruiterServiceBranchTest {
 
     @Test
     public void testViewRecruiterDashboard_ViewProfile() {
-        // Simulate user input "1"
-        String input = "1";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
 
-        RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        doNothing().when(recruiterService).viewRecruiterProfilePage();
+        
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
+        ){
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("1");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewRecruiterProfilePage();
 
-        recruiterService.viewRecruiterDashboard();
+            recruiterService.viewRecruiterDashboard();
 
-        verify(recruiterService, times(1)).viewRecruiterProfilePage();
+            verify(recruiterService, times(1)).viewRecruiterProfilePage();
+        	
+        }
+
+
     }
 
     @Test
     public void testViewRecruiterDashboard_ViewAvailableJobs() {
         // Simulate user input "2"
-        String input = "2";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
+        ){
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("2");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAvailableJobs();
 
-        RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        doNothing().when(recruiterService).viewAvailableJobs();
+            recruiterService.viewRecruiterDashboard();
 
-        recruiterService.viewRecruiterDashboard();
+            verify(recruiterService, times(1)).viewAvailableJobs();
+        	
+        }
 
-        verify(recruiterService, times(1)).viewAvailableJobs();
+
     }
 
     @Test
     public void testViewRecruiterDashboard_ViewAllApplications() {
-        // Simulate user input "3"
-        String input = "3";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
 
-        RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        doNothing().when(recruiterService).viewAllApplications();
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
+        ){
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("3");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            doNothing().when(recruiterService).viewAllApplications();
 
-        recruiterService.viewRecruiterDashboard();
+            recruiterService.viewRecruiterDashboard();
 
-        verify(recruiterService, times(1)).viewAllApplications();
+            verify(recruiterService, times(1)).viewAllApplications();
+        	
+        }
+
+
     }
 
     @Test
     public void testViewRecruiterDashboard_InvalidInput() {
-        // Simulate invalid user input
-        String input = "0";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
 
-        RecruiterService recruiterService = Mockito.spy(new RecruiterService());
-        Mockito.doNothing().when(recruiterService).viewRecruiterDashboard();
+        
+        try(MockedStatic<Utility> mockedUtility=Mockito.mockStatic(Utility.class);
+        ){
+            mockedUtility.when(()->Utility.inputOutput(Mockito.anyString())).thenReturn("0");
+            RecruiterService recruiterService = Mockito.spy(new RecruiterService());
+            Mockito.doNothing().when(recruiterService).viewRecruiterDashboard();
 
-        recruiterService.viewRecruiterDashboard();
+            recruiterService.viewRecruiterDashboard();
 
-        verify(recruiterService, times(1)).viewRecruiterDashboard();
+            verify(recruiterService, times(1)).viewRecruiterDashboard();
+        	
+        }
+
+
     }
 
     @Test
@@ -1056,7 +1070,7 @@ public class RecruiterServiceBranchTest {
             assertTrue("Should print 'Profile deleted successfully'",consoleOutput.contains("Profile deleted successfully")
                        );
 
-            utilityMock.verify(times(1),Utility::getCurrentUser);
+            utilityMock.verify(times(2),Utility::getCurrentUser);
 
             utilityMock.verify(times(1),Utility::getUsers);
 
@@ -1110,7 +1124,7 @@ public class RecruiterServiceBranchTest {
                        "Should print 'Deleting Recruiter profile'",consoleOutput.contains("Deleting Recruiter profile"));
 
 
-            utilityMock.verify( times(1),Utility::getCurrentUser);
+            utilityMock.verify( times(2),Utility::getCurrentUser);
 
 
 

@@ -1,5 +1,10 @@
 package utility;
 
+import model.Application;
+import model.Assignment;
+import model.Job;
+import model.User;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,11 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import model.Application;
-import model.Assignment;
-import model.Job;
-import model.User;
 
 public class Utility {
 
@@ -31,16 +31,23 @@ public class Utility {
     public static String inputOutput(String message) {
         System.out.println(message);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        // *** FOR EXECUTING RANDOM TESTS ***
         //   Below for preparation random testing since randoop can't put values to console input.
+
+        //   1. Uncomment below line
+
         //   message=getRandomString();
+
+        //   2. Comment whole try-catch block
         try {
-           message = br.readLine();
+            message = br.readLine();
         } catch (IOException e) {
             System.out.println("Error reading in value");
         }
+
         return message;
     }
-//   Below for preparation random testing since randoop can't put values to console input.
+//          3. Uncomment method below and import java.util.Random and other libraries if they won't import automatically;
 //    public static String getRandomString() {
 //        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 //        StringBuilder builder = new StringBuilder();
@@ -52,7 +59,11 @@ public class Utility {
 //        String randomString = builder.toString();
 //        return randomString;
 //    }
+//
     public static ArrayList<Assignment> getAssignments() {
+        if(assignments == null) {
+            assignments= new ArrayList<>();
+        }
         return assignments;
     }
 
@@ -61,6 +72,9 @@ public class Utility {
     }
 
     public static ArrayList<Job> getJobs() {
+        if(jobs == null) {
+            jobs= new ArrayList<>();
+        }
         return jobs;
     }
 
@@ -76,6 +90,9 @@ public class Utility {
     }
 
     public static ArrayList<Application> getApplications() {
+        if(applications == null) {
+            applications= new ArrayList<>();
+        }
         return applications;
     }
 
@@ -88,8 +105,10 @@ public class Utility {
     }
 
     public static ArrayList<User> getUsers() {
-        return users;
-    }
+        if(users == null) {
+            users= new ArrayList<>();
+        }
+        return users;    }
 
     public static User getCurrentUser() {
         return currentUser;

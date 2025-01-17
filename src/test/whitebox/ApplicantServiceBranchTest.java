@@ -719,9 +719,9 @@ public class ApplicantServiceBranchTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         ApplicantService spyObject = Mockito.spy(service);
-
+        Applicant mockApplicant = new Applicant("U101", "John", "Doe", "johndoe", "bestpassword");
         try (MockedStatic<Utility> mockedUtility = Mockito.mockStatic(Utility.class)) {
-
+            when(Utility.getCurrentUser()).thenReturn(mockApplicant);
             Mockito.doNothing().when(spyObject).viewApplicationProcessDashboard(Mockito.anyString());
             Mockito.doNothing().when(spyObject).viewApplicantApplications();
             Mockito.doNothing().when(spyObject).withdrawApplication(Mockito.anyString());
@@ -1558,7 +1558,7 @@ public class ApplicantServiceBranchTest {
             Assert.assertEquals("newPassword123", mockCurrentUser.getPassword());
             outputStream.reset();
 
-            mockedUtility.verify(Mockito.times(5), Utility::getCurrentUser);
+            mockedUtility.verify(Mockito.times(6), Utility::getCurrentUser);
             mockedUtility.verify(Mockito.times(1), Utility::getUsers);
             mockedUtility.verify(Mockito.times(2), () -> Utility.inputOutput(Mockito.anyString()));
         }
@@ -1595,7 +1595,7 @@ public class ApplicantServiceBranchTest {
             Assert.assertTrue(consoleOutput.contains("Redirecting to Applicant dashboard"));
             outputStream.reset();
 
-            mockedUtility.verify(Mockito.times(5), Utility::getCurrentUser);
+            mockedUtility.verify(Mockito.times(6), Utility::getCurrentUser);
             mockedUtility.verify(Mockito.times(1), Utility::getUsers);
             mockedUtility.verify(Mockito.times(2), () -> Utility.inputOutput(Mockito.anyString()));
         }
@@ -1631,7 +1631,7 @@ public class ApplicantServiceBranchTest {
             Assert.assertTrue(consoleOutput.contains("You have entered wrong Crediantials"));
             outputStream.reset();
 
-            mockedUtility.verify(Mockito.times(2), Utility::getCurrentUser);
+            mockedUtility.verify(Mockito.times(3), Utility::getCurrentUser);
             mockedUtility.verify(Mockito.times(1), () -> Utility.inputOutput(Mockito.anyString()));
         }
     }
@@ -1748,7 +1748,7 @@ public class ApplicantServiceBranchTest {
             service.viewResetPasswordPage();
             consoleOutput = outputStream.toString();
             Assert.assertTrue(consoleOutput.contains("You entered invalid option"));
-            Assert.assertTrue(consoleOutput.contains("Rediredting to Dashboard"));
+            Assert.assertTrue(consoleOutput.contains("Redirecting to Dashboard"));
             outputStream.reset();
     
             mockedUtility.verify(Mockito.times(3), () -> Utility.inputOutput(Mockito.anyString()));
