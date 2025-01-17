@@ -1,0 +1,20 @@
+# user story 32
+# method updateDescriptionOfJobPost (RecruiterService)
+
+
+jobs:
+    null. [error]
+    empty. [error]
+    non-empty. [property validJobs]
+jobId:
+    valid. [property validJobId]
+    invalid. [error]
+    null. [error]
+    empty. [error]
+newName:
+    non-empty. [if validJobs] [if validJobId]
+    empty. [if validJobs] [if validJobId] [error]
+newDescription:
+    non-empty. [if validJobs] [if validJobId]
+    empty. [if validJobs] [if validJobId] [error]
+

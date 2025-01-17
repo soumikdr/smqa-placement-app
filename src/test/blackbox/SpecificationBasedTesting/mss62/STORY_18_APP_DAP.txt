@@ -1,0 +1,10 @@
+# Input Delete Profile Confirmation
+DeleteProfileConfirmation:
+Yes. [if Role=Applicant]
+No.
+Invalid.
+
+# Input User Role
+Role:
+Applicant.
+Recruiter.

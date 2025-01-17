@@ -1,6 +1,9 @@
 package model;
 
+import utility.Utility;
+
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Application {
     private String id;
@@ -9,20 +12,38 @@ public class Application {
 
     private String applicantId;
 
-    private String status;
+    private ApplicationStatus applicationStatus;
 
     private ArrayList<Assignment> assignments;
 
+    private ArrayList<Assignment> interviewAssignments;
 
-    private String interviewDate;
-    private String interviewTime;
+    private Integer yearOfExperience;
 
-    public Application(String id, String jobId, String applicantId, String status, ArrayList<Assignment> assignments) {
+    private String education;
+
+    private String skills;
+
+    private String feedback;
+
+    public Application(String id, String jobId, String applicantId, ApplicationStatus status,
+                       ArrayList<Assignment> assignments, Integer yearOfExperience, String education, String skills,
+                       String feedback) {
         this.id = id;
         this.jobId = jobId;
         this.applicantId = applicantId;
-        this.status = status;
-        this.assignments = assignments;
+        this.applicationStatus = status;
+
+        this.assignments = assignments == null ? new ArrayList<Assignment>() : assignments;
+        this.feedback = feedback;
+        this.yearOfExperience = yearOfExperience;
+        this.education = education;
+        this.skills = skills;
+
+        ArrayList<String> commonInterviewQuestions = Utility.getCommonInterviewQuestions();
+        Assignment interview = new Assignment(UUID.randomUUID().toString(), applicantId, "interview",
+                commonInterviewQuestions, null);
+        this.assignments.add(interview);
     }
 
     public Application() {
@@ -44,7 +65,6 @@ public class Application {
         this.jobId = jobId;
     }
 
-
     public String getApplicantId() {
         return applicantId;
     }
@@ -53,12 +73,20 @@ public class Application {
         this.applicantId = applicantId;
     }
 
-    public String getStatus() {
-        return status;
+    public ApplicationStatus getStatus() {
+        return applicationStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(ApplicationStatus applicationStatus) {
+        this.applicationStatus = applicationStatus;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 
     public ArrayList<Assignment> getAssignments() {
@@ -69,21 +97,38 @@ public class Application {
         this.assignments = assignments;
     }
 
-
-    public String getInterviewDate() {
-        return interviewDate;
+    public Integer getYearOfExperience() {
+        return yearOfExperience;
     }
 
-    public void setInterviewDate(String interviewDate) {
-        this.interviewDate = interviewDate;
+    public void setYearOfExperience(Integer yearOfExperience) {
+        this.yearOfExperience = yearOfExperience;
     }
 
-    public String getInterviewTime() {
-        return interviewTime;
+    public String getEducation() {
+        return education;
     }
 
-    public void setInterviewTime(String interviewTime) {
-        this.interviewTime = interviewTime;
+    public void setEducation(String education) {
+        this.education = education;
     }
 
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public ArrayList<Assignment> getInterviewAssignments() {
+        if (interviewAssignments == null) {
+            return new ArrayList<Assignment>();
+        }
+        return interviewAssignments;
+    }
+
+    public void setInterviewAssignments(ArrayList<Assignment> interviewAssignments) {
+        this.interviewAssignments = interviewAssignments;
+    }
 }

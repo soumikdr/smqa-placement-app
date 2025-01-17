@@ -1,0 +1,35 @@
+
+Test Case 1  		<error>
+   jobs :  null
+
+
+Test Case 2  		<error>
+   jobs :  empty
+
+
+Test Case 3  		<error>
+   jobId :  invalid
+
+
+Test Case 4  		<error>
+   jobId :  null
+
+
+Test Case 5  		<error>
+   jobId :  empty
+
+
+Test Case 6  		<error>  (follows [if])
+   newName :  empty
+
+
+Test Case 7  		<error>  (follows [if])
+   newDescription :  empty
+
+
+Test Case 8  		(Key = 3.1.1.1.)
+   jobs           :  non-empty
+   jobId          :  valid
+   newName        :  non-empty
+   newDescription :  non-empty
+

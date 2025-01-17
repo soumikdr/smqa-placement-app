@@ -1,0 +1,22 @@
+
+Test Case 1  		<error>
+   firstName :  empty
+
+
+Test Case 2  		<error>
+   lastName :  empty
+
+
+Test Case 3  		<error>
+   userName :  non-unique
+
+
+Test Case 4  		<error>
+   userName :  empty
+
+
+Test Case 5  		(Key = 1.1.1.)
+   firstName :  valid
+   lastName  :  valid
+   userName  :  unique
+

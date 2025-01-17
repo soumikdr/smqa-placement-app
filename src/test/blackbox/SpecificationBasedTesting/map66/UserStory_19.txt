@@ -1,0 +1,40 @@
+# View Recruiter Profile Page [map66 - userstory 19]
+
+Current User: 
+null.                               [error]
+valid user object.                  [property user_authenticated]
+
+First Name: 
+null.                               [if !user_authenticated] [error]
+valid string.                       [if user_authenticated]
+
+Last Name: 
+null.                               [if !user_authenticated] [error]
+valid string.                       [if user_authenticated]
+
+User Name: 
+null.                               [if !user_authenticated] [error]
+valid string.                       [if user_authenticated]
+
+Role: 
+null.                               [if !user_authenticated] [error]
+valid string.                       [if user_authenticated]
+
+Menu Options: 
+null.                               [error]
+"1".                                [property update_profile]
+"2".                                [property delete_profile]
+"3".                                [property dashboard]
+invalid option.                     [error]
+
+Profile Update Redirection: 
+Redirect successful.                [if update_profile]
+Redirect failed.                    [if !update_profile]
+
+Profile Delete Redirection: 
+Redirect successful.                [if delete_profile]
+Redirect failed.                    [if !delete_profile]
+
+Dashboard Redirection: 
+Redirect successful.                [if dashboard]
+Redirect failed.                    [if !dashboard]

@@ -1,0 +1,136 @@
+
+Test Case 1  		<error>
+   RecruiterCode :  IncorrectCode
+
+
+Test Case 2  		<error>
+   RecruiterCode :  NullCode
+
+
+Test Case 3  		(Key = 1.1.1.1.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  ValidLastName
+   Username      :  ValidUsername
+   Password      :  ValidPassword
+
+
+Test Case 4  		(Key = 1.1.1.1.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  ValidLastName
+   Username      :  ValidUsername
+   Password      :  EmptyPassword
+
+
+Test Case 5  		(Key = 1.1.1.2.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  ValidLastName
+   Username      :  EmptyUsername
+   Password      :  ValidPassword
+
+
+Test Case 6  		(Key = 1.1.1.2.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  ValidLastName
+   Username      :  EmptyUsername
+   Password      :  EmptyPassword
+
+
+Test Case 7  		(Key = 1.1.2.1.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  EmptyLastName
+   Username      :  ValidUsername
+   Password      :  ValidPassword
+
+
+Test Case 8  		(Key = 1.1.2.1.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  EmptyLastName
+   Username      :  ValidUsername
+   Password      :  EmptyPassword
+
+
+Test Case 9  		(Key = 1.1.2.2.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  EmptyLastName
+   Username      :  EmptyUsername
+   Password      :  ValidPassword
+
+
+Test Case 10 		(Key = 1.1.2.2.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  ValidFirstName
+   LastName      :  EmptyLastName
+   Username      :  EmptyUsername
+   Password      :  EmptyPassword
+
+
+Test Case 11 		(Key = 1.2.1.1.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  ValidLastName
+   Username      :  ValidUsername
+   Password      :  ValidPassword
+
+
+Test Case 12 		(Key = 1.2.1.1.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  ValidLastName
+   Username      :  ValidUsername
+   Password      :  EmptyPassword
+
+
+Test Case 13 		(Key = 1.2.1.2.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  ValidLastName
+   Username      :  EmptyUsername
+   Password      :  ValidPassword
+
+
+Test Case 14 		(Key = 1.2.1.2.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  ValidLastName
+   Username      :  EmptyUsername
+   Password      :  EmptyPassword
+
+
+Test Case 15 		(Key = 1.2.2.1.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  EmptyLastName
+   Username      :  ValidUsername
+   Password      :  ValidPassword
+
+
+Test Case 16 		(Key = 1.2.2.1.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  EmptyLastName
+   Username      :  ValidUsername
+   Password      :  EmptyPassword
+
+
+Test Case 17 		(Key = 1.2.2.2.1.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  EmptyLastName
+   Username      :  EmptyUsername
+   Password      :  ValidPassword
+
+
+Test Case 18 		(Key = 1.2.2.2.2.)
+   RecruiterCode :  CorrectCode
+   FirstName     :  EmptyFirstName
+   LastName      :  EmptyLastName
+   Username      :  EmptyUsername
+   Password      :  EmptyPassword
+

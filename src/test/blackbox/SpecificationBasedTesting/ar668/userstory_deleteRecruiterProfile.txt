@@ -1,0 +1,9 @@
+# Input Delete Confirmation
+DeleteConfirm:
+Confirm. [property DeleteConfirmed]
+Cancel. [property DeleteCancelled]
+
+# Input Redirect Option
+RedirectOption:
+LandingPage. [if DeleteConfirmed]
+Dashboard. [if DeleteCancelled]

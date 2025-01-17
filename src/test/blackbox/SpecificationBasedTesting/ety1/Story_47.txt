@@ -1,0 +1,5 @@
+  UserSelection:
+    ApproveApplication. # User selects "1" to approve the application.
+    RejectApplication. # User selects "2" to reject the application.
+    GoBackToApplicationPage. # User selects "3" to go back to the application page.
+    InvalidSelection. # User enters an invalid option (non-numeric or out of range).

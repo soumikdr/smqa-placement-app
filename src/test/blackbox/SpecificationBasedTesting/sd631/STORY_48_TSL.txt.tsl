@@ -1,0 +1,15 @@
+
+Test Case 1  		(Key = 1.0.)
+   application :  null
+   feedback    :  <n/a>
+
+
+Test Case 2  		(Key = 2.1.)
+   application :  valid
+   feedback    :  empty
+
+
+Test Case 3  		(Key = 2.2.)
+   application :  valid
+   feedback    :  non-empty
+

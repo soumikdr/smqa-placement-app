@@ -1,0 +1,10 @@
+# View Feedback for Application [map66 - userstory 49]
+
+Application ID: 
+null.                               [error]
+invalid string.                     [error]
+valid string.                       [property application_exists]
+
+Feedback for Application: 
+null.                               [if !application_exists] [error]
+application id. 		    [if application_exists]

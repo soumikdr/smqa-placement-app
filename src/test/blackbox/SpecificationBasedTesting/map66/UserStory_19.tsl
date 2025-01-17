@@ -1,0 +1,64 @@
+
+Test Case 1  		<error>
+   Current User :  null
+
+
+Test Case 2  		<error>  (follows [if])
+   First Name :  null
+
+
+Test Case 3  		<error>  (follows [if])
+   Last Name :  null
+
+
+Test Case 4  		<error>  (follows [if])
+   User Name :  null
+
+
+Test Case 5  		<error>  (follows [if])
+   Role :  null
+
+
+Test Case 6  		<error>
+   Menu Options :  null
+
+
+Test Case 7  		<error>
+   Menu Options :  invalid option
+
+
+Test Case 8  		(Key = 2.2.2.2.2.2.1.2.2.)
+   Current User               :  valid user object
+   First Name                 :  valid string
+   Last Name                  :  valid string
+   User Name                  :  valid string
+   Role                       :  valid string
+   Menu Options               :  "1"
+   Profile Update Redirection :  Redirect successful
+   Profile Delete Redirection :  Redirect failed
+   Dashboard Redirection      :  Redirect failed
+
+
+Test Case 9  		(Key = 2.2.2.2.2.3.2.1.2.)
+   Current User               :  valid user object
+   First Name                 :  valid string
+   Last Name                  :  valid string
+   User Name                  :  valid string
+   Role                       :  valid string
+   Menu Options               :  "2"
+   Profile Update Redirection :  Redirect failed
+   Profile Delete Redirection :  Redirect successful
+   Dashboard Redirection      :  Redirect failed
+
+
+Test Case 10 		(Key = 2.2.2.2.2.4.2.2.1.)
+   Current User               :  valid user object
+   First Name                 :  valid string
+   Last Name                  :  valid string
+   User Name                  :  valid string
+   Role                       :  valid string
+   Menu Options               :  "3"
+   Profile Update Redirection :  Redirect failed
+   Profile Delete Redirection :  Redirect failed
+   Dashboard Redirection      :  Redirect successful
+

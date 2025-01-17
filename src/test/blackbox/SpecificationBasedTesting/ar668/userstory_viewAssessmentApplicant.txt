@@ -1,0 +1,15 @@
+# Input Assessment Availability
+AssessmentAvailability:
+Available. [property AssessmentAvailable]
+NotAvailable. [property AssessmentNotAvailable]
+
+# Input Submission Status
+SubmissionStatus:
+Submitted. [if AssessmentAvailable]
+NotSubmitted. [if AssessmentAvailable]
+
+# Input Redirect Option
+RedirectOption:
+AssessmentPage. [if AssessmentAvailable]
+Dashboard. [if AssessmentNotAvailable]
+RetryPage. [if AssessmentNotAvailable]

@@ -1,0 +1,11 @@
+# user story 48
+# method sendFeedback (RecruiterService)
+
+
+application:
+    null.
+    valid. [property applicationValid]
+feedback:
+    empty. [if applicationValid]
+    non-empty. [if applicationValid]
+

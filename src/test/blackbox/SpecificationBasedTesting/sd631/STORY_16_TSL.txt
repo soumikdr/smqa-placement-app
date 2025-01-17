@@ -1,0 +1,29 @@
+# user story 16
+# method viewApplicantProfilePage (ApplicantService)
+
+
+userId:
+    valid.
+    null. [error]
+    empty. [error]
+userName:
+    valid.
+    null. [error]
+    empty. [error]
+userFirstName:
+    valid.
+    null. [error]
+    empty. [error]
+userLastName:
+    valid.
+    null. [error]
+    empty. [error]
+userRole:
+    APPLICANT.
+    null. [error]
+input:
+    1 - User selects the option to update the profile.
+    2 - User selects the option to delete the profile.
+    3 - User selects the option to reset the password.
+    other - User selects an invalid option, returning to the dashboard.
+

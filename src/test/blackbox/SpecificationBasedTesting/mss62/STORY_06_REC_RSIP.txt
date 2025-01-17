@@ -1,0 +1,27 @@
+# Input User Role
+UserRole:
+Recruiter. 		[property Recruiter]
+Applicant.	 	[property Applicant]
+Other.			[property Other]
+
+# Input User Name
+UserName:
+Existing. 		[property Existing]
+NonExisting.	[property NonExisting]
+
+# Input Recruiter Role Verification
+RecruiterRoleVerification:
+Verified. [if Recruiter]
+NotVerified. [if !Recruiter]
+
+# Input Password
+Password:
+Correct. [if Existing]
+Incorrect. [if Existing]
+NotApplicable. [if NonExisting]
+
+# Input Redirect Option
+RedirectOption:
+RecruiterDashboard. [Correct]
+ErrorPage. [Incorrect]
+PreviousMenu.

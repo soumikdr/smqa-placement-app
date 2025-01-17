@@ -1,0 +1,9 @@
+# Input Logout Confirmation
+LogoutConfirm:
+Confirm. [property LogoutConfirmed]
+Cancel. [property LogoutCancelled]
+
+# Input Redirect Option
+RedirectOption:
+LandingPage. [if LogoutConfirmed]
+Dashboard. [if LogoutCancelled]

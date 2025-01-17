@@ -1,0 +1,10 @@
+# Input Job Availability
+JobAvailability:
+Available. [property JobsAvailable]
+NotAvailable. [property JobsNotAvailable]
+
+# Input Navigation Option
+NavigationOption:
+ViewJobDetails. [if JobsAvailable]
+Retry. [if JobsNotAvailable]
+Dashboard. [if JobsNotAvailable]
